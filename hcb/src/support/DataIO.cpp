@@ -1,5 +1,5 @@
 #include <support/DataIO.h>
-#include <bec-types.h>
+#include <hcb-types.h>
 #include <stdio.h>
 
 extern "C" {
