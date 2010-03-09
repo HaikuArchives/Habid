@@ -1,6 +1,6 @@
 #include <storage/MimeType.h>
 
-#include <bec-types.h>
+#include <hcb-types.h>
 
 class BMimeTypeBridge : public BMimeType
 {

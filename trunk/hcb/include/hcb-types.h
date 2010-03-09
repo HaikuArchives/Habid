@@ -1,5 +1,5 @@
-#ifndef BEC_TYPES_H__
-#define BEC_TYPES_H__
+#ifndef HCB_TYPES_H__
+#define HCB_TYPES_H__
 
 typedef struct { int dummy; } be_BBitmap;
 typedef struct { int dummy; } be_BDataIO;

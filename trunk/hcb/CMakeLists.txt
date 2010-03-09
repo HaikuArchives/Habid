@@ -5,6 +5,7 @@ src/storage/MimeType.cpp
 src/storage/Statable.cpp
 
 src/support/DataIO.cpp
+src/support/Flattenable.cpp
 )
 
 INCLUDE_DIRECTORIES(./include/)
