@@ -14,4 +14,6 @@ typedef struct { int dummy; } be_BPositionIO;
 typedef struct { int dummy; } be_BString;
 typedef struct { int dummy; } be_BStatable;
 
+typedef struct { int dummy; } be_BVolume;
+
 #endif
