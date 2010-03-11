@@ -3,8 +3,8 @@
 #include <hcb-types.h>
 
 extern "C" {
-	status_t bind_BStatable_GetStat(void *, struct stat *);
-	status_t bind_BStatable_set_stat(void *, struct stat &, uint32);
+	status_t bind_BStatable_GetStat_pure(void *, struct stat *);
+	status_t bind_BStatable_set_stat_pure(void *, struct stat &, uint32);
 //	status_t bind_BStatable__GetStat(void *, struct stat_beos *);
 }
 
@@ -18,12 +18,13 @@ public:
 
 	~BStatableBridge() {}
 
+	/* Pure virtual functions has to call back into D */
 	status_t GetStat(struct stat *st) const {
-		return bind_BStatable_GetStat(fBindInstPointer, st);
+		return bind_BStatable_GetStat_pure(fBindInstPointer, st);
 	}
 
 	status_t set_stat(struct stat &st, uint32 what) {
-		return bind_BStatable_set_stat(fBindInstPointer, st, what);
+		return bind_BStatable_set_stat_pure(fBindInstPointer, st, what);
 	}
 	
 	status_t _GetStat(struct stat_beos *st) const {

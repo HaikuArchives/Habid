@@ -24,6 +24,7 @@ public:
 	~BFlattenableBridge()
 	{ }
 	
+	/* Pure virtual functions has to call back into D */
 	bool IsFixedSize() const {
 		return bind_BFlattenable_IsFixedSize(fBindInstPointer);
 	}
