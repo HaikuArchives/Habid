@@ -5,8 +5,13 @@ src/storage/MimeType.cpp
 src/storage/Statable.cpp
 
 src/support/DataIO.cpp
+src/support/DataIO_BMemoryIO.cpp
+src/support/DataIO_BMallocIO.cpp
+src/support/DataIO_BPositionIO.cpp
 src/support/Flattenable.cpp
 )
 
-INCLUDE_DIRECTORIES(./include/)
+INCLUDE_DIRECTORIES(
+./include/
+)
 ADD_LIBRARY(bec SHARED ${BEC_SRCS})
