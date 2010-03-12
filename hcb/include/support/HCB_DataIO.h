@@ -93,6 +93,8 @@ public:
 
 /* end file DataIO_BPositionIO.cpp */
 
+/* begin file DataIO_BMemoryIO.cpp */
+
 class BMemoryIOBridge : public BMemoryIO
 {
 public:
@@ -125,5 +127,52 @@ public:
 	virtual status_t SetSize(off_t size);
 	virtual status_t super_SetSize(off_t size);
 };
+
+/* end file DataIO_BMemoryIO.cpp */
+
+/* begin file DataIO_BMallocIO.cpp */
+
+class BMallocIOBridge : public BMallocIO
+{
+public:
+	BMallocIOBridge();
+	virtual ~BMallocIOBridge();
+};
+
+class BMallocIOProxy : public BPositionIOProxy, public BMallocIOBridge
+{
+private:
+	void *fBindInstPointer;
+public:
+	BMallocIOProxy(void *bindInstPointer);
+	virtual ~BMallocIOProxy();
+	
+	virtual ssize_t ReadAt(off_t position, void *buffer, size_t size);
+	virtual ssize_t super_ReadAt(off_t position, void *buffer, size_t size);
+		
+	virtual ssize_t WriteAt(off_t position, const void *buffer, size_t size);
+	virtual ssize_t super_WriteAt(off_t position, const void *buffer, size_t size);
+	
+	virtual off_t Seek(off_t position, uint32 seekMode);
+	virtual off_t super_Seek(off_t position, uint32 seekMode);
+		
+	virtual off_t Position() const;
+	virtual off_t super_Position() const;
+	
+	virtual status_t SetSize(off_t size);
+	virtual status_t super_SetSize(off_t size);
+
+	void SetBlockSize(size_t blockSize);
+	void super_SetBlockSize(size_t blockSize);
+
+	const void *Buffer() const;
+	const void *super_Buffer() const;
+
+	size_t BufferLength() const;
+	size_t super_BufferLength() const;
+};
+
+/* end file DataIO_BMallocIO.cpp */
+
 
 #endif
