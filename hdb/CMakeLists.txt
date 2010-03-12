@@ -1,0 +1,30 @@
+PROJECT(BED)
+
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+FIND_PACKAGE(D REQUIRED)
+
+SET(BED_SRCS
+src/Storage/Entry.d
+src/Storage/MimeType.d
+src/Storage/Mime.d
+src/Storage/Statable.d
+src/Storage/StorageDefs.d
+
+src/Interface/Bitmap.d
+
+src/Support/BObject.d
+src/Support/DataIO.d
+src/Support/Errors.d
+src/Support/Flattenable.d
+src/Support/SupportDefs.d
+src/Support/types.d
+
+src/App/Message.d
+)
+
+SET(BED_INCLUDES
+src
+)
+
+
+add_d_target(bed NOT_DETECT_DEPENDS TYPE SHARED SOURCES ${BED_SRCS} INCLUDES ${BED_INCLUDES})
