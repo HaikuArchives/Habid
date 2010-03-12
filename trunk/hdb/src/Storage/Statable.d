@@ -71,7 +71,7 @@ class BStatable
 		return be_BStatable_GetNodeRef(fInstancePointer, &reference);
 	}
 
-	final status_t GetOwner(inout uid_t owner) {
+	final status_t GetOwner(ref uid_t owner) {
 		return be_BStatable_GetOwner(fInstancePointer, &owner);
 	}
 
@@ -79,7 +79,7 @@ class BStatable
 		return be_BStatable_SetOwner(fInstancePointer, owner);
 	}
 
-	final status_t GetGroup(inout gid_t group) {
+	final status_t GetGroup(ref gid_t group) {
 		return be_BStatable_GetGroup(fInstancePointer, &group);
 	}
 
@@ -87,7 +87,7 @@ class BStatable
 		return be_BStatable_SetGroup(fInstancePointer, group);
 	}
 
-	final status_t GetPermissions(inout mode_t perms) {
+	final status_t GetPermissions(ref mode_t perms) {
 		return be_BStatable_GetPermissions(fInstancePointer, &perms);
 	}
 
@@ -95,11 +95,11 @@ class BStatable
 		return be_BStatable_SetPermissions(fInstancePointer, perms);
 	}
 
-	final status_t GetSize(inout off_t size) {
+	final status_t GetSize(ref off_t size) {
 		return be_BStatable_GetSize(fInstancePointer, &size);
 	}
 
-	final status_t GetModificationTime(inout time_t mtime) {
+	final status_t GetModificationTime(ref time_t mtime) {
 		return be_BStatable_GetModificationTime(fInstancePointer, &mtime);
 	}
 
@@ -107,7 +107,7 @@ class BStatable
 		return be_BStatable_SetModificationTime(fInstancePointer, mtime);
 	}
 
-	final status_t GetCreationTime(inout time_t ctime) {
+	final status_t GetCreationTime(ref time_t ctime) {
 		return be_BStatable_GetCreationTime(fInstancePointer, &ctime);
 	}
 
@@ -115,7 +115,7 @@ class BStatable
 		return be_BStatable_SetCreationTime(fInstancePointer, ctime);
 	}
 
-	final status_t GetAccessTime(inout time_t atime) {
+	final status_t GetAccessTime(ref time_t atime) {
 		return be_BStatable_GetAccessTime(fInstancePointer, &atime);
 	}
 
