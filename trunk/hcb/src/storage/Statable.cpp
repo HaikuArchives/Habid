@@ -2,106 +2,133 @@
 
 #include <hcb-types.h>
 
+/* begin import functions */
+
 extern "C" {
 	status_t bind_BStatable_GetStat_pure(void *, struct stat *);
 	status_t bind_BStatable_set_stat_pure(void *, struct stat &, uint32);
-//	status_t bind_BStatable__GetStat(void *, struct stat_beos *);
 }
+
+/* end import functions */
+
+/* begin class BStatableBridge */
 
 class BStatableBridge : public BStatable
 {
-private:
-	void *fBindInstPointer;
 public:
-	BStatableBridge(void *bindInstPointer) : fBindInstPointer(bindInstPointer),
-											 BStatable() {}
+	BStatableBridge() :BStatable() 
+	{}
 
-	~BStatableBridge() {}
+	virtual ~BStatableBridge() 
+	{}
 
 	/* Pure virtual functions has to call back into D */
-	status_t GetStat(struct stat *st) const {
-		return bind_BStatable_GetStat_pure(fBindInstPointer, st);
+	virtual status_t GetStat(struct stat *st) const {
+		return 0;
 	}
 
-	status_t set_stat(struct stat &st, uint32 what) {
-		return bind_BStatable_set_stat_pure(fBindInstPointer, st, what);
+	virtual status_t set_stat(struct stat &st, uint32 what) {
+		return 0;
 	}
 	
-	status_t _GetStat(struct stat_beos *st) const {
-//		return bind_BStatable__GetStat(fBindInstPointer, st);
-		/*	
-			This is here for beos compatability only, so lets just shut the
-			compiler up and be done with it, we do not care about BeOS compat
-			in other languages anyhow i guess =) Kick me if im wrong? :)
-		*/
+	virtual status_t _GetStat(struct stat_beos *st) const {
 		return 0;
 	}
 };
 
+/* end class BStatableBridge */
+
+/* begin class BStatableProxy */
+
+class BStatableProxy : public BStatableBridge
+{
+private:
+	void *fBindInstPointer;
+
+public:
+	BStatableProxy(void *bindInstPointer) : fBindInstPointer(bindInstPointer), BStatableBridge()
+	{ }
+	virtual ~BStatableProxy()
+	{ }
+	
+	virtual status_t GetStat(struct stat *st) const {
+		return bind_BStatable_GetStat_pure(fBindInstPointer, st);
+	}
+	
+	virtual status_t set_stat(struct stat &st, uint32 what) {
+		return bind_BStatable_set_stat_pure(fBindInstPointer, st, what);
+	}
+};
+
+/* end class BStatableBridge */
+
+/* begin export functions */
 
 extern "C" {
 	be_BStatable * be_BStatable_ctor(void *bindInstPointer) {
-		return (be_BStatable *)new BStatableBridge(bindInstPointer);
+		return (be_BStatable *)new BStatableProxy(bindInstPointer);
 	}
 
 	void be_BStatable_dtor(be_BStatable *obj) {
-		delete (BStatableBridge *)obj;
+		delete (BStatableProxy *)obj;
 	}
 	
 	
 	status_t be_BStatable_GetNodeRef(be_BStatable *instPointer, node_ref *ref) {
-		return ((BStatableBridge *)instPointer)->GetNodeRef(ref);
+		return ((BStatableProxy *)instPointer)->GetNodeRef(ref);
 	}
 
 	status_t be_BStatable_GetOwner(be_BStatable *instPointer, uid_t *owner) {
-		return ((BStatableBridge *)instPointer)->GetOwner(owner);
+		return ((BStatableProxy *)instPointer)->GetOwner(owner);
 	}
 	status_t be_BStatable_SetOwner(be_BStatable *instPointer, uid_t owner) {
-		return ((BStatableBridge *)instPointer)->SetOwner(owner);
+		return ((BStatableProxy *)instPointer)->SetOwner(owner);
 	}
 
 	status_t be_BStatable_GetGroup(be_BStatable *instPointer, gid_t *group) {
-		return ((BStatableBridge *)instPointer)->GetGroup(group);
+		return ((BStatableProxy *)instPointer)->GetGroup(group);
 	}
 	status_t be_BStatable_SetGroup(be_BStatable *instPointer, gid_t group) {
-		return ((BStatableBridge *)instPointer)->SetGroup(group);
+		return ((BStatableProxy *)instPointer)->SetGroup(group);
 	}
 
 	status_t be_BStatable_GetPermissions(be_BStatable *instPointer, mode_t *perms) {
-		return ((BStatableBridge *)instPointer)->GetPermissions(perms);
+		return ((BStatableProxy *)instPointer)->GetPermissions(perms);
 	}
 	status_t be_BStatable_SetPermissions(be_BStatable *instPointer, mode_t perms) {
-		return ((BStatableBridge *)instPointer)->SetPermissions(perms);
+		return ((BStatableProxy *)instPointer)->SetPermissions(perms);
 	}
 
 	status_t be_BStatable_GetSize(be_BStatable *instPointer, off_t *size) {
-		return ((BStatableBridge *)instPointer)->GetSize(size);
+		return ((BStatableProxy *)instPointer)->GetSize(size);
 	}
 
 	status_t be_BStatable_GetModificationTime(be_BStatable *instPointer, time_t *mtime) {
-		return ((BStatableBridge *)instPointer)->GetModificationTime(mtime);
+		return ((BStatableProxy *)instPointer)->GetModificationTime(mtime);
 	}
 	status_t be_BStatable_SetModificationTime(be_BStatable *instPointer, time_t mtime) {
-		return ((BStatableBridge *)instPointer)->SetModificationTime(mtime);
+		return ((BStatableProxy *)instPointer)->SetModificationTime(mtime);
 	}
 
 	status_t be_BStatable_GetCreationTime(be_BStatable *instPointer, time_t *ctime) {
-		return ((BStatableBridge *)instPointer)->GetCreationTime(ctime);
+		return ((BStatableProxy *)instPointer)->GetCreationTime(ctime);
 	}
 	
 	status_t be_BStatable_SetCreationTime(be_BStatable *instPointer, time_t ctime) {
-		return ((BStatableBridge *)instPointer)->SetCreationTime(ctime);
+		return ((BStatableProxy *)instPointer)->SetCreationTime(ctime);
 	}
 
 	status_t be_BStatable_GetAccessTime(be_BStatable *instPointer, time_t *atime) {
-		return ((BStatableBridge *)instPointer)->GetAccessTime(atime);
+		return ((BStatableProxy *)instPointer)->GetAccessTime(atime);
 	}
 	
 	status_t be_BStatable_SetAccessTime(be_BStatable *instPointer, time_t atime) {
-		return ((BStatableBridge *)instPointer)->SetAccessTime(atime);
+		return ((BStatableProxy *)instPointer)->SetAccessTime(atime);
 	}
 
 	status_t be_BStatable_GetVolume(be_BStatable *instPointer, be_BVolume *vol) {
-		return ((BStatableBridge *)instPointer)->GetVolume((BVolume *)vol);
+		return ((BStatableProxy *)instPointer)->GetVolume((BVolume *)vol);
 	}
 } 
+
+/* end export functions */

@@ -333,7 +333,7 @@
 ./storage/Query.h
 ./storage/ResourceStrings.h
 ./storage/Resources.h
-./storage/Statable.h					- Written in C		- Not Written in D	- Untested
+./storage/Statable.h					- Written in C		- Written in D		- Untested
 ./storage/StorageDefs.h
 ./storage/SymLink.h
 ./storage/Volume.h

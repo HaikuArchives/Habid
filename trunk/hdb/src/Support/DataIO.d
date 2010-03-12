@@ -9,7 +9,6 @@ import tango.stdc.stdlib;
 import tango.stdc.string;
 
 extern (C) extern {
-	void *		be_BDataIOProxy_ctor(void *);
 	void *		be_BDataIO_ctor(void *);
 	void		be_BDataIO_dtor(void *);
 	ssize_t		be_BDataIO_Read(void *, void *, size_t);
@@ -36,27 +35,21 @@ public:
 
 	this() {
 		Stdout.formatln("BDataIO ctor");
-		if(c_obj is null) {
-			c_obj = be_BDataIO_ctor(cast(void *)this);
+		if(fInstancePointer is null) {
+			fInstancePointer = be_BDataIO_ctor(cast(void *)this);
 //			proxy_obj = be_BDataIOProxy_ctor(cast(void *)this);
-			Stdout.formatln("BDataIO::Init c_obj");
+			Stdout.formatln("BDataIO::Init fInstancePointer");
 		}
 	}
 	
 	~this() {
-		if(c_obj !is null)
-			be_BDataIO_dtor(c_obj);
-		c_obj = null;
+		if(fInstancePointer !is null)
+			be_BDataIO_dtor(fInstancePointer);
+		fInstancePointer = null;
 	}
 	
-	ssize_t Read(void [] buffer) {
-		return be_BDataIO_Read_super(c_obj, buffer.ptr, buffer.length);
-	}
-		
-	
-	ssize_t Write(void [] buffer) {
-		return be_BDataIO_Write_super(c_obj, buffer.ptr, buffer.length);
-	}
+	abstract ssize_t Read(void [] buffer);
+	abstract ssize_t Write(void [] buffer);
 }
 
 
@@ -121,25 +114,25 @@ class BPositionIO : BDataIO
 public:
 	this() {
 		Stdout.formatln("BPositionIO ctor");
-		if(c_obj is null) {
-			c_obj = be_BPositionIO_ctor(cast(void *)this);
-			Stdout.formatln("BPositionIO::Init c_obj");
+		if(fInstancePointer is null) {
+			fInstancePointer = be_BPositionIO_ctor(cast(void *)this);
+			Stdout.formatln("BPositionIO::Init fInstancePointer");
 		}
 		super();
 	}
 	
 	~this() {
-		if(c_obj !is null)
-			be_BPositionIO_dtor(c_obj);
-		c_obj = null;
+		if(fInstancePointer !is null)
+			be_BPositionIO_dtor(fInstancePointer);
+		fInstancePointer = null;
 	}
 	
 	ssize_t Read(void [] buffer) {
-		return be_BPositionIO_Read_super(c_obj, buffer.ptr, buffer.length);
+		return be_BPositionIO_Read_super(fInstancePointer, buffer.ptr, buffer.length);
 	}
 	
 	ssize_t Write(void [] buffer) {
-		return be_BPositionIO_Write_super(c_obj, buffer.ptr, buffer.length);
+		return be_BPositionIO_Write_super(fInstancePointer, buffer.ptr, buffer.length);
 	}
 	
 	abstract ssize_t ReadAt(off_t position, void [] buffer);
@@ -151,11 +144,11 @@ public:
 	abstract off_t Position();
 	
 	status_t SetSize(off_t size) {
-		return be_BPositionIO_SetSize_super(c_obj, size);
+		return be_BPositionIO_SetSize_super(fInstancePointer, size);
 	}
 	
 	status_t GetSize(off_t *size) {
-		return be_BPositionIO_GetSize_super(c_obj, size);
+		return be_BPositionIO_GetSize_super(fInstancePointer, size);
 	}
 }
 
@@ -206,37 +199,37 @@ class BMemoryIO : BPositionIO
 public:
 	this(void [] data) {
 		Stdout.formatln("BMemoryIO ctor");
-		if(c_obj is null) {
-			c_obj = be_BMemoryIO_ctor_1(cast(void *)this, data.ptr, data.length);
-			Stdout.formatln("BMemoryIO::Init c_obj");
+		if(fInstancePointer is null) {
+			fInstancePointer = be_BMemoryIO_ctor_1(cast(void *)this, data.ptr, data.length);
+			Stdout.formatln("BMemoryIO::Init fInstancePointer");
 		}
 		super();
 	}
 	
 	~this() {
-		if(c_obj !is null)
-			be_BMemoryIO_dtor(c_obj);
-		c_obj = null;
+		if(fInstancePointer !is null)
+			be_BMemoryIO_dtor(fInstancePointer);
+		fInstancePointer = null;
 	}
 	
 	ssize_t ReadAt(off_t position, void [] buffer) {
-		return be_BMemoryIO_ReadAt_super(c_obj, position, buffer.ptr, buffer.length);
+		return be_BMemoryIO_ReadAt_super(fInstancePointer, position, buffer.ptr, buffer.length);
 	}
 	
 	ssize_t WriteAt(off_t position, void [] buffer) {
-		return be_BMemoryIO_WriteAt_super(c_obj, position, buffer.ptr, buffer.length);
+		return be_BMemoryIO_WriteAt_super(fInstancePointer, position, buffer.ptr, buffer.length);
 	}
 	
 	off_t Seek(off_t position, uint32 seekMode) {
-		return be_BMemoryIO_Seek_super(c_obj, position, seekMode);
+		return be_BMemoryIO_Seek_super(fInstancePointer, position, seekMode);
 	}
 	
 	off_t Position() {
-		return be_BMemoryIO_Position_super(c_obj);
+		return be_BMemoryIO_Position_super(fInstancePointer);
 	}
 	
 	status_t SetSize(off_t size) {
-		return be_BMemoryIO_SetSize_super(c_obj, size);
+		return be_BMemoryIO_SetSize_super(fInstancePointer, size);
 	}
 }
 
@@ -286,51 +279,51 @@ class BMallocIO : BPositionIO
 public:
 	this() {
 		Stdout.formatln("BMallocIO ctor");
-		if(c_obj is null) {
+		if(fInstancePointer is null) {
 			auto sup = super;
 			
-			c_obj = be_BMallocIO_ctor(cast(void *)this, cast(void *)sup);
-			Stdout.formatln("BMallocIO::Init c_obj");
+			fInstancePointer = be_BMallocIO_ctor(cast(void *)this, cast(void *)sup);
+			Stdout.formatln("BMallocIO::Init fInstancePointer");
 		}
 		super();
 	}
 	
 	~this() {
-		if(c_obj !is null)
-			be_BMallocIO_dtor(c_obj);
-		c_obj = null;
+		if(fInstancePointer !is null)
+			be_BMallocIO_dtor(fInstancePointer);
+		fInstancePointer = null;
 	}
 	
 	ssize_t ReadAt(off_t position, void [] buffer) {
-		return be_BMallocIO_ReadAt_super(c_obj, position, buffer.ptr, buffer.length);
+		return be_BMallocIO_ReadAt_super(fInstancePointer, position, buffer.ptr, buffer.length);
 	}
 	
 	ssize_t WriteAt(off_t position, void [] buffer) {
-		return be_BMallocIO_WriteAt_super(c_obj, position, buffer.ptr, buffer.length);
+		return be_BMallocIO_WriteAt_super(fInstancePointer, position, buffer.ptr, buffer.length);
 	}
 	
 	off_t Seek(off_t position, uint32 seekMode) {
-		return be_BMallocIO_Seek_super(c_obj, position, seekMode);
+		return be_BMallocIO_Seek_super(fInstancePointer, position, seekMode);
 	}
 	
 	off_t Position() {
-		return be_BMallocIO_Position_super(c_obj);
+		return be_BMallocIO_Position_super(fInstancePointer);
 	}
 	
 	status_t SetSize(size_t size) {
-		return be_BMallocIO_SetSize_super(c_obj, size);
+		return be_BMallocIO_SetSize_super(fInstancePointer, size);
 	}
 	
 	final void SetBlockSize(size_t size) {
-		return be_BMallocIO_SetBlockSize(c_obj, size);
+		return be_BMallocIO_SetBlockSize(fInstancePointer, size);
 	}
 	
 	final void [] Buffer() {
-		return be_BMallocIO_Buffer(c_obj)[0..BufferLength()];
+		return be_BMallocIO_Buffer(fInstancePointer)[0..BufferLength()];
 	}
 	
 	final size_t BufferLength() {
-		return be_BMallocIO_BufferLength(c_obj);
+		return be_BMallocIO_BufferLength(fInstancePointer);
 	}
 }
 
