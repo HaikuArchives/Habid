@@ -333,7 +333,7 @@
 ./storage/Query.h
 ./storage/ResourceStrings.h
 ./storage/Resources.h
-./storage/Statable.h
+./storage/Statable.h					- Written in C		- Not Written in D	- Untested
 ./storage/StorageDefs.h
 ./storage/SymLink.h
 ./storage/Volume.h
@@ -348,7 +348,7 @@
 ./support/DataIO.h					- Written in C		- Written in D		- Tested and working as far as i can see =)
 ./support/Debug.h
 ./support/Errors.h
-./support/Flattenable.h
+./support/Flattenable.h				- Written in C		- Not Written in D	- Untested
 ./support/List.h
 ./support/Locker.h
 ./support/StopWatch.h
