@@ -90,95 +90,95 @@ class BMimeType
 	mixin BObject;
 
 	this() {
-		c_obj = be_BMimeType_ctor_1();
+		fInstancePointer = be_BMimeType_ctor_1();
 	}
 
 	this(char [] mimeType) {
-		c_obj = be_BMimeType_ctor_2(toStringz(mimeType));
+		fInstancePointer = be_BMimeType_ctor_2(toStringz(mimeType));
 	}
 
 	~this() {
-		if(c_obj !is null)
-			be_BMimeType_dtor(c_obj);
-		c_obj = null;
+		if(fInstancePointer !is null)
+			be_BMimeType_dtor(fInstancePointer);
+		fInstancePointer = null;
 	}
 
-	int SetTo(char [] mimeType) {
-		return be_BMimeType_SetTo(c_obj, toStringz(mimeType));
+	final int SetTo(char [] mimeType) {
+		return be_BMimeType_SetTo(fInstancePointer, toStringz(mimeType));
 	}
 
-	void Unset() {
-		be_BMimeType_Unset(c_obj);
+	final void Unset() {
+		be_BMimeType_Unset(fInstancePointer);
 	}
 
-	int	InitCheck() {
-		return be_BMimeType_InitCheck(c_obj);
+	final int	InitCheck() {
+		return be_BMimeType_InitCheck(fInstancePointer);
 	}
 
-	char [] Type() {
-		return fromStringz(be_BMimeType_Type(c_obj)).dup;
+	final char [] Type() {
+		return fromStringz(be_BMimeType_Type(fInstancePointer)).dup;
 	}
 
-	bool IsValid() {
-		return be_BMimeType_IsValid(c_obj);
+	final bool IsValid() {
+		return be_BMimeType_IsValid(fInstancePointer);
 	}
 
-	bool IsSupertypeOnly() {
-		return be_BMimeType_IsSupertypeOnly(c_obj);
+	final bool IsSupertypeOnly() {
+		return be_BMimeType_IsSupertypeOnly(fInstancePointer);
 	}
 
-	int	GetSupertype(BMimeType mimeType) {
-		return be_BMimeType_GetSupertype(c_obj, mimeType.c_obj);
+	final int	GetSupertype(BMimeType mimeType) {
+		return be_BMimeType_GetSupertype(fInstancePointer, mimeType.fInstancePointer);
 	}
 
-	bool opEquals(BMimeType type) {
-		return be_BMimeType_operator_equal_1(c_obj, type.c_obj);
+	final bool opEquals(BMimeType type) {
+		return be_BMimeType_operator_equal_1(fInstancePointer, type.fInstancePointer);
 	}
 
-	bool opEquals(char [] type) {
-		return be_BMimeType_operator_equal_2(c_obj, toStringz(type));
+	final bool opEquals(char [] type) {
+		return be_BMimeType_operator_equal_2(fInstancePointer, toStringz(type));
 	}
 
-	bool Contains(BMimeType type) {
-		return be_BMimeType_Contains(c_obj, type.c_obj);
+	final bool Contains(BMimeType type) {
+		return be_BMimeType_Contains(fInstancePointer, type.fInstancePointer);
 	}
 
-	int Install() {
-		return be_BMimeType_Install(c_obj);
+	final int Install() {
+		return be_BMimeType_Install(fInstancePointer);
 	}
 
-	int Delete() {
-		return be_BMimeType_Delete(c_obj);
+	final int Delete() {
+		return be_BMimeType_Delete(fInstancePointer);
 	}
 
-	int IsInstalled() {
-		return be_BMimeType_IsInstalled(c_obj);
+	final int IsInstalled() {
+		return be_BMimeType_IsInstalled(fInstancePointer);
 	}
 
-	int GetIcon(BBitmap bitmap, icon_size size) {
-		return be_BMimeType_GetIcon_1(c_obj, bitmap.c_obj, size);
+	final int GetIcon(BBitmap bitmap, icon_size size) {
+		return be_BMimeType_GetIcon_1(fInstancePointer, bitmap.fInstancePointer, size);
 	}
 
-	int GetIcon(byte **data, int size) {
-		return be_BMimeType_GetIcon_2(c_obj, data, size);
+	final int GetIcon(byte **data, int size) {
+		return be_BMimeType_GetIcon_2(fInstancePointer, data, size);
 	}	
 
-	int GetPreferredApp(char *signature, app_verb verb) {
-		return be_BMimeType_GetPreferredApp(c_obj, signature, verb);
+	final int GetPreferredApp(char *signature, app_verb verb) {
+		return be_BMimeType_GetPreferredApp(fInstancePointer, signature, verb);
 	}
 
-	int GetAttrInfo(BMessage msg) {
-		return be_BMimeType_GetAttrInfo(c_obj, msg.c_obj);
+	final int GetAttrInfo(BMessage msg) {
+		return be_BMimeType_GetAttrInfo(fInstancePointer, msg.fInstancePointer);
 	}
 
-	int GetFileExtensions(BMessage msg) {
-		return be_BMimeType_GetFileExtensions(c_obj, msg.c_obj);
+	final int GetFileExtensions(BMessage msg) {
+		return be_BMimeType_GetFileExtensions(fInstancePointer, msg.fInstancePointer);
 	}
 
-	int GetShortDescription(ref char [] desc) {
+	final int GetShortDescription(ref char [] desc) {
 		char * str = cast(char *)malloc(B_MIME_TYPE_LENGTH);
 
-		int ret = be_BMimeType_GetShortDescription(c_obj, str);
+		int ret = be_BMimeType_GetShortDescription(fInstancePointer, str);
 
 		desc = fromStringz(str).dup;
 
@@ -187,10 +187,10 @@ class BMimeType
 		return ret;
 	}
 
-	int GetLongDescription(ref char [] desc) {
+	final int GetLongDescription(ref char [] desc) {
 		char * str = cast(char *)malloc(B_MIME_TYPE_LENGTH);
 
-		int ret = be_BMimeType_GetLongDescription(c_obj, str);
+		int ret = be_BMimeType_GetLongDescription(fInstancePointer, str);
 
 		desc = fromStringz(str).dup;
 
@@ -199,55 +199,55 @@ class BMimeType
 		return ret;
 	}
 
-	int GetSupportingApps(BMessage msg) {
-		return be_BMimeType_GetSupportingApps(c_obj, msg.c_obj);
+	final int GetSupportingApps(BMessage msg) {
+		return be_BMimeType_GetSupportingApps(fInstancePointer, msg.fInstancePointer);
 	}
 
-	int SetIcon(BBitmap icon, icon_size size) {
-		return be_BMimeType_SetIcon_1(c_obj, icon.c_obj, size);
+	final int SetIcon(BBitmap icon, icon_size size) {
+		return be_BMimeType_SetIcon_1(fInstancePointer, icon.fInstancePointer, size);
 	}
 
-	int SetIcon(ubyte * data, icon_size size) {
-		return be_BMimeType_SetIcon_2(c_obj, data, size);
+	final int SetIcon(ubyte * data, icon_size size) {
+		return be_BMimeType_SetIcon_2(fInstancePointer, data, size);
 	}
 
-	int SetPreferredApp(char [] signature, app_verb verb) {
-		return be_BMimeType_SetPreferredApp(c_obj, toStringz(signature), verb);
+	final int SetPreferredApp(char [] signature, app_verb verb) {
+		return be_BMimeType_SetPreferredApp(fInstancePointer, toStringz(signature), verb);
 	}
 
-	int SetAttrInfo(BMessage msg) {
-		return be_BMimeType_SetAttrInfo(c_obj, msg.c_obj);
+	final int SetAttrInfo(BMessage msg) {
+		return be_BMimeType_SetAttrInfo(fInstancePointer, msg.fInstancePointer);
 	}
 	
-	int SetFileExtensions(BMessage msg) {
-		return be_BMimeType_SetFileExtensions(c_obj, msg.c_obj);
+	final int SetFileExtensions(BMessage msg) {
+		return be_BMimeType_SetFileExtensions(fInstancePointer, msg.fInstancePointer);
 	}
 
-	int SetShortDescription(char [] desc) {
-		return be_BMimeType_SetShortDescription(c_obj, toStringz(desc));
+	final int SetShortDescription(char [] desc) {
+		return be_BMimeType_SetShortDescription(fInstancePointer, toStringz(desc));
 	}
 
-	int SetLongDescription(char [] desc) {
-		return be_BMimeType_SetLongDescription(c_obj, toStringz(desc));
+	final int SetLongDescription(char [] desc) {
+		return be_BMimeType_SetLongDescription(fInstancePointer, toStringz(desc));
 	}
 
-	static int GetInstalledSupertypes(BMessage msg) {
-		return be_BMimeType_GetInstalledSupertypes_static(msg.c_obj);
+	final static int GetInstalledSupertypes(BMessage msg) {
+		return be_BMimeType_GetInstalledSupertypes_static(msg.fInstancePointer);
 	}
 
-	static int GetInstalledTypes(BMessage msg) {
-		return be_BMimeType_GetInstalledTypes_1_static(msg.c_obj);
+	final static int GetInstalledTypes(BMessage msg) {
+		return be_BMimeType_GetInstalledTypes_1_static(msg.fInstancePointer);
 	}
 
-	static int GetInstalledTypes(char [] supertype, BMessage msg) {
-		return be_BMimeType_GetInstalledTypes_2_static(toStringz(supertype), msg.c_obj);
+	final static int GetInstalledTypes(char [] supertype, BMessage msg) {
+		return be_BMimeType_GetInstalledTypes_2_static(toStringz(supertype), msg.fInstancePointer);
 	}
 
-	static int GetWildcardApps(BMessage msg) {
-		return be_BMimeType_GetWildcardApps_static(msg.c_obj);
+	final static int GetWildcardApps(BMessage msg) {
+		return be_BMimeType_GetWildcardApps_static(msg.fInstancePointer);
 	}
 
-	static bool IsValid(char [] mimeType) {
+	final static bool IsValid(char [] mimeType) {
 		return be_BMimeType_IsValid_static(toStringz(mimeType));
 	}
 }
