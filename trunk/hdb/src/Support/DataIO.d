@@ -239,96 +239,45 @@ public:
 		return be_BMemoryIO_SetSize_super(c_obj, size);
 	}
 }
-/*
+
 extern (C) extern {
 	void * 		be_BMallocIO_ctor(void *, void *);
 	void		be_BMallocIO_dtor(void *);
 	ssize_t		be_BMallocIO_ReadAt(void *, off_t, void *, size_t);
+	ssize_t		be_BMallocIO_ReadAt_super(void *, off_t, void *, size_t);
 	ssize_t		be_BMallocIO_WriteAt(void *, off_t, void *, size_t);
+	ssize_t		be_BMallocIO_WriteAt_super(void *, off_t, void *, size_t);
 	off_t		be_BMallocIO_Seek(void *, off_t, uint32);
+	off_t		be_BMallocIO_Seek_super(void *, off_t, uint32);
 	off_t		be_BMallocIO_Position(void *);
+	off_t		be_BMallocIO_Position_super(void *);
+	status_t	be_BMallocIO_SetSize(void *, size_t);
+	status_t	be_BMallocIO_SetSize_super(void *, size_t);
+
 	void		be_BMallocIO_SetBlockSize(void *, size_t);
 	void *		be_BMallocIO_Buffer(void *);
 	size_t		be_BMallocIO_BufferLength(void *);
 }
 
 extern (C) {
-	ssize_t bind_BMallocIO_ReadAt_virtual(void *bindInstPointer, bool *called, off_t position, void *buffer, size_t size) {
-		BMallocIO obj = cast(BMallocIO)bindInstPointer;
-		
-		auto baseMethod = &BMallocIO.ReadAt;
-		auto derivedMethod = &obj.ReadAt;
-		
-		if(baseMethod !is derivedMethod.funcptr) {
-			*called = true;
-			return obj.ReadAt(position, buffer[0..size]);
-		}
-		
-		*called = false;		
-		return 0;	
+	ssize_t bind_BMallocIO_ReadAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+		return (cast(BMallocIO)bindInstPointer).ReadAt(position, buffer[0..size]);
 	}
 	
-	ssize_t bind_BMallocIO_WriteAt_virtual(void *bindInstPointer, bool *called, off_t position, void *buffer, size_t size) {
-		BMallocIO obj = cast(BMallocIO)bindInstPointer;
-		
-		auto baseMethod = &BMallocIO.WriteAt;
-		auto derivedMethod = &obj.WriteAt;
-		
-		if(baseMethod !is derivedMethod.funcptr) {
-			*called = true;
-			return obj.WriteAt(position, buffer[0..size]);
-		}
-		
-		*called = false;
-		return 0;
+	ssize_t bind_BMallocIO_WriteAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+		return (cast(BMallocIO)bindInstPointer).WriteAt(position, buffer[0..size]);
 	}
 
-	off_t bind_BMallocIO_Seek_virtual(void *bindInstPointer, bool *called, off_t position, uint32 seekMode) {
-		BMallocIO obj = cast(BMallocIO)bindInstPointer;
-		
-		auto baseMethod = &BMallocIO.Seek;
-		auto derivedMethod = &obj.Seek;
-		
-		Stdout.formatln("{} - {}", baseMethod, derivedMethod.funcptr);
-		
-			if(baseMethod !is derivedMethod.funcptr) {
-				Stdout.formatln("\n\nIt has been inherited!\n\n");
-				*called = true;
-				return obj.Seek(position, seekMode);
-			}
-		
-		*called = false;
-		return 0;
+	off_t bind_BMallocIO_Seek_virtual(void *bindInstPointer, off_t position, uint32 seekMode) {
+		return (cast(BMallocIO)bindInstPointer).Seek(position, seekMode);
 	}
 	
-	off_t bind_BMallocIO_Position_virtual(void *bindInstPointer, bool *called) {
-		BMallocIO obj = cast(BMallocIO)bindInstPointer;
-		
-		auto baseMethod = &BMallocIO.Position;
-		auto derivedMethod = &obj.Position;
-		
-		if(baseMethod !is derivedMethod.funcptr) {
-			*called = true;
-			return obj.Position();
-		}
-		*called = false;
-		return 0;
+	off_t bind_BMallocIO_Position_virtual(void *bindInstPointer) {
+		return (cast(BMallocIO)bindInstPointer).Position();
 	}
 
-	status_t bind_BMallocIO_SetSize_virtual(void *bindInstPointer, bool *called, off_t size) {
-		BMallocIO obj = cast(BMallocIO)bindInstPointer;
-		
-		auto baseMethod = &BMallocIO.SetSize;
-		auto derivedMethod = &obj.SetSize;
-		
-		
-		if(baseMethod !is derivedMethod.funcptr) {
-			*called = true;
-			return obj.SetSize(size);
-		}
-		
-		*called = false;		
-		return 0;
+	status_t bind_BMallocIO_SetSize_virtual(void *bindInstPointer, off_t size) {
+		return (cast(BMallocIO)bindInstPointer).SetSize(size);
 	}
 }
 
@@ -353,31 +302,35 @@ public:
 	}
 	
 	ssize_t ReadAt(off_t position, void [] buffer) {
-		return be_BMallocIO_ReadAt(c_obj, position, buffer.ptr, buffer.length);
+		return be_BMallocIO_ReadAt_super(c_obj, position, buffer.ptr, buffer.length);
 	}
 	
 	ssize_t WriteAt(off_t position, void [] buffer) {
-		return be_BMallocIO_WriteAt(c_obj, position, buffer.ptr, buffer.length);
+		return be_BMallocIO_WriteAt_super(c_obj, position, buffer.ptr, buffer.length);
 	}
 	
 	off_t Seek(off_t position, uint32 seekMode) {
-		return be_BMallocIO_Seek(c_obj, position, seekMode);
+		return be_BMallocIO_Seek_super(c_obj, position, seekMode);
 	}
 	
 	off_t Position() {
-		return be_BMallocIO_Position(c_obj);
+		return be_BMallocIO_Position_super(c_obj);
 	}
 	
-	void SetBlockSize(size_t size) {
+	status_t SetSize(size_t size) {
+		return be_BMallocIO_SetSize_super(c_obj, size);
+	}
+	
+	final void SetBlockSize(size_t size) {
 		return be_BMallocIO_SetBlockSize(c_obj, size);
 	}
 	
-	void [] Buffer() {
+	final void [] Buffer() {
 		return be_BMallocIO_Buffer(c_obj)[0..BufferLength()];
 	}
 	
-	size_t BufferLength() {
+	final size_t BufferLength() {
 		return be_BMallocIO_BufferLength(c_obj);
 	}
 }
-*/
+
