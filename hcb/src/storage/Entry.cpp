@@ -134,9 +134,10 @@ extern "C" {
 	status_t be_BEntry_operator_notequals(be_BEntry *instPointer, const be_BEntry *item) {
 		return ((BEntryProxy *)instPointer)->operator!=(*(const BEntryProxy *)item);
 	}
-	
+/*
 	be_BEntry * be_BEntry_operator_assign(be_BEntry *instPointer, const be_BEntry *item) {
 		return (be_BEntry *)&(((BEntryProxy *)instPointer)->operator=(*(const BEntryProxy *)item));
 	}
+*/
 }
 

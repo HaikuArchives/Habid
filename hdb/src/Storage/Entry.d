@@ -162,11 +162,11 @@ class BEntry : BStatable
 		fInstancePointer = null;
 	}
 	
-	status_t InitCheck() {
+	final status_t InitCheck() {
 		return be_BEntry_InitCheck(fInstancePointer);
 	}
 	
-	bool Exists() {
+	final bool Exists() {
 		return be_BEntry_Exists(fInstancePointer);
 	}
 	
@@ -174,39 +174,39 @@ class BEntry : BStatable
 		return be_BEntry_GetStat_super(fInstancePointer, &st);
 	}
 	
-	status_t SetTo(BDirectory dir, char [] path, bool traverse = false) {
+	final status_t SetTo(BDirectory dir, char [] path, bool traverse = false) {
 		return be_BEntry_SetTo_1(fInstancePointer, dir.fInstancePointer, toStringz(path), traverse);
 	}
 	
-	status_t SetTo(ref entry_ref reference, bool traverse = false) {
+	final status_t SetTo(ref entry_ref reference, bool traverse = false) {
 		return be_BEntry_SetTo_2(fInstancePointer, &reference, traverse);
 	}
 	
-	status_t SetTo(char [] path, bool traverse = false) {
+	final status_t SetTo(char [] path, bool traverse = false) {
 		return be_BEntry_SetTo_3(fInstancePointer, toStringz(path), traverse);
 	}
 	
-	void Unset() {
+	final void Unset() {
 		return be_BEntry_Unset(fInstancePointer);
 	}
 	
-	status_t GetRef(ref entry_ref reference) {
+	final status_t GetRef(ref entry_ref reference) {
 		return be_BEntry_GetRef(fInstancePointer, &reference);
 	}
 	
-	status_t GetPath(BPath path) {
+	final status_t GetPath(BPath path) {
 		return be_BEntry_GetPath(fInstancePointer, path.fInstancePointer);
 	}
 	
-	status_t GetParent(BEntry entry) {
+	final status_t GetParent(BEntry entry) {
 		return be_BEntry_GetParent_1(fInstancePointer, entry.fInstancePointer);
 	}
 	
-	status_t GetParent(BDirectory dir) {
+	final status_t GetParent(BDirectory dir) {
 		return be_BEntry_GetParent_2(fInstancePointer, dir.fInstancePointer);
 	}
 	
-	status_t GetName(inout char [] buffer) {
+	final status_t GetName(inout char [] buffer) {
 		char *name = cast(char *)malloc(256);
 		status_t ret = be_BEntry_GetName(fInstancePointer, name);
 		buffer = fromStringz(name).dup;
@@ -215,19 +215,19 @@ class BEntry : BStatable
 		return ret;
 	}
 	
-	status_t Rename(char [] path, bool clobber = false) {
+	final status_t Rename(char [] path, bool clobber = false) {
 		return be_BEntry_Rename(fInstancePointer, toStringz(path), clobber);
 	}
 	
-	status_t MoveTo(BDirectory dir, char [] path = null, bool clobber = false) {
+	final status_t MoveTo(BDirectory dir, char [] path = null, bool clobber = false) {
 		return be_BEntry_MoveTo(fInstancePointer, dir.fInstancePointer, path == null ? null : toStringz(path), clobber);
 	}
 	
-	status_t Remove() {
+	final status_t Remove() {
 		return be_BEntry_Remove(fInstancePointer);
 	}
 	
-	status_t opEquals(BEntry entry) {
+	final status_t opEquals(BEntry entry) {
 		return be_BEntry_operator_equals(fInstancePointer, entry.fInstancePointer);
 	}
 }
