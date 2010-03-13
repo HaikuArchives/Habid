@@ -1,6 +1,8 @@
 PROJECT(BEC C CXX)
 
 SET(BEC_SRCS
+src/storage/Entry.cpp
+src/storage/EntryList.cpp
 src/storage/MimeType.cpp
 src/storage/Statable.cpp
 

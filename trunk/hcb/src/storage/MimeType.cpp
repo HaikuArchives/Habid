@@ -2,13 +2,19 @@
 
 #include <hcb-types.h>
 
-class BMimeTypeBridge : public BMimeType
-{
-public:
-	BMimeTypeBridge () : BMimeType() { }
-	BMimeTypeBridge (const char *mimeType) : BMimeType(mimeType) { }
-	~BMimeTypeBridge() { }
-};
+#include <storage/HCB_MimeType.h>
+
+BMimeTypeBridge::BMimeTypeBridge ()
+: BMimeType() 
+{ }
+
+BMimeTypeBridge::BMimeTypeBridge (const char *mimeType)
+: BMimeType(mimeType)
+{ }
+
+BMimeTypeBridge::~BMimeTypeBridge()
+{ }
+
 
 extern "C" {
 	be_BMimeType * be_BMimeType_ctor_1() {
