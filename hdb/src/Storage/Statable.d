@@ -2,6 +2,7 @@ module Storage.Statable;
 
 import tango.stdc.stdlib;
 import tango.stdc.posix.sys.types;
+import tango.stdc.posix.sys.stat;
 
 import Support.BObject;
 import Support.SupportDefs;
@@ -10,10 +11,6 @@ import Storage.StorageDefs;
 import Storage.Node;
 import Storage.Volume;
 
-struct stat
-{
-	int dummy;
-}
 
 extern (C) extern {
 	void * be_BStatable_ctor(void *bindInstPointer);
@@ -40,13 +37,14 @@ extern (C) extern {
 
 
 extern (C) {
-	status_t bind_BStatable_GetStat_pure(void *bindInstPointer, out stat st) {
-		return (cast(BStatable)bindInstPointer).GetStat(st);
+	status_t bind_BStatable_GetStat_pure(void *bindInstPointer, stat_t *st) {
+		return (cast(BStatable)bindInstPointer).GetStat(*st);
 	}
-	
-	status_t bind_BStatable_set_stat_pure(void *bindInstPointer, out stat st, uint32 what) {
+/*	
+	status_t bind_BStatable_set_stat_pure(void *bindInstPointer, ref stat st, uint32 what) {
 		return (cast(BStatable)bindInstPointer).set_stat(st, what);
 	}
+*/
 }
 
 
@@ -55,7 +53,8 @@ class BStatable
 	mixin BObject;
 
 	this() {
-		fInstancePointer = be_BStatable_ctor(cast(void *)this);
+		if(fInstancePointer is null)
+			fInstancePointer = be_BStatable_ctor(cast(void *)this);
 	}
 
 	~this() {
@@ -64,8 +63,8 @@ class BStatable
 		fInstancePointer = null;
 	}
 	
-	abstract status_t GetStat(ref stat st);
-	abstract status_t set_stat(ref stat st, uint32 what);
+	abstract status_t GetStat(ref stat_t st);
+//	abstract status_t set_stat(ref stat st, uint32 what);
 	
 	final status_t GetNodeRef(ref node_ref reference) {
 		return be_BStatable_GetNodeRef(fInstancePointer, &reference);

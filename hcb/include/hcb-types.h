@@ -2,13 +2,22 @@
 #define HCB_TYPES_H__
 
 typedef struct { int dummy; } be_BBitmap;
+
 typedef struct { int dummy; } be_BDataIO;
+typedef struct { int dummy; } be_BDirectory;
+
+typedef struct { int dummy; } be_BEntry;
+typedef struct { int dummy; } be_BEntryList;
+
 typedef struct { int dummy; } be_BFlattenable;
+
 typedef struct { int dummy; } be_BMallocIO;
 typedef struct { int dummy; } be_BMemoryIO;
 typedef struct { int dummy; } be_BMessage;
 typedef struct { int dummy; } be_BMessenger;
 typedef struct { int dummy; } be_BMimeType;
+
+typedef struct { int dummy; } be_BPath;
 typedef struct { int dummy; } be_BPositionIO;
 
 typedef struct { int dummy; } be_BString;

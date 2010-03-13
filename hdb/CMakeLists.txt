@@ -5,9 +5,11 @@ FIND_PACKAGE(D REQUIRED)
 
 SET(BED_SRCS
 src/Storage/Entry.d
+src/Storage/EntryList.d
 src/Storage/MimeType.d
 src/Storage/Mime.d
 src/Storage/Node.d
+src/Storage/Path.d
 src/Storage/Statable.d
 src/Storage/StorageDefs.d
 src/Storage/Volume.d

@@ -2,63 +2,55 @@
 
 #include <hcb-types.h>
 
+#include <storage/HCB_Statable.h>
+
 /* begin import functions */
 
 extern "C" {
 	status_t bind_BStatable_GetStat_pure(void *, struct stat *);
-	status_t bind_BStatable_set_stat_pure(void *, struct stat &, uint32);
+//	status_t bind_BStatable_set_stat_pure(void *, struct stat &, uint32);
 }
 
 /* end import functions */
 
 /* begin class BStatableBridge */
 
-class BStatableBridge : public BStatable
-{
-public:
-	BStatableBridge() :BStatable() 
-	{}
-
-	virtual ~BStatableBridge() 
-	{}
-
+BStatableBridge::BStatableBridge()
+: BStatable() 
+{ }
+BStatableBridge::~BStatableBridge() 
+{ }
 	/* Pure virtual functions has to call back into D */
-	virtual status_t GetStat(struct stat *st) const {
-		return 0;
-	}
+status_t BStatableBridge::GetStat(struct stat *st) const {
+	return 0;
+}
 
-	virtual status_t set_stat(struct stat &st, uint32 what) {
-		return 0;
-	}
+status_t BStatableBridge::set_stat(struct stat &st, uint32 what) {
+	return 0;
+}
 	
-	virtual status_t _GetStat(struct stat_beos *st) const {
-		return 0;
-	}
-};
+status_t BStatableBridge::_GetStat(struct stat_beos *st) const {
+	return 0;
+}
 
 /* end class BStatableBridge */
 
 /* begin class BStatableProxy */
 
-class BStatableProxy : public BStatableBridge
-{
-private:
-	void *fBindInstPointer;
-
-public:
-	BStatableProxy(void *bindInstPointer) : fBindInstPointer(bindInstPointer), BStatableBridge()
-	{ }
-	virtual ~BStatableProxy()
-	{ }
+BStatableProxy::BStatableProxy(void *bindInstPointer)
+: fBindInstPointer(bindInstPointer), BStatableBridge()
+{ }
+BStatableProxy::~BStatableProxy()
+{ }
 	
-	virtual status_t GetStat(struct stat *st) const {
-		return bind_BStatable_GetStat_pure(fBindInstPointer, st);
-	}
-	
-	virtual status_t set_stat(struct stat &st, uint32 what) {
-		return bind_BStatable_set_stat_pure(fBindInstPointer, st, what);
-	}
-};
+status_t BStatableProxy::GetStat(struct stat *st) const {
+	return bind_BStatable_GetStat_pure(fBindInstPointer, st);
+}
+/*	
+status_t BStatableProxy::set_stat(struct stat &st, uint32 what) {
+	return bind_BStatable_set_stat_pure(fBindInstPointer, st, what);
+}
+*/
 
 /* end class BStatableBridge */
 
