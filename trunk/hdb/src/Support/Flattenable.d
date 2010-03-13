@@ -4,10 +4,6 @@ import Support.BObject;
 import Support.SupportDefs;
 
 import tango.stdc.posix.sys.types;
-enum type_code
-{
-	DUMMY
-}
 
 extern (C) {
 	bool bind_BFlattenable_IsFixedSize(void *) {
