@@ -20,7 +20,7 @@ public:
 	
 	virtual status_t Flatten(void *buffer, ssize_t size) const;
 	
-	virtual bool AllowsTypeCode(type_code type) const;
+//	virtual bool AllowsTypeCode(type_code type) const;
 	
 	virtual status_t Unflatten(type_code type, const void *buffer, ssize_t size);
 };
@@ -46,6 +46,7 @@ public:
 	virtual status_t Flatten(void *buffer, ssize_t size) const;
 	
 	virtual bool AllowsTypeCode(type_code type) const;
+	virtual bool super_AllowsTypeCode(type_code type) const;
 	
 	virtual status_t Unflatten(type_code type, const void *buffer, ssize_t size);
 };
