@@ -5,12 +5,12 @@
 #include <support/HCB_Flattenable.h>
 
 extern "C" {
-	bool bind_BFlattenable_IsFixedSize(void *);
-	type_code bind_BFlattenable_TypeCode(void *);
-	ssize_t bind_BFlattenable_FlattenedSize(void *);
-	status_t bind_BFlattenable_Flatten(void *, void *, ssize_t);
-	bool bind_BFlattenable_AllowsTypeCode(void *, type_code);
-	status_t bind_BFlattenable_Unflatten(void *, type_code, const void *, ssize_t);
+	bool bind_BFlattenable_IsFixedSize_pure(void *);
+	type_code bind_BFlattenable_TypeCode_pure(void *);
+	ssize_t bind_BFlattenable_FlattenedSize_pure(void *);
+	status_t bind_BFlattenable_Flatten_pure(void *, void *, ssize_t);
+	bool bind_BFlattenable_AllowsTypeCode_virtual(void *, type_code);
+	status_t bind_BFlattenable_Unflatten_pure(void *, type_code, const void *, ssize_t);
 }
 
 /* end class BFlattenableBridge */
@@ -37,11 +37,7 @@ ssize_t BFlattenableBridge::FlattenedSize() const {
 status_t BFlattenableBridge::Flatten(void *buffer, ssize_t size) const {
 	return 0;
 }
-	
-bool BFlattenableBridge::AllowsTypeCode(type_code type) const {
-	return 0;
-}
-	
+		
 status_t BFlattenableBridge::Unflatten(type_code type, const void *buffer, ssize_t size) {
 	return 0;
 }
@@ -58,27 +54,31 @@ BFlattenableProxy::~BFlattenableProxy()
 { }
 
 bool BFlattenableProxy::IsFixedSize() const {
-	return bind_BFlattenable_IsFixedSize(fBindInstPointer);
+	return bind_BFlattenable_IsFixedSize_pure(fBindInstPointer);
 }
 	
 type_code BFlattenableProxy::TypeCode() const {
-	return bind_BFlattenable_TypeCode(fBindInstPointer);
+	return bind_BFlattenable_TypeCode_pure(fBindInstPointer);
 }
 	
 ssize_t BFlattenableProxy::FlattenedSize() const {
-	return bind_BFlattenable_FlattenedSize(fBindInstPointer);
+	return bind_BFlattenable_FlattenedSize_pure(fBindInstPointer);
 }
 	
 status_t BFlattenableProxy::Flatten(void *buffer, ssize_t size) const {
-	return bind_BFlattenable_Flatten(fBindInstPointer, buffer, size);
+	return bind_BFlattenable_Flatten_pure(fBindInstPointer, buffer, size);
 }
 	
 bool BFlattenableProxy::AllowsTypeCode(type_code type) const {
-	return bind_BFlattenable_AllowsTypeCode(fBindInstPointer, type);
+	return bind_BFlattenable_AllowsTypeCode_virtual(fBindInstPointer, type);
 }
-	
+
+bool BFlattenableProxy::super_AllowsTypeCode(type_code type) const {
+	return BFlattenable::AllowsTypeCode(type);
+}
+
 status_t BFlattenableProxy::Unflatten(type_code type, const void *buffer, ssize_t size) {
-	return bind_BFlattenable_Unflatten(fBindInstPointer, type, buffer, size);
+	return bind_BFlattenable_Unflatten_pure(fBindInstPointer, type, buffer, size);
 }
 
 /* end class BFlattenableProxy */
@@ -91,7 +91,7 @@ extern "C" {
 	be_BFlattenable * be_BFlattenable_dtor(void *instPointer) {
 		delete (BFlattenableProxy *)instPointer;
 	}
-	
+/*
 	bool be_BFlattenable_IsFixedSize(void *instPointer) {
 		return ((BFlattenableProxy *)instPointer)->IsFixedSize();
 	}
@@ -107,12 +107,18 @@ extern "C" {
 	status_t be_BFlattenable_Flatten(void *instPointer, void *buffer, ssize_t size) {
 		return ((BFlattenableProxy *)instPointer)->Flatten(buffer, size);
 	}
-	
+*/
 	bool be_BFlattenable_AllowsTypeCode(void *instPointer, type_code type) {
+		return ((BFlattenableProxy *)instPointer)->super_AllowsTypeCode(type);
+	}
+
+	bool be_BFlattenable_AllowsTypeCode_super(void *instPointer, type_code type) {
 		return ((BFlattenableProxy *)instPointer)->AllowsTypeCode(type);
 	}
-	
+/*	
 	status_t be_BFlattenable_Unflatten(void *instPointer, type_code type, const void *buffer, ssize_t size) {
 		return ((BFlattenableProxy *)instPointer)->Unflatten(type, buffer, size);
 	}
+*/
+
 }
