@@ -17,6 +17,8 @@ typedef struct { int dummy; } be_BMessage;
 typedef struct { int dummy; } be_BMessenger;
 typedef struct { int dummy; } be_BMimeType;
 
+typedef struct { int dummy; } be_BNode;
+
 typedef struct { int dummy; } be_BPath;
 typedef struct { int dummy; } be_BPositionIO;
 

@@ -4,23 +4,34 @@ set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 FIND_PACKAGE(D REQUIRED)
 
 SET(BED_SRCS
+src/Kernel/fs_attr.d
+
 src/Storage/Entry.d
 src/Storage/EntryList.d
+
 src/Storage/MimeType.d
 src/Storage/Mime.d
+
 src/Storage/Node.d
+
 src/Storage/Path.d
+
 src/Storage/Statable.d
 src/Storage/StorageDefs.d
+
 src/Storage/Volume.d
 
 src/Interface/Bitmap.d
 
 src/Support/BObject.d
 src/Support/DataIO.d
+
 src/Support/Errors.d
+
 src/Support/Flattenable.d
+
 src/Support/SupportDefs.d
+
 src/Support/types.d
 
 src/App/Message.d
