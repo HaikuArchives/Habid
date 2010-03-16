@@ -31,6 +31,7 @@ src/Support/Errors.d
 src/Support/Flattenable.d
 
 src/Support/SupportDefs.d
+src/Support/String.d
 
 src/Support/types.d
 
