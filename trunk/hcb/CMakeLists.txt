@@ -13,6 +13,7 @@ src/support/DataIO_BMemoryIO.cpp
 src/support/DataIO_BMallocIO.cpp
 src/support/DataIO_BPositionIO.cpp
 src/support/Flattenable.cpp
+src/support/String.cpp
 )
 
 INCLUDE_DIRECTORIES(
