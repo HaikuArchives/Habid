@@ -339,8 +339,8 @@ extern "C" {
 		return (be_BString *)&((BStringProxy *)instPointer)->MoveCharsInto(*(BString *)into, fromCharOffset, charCount);
 	}
 
-	void be_BString_MoveCharsInto_2(be_BString *instPointer, char *into, int32 *intoLength, int32 fromCharOffset, int32 charCount) {
-		((BStringProxy *)instPointer)->MoveCharsInto(into, intoLength, fromCharOffset, charCount);
+	bool be_BString_MoveCharsInto_2(be_BString *instPointer, char *into, int32 *intoLength, int32 fromCharOffset, int32 charCount) {
+		return ((BStringProxy *)instPointer)->MoveCharsInto(into, intoLength, fromCharOffset, charCount);
 	}
 
 /*
@@ -600,6 +600,7 @@ extern "C" {
 */
 
 
+	// Checked char access
 	char be_BString_ByteAt(be_BString *instPointer, int32 index) {
 		return ((BStringProxy *)instPointer)->ByteAt(index);
 	}
