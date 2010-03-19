@@ -93,11 +93,18 @@ extern "C" {
 	}
 
 	// Assignment
-/*
-			BString&		operator=(const BString& string);
-			BString&		operator=(const char* string);
-			BString&		operator=(char c);
-*/
+	
+	be_BString * be_BString_operator_assign_1(be_BString *instPointer, const be_BString *string) {
+		return (be_BString *)&((BString *)instPointer)->operator=(*(const BString *)string);
+	}
+	
+	be_BString * be_BString_operator_assign_2(be_BString *instPointer, const char *string) {
+		return (be_BString *)&((BString *)instPointer)->operator=(string);
+	}
+
+	be_BString * be_BString_operator_assign_3(be_BString *instPointer, const char c) {
+		return (be_BString *)&((BString *)instPointer)->operator=(c);
+	}
 
 	be_BString * be_BString_SetTo_1(be_BString *instPointer, const char *string) {
 		return (be_BString *)&((BStringProxy *)instPointer)->SetTo(string);
@@ -159,11 +166,17 @@ extern "C" {
 
 	// Appending
 
-/*
-			BString&		operator+=(const BString& string);
-			BString&		operator+=(const char* string);
-			BString&		operator+=(char c);
-*/
+	be_BString * be_BString_operator_addassign_1(be_BString *instPointer, const be_BString *string) {
+		return (be_BString *)&((BString *)instPointer)->operator+=(*(BString *)string);
+	}
+	
+	be_BString * be_BString_operator_addassign_2(be_BString *instPointer, const char *string) {
+		return (be_BString *)&((BString *)instPointer)->operator+=(string);
+	}
+
+	be_BString * be_BString_operator_addassign_3(be_BString *instPointer, char c) {
+		return (be_BString *)&((BString *)instPointer)->operator+=(c);
+	}
 
 	be_BString * be_BString_Append_1(be_BString *instPointer, const be_BString *string) {
 		return (be_BString *)&((BStringProxy *)instPointer)->Append(*(BString *)string);	
@@ -342,26 +355,56 @@ extern "C" {
 	bool be_BString_MoveCharsInto_2(be_BString *instPointer, char *into, int32 *intoLength, int32 fromCharOffset, int32 charCount) {
 		return ((BStringProxy *)instPointer)->MoveCharsInto(into, intoLength, fromCharOffset, charCount);
 	}
+	
+	// Compare functions
+	bool be_BString_operator_cmp_less_1(be_BString *instPointer, const be_BString *string) {
+		return ((BString *)instPointer)->operator<(*(BString *)string);
+	}
 
-/*
+	bool be_BString_operator_cmp_less_equals_1(be_BString *instPointer, const be_BString *string) {
+		return ((BString *)instPointer)->operator<=(*(BString *)string);
+	}
 
-			// Compare functions
-			bool			operator<(const BString& string) const;
-			bool			operator<=(const BString& string) const;
-			bool			operator==(const BString& string) const;
-			bool			operator>=(const BString& string) const;
-			bool			operator>(const BString& string) const;
-			bool			operator!=(const BString& string) const;
+	bool be_BString_operator_cmp_quals_1(be_BString *instPointer, const be_BString *string) {
+		return ((BString *)instPointer)->operator==(*(BString *)string);
+	}
 
-			bool			operator<(const char* string) const;
-			bool			operator<=(const char* string) const;
-			bool			operator==(const char* string) const;
-			bool			operator>=(const char* string) const;
-			bool			operator>(const char* string) const;
-			bool			operator!=(const char* string) const;
+	bool be_BString_operator_cmp_greater_equals_1(be_BString *instPointer, const be_BString *string) {
+		return ((BString *)instPointer)->operator>=(*(BString *)string);
+	}
 
-							operator const char*() const;
-*/
+	bool be_BString_operator_cmp_greater_1(be_BString *instPointer, const be_BString *string) {
+		return ((BString *)instPointer)->operator>(*(BString *)string);
+	}
+
+	bool be_BString_operator_not_equals_1(be_BString *instPointer, const be_BString *string) {
+		return ((BString *)instPointer)->operator!=(*(BString *)string);
+	}
+
+	bool be_BString_operator_cmp_less_2(be_BString *instPointer, const char *string) {
+		return ((BString *)instPointer)->operator<(*(BString *)string);
+	}
+
+	bool be_BString_operator_cmp_less_equals_2(be_BString *instPointer, const char *string) {
+		return ((BString *)instPointer)->operator<=(*(BString *)string);
+	}
+
+	bool be_BString_operator_cmp_quals_2(be_BString *instPointer, const char *string) {
+		return ((BString *)instPointer)->operator==(*(BString *)string);
+	}
+
+	bool be_BString_operator_cmp_greater_equals_2(be_BString *instPointer, const char *string) {
+		return ((BString *)instPointer)->operator>=(*(BString *)string);
+	}
+
+	bool be_BString_operator_cmp_greater_2(be_BString *instPointer, const char *string) {
+		return ((BString *)instPointer)->operator>(*(BString *)string);
+	}
+
+	bool be_BString_operator_not_equals_2(be_BString *instPointer, const char *string) {
+		return ((BString *)instPointer)->operator!=(*(BString *)string);
+	}
+
 
 	int be_BString_Compare_1(be_BString *instPointer, const be_BString *string) {
 		return ((BStringProxy *)instPointer)->Compare(*(BString *)string);
@@ -589,8 +632,6 @@ extern "C" {
 
 /*	
 			// Unchecked char access
-			char			operator[](int32 index) const;
-
 #if __GNUC__ > 3
 			BStringRef		operator[](int32 index);
 #else
@@ -599,6 +640,9 @@ extern "C" {
 
 */
 
+	char be_BString_operator_index(be_BString *instPointer, int32 index) {
+		return ((BString *)instPointer)->operator[](index);
+	}
 
 	// Checked char access
 	char be_BString_ByteAt(be_BString *instPointer, int32 index) {
@@ -665,22 +709,45 @@ extern "C" {
 		return (be_BString *)&((BStringProxy *)instPointer)->Trim();
 	}
 	
-/*
+	// Insert
+	be_BString * be_BString_operator_shift_left_1(be_BString *instPointer, const char *string) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(string);
+	}
 
+	be_BString * be_BString_operator_shift_left_2(be_BString *instPointer, const be_BString *string) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(*(BString *)string);
+	}
 
+	be_BString * be_BString_operator_shift_left_3(be_BString *instPointer, const char c) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(c);
+	}
 
-			// Insert
-			BString&		operator<<(const char* string);
-			BString&		operator<<(const BString& string);
-			BString&		operator<<(char c);
-			BString&		operator<<(int value);
-			BString&		operator<<(unsigned int value);
-			BString&		operator<<(uint32 value);
-			BString&		operator<<(int32 value);
-			BString&		operator<<(uint64 value);
-			BString&		operator<<(int64 value);
-			// float output hardcodes %.2f style formatting
-			BString&		operator<<(float value);
-*/
+	be_BString * be_BString_operator_shift_left_4(be_BString *instPointer, int value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+	}
 
+	be_BString * be_BString_operator_shift_left_5(be_BString *instPointer, unsigned int value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+	}
+
+	be_BString * be_BString_operator_shift_left_6(be_BString *instPointer, uint32 value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+	}
+
+	be_BString * be_BString_operator_shift_left_7(be_BString *instPointer, int32 value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+	}
+
+	be_BString * be_BString_operator_shift_left_8(be_BString *instPointer, uint64 value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+
+	}
+
+	be_BString * be_BString_operator_shift_left_9(be_BString *instPointer, int64 value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+	}
+
+	be_BString * be_BString_operator_shift_left_10(be_BString *instPointer, float value) {
+		return (be_BString *)&((BString *)instPointer)->operator<<(value);
+	}
 }
