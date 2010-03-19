@@ -25,11 +25,10 @@ extern (C) extern  {
 	int32 be_BString_CountBytes(void *, int32, int32);
 
 	// Assignment
-/*
-			BString&		operator=(BString& string);
-			BString&		operator=(char* string);
-			BString&		operator=(char c);
-*/
+	void * be_BString_operator_assign_1(void *, void *);
+	void * be_BString_operator_assign_2(void *, char *);
+	void * be_BString_operator_assign_3(void *, char);
+
 
 	void * be_BString_SetTo_1(void *, char *);
 	void * be_BString_SetTo_2(void *, char *, int32);
@@ -51,11 +50,9 @@ extern (C) extern  {
 
 	// Appending
 
-/*
-			BString&		operator+=(BString& string);
-			BString&		operator+=(char* string);
-			BString&		operator+=(char c);
-*/
+	void * be_BString_operator_addassign_1(void *, void *);
+	void * be_BString_operator_addassign_2(void *, char *);
+	void * be_BString_operator_addassign_3(void *, char);
 
 	void * be_BString_Append_1(void *, void *);
 	void * be_BString_Append_2(void *, char *);
@@ -106,25 +103,26 @@ extern (C) extern  {
 	void be_BString_MoveInto_2(void *, char *, int32, int32);
 	void * be_BString_MoveCharsInto_1(void *, void *, int32, int32);
 	bool be_BString_MoveCharsInto_2(void *, char *, int32 *, int32, int32);
+	
+	// Compare functions
 /*
-
-			// Compare functions
-			bool			operator<(BString& string) const;
-			bool			operator<=(BString& string) const;
-			bool			operator==(BString& string) const;
-			bool			operator>=(BString& string) const;
-			bool			operator>(BString& string) const;
-			bool			operator!=(BString& string) const;
-
-			bool			operator<(char* string) const;
-			bool			operator<=(char* string) const;
-			bool			operator==(char* string) const;
-			bool			operator>=(char* string) const;
-			bool			operator>(char* string) const;
-			bool			operator!=(char* string) const;
-
 							operator char*() const;
 */
+
+	bool be_BString_operator_cmp_less_1(void *, void *);
+	bool be_BString_operator_cmp_less_equals_1(void *, void *);
+	bool be_BString_operator_cmp_quals_1(void *, void *);
+	bool be_BString_operator_cmp_greater_equals_1(void *, void *);
+	bool be_BString_operator_cmp_greater_1(void *, void *);
+	bool be_BString_operator_not_equals_1(void *, void *);
+
+	bool be_BString_operator_cmp_less_2(void *, char *);
+	bool be_BString_operator_cmp_less_equals_2(void *, char *);
+	bool be_BString_operator_cmp_quals_2(void *, char *);
+	bool be_BString_operator_cmp_greater_equals_2(void *, char *);
+	bool be_BString_operator_cmp_greater_2(void *, char *);
+	bool be_BString_operator_not_equals_2(void *, char *);
+
 
 	int be_BString_Compare_1(void *, void *);
 	int be_BString_Compare_2(void *, char *);
@@ -197,6 +195,7 @@ extern (C) extern  {
 #endif
 
 */
+	char be_BString_operator_index(void *, int32);
 
 	// Checked char access
 	char be_BString_ByteAt(void *, int32);
@@ -221,6 +220,27 @@ extern (C) extern  {
 
 	// Trimming
 	void * be_BString_Trim(void *);
+	
+	// Insert
+	void * be_BString_operator_shift_left_1(void *, char *);
+
+	void * be_BString_operator_shift_left_2(void *, void *);
+
+	void * be_BString_operator_shift_left_3(void *, char);
+
+	void * be_BString_operator_shift_left_4(void *, int);
+
+	void * be_BString_operator_shift_left_5(void *, uint);
+
+	void * be_BString_operator_shift_left_6(void *, uint32);
+
+	void * be_BString_operator_shift_left_7(void *, int32);
+
+	void * be_BString_operator_shift_left_8(void *, uint64);
+
+	void * be_BString_operator_shift_left_9(void *, int64);
+
+	void * be_BString_operator_shift_left_10(void *, float);
 }
 
 
@@ -275,10 +295,18 @@ public:
 	// Assignment
 /*
 			BString&		operator=(BString& string);
-			BString&		operator=(char* string);
-			BString&		operator=(char c);
 */
-
+	BString opAssign(char [] string) {
+		fInstancePointer = be_BString_operator_assign_2(fInstancePointer, toStringz(string));
+		return this;
+	}
+	
+	BString opAssign(char c) {
+		fInstancePointer = be_BString_operator_assign_3(fInstancePointer, c);
+		return this;
+	}
+		
+	
 	BString SetTo(char [] string) {
 		fInstancePointer = be_BString_SetTo_1(fInstancePointer, toStringz(string));
 		return this;
@@ -353,6 +381,22 @@ public:
 	}
 	
 	// Appending
+	
+	BString opAddAssign(BString string) {
+		fInstancePointer = be_BString_operator_addassign_1(fInstancePointer, string.fInstancePointer);
+		return this;
+	}
+
+	BString opAddAssign(char [] string) {
+		fInstancePointer = be_BString_operator_addassign_2(fInstancePointer, toStringz(string));
+		return this;
+	}
+
+	BString opAddAssign(char c) {
+		fInstancePointer = be_BString_operator_addassign_3(fInstancePointer, c);
+		return this;
+	}
+
 	BString Append(BString string) {
 		fInstancePointer = be_BString_Append_1(fInstancePointer, string.fInstancePointer);
 		return this;
@@ -586,6 +630,21 @@ public:
 
 
 	// Compare functions
+/*
+	bool be_BString_operator_cmp_less_1(void *, void *);
+	bool be_BString_operator_cmp_less_equals_1(void *, void *);
+	bool be_BString_operator_cmp_quals_1(void *, void *);
+	bool be_BString_operator_cmp_greater_equals_1(void *, void *);
+	bool be_BString_operator_cmp_greater_1(void *, void *);
+	bool be_BString_operator_not_equals_1(void *, void *);
+
+	bool be_BString_operator_cmp_less_2(void *, char *);
+	bool be_BString_operator_cmp_less_equals_2(void *, char *);
+	bool be_BString_operator_cmp_quals_2(void *, char *);
+	bool be_BString_operator_cmp_greater_equals_2(void *, char *);
+	bool be_BString_operator_cmp_greater_2(void *, char *);
+	bool be_BString_operator_not_equals_2(void *, char *);
+*/
 	int Compare(BString string) {
 		return be_BString_Compare_1(fInstancePointer, string.fInstancePointer);
 	}
@@ -830,6 +889,10 @@ public:
 		return this;
 	}
 
+	// Unchecked Access
+	
+//	char be_BString_operator_index(be_BString *instPointer, int32 index);
+
 	// Checked char access
 	char ByteAt(int32 index) {
 		return be_BString_ByteAt(fInstancePointer, index);
@@ -908,6 +971,55 @@ public:
 		fInstancePointer = be_BString_Trim(fInstancePointer);
 		return this;
 	}
-/*	
-*/
+
+	// Insert
+	BString opShl(char [] string) {
+		fInstancePointer = be_BString_operator_shift_left_1(fInstancePointer, toStringz(string));
+		return this;
+	}
+	
+	BString opShl(BString string) {
+		fInstancePointer = be_BString_operator_shift_left_2(fInstancePointer, string.fInstancePointer);
+		return this;
+	}
+	
+	BString opShl(char c) {
+		fInstancePointer = be_BString_operator_shift_left_3(fInstancePointer, c);
+		return this;
+	}
+	
+	BString opShl(int value) {
+		fInstancePointer = be_BString_operator_shift_left_4(fInstancePointer, value);
+		return this;
+	}
+	
+	BString opShl(uint value) {
+		fInstancePointer = be_BString_operator_shift_left_5(fInstancePointer, value);
+		return this;
+	}
+	
+	BString opShl(uint32 value) {
+		fInstancePointer = be_BString_operator_shift_left_6(fInstancePointer, value);
+		return this;
+	}
+	
+	BString opShl(int32 value) {
+		fInstancePointer = be_BString_operator_shift_left_7(fInstancePointer, value);
+		return this;
+	}
+	
+	BString opShl(uint64 value) {
+		fInstancePointer = be_BString_operator_shift_left_8(fInstancePointer, value);
+		return this;
+	}
+	
+	BString opShl(int64 value) {
+		fInstancePointer = be_BString_operator_shift_left_9(fInstancePointer, value);
+		return this;
+	}
+	
+	BString opShl(float value) {
+		fInstancePointer = be_BString_operator_shift_left_10(fInstancePointer, value);
+		return this;
+	}
 }
