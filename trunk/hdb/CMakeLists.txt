@@ -36,6 +36,7 @@ src/Support/Locker.d
 
 src/Support/SupportDefs.d
 src/Support/String.d
+src/Support/StopWatch.d
 
 src/Support/types.d
 
