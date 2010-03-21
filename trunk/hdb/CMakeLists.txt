@@ -5,6 +5,7 @@ FIND_PACKAGE(D REQUIRED)
 
 SET(BED_SRCS
 src/Kernel/fs_attr.d
+src/Kernel/OS.d
 
 src/Storage/Entry.d
 src/Storage/EntryList.d
@@ -29,6 +30,9 @@ src/Support/DataIO.d
 src/Support/Errors.d
 
 src/Support/Flattenable.d
+
+src/Support/List.d
+src/Support/Locker.d
 
 src/Support/SupportDefs.d
 src/Support/String.d
