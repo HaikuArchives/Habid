@@ -16,6 +16,7 @@ src/support/Flattenable.cpp
 src/support/List.cpp
 src/support/Locker.cpp
 src/support/String.cpp
+src/support/StopWatch.cpp
 )
 
 INCLUDE_DIRECTORIES(
