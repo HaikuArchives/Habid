@@ -10,11 +10,10 @@ extern (C) extern {
 	void * be_BList_ctor_2(void *, void *);
 	void be_BList_dtor(void *);
 	
-/*
-	BList&				operator=(const BList& other);
-	bool				operator==(const BList& other);
-	bool				operator!=(const BList& other);
-*/
+	void * be_BList_operator_assign(void *, void *);
+	bool be_BList_operator_equals(void *, void *);
+	bool be_BList_operator_not_equals(void *, void *);
+
 	// Adding and removing items.
 	bool be_BList_AddItem_1(void *, void* , int32);
 	
@@ -78,7 +77,16 @@ public:
 			be_BList_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
+
+//	void * be_BList_operator_assign(void *, void *);
+
+	bool opEquals(BList other) {
+		return be_BList_operator_equals(fInstancePointer, other.fInstancePointer);
+	}
 	
+//	bool be_BList_operator_not_equals(void *, void *);
+	
+	// Adding and removing items.
 	bool AddItem(void *item, int32 index) {
 		return be_BList_AddItem_1(fInstancePointer, item, index);
 	}
