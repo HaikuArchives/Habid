@@ -57,6 +57,18 @@ extern "C" {
 		delete (BListProxy *)instPointer;
 	}
 	
+	be_BList * be_BList_operator_assign(be_BList *instPointer, const be_BList *other) {
+		return (be_BList *)&((BList *)instPointer)->operator=(*(BList *)other);
+	}
+	
+	bool be_BList_operator_equals(be_BList *instPointer, const be_BList *other) {
+		return ((BList *)instPointer)->operator==(*(BList *)other);
+	}
+	
+	bool be_BList_operator_not_equals(be_BList *instPointer, const be_BList *other) {
+		return ((BList *)instPointer)->operator!=(*(BList *)other);
+	}
+	
 /*
 	BList&				operator=(const BList& other);
 	bool				operator==(const BList& other);
