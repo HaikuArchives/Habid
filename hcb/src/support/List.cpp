@@ -69,11 +69,6 @@ extern "C" {
 		return ((BList *)instPointer)->operator!=(*(BList *)other);
 	}
 	
-/*
-	BList&				operator=(const BList& other);
-	bool				operator==(const BList& other);
-	bool				operator!=(const BList& other);
-*/
 	// Adding and removing items.
 	bool be_BList_AddItem_1(be_BList *instPointer, void* item, int32 index) {
 		return ((BListProxy *)instPointer)->AddItem(item, index);
