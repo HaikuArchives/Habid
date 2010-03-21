@@ -319,22 +319,22 @@
 ./storage/AppFileInfo.h
 ./storage/Directory.h
 ./storage/DiskDeviceDefs.h
-./storage/Entry.h
-./storage/EntryList.h
+./storage/Entry.h						- Written in C		- Written in D		- Untested
+./storage/EntryList.h					- Written in C		- Written in D		- Untested
 ./storage/File.h
 ./storage/FilePanel.h
 ./storage/FindDirectory.h
-./storage/Mime.h
-./storage/MimeType.h
-./storage/Node.h
+./storage/Mime.h						- No C File		- Uncomplete in D	- Untested
+./storage/MimeType.h					- Written in C		- Written in D		- Somewhat tested might be missing parts
+./storage/Node.h						- Written in C		- Written in D		- Somewhat tested
 ./storage/NodeInfo.h
 ./storage/NodeMonitor.h
-./storage/Path.h
+./storage/Path.h						- Written in C		- Written in D		- Somewhat tested
 ./storage/Query.h
 ./storage/ResourceStrings.h
 ./storage/Resources.h
 ./storage/Statable.h					- Written in C		- Written in D		- Untested
-./storage/StorageDefs.h
+./storage/StorageDefs.h				- No C File		- Written in D		- Should be working
 ./storage/SymLink.h
 ./storage/Volume.h
 ./storage/VolumeRoster.h
@@ -347,13 +347,13 @@
 ./support/ClassInfo.h
 ./support/DataIO.h					- Written in C		- Written in D		- Tested and working as far as i can see =)
 ./support/Debug.h
-./support/Errors.h
+./support/Errors.h						- No C File		- Written in D		- Untested
 ./support/Flattenable.h				- Written in C		- Not Written in D	- Untested
-./support/List.h
-./support/Locker.h
-./support/StopWatch.h
-./support/String.h
-./support/SupportDefs.h
+./support/List.h						- Written in C		- Written in D		- DoForEach functions missing in D
+./support/Locker.h					- Written in C		- Written in D		- Untested
+./support/StopWatch.h				- Written in C		- Written in D		- Tested and working
+./support/String.h						- Written in C		- Written in D		- Somewhat tested
+./support/SupportDefs.h				- No C File		- Started on in D	- 
 ./support/TLS.h
 ./support/TypeConstants.h
 ./support/UTF8.h
