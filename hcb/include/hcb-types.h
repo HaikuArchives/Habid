@@ -11,6 +11,9 @@ typedef struct { int dummy; } be_BEntryList;
 
 typedef struct { int dummy; } be_BFlattenable;
 
+typedef struct { int dummy; } be_BList;
+typedef struct { int dummy; } be_BLocker;
+
 typedef struct { int dummy; } be_BMallocIO;
 typedef struct { int dummy; } be_BMemoryIO;
 typedef struct { int dummy; } be_BMessage;
