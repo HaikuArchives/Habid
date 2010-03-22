@@ -47,7 +47,7 @@ public:
     void *fBindInstancePointer;
 
     MyClassProxy(void *bindInstancePointer)
-    : fBindInstancePointer(bindInstancePointer), MyClass()
+    : fBindInstancePointer(bindInstancePointer), MyClassBridge()
     { }
 
     ~MyClassProxy()
