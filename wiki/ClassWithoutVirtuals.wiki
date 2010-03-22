@@ -53,7 +53,11 @@ extern (C) extern {
     bool MyClass_IsTrue(void *instancePointer, bool value);
 }
 
-class MyClass
+/*
+  We mark the class Final as the C++ class does not have
+  virtual functions, it is not supposed to be inherited
+*/
+final class MyClass
 {
 public:
     void *fInstancePointer;
