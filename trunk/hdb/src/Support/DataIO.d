@@ -19,7 +19,8 @@ extern (C) extern {
 
 extern (C) {
 	ssize_t bind_BDataIO_Read_pure(void *bindInstPointer, void *buffer, ssize_t size) {
-		return (cast(BDataIO)bindInstPointer).Read(buffer[0..size]);
+		auto x = buffer[0..size];
+		return (cast(BDataIO)bindInstPointer).Read(x);
 	}
 	
 	ssize_t bind_BDataIO_Write_pure(void *bindInstPointer, void *buffer, ssize_t size) {
@@ -48,7 +49,7 @@ public:
 		fInstancePointer = null;
 	}
 	
-	abstract ssize_t Read(void [] buffer);
+	abstract ssize_t Read(inout void [] buffer);
 	abstract ssize_t Write(void [] buffer);
 }
 
@@ -76,7 +77,8 @@ extern (C) extern {
 
 extern (C) {
 	ssize_t		bind_BPositionIO_ReadAt_pure(void *bindInstPointer, off_t position, void *buffer, size_t size) {
-		return (cast(BPositionIO)bindInstPointer).ReadAt(position, buffer[0..size]);
+		auto x = buffer[0..size];
+		return (cast(BPositionIO)bindInstPointer).ReadAt(position, x);
 	}
 
 	ssize_t		bind_BPositionIO_WriteAt_pure(void *bindInstPointer, off_t position, void *buffer, size_t size) {
@@ -93,7 +95,8 @@ extern (C) {
 
 
 	ssize_t bind_BPositionIO_Read_virtual(void *bindInstPointer, void *buffer, size_t size) {
-		return (cast(BPositionIO)bindInstPointer).Read(buffer[0..size]);
+		auto x = buffer[0..size];
+		return (cast(BPositionIO)bindInstPointer).Read(x);
 	}
 	
 	ssize_t bind_BPositionIO_Write_virtual (void *bindInstPointer, void *buffer, size_t size) {
@@ -127,7 +130,7 @@ public:
 		fInstancePointer = null;
 	}
 	
-	ssize_t Read(void [] buffer) {
+	ssize_t Read(inout void [] buffer) {
 		return be_BPositionIO_Read_super(fInstancePointer, buffer.ptr, buffer.length);
 	}
 	
@@ -135,7 +138,7 @@ public:
 		return be_BPositionIO_Write_super(fInstancePointer, buffer.ptr, buffer.length);
 	}
 	
-	abstract ssize_t ReadAt(off_t position, void [] buffer);
+	abstract ssize_t ReadAt(off_t position, inout void [] buffer);
 	
 	abstract ssize_t WriteAt(off_t position, void [] buffer);
 	
@@ -176,7 +179,8 @@ extern (C) extern {
 
 extern (C) {
 	ssize_t bind_BMemoryIO_ReadAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
-		return (cast(BMemoryIO)bindInstPointer).ReadAt(position, buffer[0..size]);
+		auto x = buffer[0..size];
+		return (cast(BMemoryIO)bindInstPointer).ReadAt(position, x);
 	}
 	ssize_t bind_BMemoryIO_WriteAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
 		return (cast(BMemoryIO)bindInstPointer).WriteAt(position, buffer[0..size]);
@@ -212,7 +216,7 @@ public:
 		fInstancePointer = null;
 	}
 	
-	ssize_t ReadAt(off_t position, void [] buffer) {
+	ssize_t ReadAt(off_t position, inout void [] buffer) {
 		return be_BMemoryIO_ReadAt_super(fInstancePointer, position, buffer.ptr, buffer.length);
 	}
 	
@@ -254,7 +258,8 @@ extern (C) extern {
 
 extern (C) {
 	ssize_t bind_BMallocIO_ReadAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
-		return (cast(BMallocIO)bindInstPointer).ReadAt(position, buffer[0..size]);
+		auto x = buffer[0..size];
+		return (cast(BMallocIO)bindInstPointer).ReadAt(position, x);
 	}
 	
 	ssize_t bind_BMallocIO_WriteAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
@@ -294,7 +299,7 @@ public:
 		fInstancePointer = null;
 	}
 	
-	ssize_t ReadAt(off_t position, void [] buffer) {
+	ssize_t ReadAt(off_t position, inout void [] buffer) {
 		return be_BMallocIO_ReadAt_super(fInstancePointer, position, buffer.ptr, buffer.length);
 	}
 	
