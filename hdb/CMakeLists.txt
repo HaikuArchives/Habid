@@ -24,12 +24,18 @@ src/Storage/Volume.d
 
 src/Interface/Bitmap.d
 
+src/Support/Archivable.d
+
+src/Support/Beep.d
 src/Support/BObject.d
+
 src/Support/DataIO.d
 
 src/Support/Errors.d
 
 src/Support/Flattenable.d
+
+src/Support/HelperFunctions.d
 
 src/Support/List.d
 src/Support/Locker.d
