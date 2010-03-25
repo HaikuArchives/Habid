@@ -1,13 +1,18 @@
 PROJECT(BEC C CXX)
 
 SET(BEC_SRCS
+src/app/Message.cpp
+
 src/storage/Entry.cpp
 src/storage/EntryList.cpp
+src/storage/Mime.cpp
 src/storage/MimeType.cpp
 src/storage/Node.cpp
 src/storage/Path.cpp
 src/storage/Statable.cpp
 
+src/support/Archivable.cpp
+src/support/Beep.cpp
 src/support/DataIO.cpp
 src/support/DataIO_BMemoryIO.cpp
 src/support/DataIO_BMallocIO.cpp
