@@ -46,7 +46,6 @@ ssize_t BMemoryIOProxy::ReadAt(off_t position, void *buffer, size_t size)
 
 ssize_t BMemoryIOProxy::super_ReadAt(off_t position, void *buffer, size_t size)
 {
-	printf("BMemoryIOBridge::ReadAt\n");
 	return BMemoryIOBridge::ReadAt(position, buffer, size);
 }
 	

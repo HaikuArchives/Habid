@@ -18,6 +18,7 @@ extern "C" {
 BStatableBridge::BStatableBridge()
 : BStatable() 
 { }
+
 BStatableBridge::~BStatableBridge() 
 { }
 	/* Pure virtual functions has to call back into D */
