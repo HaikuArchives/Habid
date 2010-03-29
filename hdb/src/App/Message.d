@@ -242,6 +242,22 @@ extern (C) extern
 	double be_BMessage_FindDouble(void *, char *name, int32 n);
 }
 
+const int B_FIELD_NAME_LENGTH		= 255;
+const int B_PROPERTY_NAME_LENGTH	= 255;
+
+enum {
+	B_NO_SPECIFIER = 0,
+	B_DIRECT_SPECIFIER = 1,
+	B_INDEX_SPECIFIER,
+	B_REVERSE_INDEX_SPECIFIER,
+	B_RANGE_SPECIFIER,
+	B_REVERSE_RANGE_SPECIFIER,
+	B_NAME_SPECIFIER,
+	B_ID_SPECIFIER,
+
+	B_SPECIFIERS_END = 128
+	// app-defined specifiers start at B_SPECIFIERS_END + 1
+}
 
 class BMessage
 {
@@ -266,7 +282,8 @@ public:
 	}
 	
 	~this() {
-		be_BMessage_dtor(fInstancePointer);
+		if(fInstancePointer !is null)
+			be_BMessage_dtor(fInstancePointer);
 	}
 	
 //	void * be_BMessage_operator_assign(void *, void *other);
@@ -895,21 +912,22 @@ public:
 		return be_BMessage_ReplacePointer_2(fInstancePointer, toStringz(name), index, pointer);
 	}
 
-
+/*
 	status_t ReplaceMessenger(char [] name, BMessenger messenger) {
 		return be_BMessage_ReplaceMessenger_1(fInstancePointer, toStringz(name), messenger.fInstancePointer);
 	}
 
 	status_t ReplaceMessenger(char [] name, int32 index, BMessenger messenger) {
-		return be_BMessage_ReplaceMessenger_2(fInstancePointer, toStringz(name), int32 index, messenger.fInstancePointer);
+		return be_BMessage_ReplaceMessenger_2(fInstancePointer, toStringz(name), index, messenger.fInstancePointer);
 	}
+*/
 
 	status_t ReplaceRef(char [] name, entry_ref reference) {
 		return be_BMessage_ReplaceRef_1(fInstancePointer, toStringz(name), &reference);
 	}
 
 	status_t ReplaceRef(char [] name, int32 index, entry_ref reference) {
-		return be_BMessage_ReplaceRef_2(fInstancePointer, toStringz(name), int32 index, &reference);
+		return be_BMessage_ReplaceRef_2(fInstancePointer, toStringz(name), index, &reference);
 	}
 
 	status_t ReplaceMessage(char [] name, BMessage message) {
@@ -917,23 +935,22 @@ public:
 	}
 
 	status_t ReplaceMessage(char [] name, int32 index, BMessage message) {
-		return be_BMessage_ReplaceMessage_2(fInstancePointer, toStringz(name), int32 index, message.fInstancePointer);
+		return be_BMessage_ReplaceMessage_2(fInstancePointer, toStringz(name), index, message.fInstancePointer);
 	}
-/*
+
 	status_t ReplaceFlat(char [] name, BFlattenable flat) {
-		return be_BMessage_ReplaceFlat_1(fInstancePointer, toStringz(name), void *object);
+		return be_BMessage_ReplaceFlat_1(fInstancePointer, toStringz(name), flat.fInstancePointer);
 	}
 
 	status_t ReplaceFlat(char [] name, int32 index, BFlattenable flat) {
-		return be_BMessage_ReplaceFlat_2(fInstancePointer, toStringz(name), int32 index, void *object);
+		return be_BMessage_ReplaceFlat_2(fInstancePointer, toStringz(name), index, flat.fInstancePointer);
 	}
-*/
 
-	status_t ReplaceData(char [] name, void [] data) {
+	status_t ReplaceData(char [] name, type_code type, void [] data) {
 		return be_BMessage_ReplaceData_1(fInstancePointer, toStringz(name), type, data.ptr, data.length);
 	}
 
-	status_t ReplaceData(char [] name, int32 index, void [] data) {
+	status_t ReplaceData(char [] name, type_code type, int32 index, void [] data) {
 		return be_BMessage_ReplaceData_2(fInstancePointer, toStringz(name), type, index, data.ptr, data.length);
 	}
 
@@ -947,38 +964,134 @@ public:
 		void			*operator new(size_t, void *pointer);
 		void			operator delete(void *pointer, size_t size);
 */
-/*
+
 		// Private, reserved, or obsolete
-	bool be_BMessage_HasRect(void *, char *name, int32 n);
-	bool be_BMessage_HasPoint(void *, char *name, int32 n);
-	bool be_BMessage_HasString(void *, char *name, int32 n);
-	bool be_BMessage_HasInt8(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt8(void *, char *name, int32 n);
-	bool be_BMessage_HasInt16(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt16(void *, char *name, int32 n);
-	bool be_BMessage_HasInt32(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt32(void *, char *name, int32 n);
-	bool be_BMessage_HasInt64(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt64(void *, char *name, int32 n);
-	bool be_BMessage_HasBool(void *, char *name, int32 n);
-	bool be_BMessage_HasFloat(void *, char *name, int32 n);
-	bool be_BMessage_HasDouble(void *, char *name, int32 n);
-	bool be_BMessage_HasPointer(void *, char *name, int32 n);
-	bool be_BMessage_HasMessenger(void *, char *name, int32 n);
-	bool be_BMessage_HasRef(void *, char *name, int32 n);
-	bool be_BMessage_HasMessage(void *, char *name, int32 n);
-	bool be_BMessage_HasFlat_1(void *, char *name, void *flat);
-	bool be_BMessage_HasFlat_2(void *, char *name, int32 n, void *flat);
-	bool be_BMessage_HasData(void *, char *name, type_code type, int32 n);
-	void *be_BMessage_FindRect(void *, char *name, int32 n);
-	void *be_BMessage_FindPoint(void *, char *name, int32 n);
-	char *be_BMessage_FindString(void *, char *name, int32 n);
-	int8 be_BMessage_FindInt8(void *, char *name, int32 n);
-	int16 be_BMessage_FindInt16(void *, char *name, int32 n);
-	int32 be_BMessage_FindInt32(void *, char *name, int32 n);
-	int64 be_BMessage_FindInt64(void *, char *name, int32 n);
-	bool be_BMessage_FindBool(void *, char *name, int32 n);
-	float be_BMessage_FindFloat(void *, char *name, int32 n);
-	double be_BMessage_FindDouble(void *, char *name, int32 n);
+	bool HasRect(char [] name, int32 n) {
+		return be_BMessage_HasRect(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasPoint(char [] name, int32 n) {
+		return be_BMessage_HasPoint(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasString(char [] name, int32 n) {
+		return be_BMessage_HasString(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasInt8(char [] name, int32 n) {
+		return be_BMessage_HasInt8(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasUInt8(char [] name, int32 n) {
+		return be_BMessage_HasUInt8(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasInt16(char [] name, int32 n) {
+		return be_BMessage_HasInt16(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasUInt16(char [] name, int32 n) {
+		return be_BMessage_HasUInt16(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasInt32(char [] name, int32 n) {
+		return be_BMessage_HasInt32(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasUInt32(char [] name, int32 n) {
+		return be_BMessage_HasUInt32(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasInt64(char [] name, int32 n) {
+		return be_BMessage_HasInt64(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasUInt64(char [] name, int32 n) {
+		return be_BMessage_HasUInt64(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasBool(char [] name, int32 n) {
+		return be_BMessage_HasBool(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasFloat(char [] name, int32 n) {
+		return be_BMessage_HasFloat(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasDouble(char [] name, int32 n) {
+		return be_BMessage_HasDouble(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasPointer(char [] name, int32 n) {
+		return be_BMessage_HasPointer(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasMessenger(char [] name, int32 n) {
+		return be_BMessage_HasMessenger(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasRef(char [] name, int32 n) {
+		return be_BMessage_HasRef(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasMessage(char [] name, int32 n) {
+		return be_BMessage_HasMessage(fInstancePointer, toStringz(name), n);
+	}
+	
+	bool HasFlat(char [] name, BFlattenable flat) {
+		return be_BMessage_HasFlat_1(fInstancePointer, toStringz(name), flat.fInstancePointer);
+	}
+	
+	bool HasFlat(char [] name, int32 n, BFlattenable flat) {
+		return be_BMessage_HasFlat_2(fInstancePointer, toStringz(name), n, flat.fInstancePointer);
+	}
+	
+	bool HasData(char [] name, type_code type, int32 n) {
+		return be_BMessage_HasData(fInstancePointer, toStringz(name), type, n);
+	}
+	
+/*		
+	void * FindRect(char [] name, int32 n) {
+		return be_BMessage_FindRect(fInstancePointer, toStringz(name), n);
+	}
+
+
+	void *FindPoint(char [] name, int32 n) {
+		return be_BMessage_FindPoint(fInstancePointer, toStringz(name), n);
+	}
 */
+
+	char [] FindString(char [] name, int32 n) {
+		return fromStringz(be_BMessage_FindString(fInstancePointer, toStringz(name), n));
+	}
+
+	int8 FindInt8(char [] name, int32 n) {
+		return be_BMessage_FindInt8(fInstancePointer, toStringz(name), n);
+	}
+
+	int16 FindInt16(char [] name, int32 n) {
+		return be_BMessage_FindInt16(fInstancePointer, toStringz(name), n);
+	}
+
+	int32 FindInt32(char [] name, int32 n) {
+		return be_BMessage_FindInt32(fInstancePointer, toStringz(name), n);
+	}
+
+	int64 FindInt64(char [] name, int32 n) {
+		return be_BMessage_FindInt64(fInstancePointer, toStringz(name), n);
+	}
+
+	bool FindBool(char [] name, int32 n) {
+		return be_BMessage_FindBool(fInstancePointer, toStringz(name), n);
+	}
+
+	float FindFloat(char [] name, int32 n) {
+		return be_BMessage_FindFloat(fInstancePointer, toStringz(name), n);
+	}
+
+	double FindDouble(char [] name, int32 n) {
+		return be_BMessage_FindDouble(fInstancePointer, toStringz(name), n);
+	}
+
+
 }
