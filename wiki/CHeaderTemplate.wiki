@@ -1,3 +1,4 @@
+{{{
 #ifndef __HEADERNAME_H__
 #define __HEADERNAME_H__
 
@@ -22,3 +23,4 @@ public:
 /* end class BClassProxy */
 
 #endif
+}}}
