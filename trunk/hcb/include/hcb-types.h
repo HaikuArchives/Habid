@@ -17,10 +17,13 @@ typedef struct { int dummy; } be_BHandler;
 
 typedef struct { int dummy; } be_BList;
 typedef struct { int dummy; } be_BLocker;
+typedef struct { int dummy; } be_BLooper;
 
 typedef struct { int dummy; } be_BMallocIO;
 typedef struct { int dummy; } be_BMemoryIO;
 typedef struct { int dummy; } be_BMessage;
+typedef struct { int dummy; } be_BMessageFilter;
+
 typedef struct { int dummy; } be_BMessenger;
 typedef struct { int dummy; } be_BMimeType;
 

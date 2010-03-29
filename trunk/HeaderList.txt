@@ -223,9 +223,9 @@
 ./interface/UnicodeBlockObjects.h
 ./interface/View.h
 ./interface/Window.h
-./kernel/OS.h
+./kernel/OS.h							- No C File		- Written in D		- Should be working =)
 ./kernel/debugger.h
-./kernel/fs_attr.h
+./kernel/fs_attr.h						- No C file		- Written in D		- Should be working =)
 ./kernel/fs_index.h
 ./kernel/fs_info.h
 ./kernel/fs_query.h
@@ -324,7 +324,7 @@
 ./storage/File.h
 ./storage/FilePanel.h
 ./storage/FindDirectory.h
-./storage/Mime.h						- No C File		- Uncomplete in D	- Untested
+./storage/Mime.h						- No C File		- Written in D		- Untested
 ./storage/MimeType.h					- Written in C		- Written in D		- Somewhat tested might be missing parts
 ./storage/Node.h						- Written in C		- Written in D		- Somewhat tested
 ./storage/NodeInfo.h

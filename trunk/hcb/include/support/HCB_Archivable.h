@@ -1,5 +1,5 @@
-#ifndef __STRING_H__
-#define __STRING_H__
+#ifndef __ARCHIVABLE_H__
+#define __ARCHIVABLE_H__
 
 #include <support/Archivable.h>
 
@@ -15,7 +15,7 @@ public:
 
 /* end class BArchivableBridge */
 
-/* begin class BStringProxy */
+/* begin class BArchivableProxy */
 
 class BArchivableProxy : public BArchivableBridge
 {
@@ -27,13 +27,13 @@ public:
 	virtual ~BArchivableProxy();
 	
 	virtual	status_t Archive(BMessage* into, bool deep = true) const;
-	virtual	status_t super_Archive(BMessage* into, bool deep = true) const;
+	virtual	status_t Archive_super(BMessage* into, bool deep = true) const;
 
 	// Private or reserved
 	virtual status_t Perform(perform_code d, void* arg);
-	virtual status_t super_Perform(perform_code d, void* arg);
+	virtual status_t Perform_super(perform_code d, void* arg);
 };
 
-/* end class BStringProxy */
+/* end class BArchivableProxy */
 
 #endif

@@ -46,7 +46,7 @@ status_t BArchivableProxy::Archive(BMessage* into, bool deep) const {
 	return bind_BArchivable_Archive_virtual(fBindInstPointer, (be_BMessage *)into, deep);
 }
 
-status_t BArchivableProxy::super_Archive(BMessage* into, bool deep) const {
+status_t BArchivableProxy::Archive_super(BMessage* into, bool deep) const {
 	return BArchivableBridge::Archive(into, deep);
 }
 
@@ -55,7 +55,7 @@ status_t BArchivableProxy::Perform(perform_code d, void* arg) {
 	return bind_BArchivable_Perform_virtual(fBindInstPointer, d, arg);
 }
 
-status_t BArchivableProxy::super_Perform(perform_code d, void* arg) {
+status_t BArchivableProxy::Perform_super(perform_code d, void* arg) {
 	return BArchivableProxy::Perform(d, arg);
 }
 
@@ -81,7 +81,7 @@ extern "C" {
 	}
 
 	status_t be_BArchivable_Archive_super(void *instPointer, be_BMessage* into, bool deep) {
-		return ((BArchivableProxy *)instPointer)->super_Archive((BMessage *)into, deep);
+		return ((BArchivableProxy *)instPointer)->Archive_super((BMessage *)into, deep);
 	}
 
 	// Private or reserved
@@ -90,7 +90,7 @@ extern "C" {
 	}
 
 	status_t be_BArchivable_Perform_super(void *instPointer, perform_code d, void* arg) {
-		return ((BArchivableProxy *)instPointer)->super_Perform(d, arg);
+		return ((BArchivableProxy *)instPointer)->Perform_super(d, arg);
 	}
 
 /*

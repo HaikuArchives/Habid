@@ -1,6 +1,7 @@
 PROJECT(BEC C CXX)
 
 SET(BEC_SRCS
+src/app/Handler.cpp
 src/app/Message.cpp
 
 src/storage/Entry.cpp
