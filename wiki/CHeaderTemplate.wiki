@@ -16,8 +16,9 @@ public:
 class BClassProxy : public BClassBridge
 {
 private:
-	void *fBindInstPointer;
+    void *fBindInstPointer;
 public:
+    BClassProxy(void *bindInstPointer);
 };
 
 /* end class BClassProxy */
