@@ -126,28 +126,28 @@ status_t BPathProxy::super_Unflatten(type_code code, const void* buffer, ssize_t
 /* end class BPathBridge */
 
 extern "C" {
-	be_BPath *be_BPath_ctor_1(be_BPath *instPointer) {
-		return (be_BPath *)new BPathProxy(instPointer);
+	be_BPath *be_BPath_ctor_1(void *bindInstPointer) {
+		return (be_BPath *)new BPathProxy(bindInstPointer);
 	}
 	
-	be_BPath *be_BPath_ctor_2(be_BPath *instPointer, const be_BPath *path) {
-		return (be_BPath *)new BPathProxy(instPointer, *(BPath *)path);
+	be_BPath *be_BPath_ctor_2(void *bindInstPointer, const be_BPath *path) {
+		return (be_BPath *)new BPathProxy(bindInstPointer, *(BPath *)path);
 	}
 	
-	be_BPath *be_BPath_ctor_3(be_BPath *instPointer, const entry_ref* ref) {
-		return (be_BPath *)new BPathProxy(instPointer, ref);
+	be_BPath *be_BPath_ctor_3(void *bindInstPointer, const entry_ref* ref) {
+		return (be_BPath *)new BPathProxy(bindInstPointer, ref);
 	}
 	
-	be_BPath *be_BPath_ctor_4(be_BPath *instPointer, const be_BEntry* entry) {
-		return (be_BPath *)new BPathProxy(instPointer, (BEntry *)entry);
+	be_BPath *be_BPath_ctor_4(void *bindInstPointer, const be_BEntry* entry) {
+		return (be_BPath *)new BPathProxy(bindInstPointer, (BEntry *)entry);
 	}
 	
-	be_BPath *be_BPath_ctor_5(be_BPath *instPointer, const char* dir, const char* leaf, bool normalize) {
-		return (be_BPath *)new BPathProxy(instPointer, dir, leaf, normalize);
+	be_BPath *be_BPath_ctor_5(void *bindInstPointer, const char* dir, const char* leaf, bool normalize) {
+		return (be_BPath *)new BPathProxy(bindInstPointer, dir, leaf, normalize);
 	}
 	
-	be_BPath *be_BPath_ctor_6(be_BPath *instPointer, const be_BDirectory* dir, const char* leaf, bool normalize) {
-		return (be_BPath *)new BPathProxy(instPointer, (BDirectory *)dir, leaf, normalize);
+	be_BPath *be_BPath_ctor_6(void *bindInstPointer, const be_BDirectory* dir, const char* leaf, bool normalize) {
+		return (be_BPath *)new BPathProxy(bindInstPointer, (BDirectory *)dir, leaf, normalize);
 	}
 
 	void be_BPath_dtor(void *instPointer) {
@@ -210,38 +210,20 @@ BPath&			operator=(const char* path);
 */
 
 	// BFlattenable protocol
-	bool			be_BPath_IsFixedSize(be_BPath *instPointer) {
-		return ((BPathProxy *)instPointer)->IsFixedSize();
-	}
 	bool			be_BPath_IsFixedSize_super(be_BPath *instPointer) {
 		return ((BPathProxy *)instPointer)->super_IsFixedSize();
-	}
-	type_code		be_BPath_TypeCode(be_BPath *instPointer) {
-		return ((BPathProxy *)instPointer)->TypeCode();
 	}
 	type_code		be_BPath_TypeCode_super(be_BPath *instPointer) {
 		return ((BPathProxy *)instPointer)->super_TypeCode();
 	}
-	ssize_t			be_BPath_FlattenedSize(be_BPath *instPointer) {
-		return ((BPathProxy *)instPointer)->FlattenedSize();
-	}
 	ssize_t			be_BPath_FlattenedSize_super(be_BPath *instPointer) {
 		return ((BPathProxy *)instPointer)->super_FlattenedSize();
-	}
-	status_t		be_BPath_Flatten(be_BPath *instPointer, void* buffer, ssize_t size) {
-		return ((BPathProxy *)instPointer)->Flatten(buffer, size);
 	}
 	status_t		be_BPath_Flatten_super(be_BPath *instPointer, void* buffer, ssize_t size) {
 		return ((BPathProxy *)instPointer)->super_Flatten(buffer, size);
 	}
-	bool			be_BPath_AllowsTypeCode(be_BPath *instPointer, type_code code) {
-		return ((BPathProxy *)instPointer)->AllowsTypeCode(code);
-	}
 	bool			be_BPath_AllowsTypeCode_super(be_BPath *instPointer, type_code code) {
 		return ((BPathProxy *)instPointer)->super_AllowsTypeCode(code);
-	}
-	status_t		be_BPath_Unflatten(be_BPath *instPointer, type_code code, const void* buffer, ssize_t size) {
-		return ((BPathProxy *)instPointer)->Unflatten(code, buffer, size);
 	}
 	status_t		be_BPath_Unflatten_super(be_BPath *instPointer, type_code code, const void* buffer, ssize_t size) {
 		return ((BPathProxy *)instPointer)->super_Unflatten(code, buffer, size);
