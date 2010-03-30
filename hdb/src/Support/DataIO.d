@@ -8,22 +8,22 @@ import tango.io.Stdout;
 import tango.stdc.stdlib;
 import tango.stdc.string;
 
+import Support.types;
+
 extern (C) extern {
-	void *		be_BDataIO_ctor(void *);
-	void		be_BDataIO_dtor(void *);
-	ssize_t		be_BDataIO_Read(void *, void *, size_t);
-	ssize_t		be_BDataIO_Read_super(void *, void *, size_t);
-	ssize_t		be_BDataIO_Write(void *, void *, size_t);
-	ssize_t		be_BDataIO_Write_super(void *, void *, size_t);
+	be_BDataIO *	be_BDataIO_ctor(be_BDataIO *);
+	void			be_BDataIO_dtor(be_BDataIO *);
+	ssize_t			be_BDataIO_Read_super(be_BDataIO *, void *, size_t);
+	ssize_t			be_BDataIO_Write_super(be_BDataIO *, void *, size_t);
 }
 
 extern (C) {
-	ssize_t bind_BDataIO_Read_pure(void *bindInstPointer, void *buffer, ssize_t size) {
+	ssize_t bind_BDataIO_Read_pure(be_BDataIO *bindInstPointer, void *buffer, ssize_t size) {
 		auto x = buffer[0..size];
 		return (cast(BDataIO)bindInstPointer).Read(x);
 	}
 	
-	ssize_t bind_BDataIO_Write_pure(void *bindInstPointer, void *buffer, ssize_t size) {
+	ssize_t bind_BDataIO_Write_pure(be_BDataIO *bindInstPointer, void *buffer, ssize_t size) {
 		return (cast(BDataIO)bindInstPointer).Write(buffer[0..size]);
 	}
 }
@@ -32,100 +32,93 @@ extern (C) {
 class BDataIO
 {
 public:
-	mixin BObject;
-
+	mixin(BObject!("be_BDataIO", true, null));
+	
 	this() {
-		Stdout.formatln("BDataIO ctor");
 		if(fInstancePointer is null) {
-			fInstancePointer = be_BDataIO_ctor(cast(void *)this);
-//			proxy_obj = be_BDataIOProxy_ctor(cast(void *)this);
-			Stdout.formatln("BDataIO::Init fInstancePointer");
+			fInstancePointer = be_BDataIO_ctor(cast(be_BDataIO *)this);
 		}
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BDataIO_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
 	
-	abstract ssize_t Read(inout void [] buffer);
-	abstract ssize_t Write(void [] buffer);
+	ssize_t Read(inout void [] buffer) {
+		assert(false, "BDataIO::Read needs to be implemented");
+	}
+	
+	ssize_t Write(void [] buffer) {
+		assert(false, "BDataIO::Write needs to be implemented");
+	}
 }
 
 
 extern (C) extern {
-	void *		be_BPositionIO_ctor(void *);
-	void		be_BPositionIO_dtor(void *);
-	ssize_t		be_BPositionIO_Read(void *, void *, size_t);
-	ssize_t		be_BPositionIO_Read_super(void *, void *, size_t);
-	ssize_t		be_BPositionIO_Write(void *, void *, size_t);
-	ssize_t		be_BPositionIO_Write_super(void *, void *, size_t);
-	ssize_t		be_BPositionIO_ReadAt(void *, off_t, void *, size_t);
-	ssize_t		be_BPositionIO_ReadAt_super(void *, off_t, void *, size_t);
-	ssize_t		be_BPositionIO_WriteAt(void *, off_t, void *, size_t);
-	ssize_t		be_BPositionIO_WriteAt_super(void *, off_t, void *, size_t);
-	off_t		be_BPositionIO_Seek(void *, off_t pos, uint32 seekMode);
-	off_t		be_BPositionIO_Seek_super(void *, off_t pos, uint32 seekMode);
-	off_t		be_BPositionIO_Position(void *);
-	off_t		be_BPositionIO_Position_super(void *);
-	status_t	be_BPositionIO_SetSize(void *, off_t size);
-	status_t	be_BPositionIO_SetSize_super(void *, off_t size);
-	status_t	be_BPositionIO_GetSize(void *, off_t *size);
-	status_t	be_BPositionIO_GetSize_super(void *, off_t *size);
+	be_BPositionIO * 	be_BPositionIO_ctor(be_BPositionIO * );
+	void				be_BPositionIO_dtor(be_BPositionIO * );
+	ssize_t				be_BPositionIO_Read_super(be_BPositionIO *, void *, size_t);
+	ssize_t				be_BPositionIO_Write_super(be_BPositionIO *, void *, size_t);
+	ssize_t				be_BPositionIO_ReadAt_super(be_BPositionIO *, off_t, void * , size_t);
+	ssize_t				be_BPositionIO_WriteAt_super(be_BPositionIO *, off_t, void *, size_t);
+	off_t				be_BPositionIO_Seek_super(be_BPositionIO *, off_t, uint32);
+	off_t				be_BPositionIO_Position_super(be_BPositionIO *);
+	status_t			be_BPositionIO_SetSize_super(be_BPositionIO *, off_t);
+	status_t			be_BPositionIO_GetSize_super(be_BPositionIO *, off_t *);
 }
 
 extern (C) {
-	ssize_t		bind_BPositionIO_ReadAt_pure(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+	ssize_t		bind_BPositionIO_ReadAt_pure(be_BPositionIO *bindInstPointer, off_t position, void *buffer, size_t size) {
 		auto x = buffer[0..size];
 		return (cast(BPositionIO)bindInstPointer).ReadAt(position, x);
 	}
 
-	ssize_t		bind_BPositionIO_WriteAt_pure(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+	ssize_t		bind_BPositionIO_WriteAt_pure(be_BPositionIO * bindInstPointer, off_t position, void *buffer, size_t size) {
 		return (cast(BPositionIO)bindInstPointer).WriteAt(position, buffer[0..size]);
 	}
 
-	off_t		bind_BPositionIO_Seek_pure(void *bindInstPointer, off_t pos, uint32 seekMode) {
+	off_t		bind_BPositionIO_Seek_pure(be_BPositionIO * bindInstPointer, off_t pos, uint32 seekMode) {
 		return (cast(BPositionIO)bindInstPointer).Seek(pos, seekMode);
 	}
 
-	off_t		bind_BPositionIO_Position_pure(void *bindInstPointer) {
+	off_t		bind_BPositionIO_Position_pure(be_BPositionIO * bindInstPointer) {
 		return (cast(BPositionIO)bindInstPointer).Position();
 	}
 
 
-	ssize_t bind_BPositionIO_Read_virtual(void *bindInstPointer, void *buffer, size_t size) {
+	ssize_t bind_BPositionIO_Read_virtual(be_BPositionIO * bindInstPointer, void *buffer, size_t size) {
 		auto x = buffer[0..size];
 		return (cast(BPositionIO)bindInstPointer).Read(x);
 	}
 	
-	ssize_t bind_BPositionIO_Write_virtual (void *bindInstPointer, void *buffer, size_t size) {
+	ssize_t bind_BPositionIO_Write_virtual (be_BPositionIO * bindInstPointer, void *buffer, size_t size) {
 		return (cast(BPositionIO)bindInstPointer).Write(buffer[0..size]);
 	}
 		
-	status_t bind_BPositionIO_SetSize_virtual(void *bindInstPointer, off_t size) {
+	status_t bind_BPositionIO_SetSize_virtual(be_BPositionIO * bindInstPointer, off_t size) {
 		return (cast(BPositionIO)bindInstPointer).SetSize(size);
 	}
 	
-	status_t bind_BPositionIO_GetSize_virtual(void *bindInstPointer, off_t *size) {
+	status_t bind_BPositionIO_GetSize_virtual(be_BPositionIO * bindInstPointer, off_t *size) {
 		return (cast(BPositionIO)bindInstPointer).GetSize(size);
 	}
 }
 
-class BPositionIO : BDataIO
+class BPositionIO : public BDataIO
 {
 public:
+	mixin(BObject!("be_BPositionIO", false, "be_BDataIO"));
+	
 	this() {
-		Stdout.formatln("BPositionIO ctor");
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPositionIO_ctor(cast(void *)this);
-			Stdout.formatln("BPositionIO::Init fInstancePointer");
-		}
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPositionIO_ctor(cast(be_BPositionIO *)this);
 		super();
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BPositionIO_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
@@ -138,13 +131,21 @@ public:
 		return be_BPositionIO_Write_super(fInstancePointer, buffer.ptr, buffer.length);
 	}
 	
-	abstract ssize_t ReadAt(off_t position, inout void [] buffer);
+	ssize_t ReadAt(off_t position, inout void [] buffer) {
+		assert(false, "BPositionIO::ReadAt needs to be implemented");
+	}
 	
-	abstract ssize_t WriteAt(off_t position, void [] buffer);
+	ssize_t WriteAt(off_t position, void [] buffer) {
+		assert(false, "BPositionIO::WriteAt needs to be implemented");
+	}
 	
-	abstract off_t Seek(off_t position, uint32 seekMode);
+	off_t Seek(off_t position, uint32 seekMode) {
+		assert(false, "BPositionIO::Seek needs to be implemented");
+	}
 	
-	abstract off_t Position();
+	off_t Position() {
+		assert(false, "BPositionIO::Position needs to be implemented");
+	}
 	
 	status_t SetSize(off_t size) {
 		return be_BPositionIO_SetSize_super(fInstancePointer, size);
@@ -156,44 +157,39 @@ public:
 }
 
 extern (C) extern {
-	void * 		be_BMemoryIO_ctor_1(void *, void *data, size_t length);
-	void * 		be_BMemoryIO_ctor_2(void *, void *data, size_t length);
+	be_BMemoryIO *	be_BMemoryIO_ctor_1(be_BMemoryIO *, void *data, size_t length);
+	be_BMemoryIO *	be_BMemoryIO_ctor_2(be_BMemoryIO *, void *data, size_t length);
 	
-	void 		be_BMemoryIO_dtor(void *);
+	void 			be_BMemoryIO_dtor(be_BMemoryIO *);
 	
-	ssize_t 	be_BMemoryIO_ReadAt(void *, off_t, void *, size_t);
-	ssize_t 	be_BMemoryIO_ReadAt_super(void *, off_t, void *, size_t);
+	ssize_t 		be_BMemoryIO_ReadAt_super(be_BMemoryIO *, off_t, void *, size_t);
 
-	ssize_t 	be_BMemoryIO_WriteAt(void *, off_t, void *, size_t);
-	ssize_t 	be_BMemoryIO_WriteAt_super(void *, off_t, void *, size_t);
+	ssize_t 		be_BMemoryIO_WriteAt_super(be_BMemoryIO *, off_t, void *, size_t);
 
-	off_t		be_BMemoryIO_Seek(void *, off_t, uint32);
-	off_t		be_BMemoryIO_Seek_super(void *, off_t, uint32);
+	off_t			be_BMemoryIO_Seek_super(be_BMemoryIO *, off_t, uint32);
 
-	off_t		be_BMemoryIO_Position(void *);
-	off_t		be_BMemoryIO_Position_super(void *);
+	off_t			be_BMemoryIO_Position_super(be_BMemoryIO *);
 
-	status_t	be_BMemoryIO_SetSize(void *, off_t);
-	status_t	be_BMemoryIO_SetSize_super(void *, off_t);
+	status_t		be_BMemoryIO_SetSize_super(be_BMemoryIO *, off_t);
 }
 
 extern (C) {
-	ssize_t bind_BMemoryIO_ReadAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+	ssize_t bind_BMemoryIO_ReadAt_virtual(be_BMemoryIO * bindInstPointer, off_t position, void *buffer, size_t size) {
 		auto x = buffer[0..size];
 		return (cast(BMemoryIO)bindInstPointer).ReadAt(position, x);
 	}
-	ssize_t bind_BMemoryIO_WriteAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+	ssize_t bind_BMemoryIO_WriteAt_virtual(be_BMemoryIO * bindInstPointer, off_t position, void *buffer, size_t size) {
 		return (cast(BMemoryIO)bindInstPointer).WriteAt(position, buffer[0..size]);
 	}
 
-	off_t bind_BMemoryIO_Seek_virtual(void *bindInstPointer, off_t position, uint32 seekMode) {
+	off_t bind_BMemoryIO_Seek_virtual(be_BMemoryIO * bindInstPointer, off_t position, uint32 seekMode) {
 		return (cast(BMemoryIO)bindInstPointer).Seek(position, seekMode);
 	}
-	off_t bind_BMemoryIO_Position_virtual(void *bindInstPointer) {
+	off_t bind_BMemoryIO_Position_virtual(be_BMemoryIO * bindInstPointer) {
 		return (cast(BMemoryIO)bindInstPointer).Position();
 	}
 
-	status_t bind_BMemoryIO_SetSize_virtual(void *bindInstPointer, off_t size) {
+	status_t bind_BMemoryIO_SetSize_virtual(be_BMemoryIO * bindInstPointer, off_t size) {
 		return (cast(BMemoryIO)bindInstPointer).SetSize(size);
 	}
 }
@@ -201,17 +197,16 @@ extern (C) {
 class BMemoryIO : BPositionIO
 {
 public:
+	mixin(BObject!("be_BMemoryIO", false, "be_BPositionIO"));
+	
 	this(void [] data) {
-		Stdout.formatln("BMemoryIO ctor");
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BMemoryIO_ctor_1(cast(void *)this, data.ptr, data.length);
-			Stdout.formatln("BMemoryIO::Init fInstancePointer");
-		}
+		if(fInstancePointer is null)
+			fInstancePointer = be_BMemoryIO_ctor_1(cast(be_BMemoryIO *)this, data.ptr, data.length);
 		super();
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BMemoryIO_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
@@ -238,43 +233,38 @@ public:
 }
 
 extern (C) extern {
-	void * 		be_BMallocIO_ctor(void *, void *);
-	void		be_BMallocIO_dtor(void *);
-	ssize_t		be_BMallocIO_ReadAt(void *, off_t, void *, size_t);
-	ssize_t		be_BMallocIO_ReadAt_super(void *, off_t, void *, size_t);
-	ssize_t		be_BMallocIO_WriteAt(void *, off_t, void *, size_t);
-	ssize_t		be_BMallocIO_WriteAt_super(void *, off_t, void *, size_t);
-	off_t		be_BMallocIO_Seek(void *, off_t, uint32);
-	off_t		be_BMallocIO_Seek_super(void *, off_t, uint32);
-	off_t		be_BMallocIO_Position(void *);
-	off_t		be_BMallocIO_Position_super(void *);
-	status_t	be_BMallocIO_SetSize(void *, size_t);
-	status_t	be_BMallocIO_SetSize_super(void *, size_t);
+	be_BMallocIO *	be_BMallocIO_ctor(be_BMallocIO *);
+	void			be_BMallocIO_dtor(be_BMallocIO *);
+	ssize_t			be_BMallocIO_ReadAt_super(be_BMallocIO *, off_t, void *, size_t);
+	ssize_t			be_BMallocIO_WriteAt_super(be_BMallocIO * , off_t, void *, size_t);
+	off_t			be_BMallocIO_Seek_super(be_BMallocIO *, off_t, uint32);
+	off_t			be_BMallocIO_Position_super(be_BMallocIO *);
+	status_t		be_BMallocIO_SetSize_super(be_BMallocIO *, size_t);
 
-	void		be_BMallocIO_SetBlockSize(void *, size_t);
-	void *		be_BMallocIO_Buffer(void *);
-	size_t		be_BMallocIO_BufferLength(void *);
+	void			be_BMallocIO_SetBlockSize(be_BMallocIO *, size_t);
+	void * 			be_BMallocIO_Buffer(be_BMallocIO *);
+	size_t			be_BMallocIO_BufferLength(be_BMallocIO *);
 }
 
 extern (C) {
-	ssize_t bind_BMallocIO_ReadAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+	ssize_t bind_BMallocIO_ReadAt_virtual(be_BMallocIO * bindInstPointer, off_t position, void *buffer, size_t size) {
 		auto x = buffer[0..size];
 		return (cast(BMallocIO)bindInstPointer).ReadAt(position, x);
 	}
 	
-	ssize_t bind_BMallocIO_WriteAt_virtual(void *bindInstPointer, off_t position, void *buffer, size_t size) {
+	ssize_t bind_BMallocIO_WriteAt_virtual(be_BMallocIO * bindInstPointer, off_t position, void *buffer, size_t size) {
 		return (cast(BMallocIO)bindInstPointer).WriteAt(position, buffer[0..size]);
 	}
 
-	off_t bind_BMallocIO_Seek_virtual(void *bindInstPointer, off_t position, uint32 seekMode) {
+	off_t bind_BMallocIO_Seek_virtual(be_BMallocIO * bindInstPointer, off_t position, uint32 seekMode) {
 		return (cast(BMallocIO)bindInstPointer).Seek(position, seekMode);
 	}
 	
-	off_t bind_BMallocIO_Position_virtual(void *bindInstPointer) {
+	off_t bind_BMallocIO_Position_virtual(be_BMallocIO * bindInstPointer) {
 		return (cast(BMallocIO)bindInstPointer).Position();
 	}
 
-	status_t bind_BMallocIO_SetSize_virtual(void *bindInstPointer, off_t size) {
+	status_t bind_BMallocIO_SetSize_virtual(be_BMallocIO * bindInstPointer, off_t size) {
 		return (cast(BMallocIO)bindInstPointer).SetSize(size);
 	}
 }
@@ -282,19 +272,16 @@ extern (C) {
 class BMallocIO : BPositionIO
 {
 public:
+	mixin(BObject!("be_BMallocIO", false, "be_BPositionIO"));
+	
 	this() {
-		Stdout.formatln("BMallocIO ctor");
-		if(fInstancePointer is null) {
-			auto sup = super;
-			
-			fInstancePointer = be_BMallocIO_ctor(cast(void *)this, cast(void *)sup);
-			Stdout.formatln("BMallocIO::Init fInstancePointer");
-		}
+		if(fInstancePointer is null)
+			fInstancePointer = be_BMallocIO_ctor(cast(be_BMallocIO *)this);
 		super();
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BMallocIO_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}

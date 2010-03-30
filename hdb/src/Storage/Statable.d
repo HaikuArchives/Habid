@@ -11,37 +11,38 @@ import Storage.StorageDefs;
 import Storage.Node;
 import Storage.Volume;
 
+import Support.types;
 
 extern (C) extern {
-	void * be_BStatable_ctor(void *bindInstPointer);
+	be_BStatable *  be_BStatable_ctor(be_BStatable * bindInstPointer);
 
 
-	void be_BStatable_dtor(void *obj);
+	void be_BStatable_dtor(be_BStatable * obj);
 	
-	status_t be_BStatable_GetNodeRef(void *, node_ref *);
-	status_t be_BStatable_GetOwner(void *, uid_t *);
-	status_t be_BStatable_SetOwner(void *, uid_t );
-	status_t be_BStatable_GetGroup(void *, gid_t *);
-	status_t be_BStatable_SetGroup(void *, gid_t);
-	status_t be_BStatable_GetPermissions(void *, mode_t *);
-	status_t be_BStatable_SetPermissions(void *, mode_t);
-	status_t be_BStatable_GetSize(void *, off_t *);
-	status_t be_BStatable_GetModificationTime(void *, time_t *);
-	status_t be_BStatable_SetModificationTime(void *, time_t);
-	status_t be_BStatable_GetCreationTime(void *, time_t *);
-	status_t be_BStatable_SetCreationTime(void *, time_t );
-	status_t be_BStatable_GetAccessTime(void *, time_t *);
-	status_t be_BStatable_SetAccessTime(void *, time_t);
-	status_t be_BStatable_GetVolume(void *, void *);
+	status_t be_BStatable_GetNodeRef(be_BStatable * , node_ref *);
+	status_t be_BStatable_GetOwner(be_BStatable * , uid_t *);
+	status_t be_BStatable_SetOwner(be_BStatable * , uid_t );
+	status_t be_BStatable_GetGroup(be_BStatable * , gid_t *);
+	status_t be_BStatable_SetGroup(be_BStatable * , gid_t);
+	status_t be_BStatable_GetPermissions(be_BStatable * , mode_t *);
+	status_t be_BStatable_SetPermissions(be_BStatable * , mode_t);
+	status_t be_BStatable_GetSize(be_BStatable * , off_t *);
+	status_t be_BStatable_GetModificationTime(be_BStatable * , time_t *);
+	status_t be_BStatable_SetModificationTime(be_BStatable * , time_t);
+	status_t be_BStatable_GetCreationTime(be_BStatable * , time_t *);
+	status_t be_BStatable_SetCreationTime(be_BStatable * , time_t );
+	status_t be_BStatable_GetAccessTime(be_BStatable * , time_t *);
+	status_t be_BStatable_SetAccessTime(be_BStatable * , time_t);
+	status_t be_BStatable_GetVolume(be_BStatable * , be_BVolume * );
 }
 
 
 extern (C) {
-	status_t bind_BStatable_GetStat_pure(void *bindInstPointer, stat_t *st) {
+	status_t bind_BStatable_GetStat_pure(be_BStatable * bindInstPointer, stat_t *st) {
 		return (cast(BStatable)bindInstPointer).GetStat(*st);
 	}
 /*	
-	status_t bind_BStatable_set_stat_pure(void *bindInstPointer, ref stat st, uint32 what) {
+	status_t bind_BStatable_set_stat_pure(be_BStatable * bindInstPointer, ref stat st, uint32 what) {
 		return (cast(BStatable)bindInstPointer).set_stat(st, what);
 	}
 */
@@ -50,15 +51,16 @@ extern (C) {
 
 class BStatable
 {
-	mixin BObject;
-
+public:
+	mixin(BObject!("be_BStatable", true, null));
+	
 	this() {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BStatable_ctor(cast(void *)this);
+			fInstancePointer = be_BStatable_ctor(cast(be_BStatable * )this);
 	}
 
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BStatable_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}

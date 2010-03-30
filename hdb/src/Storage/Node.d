@@ -17,6 +17,10 @@ import Storage.Directory;
 
 import Kernel.fs_attr;
 
+import Support.BObject; 
+
+import Support.types;
+
 struct node_ref
 {
 	dev_t device;
@@ -25,89 +29,90 @@ struct node_ref
 
 extern (C) extern
 {
-	void *be_BNode_ctor_1(void *);
-	void *be_BNode_ctor_2(void *, entry_ref *);
-	void *be_BNode_ctor_3(void *, void *);
-	void *be_BNode_ctor_4(void *, char *);
-	void *be_BNode_ctor_5(void *, void *, char *);
-	void *be_BNode_ctor_6(void *, void *);
-	void be_BNode_dtor(void *);
+	be_BNode * be_BNode_ctor_1(be_BNode *);
+	be_BNode * be_BNode_ctor_2(be_BNode *, entry_ref *);
+	be_BNode * be_BNode_ctor_3(be_BNode *, be_BEntry *);
+	be_BNode * be_BNode_ctor_4(be_BNode *, char *);
+	be_BNode * be_BNode_ctor_5(be_BNode *, be_BDirectory *, char *);
+	be_BNode * be_BNode_ctor_6(be_BNode *, be_BNode *);
+	void be_BNode_dtor(be_BNode *);
 	
-	status_t be_BNode_InitCheck(void *);
-	status_t be_BNode_GetStat(void *, stat_t *);
-	status_t be_BNode_GetStat_super(void *, stat_t *);
-	status_t be_BNode_SetTo_1(void *, entry_ref *);
-	status_t be_BNode_SetTo_2(void *, void *);
-	status_t be_BNode_SetTo_3(void *, char *);
-	status_t be_BNode_SetTo_4(void *, void *, char *);
-	void be_BNode_Unset(void *);
-	status_t be_BNode_Lock(void *);
-	status_t be_BNode_Unlock(void *);
-	status_t be_BNode_Sync(void *);
-	ssize_t be_BNode_WriteAttr(void *, char *, type_code, off_t, void *, size_t);
-	ssize_t be_BNode_ReadAttr(void *, char *, type_code, off_t, void *, size_t);
-	status_t be_BNode_RemoveAttr(void *, char *);
-	status_t be_BNode_RenameAttr(void *, char *, char *);
-	status_t be_BNode_GetAttrInfo(void *, char *, attr_info *);
-	status_t be_BNode_GetNextAttrName(void *, char *);
-	status_t be_BNode_RewindAttrs(void *);
-	status_t be_BNode_WriteAttrString(void *, char *, void *);
-	status_t be_BNode_ReadAttrString(void *, char *, void *);
-	bool be_BNode_operator_equals(void *, void *);
-	bool be_BNode_operator_notequals(void *, void *);
+	status_t be_BNode_InitCheck(be_BNode *);
+	status_t be_BNode_GetStat_super(be_BNode *, stat_t *);
+	status_t be_BNode_SetTo_1(be_BNode *, entry_ref *);
+	status_t be_BNode_SetTo_2(be_BNode *, be_BEntry *);
+	status_t be_BNode_SetTo_3(be_BNode *, char *);
+	status_t be_BNode_SetTo_4(be_BNode *, be_BDirectory *, char *);
+	void be_BNode_Unset(be_BNode *);
+	status_t be_BNode_Lock(be_BNode *);
+	status_t be_BNode_Unlock(be_BNode *);
+	status_t be_BNode_Sync(be_BNode *);
+	ssize_t be_BNode_WriteAttr(be_BNode *, char *, type_code, off_t, void *, size_t);
+	ssize_t be_BNode_ReadAttr(be_BNode *, char *, type_code, off_t, void *, size_t);
+	status_t be_BNode_RemoveAttr(be_BNode *, char *);
+	status_t be_BNode_RenameAttr(be_BNode *, char *, char *);
+	status_t be_BNode_GetAttrInfo(be_BNode *, char *, attr_info *);
+	status_t be_BNode_GetNextAttrName(be_BNode *, char *);
+	status_t be_BNode_RewindAttrs(be_BNode *);
+	status_t be_BNode_WriteAttrString(be_BNode *, char *, be_BString *);
+	status_t be_BNode_ReadAttrString(be_BNode *, char *, be_BString *);
+	bool be_BNode_operator_equals(be_BNode *, be_BNode *);
+	bool be_BNode_operator_notequals(be_BNode *, be_BNode *);
 /*
 	BNode& operator=(const BNode &node);
 */
-	int be_BNode_Dup(void *);
+	int be_BNode_Dup(be_BNode *);
 }
 
 extern (C)
 {
-	status_t bind_BNode_GetStat_virtual(void *bindInstPointer, stat_t *st) {
+	status_t bind_BNode_GetStat_virtual(be_BNode *bindInstPointer, stat_t *st) {
 		return (cast(BNode *)bindInstPointer).GetStat(*st);
 	}
 }
 
 class BNode : public BStatable
 {
+	mixin(BObject!("be_BNode", false, "be_BStatable"));
+	
 	this() {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BNode_ctor_1(cast(void *)this);
+			fInstancePointer = be_BNode_ctor_1(cast(be_BNode *)this);
 		super();
 	}
 	
 	this(ref entry_ref reference) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BNode_ctor_2(cast(void *)this, &reference);
+			fInstancePointer = be_BNode_ctor_2(cast(be_BNode *)this, &reference);
 		super();
 	}
 	
 	this(BEntry entry) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BNode_ctor_3(cast(void *)this, entry.fInstancePointer);
+			fInstancePointer = be_BNode_ctor_3(cast(be_BNode *)this, entry.fInstancePointer);
 		super();
 	}
 	
 	this(char [] path) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BNode_ctor_4(cast(void *)this, toStringz(path));
+			fInstancePointer = be_BNode_ctor_4(cast(be_BNode *)this, toStringz(path));
 		super();
 	}
 	
 	this(BDirectory dir, char [] path) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BNode_ctor_5(cast(void *)this, dir.fInstancePointer, toStringz(path));
+			fInstancePointer = be_BNode_ctor_5(cast(be_BNode *)this, dir.fInstancePointer, toStringz(path));
 		super();
 	}
 	
 	this(BNode node) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BNode_ctor_6(cast(void *)this, node.fInstancePointer);
+			fInstancePointer = be_BNode_ctor_6(cast(be_BNode *)this, node.fInstancePointer);
 		super();
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BNode_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}

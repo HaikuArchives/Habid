@@ -7,7 +7,11 @@ import Support.BObject;
 import Support.SupportDefs;
 import Storage.StorageDefs;
 
+import Support.types;
+
 class BVolume
 {
-	mixin BObject;
+public:
+	mixin(BObject!("be_BVolume", true, null));
+
 }

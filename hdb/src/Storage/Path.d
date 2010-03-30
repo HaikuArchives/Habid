@@ -12,42 +12,44 @@ import Storage.StorageDefs;
 import tango.stdc.posix.sys.types;
 import tango.stdc.stringz;
 
+import Support.types;
+
 extern (C) extern {
-	void *be_BPath_ctor_1(void *);
+	be_BPath * be_BPath_ctor_1(be_BPath *);
 	
-	void *be_BPath_ctor_2(void *, void *path);
+	be_BPath * be_BPath_ctor_2(be_BPath *, be_BPath * path);
 	
-	void *be_BPath_ctor_3(void *, entry_ref*);
+	be_BPath * be_BPath_ctor_3(be_BPath *, entry_ref*);
 	
-	void *be_BPath_ctor_4(void *, void* entry);
+	be_BPath * be_BPath_ctor_4(be_BPath *, be_BEntry * entry);
 	
-	void *be_BPath_ctor_5(void *, char*, char*, bool);
+	be_BPath * be_BPath_ctor_5(be_BPath *, char*, char*, bool);
 	
-	void *be_BPath_ctor_6(void *, void*, char*, bool);
+	be_BPath * be_BPath_ctor_6(be_BPath *, be_BDirectory *, char*, bool);
 
-	void be_BPath_dtor(void *);
+	void be_BPath_dtor(be_BPath *);
 
-	status_t		be_BPath_InitCheck(void *);
+	status_t		be_BPath_InitCheck(be_BPath *);
 
-	status_t		be_BPath_SetTo_1(void *, entry_ref*);
-	status_t		be_BPath_SetTo_2(void *, void*);
-	status_t		be_BPath_SetTo_3(void *, char*, char*, bool);
-	status_t		be_BPath_SetTo_4(void *, void*, char*, bool);
-	void			be_BPath_Unset(void *);
+	status_t		be_BPath_SetTo_1(be_BPath *, entry_ref*);
+	status_t		be_BPath_SetTo_2(be_BPath *, be_BEntry *);
+	status_t		be_BPath_SetTo_3(be_BPath *, char*, char*, bool);
+	status_t		be_BPath_SetTo_4(be_BPath *, be_BDirectory *, char*, bool);
+	void			be_BPath_Unset(be_BPath *);
 
-	status_t		be_BPath_Append(void *, char*, bool);
+	status_t		be_BPath_Append(be_BPath *, char*, bool);
 
-	char*		be_BPath_Path(void *);
-	char*		be_BPath_Leaf(void *);
-	status_t		be_BPath_GetParent(void *, void*);
+	char*		be_BPath_Path(be_BPath *);
+	char*		be_BPath_Leaf(be_BPath *);
+	status_t		be_BPath_GetParent(be_BPath *, be_BPath *);
 	
-	bool be_BPath_operator_equals_1(void *, void *);
+	bool be_BPath_operator_equals_1(be_BPath *, be_BPath *);
 	
-	bool be_BPath_operator_equals_2(void *, char *);
+	bool be_BPath_operator_equals_2(be_BPath *, char *);
 	
-	bool be_BPath_operator_notequals_1(void *, void *);
+	bool be_BPath_operator_notequals_1(be_BPath *, be_BPath *);
 	
-	bool be_BPath_operator_notequals_2(void *, char *);
+	bool be_BPath_operator_notequals_2(be_BPath *, char *);
 
 /*
 BPath&			operator=(const BPath& item);
@@ -55,73 +57,67 @@ BPath&			operator=(const char* path);
 */
 
 	// BFlattenable protocol
-	bool			be_BPath_IsFixedSize(void *);
-	bool			be_BPath_IsFixedSize_super(void *);
-	type_code		be_BPath_TypeCode(void *);
-	type_code		be_BPath_TypeCode_super(void *);
-	ssize_t			be_BPath_FlattenedSize(void *);
-	ssize_t			be_BPath_FlattenedSize_super(void *);
-	status_t		be_BPath_Flatten(void *, void*, ssize_t);
-	status_t		be_BPath_Flatten_super(void *, void*, ssize_t);
-	bool			be_BPath_AllowsTypeCode(void *, type_code);
-	bool			be_BPath_AllowsTypeCode_super(void *, type_code);
-	status_t		be_BPath_Unflatten(void *, type_code, void*, ssize_t);
-	status_t		be_BPath_Unflatten_super(void *, type_code, void*, ssize_t);
+	bool			be_BPath_IsFixedSize_super(be_BPath *);
+	type_code		be_BPath_TypeCode_super(be_BPath *);
+	ssize_t			be_BPath_FlattenedSize_super(be_BPath *);
+	status_t		be_BPath_Flatten_super(be_BPath *, void *, ssize_t);
+	bool			be_BPath_AllowsTypeCode_super(be_BPath *, type_code);
+	status_t		be_BPath_Unflatten_super(be_BPath *, type_code, void *, ssize_t);
 }
 
 extern (C) {
-	bool			bind_BPath_IsFixedSize_virtual(void *bindInstPointer) {
+	bool			bind_BPath_IsFixedSize_virtual(be_BPath * bindInstPointer) {
 		return (cast(BPath)bindInstPointer).IsFixedSize();
 	}
 	
-	type_code		bind_BPath_TypeCode_virtual(void *bindInstPointer) {
+	type_code		bind_BPath_TypeCode_virtual(be_BPath * bindInstPointer) {
 		return (cast(BPath)bindInstPointer).TypeCode();
 	}
-	ssize_t			bind_BPath_FlattenedSize_virtual(void *bindInstPointer) {
+	ssize_t			bind_BPath_FlattenedSize_virtual(be_BPath * bindInstPointer) {
 		return (cast(BPath)bindInstPointer).FlattenedSize();
 	}
-	status_t		bind_BPath_Flatten_virtual(void *bindInstPointer, void* buffer, ssize_t size) {
+	status_t		bind_BPath_Flatten_virtual(be_BPath * bindInstPointer, void* buffer, ssize_t size) {
 		return (cast(BPath)bindInstPointer).Flatten(buffer[0..size]);
 	}
-	bool			bind_BPath_AllowsTypeCode_virtual(void *bindInstPointer, type_code code) {
+	bool			bind_BPath_AllowsTypeCode_virtual(be_BPath * bindInstPointer, type_code code) {
 		return (cast(BPath)bindInstPointer).AllowsTypeCode(code);
 	}
-	status_t		bind_BPath_Unflatten_virtual(void *bindInstPointer, type_code code, void* buffer, ssize_t size) {
+	status_t		bind_BPath_Unflatten_virtual(be_BPath * bindInstPointer, type_code code, void* buffer, ssize_t size) {
 		return (cast(BPath)bindInstPointer).Unflatten(code, buffer[0..size]);
 	}
 }
 
 class BPath : public BFlattenable
 {
-	mixin BObject;
+	mixin(BObject!("be_BPath", false, "be_BFlattenable"));
 	
 	this() {
-		if(fInstancePointer)
-			fInstancePointer = be_BPath_ctor_1(fInstancePointer);
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPath_ctor_1(cast(be_BPath *)this);
 		super();
 	}
 	
 	this(BPath path) {
-		if(fInstancePointer)
-			fInstancePointer = be_BPath_ctor_2(fInstancePointer, path.fInstancePointer);
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPath_ctor_2(cast(be_BPath *)this, path.fInstancePointer);
 		super();
 	}
 	
 	this(ref entry_ref reference) {
-		if(fInstancePointer)
-			fInstancePointer = be_BPath_ctor_3(fInstancePointer, &reference);
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPath_ctor_3(cast(be_BPath *)this, &reference);
 		super();
 	}
 	
 	this(BEntry entry) {
-		if(fInstancePointer)
-			fInstancePointer = be_BPath_ctor_4(fInstancePointer, entry.fInstancePointer);
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPath_ctor_4(cast(be_BPath *)this, entry.fInstancePointer);
 		super();
 	}
 	
 	this(char [] dir, char [] leaf = null, bool normalize = false) {
-		if(fInstancePointer)
-			fInstancePointer = be_BPath_ctor_5(fInstancePointer, 
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPath_ctor_5(cast(be_BPath *)this, 
 												dir == null ? null : toStringz(dir),
 												leaf == null ? null : toStringz(leaf), 
 												normalize);
@@ -129,15 +125,15 @@ class BPath : public BFlattenable
 	}
 	
 	this(BDirectory dir, char [] leaf = null, bool normalize = false) {
-		if(fInstancePointer)
-			fInstancePointer = be_BPath_ctor_6(fInstancePointer, 
+		if(fInstancePointer is null)
+			fInstancePointer = be_BPath_ctor_6(cast(be_BPath *)this, 
 												dir.fInstancePointer, leaf == null ? null : toStringz(leaf),
 												normalize);
 		super();
 	}
 	
 	~this() {
-		if(fInstancePointer)
+		if(fInstancePointer && GetOwnsPointer())
 			be_BPath_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
@@ -212,6 +208,6 @@ class BPath : public BFlattenable
 		return be_BPath_AllowsTypeCode_super(fInstancePointer, code);
 	}
 	status_t		Unflatten(type_code code, void [] buffer) {
-		return be_BPath_Unflatten(fInstancePointer, code, buffer.ptr, buffer.length);
+		return be_BPath_Unflatten_super(fInstancePointer, code, buffer.ptr, buffer.length);
 	}
 }
