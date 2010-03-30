@@ -53,11 +53,11 @@ extern "C" {
 		return ((BMimeTypeBridge *)instPointer)->IsSupertypeOnly();
 	}
 
-	status_t be_BMimeType_GetSupertype(be_BMimeType *instPointer, BMimeTypeBridge *superType) {
+	status_t be_BMimeType_GetSupertype(be_BMimeType *instPointer, be_BMimeType *superType) {
 		return ((BMimeTypeBridge *)instPointer)->GetSupertype((BMimeType *)superType);
 	}
 
-	bool be_BMimeType_operator_equal_1(be_BMimeType *instPointer, BMimeTypeBridge *type) {
+	bool be_BMimeType_operator_equal_1(be_BMimeType *instPointer, be_BMimeType *type) {
 		return *((BMimeTypeBridge *)instPointer) == *((BMimeTypeBridge *)type);
 	}
 
@@ -65,7 +65,7 @@ extern "C" {
 		return *((BMimeTypeBridge *)instPointer) == type;
 	}
 
-	bool be_BMimeType_Contains(be_BMimeType *instPointer, BMimeTypeBridge *type) {
+	bool be_BMimeType_Contains(be_BMimeType *instPointer, be_BMimeType *type) {
 		return ((BMimeTypeBridge *)instPointer)->Contains((BMimeTypeBridge *)type);
 	}
 

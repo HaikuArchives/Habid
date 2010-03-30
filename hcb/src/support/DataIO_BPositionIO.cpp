@@ -142,58 +142,34 @@ extern "C" {
 		delete (BPositionIOProxy *)instPointer;
 	}
 	
-	ssize_t be_BPositionIO_Read(be_BPositionIO *instPointer, void *buffer, size_t size) {
-		return ((BPositionIOProxy *)instPointer)->Read(buffer, size);
-	}
 	ssize_t be_BPositionIO_Read_super(be_BPositionIO *instPointer, void *buffer, size_t size) {
 		return ((BPositionIOProxy *)instPointer)->super_Read(buffer, size);
 	}
 	
-	ssize_t be_BPositionIO_Write(be_BPositionIO *instPointer, const void *buffer, size_t size) {
-		return ((BPositionIOProxy *)instPointer)->Write(buffer, size);
-	}
 	ssize_t be_BPositionIO_Write_super(be_BPositionIO *instPointer, const void *buffer, size_t size) {
 		return ((BPositionIOProxy *)instPointer)->super_Write(buffer, size);
 	}
 	
-	ssize_t be_BPositionIO_ReadAt(be_BPositionIO *instPointer, off_t position, void *buffer, size_t size) {
-		return ((BPositionIOProxy *)instPointer)->ReadAt(position, buffer, size);
-	}
 	ssize_t be_BPositionIO_ReadAt_super(be_BPositionIO *instPointer, off_t position, void *buffer, size_t size) {
 		return ((BPositionIOProxy *)instPointer)->super_ReadAt(position, buffer, size);
 	}
 	
-	ssize_t be_BPositionIO_WriteAt(be_BPositionIO *instPointer, off_t position, const void *buffer, size_t size) {
-		return ((BPositionIOProxy *)instPointer)->WriteAt(position, buffer, size);
-	}
 	ssize_t be_BPositionIO_WriteAt_super(be_BPositionIO *instPointer, off_t position, const void *buffer, size_t size) {
 		return ((BPositionIOProxy *)instPointer)->super_WriteAt(position, buffer, size);
 	}
 	
-	off_t be_BPositionIO_Seek(be_BPositionIO *instPointer, off_t position, uint32 seekMode) {
-		return ((BPositionIOProxy *)instPointer)->Seek(position, seekMode);
-	}
 	off_t be_BPositionIO_Seek_super(be_BPositionIO *instPointer, off_t position, uint32 seekMode) {
 		return ((BPositionIOProxy *)instPointer)->super_Seek(position, seekMode);
 	}
 	
-	off_t be_BPositionIO_Position(be_BPositionIO *instPointer) {
-		return ((BPositionIOProxy *)instPointer)->Position();
-	}
 	off_t be_BPositionIO_Position_super(be_BPositionIO *instPointer) {
 		return ((BPositionIOProxy *)instPointer)->super_Position();
 	}
 	
-	status_t be_BPositionIO_SetSize(be_BPositionIO *instPointer, off_t size) {
-		return ((BPositionIOProxy *)instPointer)->SetSize(size);
-	}
 	status_t be_BPositionIO_SetSize_super(be_BPositionIO *instPointer, off_t size) {
 		return ((BPositionIOProxy *)instPointer)->super_SetSize(size);
 	}
 	
-	status_t be_BPositionIO_GetSize(be_BPositionIO *instPointer, off_t *size) {
-		return ((BPositionIOProxy *)instPointer)->GetSize(size);
-	}
 	status_t be_BPositionIO_GetSize_super(be_BPositionIO *instPointer, off_t *size) {
 		return ((BPositionIOProxy *)instPointer)->super_GetSize(size);
 	}
