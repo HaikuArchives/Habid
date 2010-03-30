@@ -5,52 +5,54 @@ import Support.SupportDefs;
 
 import tango.stdc.posix.sys.types;
 
+import Support.types;
+
 extern (C) extern {
-	void * be_BList_ctor_1(void *, int32 );
-	void * be_BList_ctor_2(void *, void *);
-	void be_BList_dtor(void *);
+	be_BList * be_BList_ctor_1(be_BList *, int32 );
+	be_BList * be_BList_ctor_2(be_BList *, be_BList *);
+	void be_BList_dtor(be_BList *);
 	
-	void * be_BList_operator_assign(void *, void *);
-	bool be_BList_operator_equals(void *, void *);
-	bool be_BList_operator_not_equals(void *, void *);
+	be_BList * be_BList_operator_assign(be_BList *, be_BList *);
+	bool be_BList_operator_equals(be_BList *, be_BList *);
+	bool be_BList_operator_not_equals(be_BList *, be_BList *);
 
 	// Adding and removing items.
-	bool be_BList_AddItem_1(void *, void* , int32);
+	bool be_BList_AddItem_1(be_BList *, void*, int32);
 	
-	bool be_BList_AddItem_2(void *, void* );
-	bool be_BList_AddList_1(void *, void* , int32);
-	bool be_BList_AddList_2(void *, void* );
-	bool be_BList_RemoveItem_1(void *, void* );
-	void* be_BList_RemoveItem_2(void *, int32);
-	bool be_BList_RemoveItems(void *, int32, int32);
-	bool be_BList_ReplaceItem(void *, int32, void*);
-	void be_BList_MakeEmpty(void *);
+	bool be_BList_AddItem_2(be_BList *, void*);
+	bool be_BList_AddList_1(be_BList *, be_BList *, int32);
+	bool be_BList_AddList_2(be_BList *, be_BList *);
+	bool be_BList_RemoveItem_1(be_BList *, void* );
+	void* be_BList_RemoveItem_2(be_BList *, int32);
+	bool be_BList_RemoveItems(be_BList *, int32, int32);
+	bool be_BList_ReplaceItem(be_BList *, int32, void*);
+	void be_BList_MakeEmpty(be_BList *);
 
 	// Reorder items
-	void be_BList_SortItems(void *, int function(void*, void*));
-	bool be_BList_SwapItems(void *, int32, int32);
-	bool be_BList_MoveItem(void *, int32, int32);
+	void be_BList_SortItems(be_BList *, int function(void*, void*));
+	bool be_BList_SwapItems(be_BList *, int32, int32);
+	bool be_BList_MoveItem(be_BList *, int32, int32);
 
 	// Retrieve items
-	void* be_BList_ItemAt(void *, int32);
-	void* be_BList_FirstItem(void *);
-	void* be_BList_ItemAtFast(void *, int32);
+	void* be_BList_ItemAt(be_BList *, int32);
+	void* be_BList_FirstItem(be_BList *);
+	void* be_BList_ItemAtFast(be_BList *, int32);
 									// does not check the array bounds!
 
-	void* be_BList_LastItem(void *);
-	void* be_BList_Items(void *);
+	void* be_BList_LastItem(be_BList *);
+	void* be_BList_Items(be_BList *);
 
 	// Query
-	bool be_BList_HasItem_1(void *, void*);
-	bool be_BList_HasItem_2(void *, void*);
-	int32 be_BList_IndexOf_1(void *, void*);
-	int32 be_BList_IndexOf_2(void *, void*);
-	int32 be_BList_CountItems(void *);
-	bool be_BList_IsEmpty(void *);
+	bool be_BList_HasItem_1(be_BList *, void*);
+	bool be_BList_HasItem_2(be_BList *, void*);
+	int32 be_BList_IndexOf_1(be_BList *, void*);
+	int32 be_BList_IndexOf_2(be_BList *, void*);
+	int32 be_BList_CountItems(be_BList *);
+	bool be_BList_IsEmpty(be_BList *);
 
 	// Iteration
-	void be_BList_DoForEach_1(void *, bool function(void* ));
-	void be_BList_DoForEach_2(void *, bool function(void* , void* ), void* );
+	void be_BList_DoForEach_1(be_BList *, bool function(void* ));
+	void be_BList_DoForEach_2(be_BList *, bool function(void* , void* ), void* );
 }
 
 extern (C) {
@@ -60,31 +62,31 @@ extern (C) {
 final class BList
 {
 public:
-	mixin BObject;
-	
+	mixin(BObject!("be_BList", true, null));
+		
 	this(int32 count = 20) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BList_ctor_1(cast(void *)this, count);
+			fInstancePointer = be_BList_ctor_1(cast(be_BList *)this, count);
 	}
 	
 	this(BList anotherList) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BList_ctor_2(cast(void *)this, anotherList.fInstancePointer);
+			fInstancePointer = be_BList_ctor_2(cast(be_BList *)this, anotherList.fInstancePointer);
 	}
 
 	~this() {
-		if(fInstancePointer)
+		if(fInstancePointer && GetOwnsPointer())
 			be_BList_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
 
-//	void * be_BList_operator_assign(void *, void *);
+//	be_BList * be_BList_operator_assign(be_BList *, be_BList *);
 
 	bool opEquals(BList other) {
 		return be_BList_operator_equals(fInstancePointer, other.fInstancePointer);
 	}
 	
-//	bool be_BList_operator_not_equals(void *, void *);
+//	bool be_BList_operator_not_equals(be_BList *, be_BList *);
 	
 	// Adding and removing items.
 	bool AddItem(void *item, int32 index) {
@@ -95,12 +97,12 @@ public:
 		return be_BList_AddItem_2(fInstancePointer, item);
 	}
 	
-	bool AddList(void *list, int32 index) {
-		return be_BList_AddList_1(fInstancePointer, list, index);
+	bool AddList(BList list, int32 index) {
+		return be_BList_AddList_1(fInstancePointer, list.fInstancePointer, index);
 	}
 	
-	bool AddList(void *list) {
-		return be_BList_AddList_2(fInstancePointer, list);
+	bool AddList(BList list) {
+		return be_BList_AddList_2(fInstancePointer, list.fInstancePointer);
 	}
 	
 	bool RemoveItem(void *item) {
@@ -178,11 +180,11 @@ public:
 
 	// Iteration
 /*
-	void DoForEach(bool function(void *) func) {
+	void DoForEach(bool function(be_BList *) func) {
 		be_BList_DoForEach_1(fInstancePointer, func);
 	}
 	
-	void DoForEach(bool function(void *, void *) func, void *arg2) {
+	void DoForEach(bool function(be_BList *, be_BList *) func, be_BList *arg2) {
 		be_BList_DoForEach_2(fInstancePointer, func, arg2);
 	}
 */

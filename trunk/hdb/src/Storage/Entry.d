@@ -18,6 +18,10 @@ import tango.stdc.stdlib;
 
 import tango.io.Stdout;
 
+import Support.BObject;
+
+import Support.types;
+
 struct entry_ref
 {
 	static entry_ref opCall() {
@@ -75,89 +79,92 @@ extern (C)
 
 extern (C) extern
 {
-	void * be_BEntry_ctor_1(void *);
+	be_BEntry * be_BEntry_ctor_1(be_BEntry *);
 	
-	void * be_BEntry_ctor_2(void *, void *, char *, bool);
-	void * be_BEntry_ctor_3(void *, entry_ref *, bool);
-	void * be_BEntry_ctor_4(void *, char *, bool);
-	void * be_BEntry_ctor_5(void *, void *);
+	be_BEntry * be_BEntry_ctor_2(be_BEntry *, be_BDirectory *, char *, bool);
+	be_BEntry * be_BEntry_ctor_3(be_BEntry *, entry_ref *, bool);
+	be_BEntry * be_BEntry_ctor_4(be_BEntry *, char *, bool);
+	be_BEntry * be_BEntry_ctor_5(be_BEntry *, be_BEntry *);
 
-	void be_BEntry_dtor(void *);
+	void be_BEntry_dtor(be_BEntry *);
 	
-	status_t be_BEntry_InitCheck(void *);
+	status_t be_BEntry_InitCheck(be_BEntry *);
 
-	bool be_BEntry_Exists(void *);
+	bool be_BEntry_Exists(be_BEntry *);
 
-	status_t be_BEntry_GetStat(void *, stat_t *);
-	status_t be_BEntry_GetStat_super(void *, stat_t *);
+	status_t be_BEntry_GetStat(be_BEntry *, stat_t *);
+	status_t be_BEntry_GetStat_super(be_BEntry *, stat_t *);
 
-	status_t be_BEntry_SetTo_1(void *, void *, char *, bool);
+	status_t be_BEntry_SetTo_1(be_BEntry *, be_BDirectory *, char *, bool);
 	
-	status_t be_BEntry_SetTo_2(void *, entry_ref *, bool);
+	status_t be_BEntry_SetTo_2(be_BEntry *, entry_ref *, bool);
 	
-	status_t be_BEntry_SetTo_3(void *, char *, bool);
+	status_t be_BEntry_SetTo_3(be_BEntry *, char *, bool);
 	
-	void be_BEntry_Unset(void *);
+	void be_BEntry_Unset(be_BEntry *);
 
-	status_t be_BEntry_GetRef(void *, entry_ref *);
+	status_t be_BEntry_GetRef(be_BEntry *, entry_ref *);
 	
-	status_t be_BEntry_GetPath(void *, void *);
+	status_t be_BEntry_GetPath(be_BEntry *, be_BPath *);
 	
-	status_t be_BEntry_GetParent_1(void *, void *);
+	status_t be_BEntry_GetParent_1(be_BEntry *, be_BEntry *);
 	
-	status_t be_BEntry_GetParent_2(void *, void*);
+	status_t be_BEntry_GetParent_2(be_BEntry *, be_BDirectory *);
 	
-	status_t be_BEntry_GetName(void *, char *);
+	status_t be_BEntry_GetName(be_BEntry *, char *);
 
-	status_t be_BEntry_Rename(void *, char *, bool);
+	status_t be_BEntry_Rename(be_BEntry *, char *, bool);
 	
-	status_t be_BEntry_MoveTo(void *, void *, char *, bool);
+	status_t be_BEntry_MoveTo(be_BEntry *, be_BDirectory *, char *, bool);
 	
-	status_t be_BEntry_Remove(void *);
+	status_t be_BEntry_Remove(be_BEntry *);
 	
-	status_t be_BEntry_operator_equals(void *, void *);
+	status_t be_BEntry_operator_equals(be_BEntry *, be_BEntry *);
 	
-	status_t be_BEntry_operator_notequals(void *, void *);
+	status_t be_BEntry_operator_notequals(be_BEntry *, be_BEntry *);
 	
-	void * be_BEntry_operator_assign(void *, void *);
+	be_BEntry * be_BEntry_operator_assign(be_BEntry *, be_BEntry *);
 }
 
 class BEntry : BStatable
 {
+public:
+	mixin(BObject!("be_BEntry", false, "be_BStatable"));
+	
 	this() {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BEntry_ctor_1(cast(void *)this);
+			fInstancePointer = be_BEntry_ctor_1(cast(be_BEntry *)this);
 		
 		super();
 	}
 	
 	this(BDirectory dir, char [] path, bool traverse = false) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BEntry_ctor_2(cast(void *)this, dir.fInstancePointer, toStringz(path), traverse);
+			fInstancePointer = be_BEntry_ctor_2(cast(be_BEntry *)this, dir.fInstancePointer, toStringz(path), traverse);
 		super();
 	}
 	
 	this(ref entry_ref reference, bool traverse = false) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BEntry_ctor_3(cast(void *)this, &reference, traverse);
+			fInstancePointer = be_BEntry_ctor_3(cast(be_BEntry *)this, &reference, traverse);
 		super();
 	}
 	
 	this(char [] path, bool traverse = false) {
 		if(fInstancePointer is null) {
-			fInstancePointer = be_BEntry_ctor_4(cast(void *)this, toStringz(path), traverse);
+			fInstancePointer = be_BEntry_ctor_4(cast(be_BEntry *)this, toStringz(path), traverse);
 		}
 		super();
 	}
 	
 	this(BEntry entry) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BEntry_ctor_5(cast(void *)this, entry.fInstancePointer);
+			fInstancePointer = be_BEntry_ctor_5(cast(be_BEntry *)this, entry.fInstancePointer);
 		super();
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BEntry_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}

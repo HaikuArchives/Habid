@@ -46,7 +46,11 @@ src/Support/StopWatch.d
 
 src/Support/types.d
 
+src/App/Handler.d
+src/App/Looper.d
 src/App/Message.d
+src/App/MessageFilter.d
+src/App/Messenger.d
 )
 
 SET(BED_INCLUDES

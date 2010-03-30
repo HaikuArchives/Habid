@@ -6,30 +6,32 @@ import Support.SupportDefs;
 import tango.stdc.stringz;
 import tango.stdc.posix.sys.types;
 
-extern (C) extern {
-	void * be_BStopWatch_ctor(void *, char*, bool);
-	void be_BStopWatch_dtor(void *);
+import Support.types;
 
-	void be_BStopWatch_Suspend(void *);
-	void be_BStopWatch_Resume(void *);
-	bigtime_t be_BStopWatch_Lap(void *);
-	bigtime_t be_BStopWatch_ElapsedTime(void *);
-	void be_BStopWatch_Reset(void *);
-	char*	be_BStopWatch_Name(void *);
+extern (C) extern {
+	be_BStopWatch * be_BStopWatch_ctor(be_BStopWatch *, char*, bool);
+	void be_BStopWatch_dtor(be_BStopWatch *);
+
+	void be_BStopWatch_Suspend(be_BStopWatch *);
+	void be_BStopWatch_Resume(be_BStopWatch *);
+	bigtime_t be_BStopWatch_Lap(be_BStopWatch *);
+	bigtime_t be_BStopWatch_ElapsedTime(be_BStopWatch *);
+	void be_BStopWatch_Reset(be_BStopWatch *);
+	char*	be_BStopWatch_Name(be_BStopWatch *);
 }
 
 final class BStopWatch
 {
 public:
-	mixin BObject;
+	mixin(BObject!("be_BStopWatch", true, null));
 	
 	this(char [] name, bool silent = false) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BStopWatch_ctor(cast(void *)this, toStringz(name), silent);
+			fInstancePointer = be_BStopWatch_ctor(cast(be_BStopWatch *)this, toStringz(name), silent);
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BStopWatch_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}

@@ -7,33 +7,30 @@ import App.Message;
 
 import tango.stdc.posix.sys.types;
 
+import Support.types;
+
 extern (C) {
-	status_t bind_BArchivable_Archive_virtual(void *bindInstPointer, void *into, bool deep) {
-		BMessage msg = new BMessage(into);
+	status_t bind_BArchivable_Archive_virtual(be_BArchivable * bindInstPointer, be_BMessage *into, bool deep) {
+		BMessage msg = new BMessage(into, false);
+
 		return (cast(BArchivable)bindInstPointer).Archive(msg, deep);
 	}
 	
-	status_t bind_BArchivable_Perform_virtual(void *bindInstPointer, perform_code d, void *arg) {
+	status_t bind_BArchivable_Perform_virtual(be_BArchivable * bindInstPointer, perform_code d, void *arg) {
 		return (cast(BArchivable)bindInstPointer).Perform(d, arg);
 	}
 
 }
 
 extern (C) extern {
-	void * be_BArchivable_ctor_1(void *bindInstPointer);
+	be_BArchivable *	be_BArchivable_ctor_1(be_BArchivable *);
+	be_BArchivable *	be_BArchivable_ctor_2(be_BArchivable *, be_BMessage *);
+	void 				be_BArchivable_dtor(be_BArchivable *);
 	
-	void * be_BArchivable_ctor_2(void *bindInstPointer, void *from);
-	
-	void be_BArchivable_dtor(void *instPointer);
-	
-	status_t be_BArchivable_Archive(void *instPointer, void* into, bool deep);
-
-	status_t be_BArchivable_Archive_super(void *instPointer, void* into, bool deep);
+	status_t 			be_BArchivable_Archive_super(be_BArchivable *, be_BMessage *, bool);
 
 	// Private or reserved
-	status_t be_BArchivable_Perform(void *instPointer, perform_code d, void* arg);
-
-	status_t be_BArchivable_Perform_super(void *instPointer, perform_code d, void* arg);
+	status_t 			be_BArchivable_Perform_super(be_BArchivable *, perform_code, void* arg);
 }
 
 extern (C) {
@@ -43,27 +40,25 @@ extern (C) {
 class BArchivable
 {
 public:
-	mixin BObject;
+	mixin(BObject!("be_BArchivable", true, null));
 	
-	this(void *instancePointer = null) {
-		if(fInstancePointer is null && instancePointer is null)
-			fInstancePointer = be_BArchivable_ctor_1(cast(void *)this);
-		else
-			fInstancePointer = instancePointer;
+	this() {
+		if(fInstancePointer is null)
+			fInstancePointer = be_BArchivable_ctor_1(cast(be_BArchivable *)this);
 	}
 	
 	this(BMessage from) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BArchivable_ctor_2(cast(void *)this, from.fInstancePointer);
+			fInstancePointer = be_BArchivable_ctor_2(cast(be_BArchivable *)this, from.fInstancePointer);
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)	
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BArchivable_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
 	
-	status_t Archive(BMessage into, bool deep = true) {
+	status_t Archive(inout BMessage into, bool deep = true) {
 		return be_BArchivable_Archive_super(fInstancePointer, into.fInstancePointer, deep);
 	}
 

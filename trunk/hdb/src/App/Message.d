@@ -16,186 +16,188 @@ import tango.stdc.stdlib;
 import tango.stdc.stringz;
 import tango.io.Stdout;
 
+import Support.types;
+
 extern (C) extern
 {
-	void * be_BMessage_ctor_1(void *bindInstPointer);
-	void * be_BMessage_ctor_2(void *bindInstPointer, uint32 what);
-	void * be_BMessage_ctor_3(void *bindInstPointer, void *other);
-	void be_BMessage_dtor(void *);
+	be_BMessage * be_BMessage_ctor_1(be_BMessage * bindInstPointer);
+	be_BMessage * be_BMessage_ctor_2(be_BMessage * bindInstPointer, uint32 what);
+	be_BMessage * be_BMessage_ctor_3(be_BMessage * bindInstPointer, be_BMessage * other);
+	void be_BMessage_dtor(be_BMessage *);
 	
-	void * be_BMessage_operator_assign(void *, void *other);
+	be_BMessage * be_BMessage_operator_assign(be_BMessage *, be_BMessage * other);
 
 		// Statistics and misc info
-	status_t be_BMessage_GetInfo_1(void *, type_code typeRequested, int32 index, char **nameFound, type_code *typeFound, int32 *countFound);
-	status_t be_BMessage_GetInfo_2(void *, char *name, type_code *typeFound, int32 *countFound);
-	status_t be_BMessage_GetInfo_3(void *, char *name, type_code *typeFound, bool *fixedSize);
-	int32 be_BMessage_CountNames(void *, type_code type);
-	bool be_BMessage_IsEmpty(void *);
-	bool be_BMessage_IsSystem(void *);
-	bool be_BMessage_IsReply(void *);
-	void be_BMessage_PrintToStream(void *);
+	status_t be_BMessage_GetInfo_1(be_BMessage *, type_code typeRequested, int32 index, char **nameFound, type_code *typeFound, int32 *countFound);
+	status_t be_BMessage_GetInfo_2(be_BMessage *, char *name, type_code *typeFound, int32 *countFound);
+	status_t be_BMessage_GetInfo_3(be_BMessage *, char *name, type_code *typeFound, bool *fixedSize);
+	int32 be_BMessage_CountNames(be_BMessage *, type_code type);
+	bool be_BMessage_IsEmpty(be_BMessage *);
+	bool be_BMessage_IsSystem(be_BMessage *);
+	bool be_BMessage_IsReply(be_BMessage *);
+	void be_BMessage_PrintToStream(be_BMessage *);
 
-	status_t be_BMessage_Rename(void *, char *oldEntry, char *newEntry);
+	status_t be_BMessage_Rename(be_BMessage *, char *oldEntry, char *newEntry);
 
 	// Delivery info
-	bool be_BMessage_WasDelivered(void *);
-	bool be_BMessage_IsSourceWaiting(void *);
-	bool be_BMessage_IsSourceRemote(void *);
+	bool be_BMessage_WasDelivered(be_BMessage *);
+	bool be_BMessage_IsSourceWaiting(be_BMessage *);
+	bool be_BMessage_IsSourceRemote(be_BMessage *);
 //	BMessenger		ReturnAddress() const;
-	void * be_BMessage_Previous(void *);
-	bool be_BMessage_WasDropped(void *);
+	be_BMessage * be_BMessage_Previous(be_BMessage *);
+	bool be_BMessage_WasDropped(be_BMessage *);
 //	BPoint	DropPoint(BPoint *offset = NULL) const;
 
 
 	// Replying
-	status_t be_BMessage_SendReply_1(void *, uint32 command, void *replyTo);
-	status_t be_BMessage_SendReply_2(void *, void *reply, void *replyTo,
+	status_t be_BMessage_SendReply_1(be_BMessage *, uint32 command, be_BMessage * replyTo);
+	status_t be_BMessage_SendReply_2(be_BMessage *, be_BMessage * reply, be_BMessage * replyTo,
 							bigtime_t timeout);
-	status_t be_BMessage_SendReply_3(void *, void *reply, void *replyTo,
+	status_t be_BMessage_SendReply_3(be_BMessage *, be_BMessage * reply, be_BMessage * replyTo,
 							bigtime_t timeout);
-	status_t be_BMessage_SendReply_4(void *, uint32 command, void *replyToReply);
-	status_t be_BMessage_SendReply_5(void *, void *the_reply, void *replyToReply,
+	status_t be_BMessage_SendReply_4(be_BMessage *, uint32 command, be_BMessage * replyToReply);
+	status_t be_BMessage_SendReply_5(be_BMessage *, be_BMessage * the_reply, be_BMessage * replyToReply,
 							bigtime_t sendTimeout, bigtime_t replyTimeout);
 
 	// Flattening data
-	ssize_t be_BMessage_FlattenedSize(void *);
-	status_t be_BMessage_Flatten_1(void *, char *buffer, ssize_t size);
-	status_t be_BMessage_Flatten_2(void *, void *stream, ssize_t *size);
-	status_t be_BMessage_Unflatten_1(void *, char *flatBuffer);
-	status_t be_BMessage_Unflatten_2(void *, void *stream);
+	ssize_t be_BMessage_FlattenedSize(be_BMessage *);
+	status_t be_BMessage_Flatten_1(be_BMessage *, char *buffer, ssize_t size);
+	status_t be_BMessage_Flatten_2(be_BMessage *, be_BDataIO *stream, ssize_t *size);
+	status_t be_BMessage_Unflatten_1(be_BMessage *, char *flatBuffer);
+	status_t be_BMessage_Unflatten_2(be_BMessage *, be_BDataIO *stream);
 
 	// Specifiers (scripting)
-	status_t be_BMessage_AddSpecifier_1(void *, char *property);
-	status_t be_BMessage_AddSpecifier_2(void *, char *property, int32 index);
-	status_t be_BMessage_AddSpecifier_3(void *, char *property, int32 index, int32 range);
-	status_t be_BMessage_AddSpecifier_4(void *, char *property, char *name);
-	status_t be_BMessage_AddSpecifier_5(void *, void *specifier);
+	status_t be_BMessage_AddSpecifier_1(be_BMessage *, char *property);
+	status_t be_BMessage_AddSpecifier_2(be_BMessage *, char *property, int32 index);
+	status_t be_BMessage_AddSpecifier_3(be_BMessage *, char *property, int32 index, int32 range);
+	status_t be_BMessage_AddSpecifier_4(be_BMessage *, char *property, char *name);
+	status_t be_BMessage_AddSpecifier_5(be_BMessage *, be_BMessage * specifier);
 
-	status_t be_BMessage_SetCurrentSpecifier(void *, int32 index);
-	status_t be_BMessage_GetCurrentSpecifier(void *, int32 *index, void *specifier, int32 *what, char **property);
-	bool be_BMessage_HasSpecifiers(void *);
-	status_t be_BMessage_PopSpecifier(void *);
+	status_t be_BMessage_SetCurrentSpecifier(be_BMessage *, int32 index);
+	status_t be_BMessage_GetCurrentSpecifier(be_BMessage *, int32 *index, be_BMessage *specifier, int32 *what, char **property);
+	bool be_BMessage_HasSpecifiers(be_BMessage *);
+	status_t be_BMessage_PopSpecifier(be_BMessage *);
 
 
 	// Adding data
-	status_t be_BMessage_AddRect(void *, char *name, void *aRect);
-	status_t be_BMessage_AddPoint(void *, char *name, void *aPoint);
-	status_t be_BMessage_AddString_1(void *, char *name, char *aString);
-	status_t be_BMessage_AddString_2(void *, char *name, void *aString);
-	status_t be_BMessage_AddInt8(void *, char *name, int8 value);
-	status_t be_BMessage_AddUInt8(void *, char *name, uint8 value);
-	status_t be_BMessage_AddInt16(void *, char *name, int16 value);
-	status_t be_BMessage_AddUInt16(void *, char *name, uint16 value);
-	status_t be_BMessage_AddInt32(void *, char *name, int32 value);
-	status_t be_BMessage_AddUInt32(void *, char *name, uint32 value);
-	status_t be_BMessage_AddInt64(void *, char *name, int64 value);
-	status_t be_BMessage_AddUInt64(void *, char *name, uint64 value);
-	status_t be_BMessage_AddBool(void *, char *name, bool aBoolean);
-	status_t be_BMessage_AddFloat(void *, char *name, float aFloat);
-	status_t be_BMessage_AddDouble(void *, char *name, double aDouble);
-	status_t be_BMessage_AddPointer(void *, char *name, void *aPointer);
-	status_t be_BMessage_AddMessenger(void *, char *name, void *messenger);
-	status_t be_BMessage_AddRef(void *, char *name, entry_ref *);
-	status_t be_BMessage_AddMessage(void *, char *name, void *message);
-	status_t be_BMessage_AddFlat(void *, char *name, void *object, int32 count);
-	status_t be_BMessage_AddData(void *, char *name, type_code type, void *data, ssize_t numBytes, bool isFixedSize, int32 count);
+	status_t be_BMessage_AddRect(be_BMessage *, char *name, be_BRect * aRect);
+	status_t be_BMessage_AddPoint(be_BMessage *, char *name, be_BPoint * aPoint);
+	status_t be_BMessage_AddString_1(be_BMessage *, char *name, char *aString);
+	status_t be_BMessage_AddString_2(be_BMessage *, char *name, be_BString * aString);
+	status_t be_BMessage_AddInt8(be_BMessage *, char *name, int8 value);
+	status_t be_BMessage_AddUInt8(be_BMessage *, char *name, uint8 value);
+	status_t be_BMessage_AddInt16(be_BMessage *, char *name, int16 value);
+	status_t be_BMessage_AddUInt16(be_BMessage *, char *name, uint16 value);
+	status_t be_BMessage_AddInt32(be_BMessage *, char *name, int32 value);
+	status_t be_BMessage_AddUInt32(be_BMessage *, char *name, uint32 value);
+	status_t be_BMessage_AddInt64(be_BMessage *, char *name, int64 value);
+	status_t be_BMessage_AddUInt64(be_BMessage *, char *name, uint64 value);
+	status_t be_BMessage_AddBool(be_BMessage *, char *name, bool aBoolean);
+	status_t be_BMessage_AddFloat(be_BMessage *, char *name, float aFloat);
+	status_t be_BMessage_AddDouble(be_BMessage *, char *name, double aDouble);
+	status_t be_BMessage_AddPointer(be_BMessage *, char *name, void *aPointer);
+	status_t be_BMessage_AddMessenger(be_BMessage *, char *name, be_BMessenger * messenger);
+	status_t be_BMessage_AddRef(be_BMessage *, char *name, entry_ref *);
+	status_t be_BMessage_AddMessage(be_BMessage *, char *name, be_BMessage * message);
+	status_t be_BMessage_AddFlat(be_BMessage *, char *name, be_BFlattenable * object, int32 count);
+	status_t be_BMessage_AddData(be_BMessage *, char *name, type_code type, void *data, ssize_t numBytes, bool isFixedSize, int32 count);
 
 
 	// Removing data
-	status_t be_BMessage_RemoveData(void *, char *name, int32 index);
-	status_t be_BMessage_RemoveName(void *, char *name);
-	status_t be_BMessage_MakeEmpty(void *);
+	status_t be_BMessage_RemoveData(be_BMessage *, char *name, int32 index);
+	status_t be_BMessage_RemoveName(be_BMessage *, char *name);
+	status_t be_BMessage_MakeEmpty(be_BMessage *);
 
 	// Finding data
-	status_t be_BMessage_FindRect_1(void *, char *name, void *rect);
-	status_t be_BMessage_FindRect_2(void *, char *name, int32 index, void *rect);
-	status_t be_BMessage_FindPoint_1(void *, char *name, void *point);
-	status_t be_BMessage_FindPoint_2(void *, char *name, int32 index, void *point);
-	status_t be_BMessage_FindString_1(void *, char *name, char **string);
-	status_t be_BMessage_FindString_2(void *, char *name, int32 index, char **string);
-	status_t be_BMessage_FindString_3(void *, char *name, void *string);
-	status_t be_BMessage_FindString_4(void *, char *name, int32 index, void *string);
-	status_t be_BMessage_FindInt8_1(void *, char *name, int8 *value);
-	status_t be_BMessage_FindInt8_2(void *, char *name, int32 index, int8 *value);
-	status_t be_BMessage_FindUInt8_1(void *, char *name, uint8 *value);
-	status_t be_BMessage_FindUInt8_2(void *, char *name, int32 index, uint8 *value);
-	status_t be_BMessage_FindInt16_1(void *, char *name, int16 *value);
-	status_t be_BMessage_FindInt16_2(void *, char *name, int32 index, int16 *value);
-	status_t be_BMessage_FindUInt16_1(void *, char *name, uint16 *value);
-	status_t be_BMessage_FindUInt16_2(void *, char *name, int32 index, uint16 *value);
-	status_t be_BMessage_FindInt32_1(void *, char *name, int32 *value);
-	status_t be_BMessage_FindInt32_2(void *, char *name, int32 index, int32 *value);
-	status_t be_BMessage_FindUInt32_1(void *, char *name, uint32 *value);
-	status_t be_BMessage_FindUInt32_2(void *, char *name, int32 index, uint32 *value);
-	status_t be_BMessage_FindInt64_1(void *, char *name, int64 *value);
-	status_t be_BMessage_FindInt64_2(void *, char *name, int32 index, int64 *value);
-	status_t be_BMessage_FindUInt64_1(void *, char *name, uint64 *value);
-	status_t be_BMessage_FindUInt64_2(void *, char *name, int32 index, uint64 *value);
-	status_t be_BMessage_FindBool_1(void *, char *name, bool *value);
-	status_t be_BMessage_FindBool_2(void *, char *name, int32 index, bool *value);
-	status_t be_BMessage_FindFloat_1(void *, char *name, float *value);
-	status_t be_BMessage_FindFloat_2(void *, char *name, int32 index, float *value);
-	status_t be_BMessage_FindDouble_1(void *, char *name, double *value);
-	status_t be_BMessage_FindDouble_2(void *, char *name, int32 index, double *value);
-	status_t be_BMessage_FindPointer_1(void *, char *name, void **pointer);
-	status_t be_BMessage_FindPointer_2(void *, char *name, int32 index,  void **pointer);
-	status_t be_BMessage_FindMessenger_1(void *, char *name, void *messenger);
-	status_t be_BMessage_FindMessenger_2(void *, char *name, int32 index, void *messenger);
-	status_t be_BMessage_FindRef_1(void *, char *name, entry_ref *);
-	status_t be_BMessage_FindRef_2(void *, char *name, int32 index, entry_ref *);
-	status_t be_BMessage_FindMessage_1(void *, char *name, void *message);
-	status_t be_BMessage_FindMessage_2(void *, char *name, int32 index, void *message);
-	status_t be_BMessage_FindFlat_1(void *, char *name, void *object);
-	status_t be_BMessage_FindFlat_2(void *, char *name, int32 index, void *object);
-	status_t be_BMessage_FindData_1(void *, char *name, type_code type,
+	status_t be_BMessage_FindRect_1(be_BMessage *, char *name, be_BRect * rect);
+	status_t be_BMessage_FindRect_2(be_BMessage *, char *name, int32 index, be_BRect * rect);
+	status_t be_BMessage_FindPoint_1(be_BMessage *, char *name, be_BPoint * point);
+	status_t be_BMessage_FindPoint_2(be_BMessage *, char *name, int32 index, be_BPoint * point);
+	status_t be_BMessage_FindString_1(be_BMessage *, char *name, char **string);
+	status_t be_BMessage_FindString_2(be_BMessage *, char *name, int32 index, char **string);
+	status_t be_BMessage_FindString_3(be_BMessage *, char *name, be_BString * string);
+	status_t be_BMessage_FindString_4(be_BMessage *, char *name, int32 index, be_BString * string);
+	status_t be_BMessage_FindInt8_1(be_BMessage *, char *name, int8 *value);
+	status_t be_BMessage_FindInt8_2(be_BMessage *, char *name, int32 index, int8 *value);
+	status_t be_BMessage_FindUInt8_1(be_BMessage *, char *name, uint8 *value);
+	status_t be_BMessage_FindUInt8_2(be_BMessage *, char *name, int32 index, uint8 *value);
+	status_t be_BMessage_FindInt16_1(be_BMessage *, char *name, int16 *value);
+	status_t be_BMessage_FindInt16_2(be_BMessage *, char *name, int32 index, int16 *value);
+	status_t be_BMessage_FindUInt16_1(be_BMessage *, char *name, uint16 *value);
+	status_t be_BMessage_FindUInt16_2(be_BMessage *, char *name, int32 index, uint16 *value);
+	status_t be_BMessage_FindInt32_1(be_BMessage *, char *name, int32 *value);
+	status_t be_BMessage_FindInt32_2(be_BMessage *, char *name, int32 index, int32 *value);
+	status_t be_BMessage_FindUInt32_1(be_BMessage *, char *name, uint32 *value);
+	status_t be_BMessage_FindUInt32_2(be_BMessage *, char *name, int32 index, uint32 *value);
+	status_t be_BMessage_FindInt64_1(be_BMessage *, char *name, int64 *value);
+	status_t be_BMessage_FindInt64_2(be_BMessage *, char *name, int32 index, int64 *value);
+	status_t be_BMessage_FindUInt64_1(be_BMessage *, char *name, uint64 *value);
+	status_t be_BMessage_FindUInt64_2(be_BMessage *, char *name, int32 index, uint64 *value);
+	status_t be_BMessage_FindBool_1(be_BMessage *, char *name, bool *value);
+	status_t be_BMessage_FindBool_2(be_BMessage *, char *name, int32 index, bool *value);
+	status_t be_BMessage_FindFloat_1(be_BMessage *, char *name, float *value);
+	status_t be_BMessage_FindFloat_2(be_BMessage *, char *name, int32 index, float *value);
+	status_t be_BMessage_FindDouble_1(be_BMessage *, char *name, double *value);
+	status_t be_BMessage_FindDouble_2(be_BMessage *, char *name, int32 index, double *value);
+	status_t be_BMessage_FindPointer_1(be_BMessage *, char *name, void **pointer);
+	status_t be_BMessage_FindPointer_2(be_BMessage *, char *name, int32 index, void **pointer);
+	status_t be_BMessage_FindMessenger_1(be_BMessage *, char *name, be_BMessenger * messenger);
+	status_t be_BMessage_FindMessenger_2(be_BMessage *, char *name, int32 index, be_BMessenger * messenger);
+	status_t be_BMessage_FindRef_1(be_BMessage *, char *name, entry_ref *);
+	status_t be_BMessage_FindRef_2(be_BMessage *, char *name, int32 index, entry_ref *);
+	status_t be_BMessage_FindMessage_1(be_BMessage *, char *name, be_BMessage * message);
+	status_t be_BMessage_FindMessage_2(be_BMessage *, char *name, int32 index, be_BMessage * message);
+	status_t be_BMessage_FindFlat_1(be_BMessage *, char *name, be_BFlattenable * object);
+	status_t be_BMessage_FindFlat_2(be_BMessage *, char *name, int32 index, be_BFlattenable * object);
+	status_t be_BMessage_FindData_1(be_BMessage *, char *name, type_code type,
 							void **data, ssize_t *numBytes);
-	status_t be_BMessage_FindData_2(void *, char *name, type_code type, int32 index,
+	status_t be_BMessage_FindData_2(be_BMessage *, char *name, type_code type, int32 index,
 							void **data, ssize_t *numBytes);
 
 	// Replacing data
-	status_t be_BMessage_ReplaceRect_1(void *, char *name, void *aRect);
-	status_t be_BMessage_ReplaceRect_2(void *, char *name, int32 index, void *aRect);
-	status_t be_BMessage_ReplacePoint_1(void *, char *name, void *aPoint);
-	status_t be_BMessage_ReplacePoint_2(void *, char *name, int32 index, void *aPoint);
-	status_t be_BMessage_ReplaceString_1(void *, char *name, char *aString);
-	status_t be_BMessage_ReplaceString_2(void *, char *name, int32 index, char *aString);
-	status_t be_BMessage_ReplaceString_3(void *, char *name, void *aString);
-	status_t be_BMessage_ReplaceString_4(void *, char *name, int32 index, void *aString);
-	status_t be_BMessage_ReplaceInt8_1(void *, char *name, int8 value);
-	status_t be_BMessage_ReplaceInt8_2(void *, char *name, int32 index, int8 value);
-	status_t be_BMessage_ReplaceUInt8_1(void *, char *name, uint8 value);
-	status_t be_BMessage_ReplaceUInt8_2(void *, char *name, int32 index, uint8 value);
-	status_t be_BMessage_ReplaceInt16_1(void *, char *name, int16 value);
-	status_t be_BMessage_ReplaceInt16_2(void *, char *name, int32 index, int16 value);
-	status_t be_BMessage_ReplaceUInt16_1(void *, char *name, uint16 value);
-	status_t be_BMessage_ReplaceUInt16_2(void *, char *name, int32 index, uint16 value);
-	status_t be_BMessage_ReplaceInt32_1(void *, char *name, int32 value);
-	status_t be_BMessage_ReplaceInt32_2(void *, char *name, int32 index, int32 value);
-	status_t be_BMessage_ReplaceUInt32_1(void *, char *name, uint32 value);
-	status_t be_BMessage_ReplaceUInt32_2(void *, char *name, int32 index, uint32 value);
-	status_t be_BMessage_ReplaceInt64_1(void *, char *name, int64 value);
-	status_t be_BMessage_ReplaceInt64_2(void *, char *name, int32 index, int64 value);
-	status_t be_BMessage_ReplaceUInt64_1(void *, char *name, uint64 value);
-	status_t be_BMessage_ReplaceUInt64_2(void *, char *name, int32 index, uint64 value);
-	status_t be_BMessage_ReplaceBool_1(void *, char *name, bool aBoolean);
-	status_t be_BMessage_ReplaceBool_2(void *, char *name, int32 index, bool aBoolean);
-	status_t be_BMessage_ReplaceFloat_1(void *, char *name, float aFloat);
-	status_t be_BMessage_ReplaceFloat_2(void *, char *name, int32 index, float aFloat);
-	status_t be_BMessage_ReplaceDouble_1(void *, char *name, double aDouble);
-	status_t be_BMessage_ReplaceDouble_2(void *, char *name, int32 index, double aDouble);
-	status_t be_BMessage_ReplacePointer_1(void *, char *name, void *pointer);
-	status_t be_BMessage_ReplacePointer_2(void *, char *name, int32 index, void *pointer);
-	status_t be_BMessage_ReplaceMessenger_1(void *, char *name, void *messenger);
-	status_t be_BMessage_ReplaceMessenger_2(void *, char *name, int32 index, void *messenger);
-	status_t be_BMessage_ReplaceRef_1(void *, char *name,entry_ref *);
-	status_t be_BMessage_ReplaceRef_2(void *, char *name, int32 index, entry_ref *);
-	status_t be_BMessage_ReplaceMessage_1(void *, char *name, void *message);
-	status_t be_BMessage_ReplaceMessage_2(void *, char *name, int32 index, void *message);
-	status_t be_BMessage_ReplaceFlat_1(void *, char *name, void *object);
-	status_t be_BMessage_ReplaceFlat_2(void *, char *name, int32 index, void *object);
-	status_t be_BMessage_ReplaceData_1(void *, char *name, type_code type,
+	status_t be_BMessage_ReplaceRect_1(be_BMessage *, char *name, be_BRect * aRect);
+	status_t be_BMessage_ReplaceRect_2(be_BMessage *, char *name, int32 index, be_BRect * aRect);
+	status_t be_BMessage_ReplacePoint_1(be_BMessage *, char *name, be_BPoint * aPoint);
+	status_t be_BMessage_ReplacePoint_2(be_BMessage *, char *name, int32 index, be_BPoint * aPoint);
+	status_t be_BMessage_ReplaceString_1(be_BMessage *, char *name, char *aString);
+	status_t be_BMessage_ReplaceString_2(be_BMessage *, char *name, int32 index, char *aString);
+	status_t be_BMessage_ReplaceString_3(be_BMessage *, char *name, be_BString * aString);
+	status_t be_BMessage_ReplaceString_4(be_BMessage *, char *name, int32 index, be_BString * aString);
+	status_t be_BMessage_ReplaceInt8_1(be_BMessage *, char *name, int8 value);
+	status_t be_BMessage_ReplaceInt8_2(be_BMessage *, char *name, int32 index, int8 value);
+	status_t be_BMessage_ReplaceUInt8_1(be_BMessage *, char *name, uint8 value);
+	status_t be_BMessage_ReplaceUInt8_2(be_BMessage *, char *name, int32 index, uint8 value);
+	status_t be_BMessage_ReplaceInt16_1(be_BMessage *, char *name, int16 value);
+	status_t be_BMessage_ReplaceInt16_2(be_BMessage *, char *name, int32 index, int16 value);
+	status_t be_BMessage_ReplaceUInt16_1(be_BMessage *, char *name, uint16 value);
+	status_t be_BMessage_ReplaceUInt16_2(be_BMessage *, char *name, int32 index, uint16 value);
+	status_t be_BMessage_ReplaceInt32_1(be_BMessage *, char *name, int32 value);
+	status_t be_BMessage_ReplaceInt32_2(be_BMessage *, char *name, int32 index, int32 value);
+	status_t be_BMessage_ReplaceUInt32_1(be_BMessage *, char *name, uint32 value);
+	status_t be_BMessage_ReplaceUInt32_2(be_BMessage *, char *name, int32 index, uint32 value);
+	status_t be_BMessage_ReplaceInt64_1(be_BMessage *, char *name, int64 value);
+	status_t be_BMessage_ReplaceInt64_2(be_BMessage *, char *name, int32 index, int64 value);
+	status_t be_BMessage_ReplaceUInt64_1(be_BMessage *, char *name, uint64 value);
+	status_t be_BMessage_ReplaceUInt64_2(be_BMessage *, char *name, int32 index, uint64 value);
+	status_t be_BMessage_ReplaceBool_1(be_BMessage *, char *name, bool aBoolean);
+	status_t be_BMessage_ReplaceBool_2(be_BMessage *, char *name, int32 index, bool aBoolean);
+	status_t be_BMessage_ReplaceFloat_1(be_BMessage *, char *name, float aFloat);
+	status_t be_BMessage_ReplaceFloat_2(be_BMessage *, char *name, int32 index, float aFloat);
+	status_t be_BMessage_ReplaceDouble_1(be_BMessage *, char *name, double aDouble);
+	status_t be_BMessage_ReplaceDouble_2(be_BMessage *, char *name, int32 index, double aDouble);
+	status_t be_BMessage_ReplacePointer_1(be_BMessage *, char *name, void *pointer);
+	status_t be_BMessage_ReplacePointer_2(be_BMessage *, char *name, int32 index, void *pointer);
+	status_t be_BMessage_ReplaceMessenger_1(be_BMessage *, char *name, be_BMessenger * messenger);
+	status_t be_BMessage_ReplaceMessenger_2(be_BMessage *, char *name, int32 index, be_BMessenger * messenger);
+	status_t be_BMessage_ReplaceRef_1(be_BMessage *, char *name,entry_ref *);
+	status_t be_BMessage_ReplaceRef_2(be_BMessage *, char *name, int32 index, entry_ref *);
+	status_t be_BMessage_ReplaceMessage_1(be_BMessage *, char *name, be_BMessage * message);
+	status_t be_BMessage_ReplaceMessage_2(be_BMessage *, char *name, int32 index, be_BMessage * message);
+	status_t be_BMessage_ReplaceFlat_1(be_BMessage *, char *name, be_BFlattenable * object);
+	status_t be_BMessage_ReplaceFlat_2(be_BMessage *, char *name, int32 index, be_BFlattenable * object);
+	status_t be_BMessage_ReplaceData_1(be_BMessage *, char *name, type_code type,
 							void *data, ssize_t numBytes);
-	status_t be_BMessage_ReplaceData_2(void *, char *name, type_code type, int32 index,
+	status_t be_BMessage_ReplaceData_2(be_BMessage *, char *name, type_code type, int32 index,
 							void *data, ssize_t numBytes);
 
 /*
@@ -204,42 +206,42 @@ extern (C) extern
 							bool ignoreFieldOrder = true, bool deep = false) const;
 
 		void			*operator new(size_t size);
-		void			*operator new(size_t, void *pointer);
-		void			operator delete(void *pointer, size_t size);
+		void			*operator new(size_t, be_BMessage *pointer);
+		void			operator delete(be_BMessage *pointer, size_t size);
 */
 
 		// Private, reserved, or obsolete
-	bool be_BMessage_HasRect(void *, char *name, int32 n);
-	bool be_BMessage_HasPoint(void *, char *name, int32 n);
-	bool be_BMessage_HasString(void *, char *name, int32 n);
-	bool be_BMessage_HasInt8(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt8(void *, char *name, int32 n);
-	bool be_BMessage_HasInt16(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt16(void *, char *name, int32 n);
-	bool be_BMessage_HasInt32(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt32(void *, char *name, int32 n);
-	bool be_BMessage_HasInt64(void *, char *name, int32 n);
-	bool be_BMessage_HasUInt64(void *, char *name, int32 n);
-	bool be_BMessage_HasBool(void *, char *name, int32 n);
-	bool be_BMessage_HasFloat(void *, char *name, int32 n);
-	bool be_BMessage_HasDouble(void *, char *name, int32 n);
-	bool be_BMessage_HasPointer(void *, char *name, int32 n);
-	bool be_BMessage_HasMessenger(void *, char *name, int32 n);
-	bool be_BMessage_HasRef(void *, char *name, int32 n);
-	bool be_BMessage_HasMessage(void *, char *name, int32 n);
-	bool be_BMessage_HasFlat_1(void *, char *name, void *flat);
-	bool be_BMessage_HasFlat_2(void *, char *name, int32 n, void *flat);
-	bool be_BMessage_HasData(void *, char *name, type_code type, int32 n);
-	void *be_BMessage_FindRect(void *, char *name, int32 n);
-	void *be_BMessage_FindPoint(void *, char *name, int32 n);
-	char *be_BMessage_FindString(void *, char *name, int32 n);
-	int8 be_BMessage_FindInt8(void *, char *name, int32 n);
-	int16 be_BMessage_FindInt16(void *, char *name, int32 n);
-	int32 be_BMessage_FindInt32(void *, char *name, int32 n);
-	int64 be_BMessage_FindInt64(void *, char *name, int32 n);
-	bool be_BMessage_FindBool(void *, char *name, int32 n);
-	float be_BMessage_FindFloat(void *, char *name, int32 n);
-	double be_BMessage_FindDouble(void *, char *name, int32 n);
+	bool be_BMessage_HasRect(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasPoint(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasString(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasInt8(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasUInt8(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasInt16(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasUInt16(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasInt32(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasUInt32(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasInt64(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasUInt64(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasBool(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasFloat(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasDouble(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasPointer(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasMessenger(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasRef(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasMessage(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_HasFlat_1(be_BMessage *, char *name, be_BFlattenable * flat);
+	bool be_BMessage_HasFlat_2(be_BMessage *, char *name, int32 n, be_BFlattenable * flat);
+	bool be_BMessage_HasData(be_BMessage *, char *name, type_code type, int32 n);
+	be_BRect * be_BMessage_FindRect(be_BMessage *, char *name, int32 n);
+	be_BPoint * be_BMessage_FindPoint(be_BMessage *, char *name, int32 n);
+	char *be_BMessage_FindString(be_BMessage *, char *name, int32 n);
+	int8 be_BMessage_FindInt8(be_BMessage *, char *name, int32 n);
+	int16 be_BMessage_FindInt16(be_BMessage *, char *name, int32 n);
+	int32 be_BMessage_FindInt32(be_BMessage *, char *name, int32 n);
+	int64 be_BMessage_FindInt64(be_BMessage *, char *name, int32 n);
+	bool be_BMessage_FindBool(be_BMessage *, char *name, int32 n);
+	float be_BMessage_FindFloat(be_BMessage *, char *name, int32 n);
+	double be_BMessage_FindDouble(be_BMessage *, char *name, int32 n);
 }
 
 const int B_FIELD_NAME_LENGTH		= 255;
@@ -262,31 +264,29 @@ enum {
 class BMessage
 {
 public:
-	mixin BObject;
+	mixin(BObject!("be_BMessage", true, null));
 	
-	this(void *instancePointer = null) {
-		if(fInstancePointer is null && instancePointer is null)
-			fInstancePointer = be_BMessage_ctor_1(cast(void *)this);
-		else
-			fInstancePointer = instancePointer;	
+	this() {
+		if(fInstancePointer is null)
+			fInstancePointer = be_BMessage_ctor_1(cast(be_BMessage *)this);
 	}
 	
 	this(uint32 what) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BMessage_ctor_2(cast(void *)this, what);
+			fInstancePointer = be_BMessage_ctor_2(cast(be_BMessage *)this, what);
 	}
 	
 	this(BMessage other) {
 		if(fInstancePointer is null)
-			fInstancePointer = be_BMessage_ctor_3(cast(void *)this, other.fInstancePointer);
+			fInstancePointer = be_BMessage_ctor_3(cast(be_BMessage *)this, other.fInstancePointer);
 	}
 	
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BMessage_dtor(fInstancePointer);
 	}
 	
-//	void * be_BMessage_operator_assign(void *, void *other);
+//	be_BMessage * be_BMessage_operator_assign(be_BMessage *, be_BMessage *other);
 
 	status_t GetInfo(type_code typeRequested, int32 index, inout char [] nameFound, inout type_code typeFound, inout int32 countFound) {
 		char *nameBuffer;
@@ -351,7 +351,12 @@ public:
 
 	// Should i realy do it this way? :)
 	BMessage Previous() {
-		return new BMessage(be_BMessage_Previous(fInstancePointer));
+		be_BMessage * messagePtr = be_BMessage_Previous(fInstancePointer);
+		
+		if(messagePtr !is null)
+			return new BMessage(messagePtr, false);
+		
+		return null;
 	}
 	
 	bool WasDropped() {
@@ -435,7 +440,7 @@ public:
 	}
 /*	
 	status_t GetCurrentSpecifier(inout int32 index, BMessage specifier, inout int32 what, char [] property) {
-		be_BMessage_GetCurrentSpecifier(void *, int32 *index, void *specifier, int32 *what, char **property);
+		be_BMessage_GetCurrentSpecifier(be_BMessage *, int32 *index, be_BMessage *specifier, int32 *what, char **property);
 	}
 */
 	
@@ -448,8 +453,8 @@ public:
 	}
 
 	// Adding data
-//	status_t be_BMessage_AddRect(void *, char *name, void *aRect);
-//	status_t be_BMessage_AddPoint(void *, char *name, void *aPoint);
+//	status_t be_BMessage_AddRect(be_BMessage *, char *name, be_BMessage *aRect);
+//	status_t be_BMessage_AddPoint(be_BMessage *, char *name, be_BMessage *aPoint);
 	
 	status_t AddString(char [] name, char [] string) {
 		return be_BMessage_AddString_1(fInstancePointer, toStringz(name), toStringz(string));
@@ -693,11 +698,11 @@ public:
 
 /*
 	status_t FindMessenger(char [] name, inout BMessenger messenger) {
-		return be_BMessage_FindMessenger_1(void *, char *name, void *messenger);
+		return be_BMessage_FindMessenger_1(be_BMessage *, char *name, be_BMessage *messenger);
 	}
 	
 	status_t FindMessenger(char [] name, int32 index, inout BMessenger messenger) {
-		return be_BMessage_FindMessenger_2(void *, char *name, int32 index, void *messenger);
+		return be_BMessage_FindMessenger_2(be_BMessage *, char *name, int32 index, be_BMessage *messenger);
 	}
 */	
 	status_t FindRef(char [] name, inout entry_ref reference) {
@@ -709,53 +714,63 @@ public:
 	}
 	
 	status_t FindMessage(char [] name, inout BMessage message) {
-		void *tmpInstancePointer;
+		assert(message !is null, "BMessage::FindMessage inited BMessage passed");
+		be_BMessage * messagePtr;
 		
-		status_t ret = be_BMessage_FindMessage_1(fInstancePointer, toStringz(name), tmpInstancePointer);
+		status_t ret = be_BMessage_FindMessage_1(fInstancePointer, toStringz(name), messagePtr);
 		
 		if(ret < B_OK) return ret;
 
-		message = new BMessage(tmpInstancePointer);
+		if(messagePtr !is null)
+			message = new BMessage(messagePtr, false);
 		
 		return ret;
 	}
 	
 	status_t FindMessage(char [] name, int32 index, inout BMessage message) {
-		void *tmpInstancePointer;
+		assert(message !is null, "BMessage::FindMessage inited BMessage passed");
+
+		be_BMessage * messagePtr;
 		
-		status_t ret = be_BMessage_FindMessage_2(fInstancePointer, toStringz(name), index, tmpInstancePointer);
+		status_t ret = be_BMessage_FindMessage_2(fInstancePointer, toStringz(name), index, messagePtr);
 		
 		if(ret < B_OK) return ret;
 
-		message = new BMessage(tmpInstancePointer);
+		if(messagePtr !is null)
+			message = new BMessage(messagePtr, false);
 		
 		return ret;
 	}
-/*
+
 	status_t FindFlat(char [] name, inout BFlattenable flat) {
-		void *tmpInstancePointer;
+		assert(flat !is null, "BMessage::FindFlat inited BFlattenable passed");
 		
-		status_t ret = be_BMessage_FindFlat_1(fInstancePointer, toStringz(name), tmpInstancePointer);
+		be_BFlattenable * flatPtr;
+		
+		status_t ret = be_BMessage_FindFlat_1(fInstancePointer, toStringz(name), flatPtr);
 		
 		if(ret < B_OK) return ret;
 
-		flat = new BFlattenable(tmpInstancePointer);
+		if(flatPtr !is null)
+			flat = new BFlattenable(flatPtr, false);
 		
 		return ret;
 	}
 	
 	status_t FindFlat(char [] name, int32 index, inout BFlattenable flat) {
-		void *tmpInstancePointer;
+		assert(flat !is null, "BMessage::FindFlat inited BFlattenable passed");
+
+		be_BFlattenable * flatPtr;
 		
-		status_t ret = be_BMessage_FindFlat_2(fInstancePointer, toStringz(name), index, tmpInstancePointer);
+		status_t ret = be_BMessage_FindFlat_2(fInstancePointer, toStringz(name), index, flatPtr);
 	
 		if(ret < B_OK) return ret;
 
-		flat = new BFlattenable(tmpInstancePointer);
+		if(flatPtr !is null)
+			flat = new BFlattenable(flatPtr, false);
 		
 		return ret;
 	}
-*/
 	
 	status_t FindData(char [] name, type_code type, inout void [] data, inout ssize_t numBytes) {
 		void *tmpData;
@@ -961,8 +976,8 @@ public:
 							bool ignoreFieldOrder = true, bool deep = false) const;
 
 		void			*operator new(size_t size);
-		void			*operator new(size_t, void *pointer);
-		void			operator delete(void *pointer, size_t size);
+		void			*operator new(size_t, be_BMessage *pointer);
+		void			operator delete(be_BMessage *pointer, size_t size);
 */
 
 		// Private, reserved, or obsolete
@@ -1051,12 +1066,12 @@ public:
 	}
 	
 /*		
-	void * FindRect(char [] name, int32 n) {
+	be_BMessage * FindRect(char [] name, int32 n) {
 		return be_BMessage_FindRect(fInstancePointer, toStringz(name), n);
 	}
 
 
-	void *FindPoint(char [] name, int32 n) {
+	be_BMessage *FindPoint(char [] name, int32 n) {
 		return be_BMessage_FindPoint(fInstancePointer, toStringz(name), n);
 	}
 */

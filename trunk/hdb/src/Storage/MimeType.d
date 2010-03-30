@@ -15,90 +15,95 @@ import tango.stdc.stdlib;
 
 import tango.io.Stdout;
 
+import Support.types;
+
 enum app_verb {
 	B_OPEN
 }
 
 extern (C) {
-	void *	be_BMimeType_ctor_1();
-	void *	be_BMimeType_ctor_2(char *);
-	void	be_BMimeType_dtor(void *);
-	int		be_BMimeType_SetTo(void *, char *);
-	void	be_BMimeType_Unset(void *);
-	int		be_BMimeType_InitCheck(void *);
-	char *	be_BMimeType_Type(void *);
-	bool	be_BMimeType_IsValid(void *);
-	bool	be_BMimeType_IsSupertypeOnly(void *);
-	int		be_BMimeType_GetSupertype(void *, void *);
-	bool	be_BMimeType_operator_equal_1(void *, void *);
-	bool	be_BMimeType_operator_equal_2(void *, char *);
-	bool	be_BMimeType_Contains(void *, void *);
-	int		be_BMimeType_Install(void *);
-	int 	be_BMimeType_Delete(void *);
-	bool	be_BMimeType_IsInstalled(void *);
+	be_BMimeType * 	be_BMimeType_ctor_1();
+	be_BMimeType * 	be_BMimeType_ctor_2(char *);
+	void	be_BMimeType_dtor(be_BMimeType *);
+	int		be_BMimeType_SetTo(be_BMimeType *, char *);
+	void	be_BMimeType_Unset(be_BMimeType *);
+	int		be_BMimeType_InitCheck(be_BMimeType *);
+	char *	be_BMimeType_Type(be_BMimeType *);
+	bool	be_BMimeType_IsValid(be_BMimeType *);
+	bool	be_BMimeType_IsSupertypeOnly(be_BMimeType *);
+	int		be_BMimeType_GetSupertype(be_BMimeType *, be_BMimeType *);
+	bool	be_BMimeType_operator_equal_1(be_BMimeType *, be_BMimeType *);
+	bool	be_BMimeType_operator_equal_2(be_BMimeType *, char *);
+	bool	be_BMimeType_Contains(be_BMimeType *, be_BMimeType *);
+	int		be_BMimeType_Install(be_BMimeType *);
+	int 	be_BMimeType_Delete(be_BMimeType *);
+	bool	be_BMimeType_IsInstalled(be_BMimeType *);
 
-	int		be_BMimeType_GetIcon_1(void *, void *, icon_size size);
-	int		be_BMimeType_GetIcon_2(void *, byte **data, int size);
-	int		be_BMimeType_GetPreferredApp(void *, char *signature, app_verb verb);	int		be_BMimeType_GetAttrInfo(void *, void *);
-	int		be_BMimeType_GetFileExtensions(void *, void *);
-	int		be_BMimeType_GetShortDescription(void *, char *desc);
-	int		be_BMimeType_GetLongDescription(void *, char *desc);
-	int		be_BMimeType_GetSupportingApps(void *, void *);
+	int		be_BMimeType_GetIcon_1(be_BMimeType *, be_BBitmap *, icon_size size);
+	int		be_BMimeType_GetIcon_2(be_BMimeType *, byte **data, int size);
+	int		be_BMimeType_GetPreferredApp(be_BMimeType *, char *signature, app_verb verb);	
+	int		be_BMimeType_GetAttrInfo(be_BMimeType *, be_BMessage *);
+	int		be_BMimeType_GetFileExtensions(be_BMimeType *, be_BMessage *);
+	int		be_BMimeType_GetShortDescription(be_BMimeType *, char *desc);
+	int		be_BMimeType_GetLongDescription(be_BMimeType *, char *desc);
+	int		be_BMimeType_GetSupportingApps(be_BMimeType *, be_BMessage *);
 
-	int		be_BMimeType_SetIcon_1(void *, void *, icon_size size);
-	int		be_BMimeType_SetIcon_2(void *, ubyte *, icon_size size);
-	int		be_BMimeType_SetPreferredApp(void *, char *, app_verb verb);
-	int		be_BMimeType_SetAttrInfo(void *, void *);
-	int		be_BMimeType_SetFileExtensions(void *, void *);
-	int		be_BMimeType_SetShortDescription(void *, char *);
-	int		be_BMimeType_SetLongDescription(void *, char *);
+	int		be_BMimeType_SetIcon_1(be_BMimeType *, be_BBitmap *, icon_size size);
+	int		be_BMimeType_SetIcon_2(be_BMimeType *, ubyte *, icon_size size);
+	int		be_BMimeType_SetPreferredApp(be_BMimeType *, char *, app_verb verb);
+	int		be_BMimeType_SetAttrInfo(be_BMimeType *, be_BMessage *);
+	int		be_BMimeType_SetFileExtensions(be_BMimeType *, be_BMessage *);
+	int		be_BMimeType_SetShortDescription(be_BMimeType *, char *);
+	int		be_BMimeType_SetLongDescription(be_BMimeType *, char *);
 
 	// Statics
-	int		be_BMimeType_GetInstalledSupertypes_static(void *);
-	int		be_BMimeType_GetInstalledTypes_1_static(void *);
-	int		be_BMimeType_GetInstalledTypes_2_static(char *, void *);
-	int		be_BMimeType_GetWildcardApps_static(void *);
+	int		be_BMimeType_GetInstalledSupertypes_static(be_BMessage *);
+	int		be_BMimeType_GetInstalledTypes_1_static(be_BMessage *);
+	int		be_BMimeType_GetInstalledTypes_2_static(char *, be_BMessage *);
+	int		be_BMimeType_GetWildcardApps_static(be_BMessage *);
 	bool	be_BMimeType_IsValid_static(char *);
 	// End Statics
 
-	int		be_BMimeType_GetAppHint(void *, entry_ref *);
-	int		be_BMimeType_SetAppHint(void *, entry_ref *);
+	int		be_BMimeType_GetAppHint(be_BMimeType *, entry_ref *);
+	int		be_BMimeType_SetAppHint(be_BMimeType *, entry_ref *);
 
-	int		be_BMimeType_GetIconForType_1(void *, char *, void *, icon_size);
-	int		be_BMimeType_GetIconForType_2(void *, char *, ubyte **, int *);
-	int		be_BMimeType_SetIconForType_1(void *, char *, void *, icon_size);
-	int		be_BMimeType_SetIconForType_2(void *, char *, ubyte *, int);
+	int		be_BMimeType_GetIconForType_1(be_BMimeType *, char *, be_BBitmap *, icon_size);
+	int		be_BMimeType_GetIconForType_2(be_BMimeType *, char *, ubyte **, int *);
+	int		be_BMimeType_SetIconForType_1(be_BMimeType *, char *, be_BBitmap *, icon_size);
+	int		be_BMimeType_SetIconForType_2(be_BMimeType *, char *, ubyte *, int);
 
-	int		be_BMimeType_GetSnifferRule_1(void *, void *);
-	int		be_BMimeType_GetSnifferRule_2(void *, char *);
-	int		be_BMimeType_CheckSnifferRule(void *, char *, void *);
+	int		be_BMimeType_GetSnifferRule_1(be_BMimeType *, be_BString *);
+	int		be_BMimeType_GetSnifferRule_2(be_BMimeType *, char *);
+	int		be_BMimeType_CheckSnifferRule(be_BMimeType *, char *, be_BString *);
 
 	// More statics
-	int		be_BMimeType_GuessMimeType_1_static(entry_ref *, void *);
-	int		be_BMimeType_GuessMimeType_2_static(void *, int, void *);
-	int		be_BMimeType_GuessMimeType_3_static(char *filename, void *);
-	int		be_BMimeType_StartWatching_static(void *);
-	int		be_BMimeType_StopWatching_static(void *);
+	int		be_BMimeType_GuessMimeType_1_static(entry_ref *, be_BMimeType *);
+	int		be_BMimeType_GuessMimeType_2_static(be_BMimeType *, int, be_BMimeType *);
+	int		be_BMimeType_GuessMimeType_3_static(char *filename, be_BMimeType *);
+	int		be_BMimeType_StartWatching_static(be_BMessenger *);
+	int		be_BMimeType_StopWatching_static(be_BMessenger *);
 	// End More statics
 
 	// Deprecated
-	int		be_BMimeType_SetType(void *, char *mimeType);
+	int		be_BMimeType_SetType(be_BMimeType *, char *mimeType);
 }
 
 class BMimeType
 {
-	mixin BObject;
-
+	mixin(BObject!("be_BMimeType", true, null));
+	
 	this() {
-		fInstancePointer = be_BMimeType_ctor_1();
+		if(fInstancePointer is null)
+			fInstancePointer = be_BMimeType_ctor_1();
 	}
 
 	this(char [] mimeType) {
-		fInstancePointer = be_BMimeType_ctor_2(toStringz(mimeType));
+		if(fInstancePointer is null)
+			fInstancePointer = be_BMimeType_ctor_2(toStringz(mimeType));
 	}
 
 	~this() {
-		if(fInstancePointer !is null)
+		if(fInstancePointer !is null && GetOwnsPointer())
 			be_BMimeType_dtor(fInstancePointer);
 		fInstancePointer = null;
 	}
