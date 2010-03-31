@@ -242,6 +242,9 @@ extern (C) extern
 	bool be_BMessage_FindBool(be_BMessage *, char *name, int32 n);
 	float be_BMessage_FindFloat(be_BMessage *, char *name, int32 n);
 	double be_BMessage_FindDouble(be_BMessage *, char *name, int32 n);
+	
+	uint32 be_BMessage_get_what(be_BMessage *);
+	void be_BMessage_set_what(be_BMessage *, uint32);
 }
 
 const int B_FIELD_NAME_LENGTH		= 255;
@@ -1108,5 +1111,12 @@ public:
 		return be_BMessage_FindDouble(fInstancePointer, toStringz(name), n);
 	}
 
+	uint32 what() {
+		return be_BMessage_get_what(fInstancePointer);
+	}
+	
+	void what(uint32 what) {
+		be_BMessage_set_what(fInstancePointer, what);
+	}
 
 }

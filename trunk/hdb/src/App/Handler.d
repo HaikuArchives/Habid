@@ -156,7 +156,7 @@ public:
 	}
 
 	// BHandler guts.
-	void MessageReceived(inout BMessage message) {
+	void MessageReceived(BMessage message) {
 		be_BHandler_MessageReceived_super(fInstancePointer, message.fInstancePointer);
 	}
 	
