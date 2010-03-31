@@ -763,6 +763,14 @@ extern "C" {
 	double be_BMessage_FindDouble(be_BMessage *instPointer, const char *name, int32 n) {
 		return ((BMessage *)instPointer)->FindDouble(name, n);
 	}
+	
+	uint32 be_BMessage_get_what(be_BMessage *instPointer) {
+		return ((BMessage *)instPointer)->what;
+	}
+	
+	void be_BMessage_set_what(be_BMessage *instPointer, uint32 what) {
+		((BMessage *)instPointer)->what = what;
+	}
 }
 
 /* end export functions */

@@ -23,6 +23,7 @@ typedef struct { int dummy; } be_BMallocIO;
 typedef struct { int dummy; } be_BMemoryIO;
 typedef struct { int dummy; } be_BMessage;
 typedef struct { int dummy; } be_BMessageFilter;
+typedef struct { int dummy; } be_BMessageQueue;
 
 typedef struct { int dummy; } be_BMessenger;
 typedef struct { int dummy; } be_BMimeType;

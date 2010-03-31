@@ -16,6 +16,8 @@ public:
 			int32 priority = B_NORMAL_PRIORITY,
 			int32 port_capacity
 			= B_LOOPER_PORT_DEFAULT_CAPACITY);
+	BLooperProxy(void *bindInstPointer, BMessage *data);
+	
 	virtual	~BLooperProxy();
 	
 	virtual	status_t		Archive(BMessage* data, bool deep = true) const;
