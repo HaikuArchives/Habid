@@ -84,7 +84,7 @@ extern (C) {
 }
 
 
-class BStatable
+class BResources
 {
 public:
 	mixin(BObject!("be_BResources", true, null));
@@ -205,31 +205,31 @@ public:
 
 
 	bool GetResourceInfo(int32 byIndex, inout type_code typeFound, inout int32 idFound, inout char [] nameFound, inout size_t lengthFound) {
-		char **tmpNameFound;
+		char *tmpNameFound;
 
-		bool ret = be_BResources_GetResourceInfo_1(fInstancePointer, byIndex, &typeFound, &idFound, tmpNameFound, &lengthFound);
-		
-		nameFound = fromStringz(*tmpNameFound);
+		bool ret = be_BResources_GetResourceInfo_1(fInstancePointer, byIndex, &typeFound, &idFound, &tmpNameFound, &lengthFound);
+
+		nameFound = fromStringz(tmpNameFound);
 		
 		return ret;
 	}
 
 	bool GetResourceInfo(type_code byType, int32 andIndex, inout int32 idFound, inout char [] nameFound, inout size_t lengthFound) {
-		char **tmpNameFound;
+		char *tmpNameFound;
 		
-		bool ret = be_BResources_GetResourceInfo_2(fInstancePointer, byType, andIndex, &idFound, tmpNameFound, &lengthFound);
+		bool ret = be_BResources_GetResourceInfo_2(fInstancePointer, byType, andIndex, &idFound, &tmpNameFound, &lengthFound);
 		
-		nameFound = fromStringz(*tmpNameFound);
+		nameFound = fromStringz(tmpNameFound);
 		
 		return ret;
 	}
 
 	bool GetResourceInfo(type_code byType, int32 andID, inout char [] nameFound, inout size_t lengthFound) {
-		char **tmpNameFound;
+		char *tmpNameFound;
 		
-		bool ret = be_BResources_GetResourceInfo_3(fInstancePointer, byType, andID, tmpNameFound, &lengthFound);
+		bool ret = be_BResources_GetResourceInfo_3(fInstancePointer, byType, andID, &tmpNameFound, &lengthFound);
 	
-		nameFound = fromStringz(*tmpNameFound);
+		nameFound = fromStringz(tmpNameFound);
 			
 		return ret;
 	}
@@ -239,11 +239,11 @@ public:
 	}
 	
 	bool GetResourceInfo(void *byPointer, inout type_code typeFound, inout int32 idFound, inout size_t lengthFound, inout char [] nameFound) {
-		char **tmpNameFound;
+		char *tmpNameFound;
 		
-		bool ret = be_BResources_GetResourceInfo_5(fInstancePointer, byPointer, &typeFound, &idFound, &lengthFound, tmpNameFound);
+		bool ret = be_BResources_GetResourceInfo_5(fInstancePointer, byPointer, &typeFound, &idFound, &lengthFound, &tmpNameFound);
 		
-		nameFound = fromStringz(*tmpNameFound);
+		nameFound = fromStringz(tmpNameFound);
 		
 		return ret;
 	}
