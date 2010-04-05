@@ -12,6 +12,7 @@ typedef struct { int dummy; } be_BEntry;
 typedef struct { int dummy; } be_BEntryList;
 
 typedef struct { int dummy; } be_BFlattenable;
+typedef struct { int dummy; } be_BFile;
 
 typedef struct { int dummy; } be_BHandler;
 
@@ -35,6 +36,7 @@ typedef struct { int dummy; } be_BPoint;
 typedef struct { int dummy; } be_BPositionIO;
 
 typedef struct { int dummy; } be_BRect;
+typedef struct { int dummy; } be_BResources;
 
 typedef struct { int dummy; } be_BString;
 typedef struct { int dummy; } be_BStatable;
