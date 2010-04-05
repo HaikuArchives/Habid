@@ -14,6 +14,7 @@ src/storage/MimeType.cpp
 src/storage/Node.cpp
 src/storage/Path.cpp
 src/storage/Statable.cpp
+src/storage/Resources.cpp
 
 src/support/Archivable.cpp
 src/support/Beep.cpp

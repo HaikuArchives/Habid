@@ -6,9 +6,12 @@ FIND_PACKAGE(D REQUIRED)
 SET(BED_SRCS
 src/Kernel/fs_attr.d
 src/Kernel/OS.d
+src/Kernel/image.d
 
 src/Storage/Entry.d
 src/Storage/EntryList.d
+
+src/Storage/File.d
 
 src/Storage/MimeType.d
 src/Storage/Mime.d
@@ -19,6 +22,8 @@ src/Storage/Path.d
 
 src/Storage/Statable.d
 src/Storage/StorageDefs.d
+
+src/Storage/Resources.d
 
 src/Storage/Volume.d
 
