@@ -114,15 +114,15 @@ public:
 
 	// Message sending
 
-	status_t SendMessage(uint32 command, BHandler replyTo) {
-		return be_BMessenger_SendMessage_1(fInstancePointer, command, replyTo.fInstancePointer);
+	status_t SendMessage(uint32 command, BHandler replyTo = null) {
+		return be_BMessenger_SendMessage_1(fInstancePointer, command, replyTo is null ? null : replyTo.fInstancePointer);
 	}
 	
-	status_t SendMessage(BMessage message, BHandler replyTo, bigtime_t timeout) {
-		return be_BMessenger_SendMessage_2(fInstancePointer, message.fInstancePointer, replyTo.fInstancePointer, timeout);
+	status_t SendMessage(BMessage message, BHandler replyTo = null, bigtime_t timeout = B_INFINITE_TIMEOUT) {
+		return be_BMessenger_SendMessage_2(fInstancePointer, message.fInstancePointer, replyTo is null ? null : replyTo.fInstancePointer, timeout);
 	}
 
-	status_t SendMessage(BMessage message, BMessenger replyTo, bigtime_t timeout) {
+	status_t SendMessage(BMessage message, BMessenger replyTo, bigtime_t timeout = B_INFINITE_TIMEOUT) {
 		return be_BMessenger_SendMessage_3(fInstancePointer, message.fInstancePointer, replyTo.fInstancePointer, timeout);
 	}
 	
@@ -130,7 +130,7 @@ public:
 		return be_BMessenger_SendMessage_4(fInstancePointer, command, reply.fInstancePointer);
 	}
 	
-	status_t SendMessage(BMessage message, BMessage reply, bigtime_t deliveryTimeout, bigtime_t replyTimeout) {
+	status_t SendMessage(BMessage message, BMessage reply, bigtime_t deliveryTimeout = B_INFINITE_TIMEOUT, bigtime_t replyTimeout = B_INFINITE_TIMEOUT) {
 		return be_BMessenger_SendMessage_5(fInstancePointer, message.fInstancePointer, reply.fInstancePointer, deliveryTimeout, replyTimeout);
 	}
 	
