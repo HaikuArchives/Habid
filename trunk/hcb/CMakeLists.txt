@@ -5,7 +5,8 @@ src/app/Handler.cpp
 src/app/Looper.cpp
 src/app/Message.cpp
 src/app/MessageQueue.cpp
-
+src/app/MessageRunner.cpp
+src/app/Messenger.cpp
 
 src/storage/Entry.cpp
 src/storage/EntryList.cpp

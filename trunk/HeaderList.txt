@@ -32,14 +32,14 @@
 ./app/Application.h
 ./app/Clipboard.h
 ./app/Cursor.h
-./app/Handler.h
+./app/Handler.h						- Written in C		- Written in D		- Untested
 ./app/Invoker.h
-./app/Looper.h
-./app/Message.h
-./app/MessageFilter.h
-./app/MessageQueue.h
-./app/MessageRunner.h
-./app/Messenger.h
+./app/Looper.h						- Written in C		- Written in D		- Untested
+./app/Message.h						- Written in C		- Written in D		- Somewhat tested
+./app/MessageFilter.h					- Written in C		- Written in D		- Untested
+./app/MessageQueue.h				- Written in C		- Written in D		- Untested
+./app/MessageRunner.h				- Written in C		- Written in D		- Untested
+./app/Messenger.h					- Written in C		- Written in D		- Untested
 ./app/PropertyInfo.h
 ./app/Roster.h
 ./arch/arm/arch_debugger.h
