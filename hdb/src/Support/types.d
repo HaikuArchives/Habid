@@ -46,6 +46,7 @@ typedef void be_BStopWatch;
 typedef void be_BHandler;
 typedef void be_BMessageFilter;
 typedef void be_BMessageQueue;
+typedef void be_BMessageRunner;
 typedef void be_BLooper;
 typedef void be_BResources;
 typedef void be_BFile;

@@ -56,6 +56,7 @@ src/App/Looper.d
 src/App/Message.d
 src/App/MessageFilter.d
 src/App/MessageQueue.d
+src/App/MessageRunner.d
 src/App/Messenger.d
 )
 

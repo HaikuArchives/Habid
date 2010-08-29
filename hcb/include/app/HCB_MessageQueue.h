@@ -4,7 +4,7 @@
 #include <app/MessageQueue.h>
 
 /* begin class BMessageQueueBridge */
-
+/*
 class BMessageQueueBridge : public BMessageQueue
 {
 public:
@@ -13,7 +13,7 @@ public:
 	
 	bool IsLocked() const;
 };
-
+*/
 /* end class BMessageQueueBridge */
 
 #endif
