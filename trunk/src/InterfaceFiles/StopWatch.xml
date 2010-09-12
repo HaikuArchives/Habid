@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Flatten>
+	<IncludeFile name="SupportDefs.h" type="System"/>
+	<Includefile name="StopWatch.h" type="system"/>
+
+	<class name="BStopWatch">
+		<Function name="" returns="" arguments="const char *name, bool silent" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Suspend" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="Resume" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Lap" returns="bigtime_t" arguments="" type="Final" mod=""/>
+		<Function name="ElapsedTime" returns="bigtime_t" arguments="" type="Final" mod="const"/>
+
+		<Function name="Reset" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="Name" returns="const char *" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

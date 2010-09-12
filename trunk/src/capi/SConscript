@@ -1,0 +1,15 @@
+env = Environment(CPPPATH='include')
+
+c_srcs = [
+#	'App/Looper.cpp',
+
+	'Support/Autolock.cpp',
+	'Support/DataIO.cpp',
+	'Support/List.cpp',
+	'Support/Locker.cpp',
+	'Support/StopWatch.cpp'
+]
+
+c_objs = env.SharedObject(c_srcs)
+
+Return('c_objs')

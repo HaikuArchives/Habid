@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<Flatten>
+	<IncludeFile name="SupportDefs.h" type="System"/>
+	<Includefile name="DataIO.h" type="system"/>
+
+	<class name="BDataIO">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Read" returns="ssize_t" arguments="void *buffer, size_t size" type="PureVirtual" mod=""/>
+		<Function name="Write" returns="ssize_t" arguments="const void *buffer, size_t size" type="Purevirtual" mod=""/>
+	</class>
+
+	<class name="BPositionIO">
+		<Inherits name="BDataIO" access="public"/>
+
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+	
+		<Function name="Read" returns="ssize_t" arguments="void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="Write" returns="ssize_t" arguments="const void *buffer, size_t size" type="Virtual" mod=""/>
+
+		<Function name="ReadAt" returns="ssize_t" arguments="off_t position, void *buffer, size_t size" type="PureVirtual" mod=""/>
+		<Function name="WriteAt" returns="ssize_t" arguments="off_t position, const void *buffer, size_t size" type="PureVirtual" mod=""/>
+
+		<Function name="Seek" returns="off_t" arguments="off_t position, uint32 seekMode" type="PureVirtual" mod=""/>
+		<Function name="Position" returns="off_t" arguments="" type="PureVirtual" mod="const"/>
+
+		<Function name="SetSize" returns="status_t" arguments="off_t size" type="Virtual" mod=""/>
+		<Function name="GetSize" returns="status_t" arguments="off_t *size" type="Virtual" mod=""/>
+	</class>
+
+	<class name="BMemoryIO">
+		<Inherits name="BPositionIO" access="public"/>
+
+		<Function name="" returns="" arguments="void *data, size_t length" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const void *data, size_t length" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+	
+		<Function name="ReadAt" returns="ssize_t" arguments="off_t position, void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="WriteAt" returns="ssize_t" arguments="off_t position, const void *buffer, size_t size" type="Virtual" mod=""/>
+
+		<Function name="Seek" returns="off_t" arguments="off_t position, uint32 seekMode" type="Virtual" mod=""/>
+		<Function name="Position" returns="off_t" arguments="" type="Virtual" mod="const"/>
+
+		<Function name="SetSize" returns="status_t" arguments="off_t size" type="Virtual" mod=""/>
+	</class>
+
+	<class name="BMallocIO">
+		<Inherits name="BPositionIO" access="public"/>
+
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+	
+		<Function name="ReadAt" returns="ssize_t" arguments="off_t position, void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="WriteAt" returns="ssize_t" arguments="off_t position, const void *buffer, size_t size" type="Virtual" mod=""/>
+
+		<Function name="Seek" returns="off_t" arguments="off_t position, uint32 seekMode" type="Virtual" mod=""/>
+		<Function name="Position" returns="off_t" arguments="" type="Virtual" mod="const"/>
+
+		<Function name="SetSize" returns="status_t" arguments="off_t size" type="Virtual" mod=""/>
+
+		<Function name="SetBlockSize" returns="void" arguments="size_t blockSize" type="Final" mod=""/>
+		<Function name="Buffer" returns="const void *" arguments="" type="Final" mod="const"/>
+		<Function name="BufferLength" returns="size_t" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

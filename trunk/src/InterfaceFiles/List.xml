@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<Flatten>
+	<IncludeFile name="SupportDefs.h" type="System"/>
+	<Includefile name="List.h" type="system"/>
+
+	<class name="BList">
+		<Function name="" returns="" arguments="int32 count" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BList & anotherList" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="AddItem" returns="bool" arguments="void *item, int32 index" type="Final" mod=""/>
+		<Function name="AddItem" returns="bool" arguments="void *item" type="Final" mod=""/>
+		<Function name="AddList" returns="bool" arguments="const BList *list, int32 index" type="Final" mod=""/>
+		<Function name="AddList" returns="bool" arguments="const BList *list" type="Final" mod=""/>
+
+		<Function name="RemoveItem" returns="bool" arguments="void *item" type="Final" mod=""/>
+		<Function name="RemoveItem" returns="void *" arguments="int32 index" type="Final" mod=""/>
+		<Function name="RemoveItems" returns="bool" arguments="int32 index, int32 count" type="Final" mod=""/>
+		<Function name="ReplaceItem" returns="bool" arguments="int32 index, void *newItem" type="Final" mod=""/>
+
+		<Function name="MakeEmpty" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="SortItems" returns="void" arguments="int (*comparefunc)(const void *, const void *)" type="Final" mod=""/>
+		<Function name="SwapItems" returns="bool" arguments="int32 indexA, int32 indexB" type="Final" mod=""/>
+		<Function name="MoveItem" returns="bool" arguments="int32 fromIndex, int32 toIndex" type="Final" mod=""/>
+
+
+		<Function name="ItemAt" returns="void *" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="FirstItem" returns="void *" arguments="" type="Final" mod="const"/>
+		<Function name="ItemAtFast" returns="void *" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="LastItem" returns="void" arguments="" type="Final" mod="const"/>
+		<Function name="Items" returns="void *" arguments="" type="Final" mod="const"/>
+
+		<Function name="HasItem" returns="bool" arguments="void *item" type="Final" mod="const"/>
+		<Function name="HasItem" returns="bool" arguments="const void *item" type="Final" mod="const"/>
+		<Function name="IndexOf" returns="int32" arguments="void *item" type="Final" mod="const"/>
+		<Function name="IndexOf" returns="int32" arguments="const void *item" type="Final" mod="const"/>
+		<Function name="CountItems" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="IsEmpty" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="DoForEach" returns="void" arguments="bool (*func)(void *item)" type="Final" mod=""/>
+		<Function name="DoForEach" returns="void" arguments="bool (*func)(void *item, void *arg2), void *arg2" type="Final" mod=""/>
+
+
+	</class>
+</Flatten>
+
