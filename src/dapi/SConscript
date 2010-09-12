@@ -1,0 +1,21 @@
+env = Environment(DPATH='.')
+
+d_srcs = [
+	'App/Looper.d',
+	'Kernel/OS.d',
+
+	'Storage/StorageDefs.d',
+
+	'Support/Autolock.d',
+	'Support/DataIO.d',
+	'Support/BObject.d',
+	'Support/List.d',
+	'Support/Locker.d',
+	'Support/StopWatch.d',
+	'Support/SupportDefs.d',
+	'Support/types.d'
+]
+
+d_objs = env.SharedObject(d_srcs)
+
+Return('d_objs')

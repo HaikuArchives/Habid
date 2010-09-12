@@ -1,9 +1,0 @@
-/* begin import functions */
-/* end import functions */
-
-/* begin class Name */
-/* end class Name */
-
-/* begin export functions */
-/* end export functions */
-

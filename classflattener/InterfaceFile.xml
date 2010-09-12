@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Flatten>
+	<IncludeFile name="IncludeFile.h" type="System"/>
+
+	<class name="ClassName">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Final" mod=""/>
+	</class>
+</Flatten>
+
