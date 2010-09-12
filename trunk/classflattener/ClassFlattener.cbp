@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ClassFlattener" />
+		<Option pch_mode="2" />
+		<Option compiler="ldc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ClassFlattener" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="ldc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-d-debug" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ClassFlattener" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="ldc" />
+				<Compiler>
+					<Add option="-O" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Unit filename="Parser/ClassInfo.d" />
+		<Unit filename="Parser/InterfaceParser.d" />
+		<Unit filename="Writers/CWriter.d" />
+		<Unit filename="hello.d" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

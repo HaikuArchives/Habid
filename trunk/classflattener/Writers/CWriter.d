@@ -18,17 +18,26 @@ char [][] bindBuffer;
 char [][] classBuffer;
 char [][] includeBuffer;
 
-bool buildOutput(InterfaceClassInfo [] ci) {
+char [][] licenseBuffer;
+
+InterfaceParser currentParser = null;
+
+bool buildOutput(InterfaceParser parser) {
+    currentParser = parser;
+
+    addLicenseMIT();
+
     buildIncludes();
 
-    foreach(interfaceclass; ci) {
+    foreach(interfaceclass; parser.getInterfaceClassInfo()) {
         if(interfaceclass.hasPureVirtual)
             buildBridgeClass(interfaceclass);
 
         if(interfaceclass.hasVirtual || interfaceclass.hasPureVirtual)
             buildProxyClass(interfaceclass);
 
-        buildBindingExports(interfaceclass);
+        if(interfaceclass.hasVirtual)
+            buildBindingExports(interfaceclass);
         buildExports(interfaceclass);
     }
 
@@ -38,8 +47,15 @@ bool buildOutput(InterfaceClassInfo [] ci) {
     return true;
 }
 
+void addLicenseMIT() {
+    licenseBuffer ~= "/*";
+    licenseBuffer ~= " * Copyright 2010 " ~ currentParser.getAuthor() ~ " <" ~ currentParser.getAuthorEmail() ~ ">";
+    licenseBuffer ~= " * All rights reserved. Distributed under the terms of the MIT license.";
+    licenseBuffer ~= " */";
+}
+
 void buildIncludes() {
-    foreach(include; InterfaceParser.getIncludes()) {
+    foreach(include; currentParser.getIncludes()) {
         if(include.typeString == "system")
             includeBuffer ~= "#include <" ~ include.nameString ~ ">";
         else
@@ -80,7 +96,7 @@ char [] buildInherits(in InterfaceClassInfo classInfo, MemberFunction *memberFun
 {
     char [] buffer;
     foreach(inheritno, inherit; classInfo.inherits) {
-        InterfaceClassInfo *otherClass = InterfaceParser.findClass(inherit.nameString);
+        InterfaceClassInfo *otherClass = currentParser.findClass(inherit.nameString);
 
         if(otherClass.hasVirtual || otherClass.hasPureVirtual) {
             if(inheritno > 0)
@@ -244,13 +260,22 @@ void buildExports(InterfaceClassInfo ci) {
 }
 
 void print() {
-    foreach(include; includeBuffer)
-        Stdout.formatln(include);
+    foreach(line; licenseBuffer)
+        Stdout.formatln(line);
+
+    Stdout.formatln("\n");
+
+    foreach(line; includeBuffer)
+        Stdout.formatln(line);
+
+    Stdout.formatln("\n");
 
     foreach(line; bindBuffer)
         Stdout.formatln(line);
+
     foreach(line; classBuffer)
         Stdout.formatln(line);
+
     foreach(line; exportBuffer)
         Stdout.formatln(line);
 }
