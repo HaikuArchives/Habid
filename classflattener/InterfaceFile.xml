@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <Flatten>
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com"/>
+
 	<IncludeFile name="IncludeFile.h" type="System"/>
 
 	<class name="ClassName">

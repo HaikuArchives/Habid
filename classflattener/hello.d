@@ -2,14 +2,19 @@ import Parser.InterfaceParser;
 
 import CWriter = Writers.CWriter;
 
+import tango.io.Stdout;
+
 int main(char[][] args)
 {
-    InterfaceParser.parse("InterfaceFile.xml");
+    InterfaceParser parser = new InterfaceParser;
+
+    parser.parse(args[1]);
 //    parser.parse();
 //    parser.print();
 
-    CWriter.buildOutput(InterfaceParser.getInterfaceClassInfo());
+    CWriter.buildOutput(parser);
     CWriter.print();
 
     return 0;
 }
+

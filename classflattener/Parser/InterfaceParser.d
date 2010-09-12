@@ -28,6 +28,9 @@ private:
     InterfaceClassInfo [] fClasses;
 
     IncludeFile [] fIncludeFiles;
+
+    char [] fAuthor;
+    char [] fAuthorEmail;
 public:
     bool parse(char [] filename) {
         FilePath path = new FilePath(filename);
@@ -70,6 +73,10 @@ public:
                         inc.nameString = child.attributes.name(null, "name").value().dup;
                         inc.typeString = Ascii.toLower(child.attributes.name(null, "type").value().dup);
                         fIncludeFiles ~= inc;
+                    } break;
+                    case "author": {
+                        fAuthor = child.attributes.name(null, "name").value().dup;
+                        fAuthorEmail = child.attributes.name(null, "email").value().dup;
                     } break;
                     default: {
                         Stdout.formatln("InterfaceParser::parse Unhandled node ({})", name);
@@ -197,226 +204,12 @@ public:
     IncludeFile [] getIncludes() {
         return fIncludeFiles;
     }
-}
-/*
-class InterfaceParser
-{
-private:
-    char [] fFilename;
 
-    InterfaceClassInfo [] fClasses;
-public:
-    this(char [] filename) {
-        fFilename = filename.dup;
+    char [] getAuthor() {
+        return fAuthor;
     }
 
-    bool parse() {
-        if(fFilename.length < 0) {
-            Stdout.formatln("InterfaceParser::parse Invlid filename");
-            return false;
-        }
-
-        FilePath path = new FilePath(fFilename);
-
-        if(!path.exists()) {
-            Stdout.formatln("InteraceParser::parse File does not exist ({})", fFilename);
-            return false;
-        }
-
-        File file = new File(path.toString());
-
-        char [] buffer = cast(char [])file.load();
-
-        Document!(char) doc = new Document!(char);
-
-        doc.parse(buffer);
-
-        doc.Node node = doc.tree();
-
-        if(node.type() != XmlNodeType.Document) {
-            Stdout.formatln("InterfaceParser::parse Invalid Document ({})", fFilename);
-            return false;
-        }
-
-        doc.Node rootNode = node.child();
-
-        foreach(child; rootNode.children) {
-            if(child.type() == XmlNodeType.Element) {
-                char [] name = Ascii.toLower(child.name().dup);
-
-                switch(name) {
-                    case "class": {
-                        parseClassNode(child);
-                    } break;
-
-                    default: {
-                        Stdout.formatln("InterfaceParser::parse Unhandled node ({})", name);
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
-    void parseClassNode(Document!(char).Node node) {
-        InterfaceClassInfo ci;
-        ci.nameString = node.attributes.name(null, "name").value().dup;
-
-        foreach(child; node.children) {
-            if(child.type() == XmlNodeType.Element) {
-                char [] name = Ascii.toLower(child.name().dup);
-
-                switch(name) {
-                    case "inherits": {
-                        InterfaceClassInfo.Inherit inherit;
-                        inherit.name = child.attributes.name(null, "name").value().dup;
-                        inherit.access = child.attributes.name(null, "access").value().dup;
-                        ci.inherits ~= inherit;
-                    } break;
-                    case "hasfinal": {
-                        ci.hasFinal = child.attributes.name(null, "value").value() == "true" ? true : false;
-                    } break;
-                    case "hasvirtual": {
-                        ci.hasVirtual = child.attributes.name(null, "value").value() == "true" ? true : false;
-                    } break;
-                    case "haspurevirtual": {
-                        ci.hasPureVirtual = child.attributes.name(null, "value").value() == "true" ? true : false;
-                    } break;
-                    case "constructor": {
-                        parseConstructor(child, ci);
-                    } break;
-                    case "memberfunction": {
-                        parseMemberFunction(child, ci);
-                    } break;
-                    default: {
-                        Stdout.formatln("InterfaceParser::parseClassNode Unhandled node ({})", name);
-                    }
-                }
-            }
-        }
-
-        fClasses ~= ci;
-    }
-
-    void parseConstructor(Document!(char).Node node, inout InterfaceClassInfo ci) {
-        MemberFunction mf;
-
-        mf.isConstructor = true;
-        mf.nameString = "ctor";
-        mf.returnString = ci.nameString ~ " *";
-
-        foreach(child; node.children()) {
-            if(child.type() != XmlNodeType.Element)
-                continue;
-
-            char [] name = Ascii.toLower(child.name().dup);
-
-            switch(name) {
-                case "arg": {
-                    MemberFunction.Argument arg;
-                    arg.nameString = child.attributes.name(null, "name").value().dup;
-                    arg.typeString = child.attributes.name(null, "type").value().dup;
-                    mf.arguments ~= arg;
-                } break;
-                default: {
-                    Stdout.formatln("InterfaceParser::parseConstructor Unhandled node ({})", name);
-                }
-            }
-        }
-
-        int funcNo = ci.countNames(mf.nameString);
-
-        if(funcNo > 0)
-            mf.postfix = "_" ~ Integer.toString(funcNo);
-
-        ci.memberFunctions ~= mf;
-
-        MemberFunction dtor;
-        dtor.nameString = "dtor";
-        dtor.returnString = "void";
-        dtor.isDestructor = true;
-
-        ci.memberFunctions ~= dtor;
-    }
-
-    void parseMemberFunction(Document!(char).Node node, inout InterfaceClassInfo ci) {
-        MemberFunction mf;
-
-        mf.nameString = node.attributes.name(null, "name").value().dup;
-
-        char [] typeString;
-        typeString = Ascii.toLower(node.attributes.name(null, "type").value().dup);
-
-        switch(typeString) {
-            case "final": {
-                mf.isFinal = true;
-            } break;
-            case "virtual": {
-                mf.isVirtual = true;
-            } break;
-            case "purevirtual": {
-                mf.isPureVirtual = true;
-            } break;
-            default: {
-                Stdout.formatln("InterfaceParser::parseMemberFunction Invalid type ({}) for function ({})", typeString, mf.nameString);
-            }
-        }
-
-        mf.returnString = node.attributes.name(null, "returns").value().dup;
-
-        foreach(child; node.children()) {
-            if(child.type() != XmlNodeType.Element)
-                continue;
-
-            char [] name = Ascii.toLower(child.name().dup);
-
-            switch(name) {
-                case "arg": {
-                    MemberFunction.Argument arg;
-                    arg.nameString = child.attributes.name(null, "name").value().dup;
-                    arg.typeString = child.attributes.name(null, "type").value().dup;
-                    mf.arguments ~= arg;
-                } break;
-                default: {
-                    Stdout.formatln("InterfaceParser::parseConstructor Unhandled node ({})", name);
-                }
-            }
-        }
-
-        int funcNo = ci.countNames(mf.nameString);
-
-        if(funcNo > 0)
-            mf.postfix = "_" ~ Integer.toString(funcNo);
-
-        ci.memberFunctions ~= mf;
-    }
-
-    void print() {
-        foreach(cl; fClasses) {
-            Stdout.formatln("Class {}", cl.nameString);
-            foreach(inherit; cl.inherits)
-                Stdout.formatln("Inherits From: {} Access: {}", inherit.name, inherit.access);
-
-            Stdout.formatln("HasFinal {}", cl.hasFinal);
-            Stdout.formatln("HasVirtual {}", cl.hasVirtual);
-            Stdout.formatln("HasPureVirtual {}", cl.hasPureVirtual);
-
-            foreach(mf; cl.memberFunctions) {
-                if(mf.isConstructor)
-                    Stdout.formatln("\tMemberFunction Constructor");
-                else
-                    Stdout.formatln("\tMemberFunction: {}", mf.nameString ~ mf.postfix);
-
-                foreach(arg; mf.arguments) {
-                    Stdout.formatln("\t\tArgument: {} Type: {}", arg.nameString, arg.typeString);
-                }
-            }
-        }
-    }
-
-    InterfaceClassInfo [] getInterfaceClassInfo() {
-        return fClasses;
+    char [] getAuthorEmail() {
+        return fAuthorEmail;
     }
 }
-*/
