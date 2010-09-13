@@ -62,7 +62,8 @@ void buildIncludes(InputFile inputFile) {
 }
 
 void buildHeaderBridgeClass(InterfaceClassInfo classInfo) {
-    bridgeBuffer ~= "class " ~ classInfo.nameString ~ "Bridge : public " ~ classInfo.nameString;
+    bridgeBuffer ~= "class " ~ classInfo.nameString ~ "Bridge";
+    bridgeBuffer ~= ": public " ~ classInfo.nameString;
     bridgeBuffer ~= "{{";
     bridgeBuffer ~= "public:";
 

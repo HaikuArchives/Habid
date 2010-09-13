@@ -82,11 +82,14 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
                     InputFile file = InterfaceParser.getInputFile(inherit.nameString);
 
                     if(file !is null) {
-                        InterfaceClassInfo otherClass = file.findClass(inherit.nameString);
+                        if(inheritno > 0)
+                            tmpBuffer ~= ", ";
+
+                        InterfaceClassInfo otherClass = file.findClass(inherit.nameString ~ memberFunc.postfix);
                         if(otherClass !is null) {
                             MemberFunction func = otherClass.getMemberFunction(memberFunc.nameString ~ memberFunc.postfix);
                             if(func !is null) {
-                                if(otherClass.hasPureVirtual)
+                                if(otherClass.hasPureVirtual || otherClass.hasVirtual)
                                     tmpBuffer ~= otherClass.nameString ~ "Proxy(bindInstPtr" ~ (func.countArguments() > 0 ? ", " : "") ~ func.buildArguments(false) ~ ")";
                             }
                         }
@@ -153,7 +156,7 @@ void buildCExports(InterfaceClassInfo classInfo) {
             if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
                 exportBuffer ~= "\t{{";
-                exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
+                exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
                 exportBuffer ~= "\t}\n";
             } else {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
