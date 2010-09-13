@@ -54,8 +54,6 @@ void buildCBridgeClass(InterfaceClassInfo classInfo) {
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
             bridgeBuffer ~= classInfo.nameString ~ "Bridge::" ~ classInfo.nameString ~ "Bridge(" ~ memberFunc.buildArguments(true) ~ ")";
-//            if(classInfo.countInherits() > 0)
-//                bridgeBuffer ~= ": " ~ classInfo.nameString ~ "(" ~ memberFunc.buildArguments(false) ~ ")";
             bridgeBuffer ~= ": " ~ classInfo.nameString ~ "(" ~ memberFunc.buildArguments(false) ~ ")";
             bridgeBuffer ~= "{{";
 
@@ -99,18 +97,12 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
 
                         if(InterfaceParser.getInputFile(inherit.nameString) !is InterfaceParser.getInputFile()) {
                             assert(false, "No reference to " ~ inherit.nameString ~ " Anywhere :/");
-//                            tmpBuffer ~= inherit.nameString ~ "Proxy(bindInstPtr)";
                         }
                         else
                             tmpBuffer ~= inherit.nameString ~ "Proxy(bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(false) ~ ")";
 
                     }
                 }
-                /*
-                if(tmpBuffer.length > 0)
-                    tmpBuffer ~= ", ";
-                */
-//                }
 
                 if(tmpBuffer.length > 0)
                     tmpBuffer ~= ", ";
