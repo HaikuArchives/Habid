@@ -1,3 +1,5 @@
+module Writers.HeaderWriter;
+
 import Parser.InterfaceParser;
 import Parser.ClassInfo;
 
@@ -82,7 +84,7 @@ void buildHeaderBridgeClass(InterfaceClassInfo classInfo) {
 
 void buildHeaderProxyClass(InterfaceClassInfo classInfo)
 {
-    proxyBuffer ~= "class " ~ classInfo.nameString ~ "Proxy : " ~ classInfo.getInherits(false, false, true) ~ (classInfo.countInherits() > 0 ? ", " : "") ~ "public " ~ classInfo.nameString ~ (classInfo.hasPureVirtual ? "Bridge" : "");
+    proxyBuffer ~= "class " ~ classInfo.nameString ~ "Proxy : public " ~ classInfo.getInherits(false, false, true) ~ (classInfo.countInherits() > 0 ? ", " : "") ~ "public " ~ classInfo.nameString ~ (classInfo.hasPureVirtual ? "Bridge" : "");
     proxyBuffer ~= "{{";
     proxyBuffer ~= "\tvoid *fBindInstPtr;";
     proxyBuffer ~= "public:";
