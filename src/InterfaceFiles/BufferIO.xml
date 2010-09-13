@@ -2,13 +2,10 @@
 <Flatten>
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
-	<CppFile name="Support/BufferIO.cpp"/>
-	<HeaderFile name="Support/BufferIO.h"/>
-
 	<IncludeFile name="SupportDefs.h" type="System"/>
 	<IncludeFile name="BufferIO.h" type="System"/>
 	
-	<IncludeFile name="PositionIO.h" type="local"/>
+	<IncludeFile name="Support/PositionIO.h" type="local"/>
 
 	<class name="BBufferIO">
 		<Inherits name="BPositionIO" access="public"/>

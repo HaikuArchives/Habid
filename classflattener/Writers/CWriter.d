@@ -53,17 +53,17 @@ void buildIncludes(InputFile inputFile) {
 void buildCBridgeClass(InterfaceClassInfo classInfo) {
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
-            bridgeBuffer ~= classInfo.nameString ~ "Bridge::" ~ classInfo.nameString ~ "Bridge()";
-            if(classInfo.countInherits() > 0)
-                bridgeBuffer ~= ": " ~ classInfo.nameString ~ "(" ~ memberFunc.buildArguments(false) ~ ")";
-
+            bridgeBuffer ~= classInfo.nameString ~ "Bridge::" ~ classInfo.nameString ~ "Bridge(" ~ memberFunc.buildArguments(true) ~ ")";
+//            if(classInfo.countInherits() > 0)
+//                bridgeBuffer ~= ": " ~ classInfo.nameString ~ "(" ~ memberFunc.buildArguments(false) ~ ")";
+            bridgeBuffer ~= ": " ~ classInfo.nameString ~ "(" ~ memberFunc.buildArguments(false) ~ ")";
             bridgeBuffer ~= "{{";
 
             bridgeBuffer ~= "}";
         } else if(memberFunc.isDestructor) {
             bridgeBuffer ~= classInfo.nameString ~ "Bridge::~" ~ classInfo.nameString ~ "Bridge() {{ }";
         }
-        
+
         if(memberFunc.isPureVirtual) {
             bridgeBuffer ~= memberFunc.getReturnString(false) ~ " " ~ classInfo.nameString ~ "Bridge::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(true) ~ ")" ~ memberFunc.mod ~ "{{ }";
         }
@@ -86,17 +86,33 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
                         if(otherClass !is null) {
                             MemberFunction func = otherClass.getMemberFunction(memberFunc.nameString ~ memberFunc.postfix);
                             if(func !is null) {
-                            if(otherClass.hasPureVirtual)
-                                tmpBuffer ~= otherClass.nameString ~ "Proxy(bindInstPtr" ~ (func.countArguments() > 0 ? ", " : "") ~ func.buildArguments(false) ~ ")";
-                            } /* else {
-                                tmpBuffer ~= otherClass.nameString ~ "(" ~ (func.countArguments() > 0 ? ", " : "") ~ func.buildArguments(false) ~ ")";
-                            } */
+                                if(otherClass.hasPureVirtual)
+                                    tmpBuffer ~= otherClass.nameString ~ "Proxy(bindInstPtr" ~ (func.countArguments() > 0 ? ", " : "") ~ func.buildArguments(false) ~ ")";
+                            }
                         }
                     } else {
-	                    tmpBuffer ~= "slan";
+                        if(inheritno > 0)
+                            tmpBuffer ~= ", ";
+
+                        if(InterfaceParser.getInputFile(inherit.nameString) !is InterfaceParser.getInputFile()) {
+                            assert(false, "No reference to " ~ inherit.nameString ~ " Anywhere :/");
+//                            tmpBuffer ~= inherit.nameString ~ "Proxy(bindInstPtr)";
+                        }
+                        else
+                            tmpBuffer ~= inherit.nameString ~ "Proxy(bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(false) ~ ")";
+
                     }
                 }
-                proxyBuffer ~= ": fBindInstPtr(bindInstPtr), " ~ tmpBuffer.dup ~ ", " ~ classInfo.nameString ~ "Bridge(" ~ memberFunc.buildArguments(false) ~ ") {{ }\n";
+                /*
+                if(tmpBuffer.length > 0)
+                    tmpBuffer ~= ", ";
+                */
+//                }
+
+                if(tmpBuffer.length > 0)
+                    tmpBuffer ~= ", ";
+
+                proxyBuffer ~= ": fBindInstPtr(bindInstPtr), " ~ tmpBuffer.dup ~ classInfo.nameString ~ "Bridge(" ~ memberFunc.buildArguments(false) ~ ") {{ }\n";
             }
             else
                 proxyBuffer ~= ": fBindInstPtr(bindInstPtr), " ~ classInfo.nameString ~ "Bridge(" ~ memberFunc.buildArguments(false) ~ ") {{ }\n";
