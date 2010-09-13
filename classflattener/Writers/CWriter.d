@@ -118,7 +118,7 @@ void buildCExports(InterfaceClassInfo classInfo) {
 
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
-            exportBuffer ~= "\t" ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfix ~ "(void *bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
+            exportBuffer ~= "\t" ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "*") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfix ~ "(void *bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\treturn new " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy" : "") ~ "(bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(false, true) ~ ");";
             exportBuffer ~= "\t}\n";
