@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<IncludeFile name="SupportDefs.h" type="System"/>
+	<Includefile name="Flattenable.h" type="system"/>
+
+	<class name="BFlattenable">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="IsFixedSize" returns="bool" arguments="" type="PureVirtual" mod="const"/>
+		<Function name="TypeCode" returns="type_code" arguments="" type="PureVirtual" mod="const"/>
+		<Function name="FlattenedSize" returns="ssize_t" arguments="" type="PureVirtual" mod="const"/>
+		<Function name="Flatten" returns="status_t" arguments="void *buffer, ssize_t size" type="PureVirtual" mod="const"/>
+		<Function name="AllowsTypeCode" returns="bool" arguments="type_code code" type="PureVirtual" mod="const"/>
+
+		<Function name="Unflatten" returns="status_t" arguments="type_code code, const void *buffer, ssize_t size" type="PureVirtual" mod=""/>
+	</class>
+</Flatten>
+

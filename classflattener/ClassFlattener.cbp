@@ -11,6 +11,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="ldc" />
+				<Option parameters="InterfaceFile.xml" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-d-debug" />
@@ -29,6 +30,7 @@
 		<Unit filename="Parser/ClassInfo.d" />
 		<Unit filename="Parser/InterfaceParser.d" />
 		<Unit filename="Writers/CWriter.d" />
+		<Unit filename="Writers/HeaderWriter.d" />
 		<Unit filename="hello.d" />
 		<Extensions>
 			<code_completion />
