@@ -2,6 +2,7 @@
 <Flatten>
 	<IncludeFile name="SupportDefs.h" type="System"/>
 	<Includefile name="DataIO.h" type="system"/>
+	<IncludeFile name="Support/DataIO.h" type="local"/>
 
 	<class name="BDataIO">
 		<Function name="" returns="" arguments="" type="Constructor" mod=""/>

@@ -25,9 +25,8 @@ void buildHeader()
     buildIncludes(inputFile);
 
     foreach(classInfo; inputFile.fClasses) {
-        if(classInfo.hasPureVirtual)
-            buildHeaderBridgeClass(classInfo);
         if(classInfo.hasPureVirtual || classInfo.hasVirtual) {
+            buildHeaderBridgeClass(classInfo);
             buildHeaderProxyClass(classInfo);
             buildBindExports(classInfo);
         }
