@@ -19,11 +19,11 @@ import Util = tango.text.Util;
 import Ascii = tango.text.Ascii;
 import Integer = tango.text.convert.Integer;
 
-
-class InterfaceParser
-{ static:
-private:
+class InputFile
+{
     char [] fFilename;
+    char [] fCppOutputFilename;
+    char [] fHeaderOutputFilename;
 
     InterfaceClassInfo [] fClasses;
 
@@ -31,8 +31,67 @@ private:
 
     char [] fAuthor;
     char [] fAuthorEmail;
+    char [] fLicense;
+
+    InterfaceClassInfo findClass(char [] name) {
+        foreach(classInfo; fClasses) {
+            if(classInfo.nameString == name)
+                return classInfo;
+        }
+
+        return null;
+    }
+
+    void print() {
+        Stdout.formatln("InputFilename: {}", fFilename);
+        Stdout.formatln("CppOutputFilename: {}", fCppOutputFilename);
+        Stdout.formatln("HeaderOutputFilename: {}", fHeaderOutputFilename);
+        Stdout.formatln("Author: {}", fAuthor);
+        Stdout.formatln("Author Email: {}", fAuthorEmail);
+        Stdout.formatln("License: {}", fLicense);
+
+        foreach(includeFile; fIncludeFiles)
+            Stdout.formatln("Includes: {}", includeFile.nameString);
+
+        foreach(classInfo; fClasses) {
+            char [] buffer;
+            buffer ~= classInfo.nameString;
+            if(classInfo.hasPureVirtual || classInfo.hasVirtual)
+                buffer ~= " " ~ classInfo.nameString ~ "Bridge " ~ classInfo.nameString ~ "Proxy" ;
+
+            Stdout.formatln("Builds: {}", buffer);
+        }
+    }
+
+    char [][] buildLicense() {
+        char [][] licenseBuffer;
+        switch(Ascii.toLower(fLicense.dup)) {
+            case "mit": {
+                licenseBuffer ~= "/*";
+                licenseBuffer ~= " * Copyright 2010 " ~ fAuthor ~ " <" ~ fAuthorEmail ~ ">";
+                licenseBuffer ~= " * All rights reserved. Distributed under the terms of the MIT license.";
+                licenseBuffer ~= " */";
+            } break;
+            default: {
+                Stdout.formatln("Unsupported License format ({})", fLicense);
+            }
+        }
+
+        return licenseBuffer;
+    }
+
+}
+
+class InterfaceParser
+{ static:
+private:
+    InputFile fInputFile;
+
+    InputFile [] fOtherInputs;
 public:
-    bool parse(char [] filename) {
+    bool parse(char [] filename, bool otherInput = false) {
+        InputFile inputFile = new InputFile;
+
         FilePath path = new FilePath(filename);
 
         if(!path.exists()) {
@@ -48,10 +107,12 @@ public:
 
         doc.parse(buffer);
 
+        inputFile.fFilename = filename.dup;
+
         doc.Node node = doc.tree();
 
         if(node.type() != XmlNodeType.Document) {
-            Stdout.formatln("InterfaceParser::parse Invalid Document ({})", fFilename);
+            Stdout.formatln("InterfaceParser::parse Invalid Document ({})", inputFile.fFilename);
             return false;
         }
 
@@ -62,21 +123,25 @@ public:
                 char [] name = Ascii.toLower(child.name().dup);
 
                 switch(name) {
+                    case "headerfile": {
+                        inputFile.fHeaderOutputFilename = child.attributes.name(null, "name").value().dup;
+                    } break;
                     case "class": {
-                        InterfaceClassInfo classinfo;
+                        InterfaceClassInfo classinfo = new InterfaceClassInfo;
                         classinfo.nameString = child.attributes.name(null, "name").value().dup;
                         parseClassNode(child, classinfo);
-                        fClasses ~= classinfo;
+                        inputFile.fClasses ~= classinfo;
                     } break;
                     case "includefile": {
                         IncludeFile inc;
                         inc.nameString = child.attributes.name(null, "name").value().dup;
                         inc.typeString = Ascii.toLower(child.attributes.name(null, "type").value().dup);
-                        fIncludeFiles ~= inc;
+                        inputFile.fIncludeFiles ~= inc;
                     } break;
                     case "author": {
-                        fAuthor = child.attributes.name(null, "name").value().dup;
-                        fAuthorEmail = child.attributes.name(null, "email").value().dup;
+                        inputFile.fAuthor = child.attributes.name(null, "name").value().dup;
+                        inputFile.fAuthorEmail = child.attributes.name(null, "email").value().dup;
+                        inputFile.fLicense = child.attributes.name(null, "license").value().dup;
                     } break;
                     default: {
                         Stdout.formatln("InterfaceParser::parse Unhandled node ({})", name);
@@ -85,6 +150,13 @@ public:
             }
         }
 
+        if(otherInput)
+            fOtherInputs ~= inputFile;
+        else
+            fInputFile = inputFile;
+
+        delete doc;
+        file.close();
 
         return true;
     }
@@ -98,7 +170,7 @@ public:
 
             switch(name) {
                 case "function": {
-                    MemberFunction memberFunc;
+                    MemberFunction memberFunc = new MemberFunction;
                     memberFunc.nameString = child.attributes.name(null, "name").value().dup;
                     memberFunc.returnString = child.attributes.name(null, "returns").value().dup;
                     memberFunc.mod = child.attributes.name(null, "mod").value().dup;
@@ -136,11 +208,11 @@ public:
     void parseArguments(char [] args, inout MemberFunction memberFunc) {
         if(args == "") return;
 
-        char [][] tokens = Util.split(args, ",");
+        char [][] tokens = Util.split(args.dup, ",");
 
         foreach(token; tokens) {
             MemberFunction.Argument arg;
-            char [] trimmedToken = Util.trim(token);
+            char [] trimmedToken = Util.trim(token.dup);
 
             int loc = 0;
             if((loc = Util.locate(trimmedToken, '*')) != trimmedToken.length) {
@@ -186,21 +258,31 @@ public:
         return FunctionType.FT_NONE;
     }
 
+    InputFile getInputFile() {
+        return fInputFile;
+    }
+/*
     InterfaceClassInfo [] getInterfaceClassInfo() {
         return fClasses;
     }
+*/
 
-    InterfaceClassInfo *findClass(char [] name) {
-    	int classno = 0;
-        for(int i = 0; i < fClasses.length; i++)
-            if(fClasses[i].nameString == name) {
-            	classno = i;
-                break;
+    InputFile getInputFile(char [] name) {
+        foreach(classInfo; fInputFile.fClasses)
+            if(classInfo.nameString == name)
+                return fInputFile;
+
+        foreach(inputFile; fOtherInputs) {
+            foreach(classInfo; inputFile.fClasses) {
+               if(classInfo.nameString == name)
+                    return inputFile;
             }
+        }
 
-        return &fClasses[classno];
+        return null;
     }
 
+/*
     IncludeFile [] getIncludes() {
         return fIncludeFiles;
     }
@@ -212,4 +294,5 @@ public:
     char [] getAuthorEmail() {
         return fAuthorEmail;
     }
+*/
 }
