@@ -62,8 +62,10 @@ void buildCBridgeClass(InterfaceClassInfo classInfo) {
             bridgeBuffer ~= "}";
         } else if(memberFunc.isDestructor) {
             bridgeBuffer ~= classInfo.nameString ~ "Bridge::~" ~ classInfo.nameString ~ "Bridge() {{ }";
-        } else {
-            bridgeBuffer ~= memberFunc.getReturnString(false) ~ " " ~ classInfo.nameString ~ "Bridge::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(true) ~ ") {{ }";
+        }
+        
+        if(memberFunc.isPureVirtual) {
+            bridgeBuffer ~= memberFunc.getReturnString(false) ~ " " ~ classInfo.nameString ~ "Bridge::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(true) ~ ")" ~ memberFunc.mod ~ "{{ }";
         }
 
         bridgeBuffer ~= "\n";
@@ -84,10 +86,14 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
                         if(otherClass !is null) {
                             MemberFunction func = otherClass.getMemberFunction(memberFunc.nameString ~ memberFunc.postfix);
                             if(func !is null) {
-                            if(otherClass.hasPureVirtual || otherClass.hasVirtual)
+                            if(otherClass.hasPureVirtual)
                                 tmpBuffer ~= otherClass.nameString ~ "Proxy(bindInstPtr" ~ (func.countArguments() > 0 ? ", " : "") ~ func.buildArguments(false) ~ ")";
-                            }
+                            } /* else {
+                                tmpBuffer ~= otherClass.nameString ~ "(" ~ (func.countArguments() > 0 ? ", " : "") ~ func.buildArguments(false) ~ ")";
+                            } */
                         }
+                    } else {
+	                    tmpBuffer ~= "slan";
                     }
                 }
                 proxyBuffer ~= ": fBindInstPtr(bindInstPtr), " ~ tmpBuffer.dup ~ ", " ~ classInfo.nameString ~ "Bridge(" ~ memberFunc.buildArguments(false) ~ ") {{ }\n";
@@ -114,13 +120,13 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
 }
 
 void buildCExports(InterfaceClassInfo classInfo) {
-    exportBuffer ~= "export \"C\" {{";
+    exportBuffer ~= "extern \"C\" {{";
 
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
             exportBuffer ~= "\t" ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "*") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfix ~ "(void *bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
             exportBuffer ~= "\t{{";
-            exportBuffer ~= "\t\treturn new " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy" : "") ~ "(bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(false, true) ~ ");";
+            exportBuffer ~= "\t\treturn new " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? ("Proxy(bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "")) : "(") ~ memberFunc.buildArguments(false, true) ~ ");";
             exportBuffer ~= "\t}\n";
         } else if(memberFunc.isDestructor) {
             exportBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ "* self)";
@@ -134,7 +140,7 @@ void buildCExports(InterfaceClassInfo classInfo) {
                 exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
                 exportBuffer ~= "\t}\n";
             } else {
-                exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
+                exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
                 exportBuffer ~= "\t{{";
                 exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
                 exportBuffer ~= "\t}\n";
