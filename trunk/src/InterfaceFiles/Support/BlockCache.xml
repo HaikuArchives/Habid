@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="BlockCache.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BBlockCache">
+		<Function name="" returns="" arguments="uint32 blockCount, size_t blockSize, uint32 allocationType" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Get" returns="void *" arguments="size_t blockSize" type="Final" mod=""/>
+		<Function name="Save" returns="void" arguments="void *pointer, size_t blockSize" type="Final" mod=""/>
+	</class>
+</Flatten>
+
