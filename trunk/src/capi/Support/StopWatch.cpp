@@ -6,7 +6,7 @@
 #include <SupportDefs.h>
 #include <StopWatch.h>
 
-#include <stdio.h>
+
 
 extern "C" {
 	BStopWatch* be_BStopWatch_ctor(void *bindInstPtr, const char * name, bool silent)
