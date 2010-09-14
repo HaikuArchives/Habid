@@ -22,7 +22,8 @@ public:
 }
 
 int main() {
-	BStopWatch watch = new BStopWatch("test", false);
+	BStopWatch watch = new BStopWatch("test");
+
 	char [] buffer = new char[256];
 
 	MyMallocIO io = new MyMallocIO();
@@ -37,6 +38,7 @@ int main() {
 	Stdout.formatln("here? {}", cast(char [])read);
 
 	delete io;
+
 	delete watch;
 	return 0;
 }

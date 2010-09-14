@@ -17,16 +17,16 @@ import tango.stdc.stringz;
 extern (C) extern
 {
 	// BLocker * be_BLocker_ctor_1();
-	void * be_BLocker_ctor_1();
+	void * be_BLocker_ctor(void *bindInstPtr);
 	
 	// BLocker * be_BLocker_ctor_2(const char *name);
-	void * be_BLocker_ctor_2(char *name);
+	void * be_BLocker_ctor_1(void *bindInstPtr, char *name);
 	
 	//	BLocker * be_BLocker_ctor_3(bool benaphoreStyle);
-	void * be_BLocker_ctor_3(bool benaphoreStyle);
+	void * be_BLocker_ctor_2(void *bindInstPtr, bool benaphoreStyle);
 	
 	// BLocker * be_BLocker_ctor_4(const char *name, bool benaphoreStyle);
-	void * be_BLocker_ctor_4(char *name, bool benaphoreStyle);
+	void * be_BLocker_ctor_3(void *bindInstPtr, char *name, bool benaphoreStyle);
 	
 	//	void be_BLocker_dtor(BLocker *self);
 	void be_BLocker_dtor(void *self);
@@ -76,28 +76,28 @@ final class BLocker : IBLocker
 public:
 	// BLocker * be_BLocker_ctor_1();
 	this() {
-		fInstancePointer = be_BLocker_ctor_1();
+		fInstancePointer = be_BLocker_ctor(cast(void *)this);
 		fOwnsPointer = true;
 	}
 
 
 	// BLocker * be_BLocker_ctor_2(const char *name);
 	this(char [] name) {
-		fInstancePointer = be_BLocker_ctor_2(toStringz(name));
+		fInstancePointer = be_BLocker_ctor_1(cast(void *)this, toStringz(name));
 		fOwnsPointer = true;
 	}
 
 	
 	//	BLocker * be_BLocker_ctor_3(bool benaphoreStyle);
 	this(bool benophoreStyle) {
-		fInstancePointer = be_BLocker_ctor_3(benophoreStyle);
+		fInstancePointer = be_BLocker_ctor_2(cast(void *)this, benophoreStyle);
 		fOwnsPointer = true;
 	}
 
 	
 	// BLocker * be_BLocker_ctor_4(const char *name, bool benaphoreStyle);
 	this(char [] name, bool benophoreStyle) {
-		fInstancePointer = be_BLocker_ctor_4(toStringz(name), benophoreStyle);
+		fInstancePointer = be_BLocker_ctor_3(cast(void *)this, toStringz(name), benophoreStyle);
 		fOwnsPointer = true;
 	}
 

@@ -1,7 +1,13 @@
+/*
+ * Copyright 2010 Tomas Wilhelmsson <tomas.wilhelmsson@gmail.com>
+ * All rights reserved. Distributed under the terms of the MIT license.
+ */
+
 #include <SupportDefs.h>
 #include <DataIO.h>
 
-class BDataIOBridge : public BDataIO
+class BDataIOBridge
+: public BDataIO
 {
 public:
 	BDataIOBridge();
@@ -11,7 +17,8 @@ public:
 	virtual ssize_t Write(const void * buffer, size_t size) ;
 };
 
-class BPositionIOBridge : public BPositionIO
+class BPositionIOBridge
+: public BPositionIO
 {
 public:
 	BPositionIOBridge();
@@ -23,8 +30,28 @@ public:
 	virtual off_t Position() const;
 };
 
+class BMemoryIOBridge
+: public BMemoryIO
+{
+public:
+	BMemoryIOBridge(void * data, size_t length);
+	BMemoryIOBridge(const void * data, size_t length);
+	~BMemoryIOBridge();
 
-class BDataIOProxy : public BDataIOBridge
+};
+
+class BMallocIOBridge
+: public BMallocIO
+{
+public:
+	BMallocIOBridge();
+	~BMallocIOBridge();
+
+};
+
+
+class BDataIOProxy
+: public BDataIOBridge
 {
 	void *fBindInstPtr;
 public:
@@ -37,7 +64,8 @@ public:
 	virtual ssize_t Write_super(const void * buffer, size_t size) ;
 };
 
-class BPositionIOProxy :  BDataIOProxy, public BPositionIOBridge
+class BPositionIOProxy
+: public  BDataIOProxy, public BPositionIOBridge
 {
 	void *fBindInstPtr;
 public:
@@ -62,7 +90,8 @@ public:
 	virtual status_t GetSize_super(off_t * size) ;
 };
 
-class BMemoryIOProxy :  BPositionIOProxy, public BMemoryIO
+class BMemoryIOProxy
+: public  BPositionIOProxy, public BMemoryIOBridge
 {
 	void *fBindInstPtr;
 public:
@@ -82,7 +111,8 @@ public:
 	virtual status_t SetSize_super(off_t size) ;
 };
 
-class BMallocIOProxy :  BPositionIOProxy, public BMallocIO
+class BMallocIOProxy
+: public  BPositionIOProxy, public BMallocIOBridge
 {
 	void *fBindInstPtr;
 public:

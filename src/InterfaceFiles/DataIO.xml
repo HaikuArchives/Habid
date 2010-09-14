@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <Flatten>
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
 	<IncludeFile name="SupportDefs.h" type="System"/>
 	<Includefile name="DataIO.h" type="system"/>
 	<IncludeFile name="Support/DataIO.h" type="local"/>

@@ -13,7 +13,7 @@ import tango.stdc.stringz;
 
 extern (C) extern {
 //	BStopWatch * be_BStopWatch_ctor(const char *name, bool silent);
-	void * be_BStopWatch_ctor(char *name, bool silent);
+	void * be_BStopWatch_ctor(void *bindInstPtr, char *name, bool silent);
 
 
 //	void be_BStopWatch_dtor(BStopWatch *self);
@@ -62,7 +62,7 @@ class BStopWatch : IBStopWatch
 public:
 	//	BStopWatch * be_BStopWatch_ctor(const char *name, bool silent);
 	this(char [] name, bool silent = false) {
-		fInstancePointer = be_BStopWatch_ctor(toStringz(name), silent);
+		fInstancePointer = be_BStopWatch_ctor(cast(void *)this, toStringz(name), silent);
 		fOwnsPointer = true;
 	}
 	
