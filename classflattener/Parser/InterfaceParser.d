@@ -136,6 +136,7 @@ public:
                         IncludeFile inc;
                         inc.nameString = child.attributes.name(null, "name").value().dup;
                         inc.typeString = Ascii.toLower(child.attributes.name(null, "type").value().dup);
+                        inc.targetString = Ascii.toLower(child.attributes.name(null, "target").value().dup);
                         inputFile.fIncludeFiles ~= inc;
                     } break;
                     case "author": {

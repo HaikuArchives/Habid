@@ -25,6 +25,20 @@ struct IncludeFile
 {
     char [] nameString;
     char [] typeString;
+    
+    char [] targetString;
+    
+    bool isSourceTarget() {
+    	if(Util.containsPattern(targetString, "source"))
+    		return true;
+    	return false;	
+    }
+    
+    bool isHeaderTarget() {
+    	if(Util.containsPattern(targetString, "header"))
+    		return true;
+    	return false;	
+    }
 }
 
 
