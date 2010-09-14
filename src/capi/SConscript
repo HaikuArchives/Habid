@@ -6,6 +6,7 @@ c_srcs = [
 	'Support/Autolock.cpp',
 	'Support/DataIO.cpp',
 	'Support/BufferIO.cpp',
+	'Support/BlockCache.cpp',
 	'Support/List.cpp',
 	'Support/Locker.cpp',
 	'Support/StopWatch.cpp'

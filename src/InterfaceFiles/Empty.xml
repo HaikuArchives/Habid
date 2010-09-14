@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="" type="" target=""/>
+
+	<Author name="" email="" license=""/>
+
+	<class name="">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="" mod=""/>
+		<Function name="" returns="" arguments="" type="" mod=""/>
+	</class>
+</Flatten>
+
