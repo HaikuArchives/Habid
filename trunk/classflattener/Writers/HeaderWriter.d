@@ -111,6 +111,18 @@ void print() {
 
     Stdout.newline;
 
+	InputFile inputFile = InterfaceParser.getInputFile();
+	
+	char [] tmpBuffer = "HABID_";
+	
+	foreach(classInfo; inputFile.fClasses)
+		tmpBuffer ~= classInfo.nameString ~ "_";
+	
+	Stdout.formatln("#ifndef " ~ tmpBuffer.dup);
+	Stdout.formatln("#define " ~ tmpBuffer.dup);
+
+	Stdout.newline;
+
     foreach(line; includeBuffer)
         Stdout.formatln(line);
 
@@ -128,6 +140,8 @@ void print() {
 
     foreach(line; bindBuffer)
         Stdout.formatln(line);
+        
+    Stdout.formatln("#endif // " ~ tmpBuffer.dup ~ "\n");
 }
 
 void buildBindExports(InterfaceClassInfo classInfo) {
@@ -136,7 +150,8 @@ void buildBindExports(InterfaceClassInfo classInfo) {
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor || memberFunc.isDestructor)
             continue;
-        bindBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(void *bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
+        if(memberFunc.isPureVirtual || memberFunc.isVirtual)
+        	bindBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(void *bindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
     }
     bindBuffer ~= "}";
 }

@@ -5,7 +5,7 @@
 	<IncludeFile name="SupportDefs.h" type="System"/>
 	<IncludeFile name="BufferIO.h" type="System"/>
 	
-	<IncludeFile name="Support/PositionIO.h" type="local"/>
+	<IncludeFile name="Support/DataIO.h" type="local"/>
 
 	<class name="BBufferIO">
 		<Inherits name="BPositionIO" access="public"/>
@@ -13,7 +13,18 @@
 		<Function name="" returns="" arguments="BPositionIO *stream, size_t bufferSize, bool ownsStream" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
 
-		<Function name="Unflatten" returns="status_t" arguments="type_code code, const void *buffer, ssize_t size" type="PureVirtual" mod=""/>
+		<Function name="ReadAt" returns="ssize_t" arguments="off_t pos, void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="WriteAt" returns="ssize_t" arguments="off_t pos, const void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="Seek" returns="off_t" arguments="off_t position, uint32 seekMode" type="Virtual" mod=""/>
+		<Function name="Position" returns="off_t" arguments="" type="Virtual" mod="const"/>
+		<Function name="SetSize" returns="status_t" arguments="off_t size" type="Virtual" mod=""/>
+		<Function name="Flush" returns="status_t" arguments="" type="Virtual" mod=""/>
+
+		<Function name="Stream" returns="BPositionIO *" arguments="" type="" mod="const"/>
+		<Function name="BufferSize" returns="size_t" arguments="" type="" mod="const"/>
+		<Function name="OwnsStream" returns="bool" arguments="" type="" mod="const"/>
+		<Function name="SetOwnsStream" returns="void" arguments="bool ownsStream" type="" mod=""/>
+		<Function name="PrintToStream" returns="void" arguments="" type="" mod="const"/>
 	</class>
 </Flatten>
 

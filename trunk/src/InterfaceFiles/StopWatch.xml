@@ -3,7 +3,8 @@
 	<IncludeFile name="SupportDefs.h" type="System"/>
 	<Includefile name="StopWatch.h" type="system"/>
 
-	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="mit"/>
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
 	<class name="BStopWatch">
 		<Function name="" returns="" arguments="const char *name, bool silent" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
