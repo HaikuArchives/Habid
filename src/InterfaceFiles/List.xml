@@ -3,6 +3,8 @@
 	<IncludeFile name="SupportDefs.h" type="System"/>
 	<Includefile name="List.h" type="system"/>
 
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
 	<class name="BList">
 		<Function name="" returns="" arguments="int32 count" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="const BList & anotherList" type="Constructor" mod=""/>

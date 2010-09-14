@@ -19,6 +19,16 @@ public:
 	}
 
 	~this() { }
+
+	off_t Position() {
+		Stdout.formatln("Position");
+		return super.Position();
+	}
+
+	off_t Seek(off_t position, uint32 seekMode) {
+		Stdout.formatln("Pos: {} - seekMode: {}", position, seekMode);
+		return super.Seek(position, seekMode);
+	}
 }
 
 int main() {
