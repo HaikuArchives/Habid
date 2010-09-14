@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <Flatten>
-	<IncludeFile name="SupportDefs.h" type="System"/>
-	<Includefile name="List.h" type="system"/>
+	<Includefile name="List.h" type="system" taret="source"/>
 
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 

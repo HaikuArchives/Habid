@@ -39,13 +39,15 @@ void buildC()
 
 void buildIncludes(InputFile inputFile) {
     foreach(include; inputFile.fIncludeFiles) {
-        char [] tmpBuffer = "#include ";
-        if(Ascii.toLower(include.typeString.dup) == "system")
-            tmpBuffer ~= "<" ~ include.nameString ~ ">";
-        else
-            tmpBuffer ~= "\"" ~ include.nameString ~ "\"";
+    	if(include.isSourceTarget()) {
+        	char [] tmpBuffer = "#include ";
+        	if(Ascii.toLower(include.typeString.dup) == "system")
+           		tmpBuffer ~= "<" ~ include.nameString ~ ">";
+        	else
+            	tmpBuffer ~= "\"" ~ include.nameString ~ "\"";
 
-        includeBuffer ~= tmpBuffer.dup;
+        	includeBuffer ~= tmpBuffer.dup;
+    	}
     }
 }
 

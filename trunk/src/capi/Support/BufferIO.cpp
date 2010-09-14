@@ -4,7 +4,6 @@
  */
 
 #include <SupportDefs.h>
-#include <BufferIO.h>
 #include "Support/BufferIO.h"
 
 BBufferIOBridge::BBufferIOBridge(BPositionIO * stream, size_t bufferSize, bool ownsStream)

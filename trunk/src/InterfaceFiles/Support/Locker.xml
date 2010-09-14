@@ -2,8 +2,8 @@
 <Flatten>
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
-	<IncludeFile name="SupportDefs.h" type="System"/>
-	<Includefile name="Locker.h" type="system"/>
+	<Includefile name="Locker.h" type="system" target="header"/>
+	<Includefile name="Support/Locker.h" type="system" target="source"/>
 
 	<class name="BLocker">
 		<Function name="" returns="" arguments="" type="Constructor" mod=""/>

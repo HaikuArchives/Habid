@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <Flatten>
-	<IncludeFile name="SupportDefs.h" type="System"/>
-	<Includefile name="StopWatch.h" type="system"/>
+	<Includefile name="StopWatch.h" type="system" target="source"/>
 
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 

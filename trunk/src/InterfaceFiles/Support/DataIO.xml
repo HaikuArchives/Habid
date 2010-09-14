@@ -2,9 +2,9 @@
 <Flatten>
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
-	<IncludeFile name="SupportDefs.h" type="System"/>
-	<Includefile name="DataIO.h" type="system"/>
-	<IncludeFile name="Support/DataIO.h" type="local"/>
+	<IncludeFile name="SupportDefs.h" type="System" target="source,header"/>
+	<Includefile name="DataIO.h" type="system" target="header"/>
+	<IncludeFile name="Support/DataIO.h" type="local" target="Source"/>
 
 	<class name="BDataIO">
 		<Function name="" returns="" arguments="" type="Constructor" mod=""/>

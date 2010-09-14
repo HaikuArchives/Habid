@@ -2,8 +2,8 @@
 <Flatten>
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
-	<IncludeFile name="SupportDefs.h" type="System"/>
-	<Includefile name="Flattenable.h" type="system"/>
+	<Includefile name="Flattenable.h" type="system" target="header"/>
+	<Includefile name="Support/Flattenable.h" type="local" target="source"/>
 
 	<class name="BFlattenable">
 		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
