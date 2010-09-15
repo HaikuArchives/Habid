@@ -157,12 +157,12 @@ void buildCExports(InterfaceClassInfo classInfo) {
             exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
             exportBuffer ~= "\t}\n";
         } else if(memberFunc.isVariable) {
-            exportBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_setVar_" ~ memberFunc.nameString ~ "(" ~ classInfo.nameString ~ "Proxy *self, " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ ")";
+            exportBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varSet(" ~ classInfo.nameString ~ " *self, " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ ")";
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\tself->" ~ memberFunc.nameString ~ " = " ~ memberFunc.nameString ~ ";";
             exportBuffer ~= "\t}\n";
 
-            exportBuffer ~= "\t" ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_getVar_" ~ memberFunc.nameString ~ "(" ~ classInfo.nameString ~ "Proxy *self)";
+            exportBuffer ~= "\t" ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(" ~ classInfo.nameString ~ " *self)";
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\treturn self->" ~ memberFunc.nameString ~ ";";
             exportBuffer ~= "\t}";
