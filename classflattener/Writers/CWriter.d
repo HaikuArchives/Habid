@@ -85,14 +85,14 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
                             tmpBuffer ~= ", ";
 
                         InterfaceClassInfo otherClass = file.findClass(inherit.nameString);
-                        
-                        	
+
+
                         if(otherClass !is null) {
                             MemberFunction func = otherClass.getMemberFunction(memberFunc.nameString ~ memberFunc.postfix);
 
 							if(func is null)
 								func = otherClass.getMemberFunction(memberFunc.nameString);
-							
+
                             if(func !is null) {
                                 if(otherClass.hasPureVirtual || otherClass.hasVirtual)
                                     tmpBuffer ~= otherClass.nameString ~ "Proxy(bindInstPtr" ~ (func.countArguments() > 0 ? (", " ~ func.buildArguments(false)) : "") ~ ")";
@@ -151,6 +151,21 @@ void buildCExports(InterfaceClassInfo classInfo) {
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\tdelete self;";
             exportBuffer ~= "\t}\n";
+        } else if(memberFunc.isOperator) {
+            exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
+            exportBuffer ~= "\t{{";
+            exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
+            exportBuffer ~= "\t}\n";
+        } else if(memberFunc.isVariable) {
+            exportBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_setVar_" ~ memberFunc.nameString ~ "(" ~ classInfo.nameString ~ "Proxy *self, " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ ")";
+            exportBuffer ~= "\t{{";
+            exportBuffer ~= "\t\tself->" ~ memberFunc.nameString ~ " = " ~ memberFunc.nameString ~ ";";
+            exportBuffer ~= "\t}\n";
+
+            exportBuffer ~= "\t" ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_getVar_" ~ memberFunc.nameString ~ "(" ~ classInfo.nameString ~ "Proxy *self)";
+            exportBuffer ~= "\t{{";
+            exportBuffer ~= "\t\treturn self->" ~ memberFunc.nameString ~ ";";
+            exportBuffer ~= "\t}";
         } else {
             if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";

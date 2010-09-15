@@ -18,26 +18,28 @@ enum FunctionType : uint
     FT_FINAL = 4,
     FT_VIRTUAL = 8,
     FT_PURE_VIRTUAL = 16,
-    FT_NONE = 32
+    FT_OPERATOR = 32,
+    FT_VARIABLE = 64,
+    FT_NONE = 128
 }
 
 struct IncludeFile
 {
     char [] nameString;
     char [] typeString;
-    
+
     char [] targetString;
-    
+
     bool isSourceTarget() {
     	if(Util.containsPattern(targetString, "source"))
     		return true;
-    	return false;	
+    	return false;
     }
-    
+
     bool isHeaderTarget() {
     	if(Util.containsPattern(targetString, "header"))
     		return true;
-    	return false;	
+    	return false;
     }
 }
 
@@ -136,6 +138,56 @@ class MemberFunction
 
     FunctionType functionType;
 
+    char [] getOperatorName() {
+        switch(Util.chopl(nameString.dup, "operator")) {
+            case "+": {
+                return "opAdd";
+            } break;
+            case "-": {
+                return "opSub";
+            } break;
+            case "*": {
+                return "opMul";
+            } break;
+            case "/": {
+                return "opDiv";
+            } break;
+            case "%": {
+                return "opMod";
+            } break;
+            case "==": {
+                return "opEquals";
+            } break;
+            case "!=": {
+                return "opNotEquals";
+            } break;
+            case "<": {
+                return "opCmpLess";
+            } break;
+            case "<=": {
+                return "opCmpLessEqual";
+            } break;
+            case ">": {
+                return "opCmpGreater";
+            } break;
+            case ">=": {
+                return "opCmpGreaterEqual";
+            } break;
+            case "=": {
+                return "opAssign";
+            } break;
+            case "+=": {
+                return "opAddAssign";
+            } break;
+            case "-=": {
+                return "opSubAssign";
+            } break;
+            default: {
+                assert(false, "Invalid operator name: " ~ nameString);
+            }
+        }
+    }
+
     char [] getReturnString(bool replaceRef) {
         return (replaceRef && returnIsRef()) ? Util.replace(returnString.dup, '&', '*').dup : returnString.dup;
     }
@@ -192,6 +244,14 @@ class MemberFunction
 
     bool isDestructor() {
         return functionType == FunctionType.FT_DESTRUCTOR;
+    }
+
+    bool isOperator() {
+        return functionType == FunctionType.FT_OPERATOR;
+    }
+
+    bool isVariable() {
+        return functionType == FunctionType.FT_VARIABLE;
     }
 
     bool returnIsRef() {
