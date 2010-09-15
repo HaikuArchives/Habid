@@ -16,9 +16,9 @@
 		<Function name="CountChars" returns="int32" arguments="" type="Final" mod="const"/>
 		<Function name="CountBytes" returns="int32" arguments="int32 fromCharOffset, int32 charCount" type="Final" mod="const"/>
 
-		<Function name="operator=" returns="BString &" arguments="const BString & string" type="Final" mod=""/>
-		<Function name="operator=" returns="BString &" arguments="const char *string" type="Final" mod=""/>
-		<Function name="operator=" returns="BString &" arguments="char c" type="Final" mod=""/>
+		<Function name="operator=" returns="BString &" arguments="const BString & string" type="Operator" mod=""/>
+		<Function name="operator=" returns="BString &" arguments="const char *string" type="Operator" mod=""/>
+		<Function name="operator=" returns="BString &" arguments="char c" type="Operator" mod=""/>
 		
 		<Function name="SetTo" returns="BString &" arguments="const char *string" type="Final" mod=""/>
 		<Function name="SetTo" returns="BString &" arguments="const char *string, int32 maxLength" type="Final" mod=""/>
@@ -40,9 +40,9 @@
 		<Function name="CopyCharsInto" returns="BString &" arguments="BString& into, int32 fromCharOffset, int32 charCount" type="Final" mod="const"/>
 		<Function name="CopyCharsInto" returns="void" arguments="char* into, int32* intoLength, int32 fromCharOffset, int32 charCount" type="Final" mod="const"/>
 
-		<Function name="operator+=" returns="BString &" arguments="" type="Final" mod=""/>
-		<Function name="operator+=" returns="BString &" arguments="" type="Final" mod=""/>
-		<Function name="operator+=" returns="BString &" arguments="" type="Final" mod=""/>
+		<Function name="operator+=" returns="BString &" arguments="" type="Operator" mod=""/>
+		<Function name="operator+=" returns="BString &" arguments="" type="Operator" mod=""/>
+		<Function name="operator+=" returns="BString &" arguments="" type="Operator" mod=""/>
 		
 		<Function name="Append" returns="BString &" arguments="const BString& string" type="Final" mod=""/>
 		<Function name="Append" returns="BString &" arguments="const char* string" type="Final" mod=""/>
@@ -103,19 +103,19 @@
 		<Function name="MoveCharsInto" returns="void" arguments="char* into, int32* intoLength, int32 fromCharOffset, int32 charCount" type="Final" mod=""/>
 
 
-		<Function name="operator<" returns="bool" arguments="const BString& string" type="Final" mod="const"/>
-		<Function name="operator<=" returns="bool" arguments="const BString& string" type="Final" mod="const"/>
-		<Function name="operator==" returns="bool" arguments="const BString& string" type="Final" mod="const"/>
-		<Function name="operator>=" returns="bool" arguments="const BString& string" type="Final" mod="const"/>
-		<Function name="operator>" returns="bool" arguments="const BString& string" type="Final" mod="const"/>
-		<Function name="operator!=" returns="bool" arguments="const BString& string" type="Final" mod="const"/>
+		<Function name="operator<" returns="bool" arguments="const BString& string" type="Operator" mod="const"/>
+		<Function name="operator<=" returns="bool" arguments="const BString& string" type="Operator" mod="const"/>
+		<Function name="operator==" returns="bool" arguments="const BString& string" type="Operator" mod="const"/>
+		<Function name="operator>=" returns="bool" arguments="const BString& string" type="Operator" mod="const"/>
+		<Function name="operator>" returns="bool" arguments="const BString& string" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BString& string" type="Operator" mod="const"/>
 
-		<Function name="operator<" returns="bool" arguments="const char* string" type="Final" mod="const"/>
-		<Function name="operator<=" returns="bool" arguments="const char* string" type="Final" mod="const"/>
-		<Function name="operator==" returns="bool" arguments="const char* string" type="Final" mod="const"/>
-		<Function name="operator>=" returns="bool" arguments="const char* string" type="Final" mod="const"/>
-		<Function name="operator>" returns="bool" arguments="const char* string" type="Final" mod="const"/>
-		<Function name="operator!=" returns="bool" arguments="const char* string" type="Final" mod="const"/>
+		<Function name="operator<" returns="bool" arguments="const char* string" type="Operator" mod="const"/>
+		<Function name="operator<=" returns="bool" arguments="const char* string" type="Operator" mod="const"/>
+		<Function name="operator==" returns="bool" arguments="const char* string" type="Operator" mod="const"/>
+		<Function name="operator>=" returns="bool" arguments="const char* string" type="Operator" mod="const"/>
+		<Function name="operator>" returns="bool" arguments="const char* string" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const char* string" type="Operator" mod="const"/>
 
 		<Function name="Compare" returns="int" arguments="const BString& string" type="Final" mod="const"/>
 		<Function name="Compare" returns="int" arguments="const char* string" type="Final" mod="const"/>
@@ -132,7 +132,7 @@
 		<Function name="ICompare" returns="int" arguments="const char* string, int32 length" type="Final" mod="const"/>
 
 
-		<Function name="" returns="" arguments="" type="Final" mod=""/>
+		<Function name="" returns="" arguments="" type="" mod=""/>
 
 	</class>
 </Flatten>

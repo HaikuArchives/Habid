@@ -172,13 +172,14 @@ public:
             switch(name) {
                 case "function": {
                     MemberFunction memberFunc = new MemberFunction;
+
                     memberFunc.nameString = child.attributes.name(null, "name").value().dup;
                     memberFunc.returnString = child.attributes.name(null, "returns").value().dup;
                     memberFunc.mod = child.attributes.name(null, "mod").value().dup;
+                    memberFunc.functionType = parseType(child.attributes.name(null, "type").value());
 
                     parseArguments(child.attributes.name(null, "arguments").value(), memberFunc);
 
-                    memberFunc.functionType = parseType(child.attributes.name(null, "type").value());
 
                     if(memberFunc.isFinal) classInfo.hasFinal = true;
                     else if(memberFunc.isVirtual) classInfo.hasVirtual = true;
@@ -250,6 +251,12 @@ public:
             } break;
             case "purevirtual": {
                 return FunctionType.FT_PURE_VIRTUAL;
+            } break;
+            case "operator": {
+                return FunctionType.FT_OPERATOR;
+            } break;
+            case "variable": {
+                return FunctionType.FT_VARIABLE;
             } break;
             default: {
                 return FunctionType.FT_NONE;
