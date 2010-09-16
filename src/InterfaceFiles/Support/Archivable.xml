@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Archivable.h" type="system" target="header"/>
+	<Includefile name="Support/Archivable.h" type="local" target="source"/>
+	
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BArchivable">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* from" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Archive" returns="status_t" arguments="BMessage* into, bool deep" type="Virtual" mod="const"/>
+
+		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
+		
+		<Function name="AllUnarchived" returns="status_t" arguments="const BMessage* archive" type="Virtual" mod=""/>
+		<Function name="AllArchived" returns="status_t" arguments="BMessage* archive" type="Virtual" mod="const"/>
+	</class>
+</Flatten>
+

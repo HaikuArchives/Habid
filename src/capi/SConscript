@@ -4,6 +4,7 @@ c_srcs = [
 #	'App/Looper.cpp',
 
 	'Support/Autolock.cpp',
+	'Support/Archivable.cpp',
 	'Support/DataIO.cpp',
 	'Support/BufferIO.cpp',
 	'Support/BlockCache.cpp',
