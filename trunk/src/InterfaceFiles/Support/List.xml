@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Flatten>
-	<Includefile name="List.h" type="system" taret="source"/>
+	<Includefile name="List.h" type="system" target="source"/>
 
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
@@ -8,6 +8,10 @@
 		<Function name="" returns="" arguments="int32 count" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="const BList & anotherList" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="operator=" returns="BList &" arguments="const BList& other" type="Operator" mod=""/>
+		<Function name="operator==" returns="bool" arguments="const BList& other" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BList& other" type="Operator" mod="const"/>
 
 		<Function name="AddItem" returns="bool" arguments="void *item, int32 index" type="Final" mod=""/>
 		<Function name="AddItem" returns="bool" arguments="void *item" type="Final" mod=""/>
