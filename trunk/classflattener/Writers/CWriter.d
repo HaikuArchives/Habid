@@ -152,7 +152,7 @@ void buildCExports(InterfaceClassInfo classInfo) {
             exportBuffer ~= "\t\tdelete self;";
             exportBuffer ~= "\t}\n";
         } else if(memberFunc.isOperator) {
-            exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
+            exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ memberFunc.postfix ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.countArguments() > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true) ~ ");";
             exportBuffer ~= "\t}\n";

@@ -9,7 +9,8 @@ c_srcs = [
 	'Support/BlockCache.cpp',
 	'Support/List.cpp',
 	'Support/Locker.cpp',
-	'Support/StopWatch.cpp'
+	'Support/StopWatch.cpp',
+	'Support/String.cpp'
 ]
 
 c_objs = env.SharedObject(c_srcs)

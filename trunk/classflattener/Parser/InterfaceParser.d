@@ -190,8 +190,9 @@ public:
                     if(memberFunc.isDestructor)
                         memberFunc.nameString = "dtor";
 
-                    if(classInfo.countNames(memberFunc.nameString) > 0)
+                    if(classInfo.countNames(memberFunc.nameString) > 0) {
                         memberFunc.postfix = "_" ~ Integer.toString(classInfo.countNames(memberFunc.nameString));
+                    }
                     classInfo.memberFunctions ~= memberFunc;
                 } break;
                 case "inherits": {
@@ -226,7 +227,8 @@ public:
                 arg.typeString = Util.trim(trimmedToken[0..loc + 1]).dup;
                 arg.nameString = Util.trim(trimmedToken[loc + 1..$]).dup;
             } else {
-                loc = Util.locate(trimmedToken, ' ');
+               	loc = Util.locatePrior(trimmedToken, ' ');
+                	
                 arg.typeString = Util.trim(trimmedToken[0..loc + 1]).dup;
                 arg.nameString = Util.trim(trimmedToken[loc + 1..$]).dup;
             }

@@ -182,6 +182,15 @@ class MemberFunction
             case "-=": {
                 return "opSubAssign";
             } break;
+            case "[]": {
+            	return "opIndex";
+            } break;
+            case "<<": {
+            	return "opShl";
+            } break;
+            case ">>": {
+            	return "opShr";
+            } break;
             default: {
                 assert(false, "Invalid operator name: " ~ nameString);
             }

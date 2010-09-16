@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Flatten>
-	<Includefile name="BlockCache.h" type="system" target="source"/>
-
+	<Includefile name="String.h" type="system" target="source"/>
+	
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
 	<class name="BString">
@@ -40,9 +40,9 @@
 		<Function name="CopyCharsInto" returns="BString &" arguments="BString& into, int32 fromCharOffset, int32 charCount" type="Final" mod="const"/>
 		<Function name="CopyCharsInto" returns="void" arguments="char* into, int32* intoLength, int32 fromCharOffset, int32 charCount" type="Final" mod="const"/>
 
-		<Function name="operator+=" returns="BString &" arguments="" type="Operator" mod=""/>
-		<Function name="operator+=" returns="BString &" arguments="" type="Operator" mod=""/>
-		<Function name="operator+=" returns="BString &" arguments="" type="Operator" mod=""/>
+		<Function name="operator+=" returns="BString &" arguments="const BString& string" type="Operator" mod=""/>
+		<Function name="operator+=" returns="BString &" arguments="const char* string" type="Operator" mod=""/>
+		<Function name="operator+=" returns="BString &" arguments="char c" type="Operator" mod=""/>
 		
 		<Function name="Append" returns="BString &" arguments="const BString& string" type="Final" mod=""/>
 		<Function name="Append" returns="BString &" arguments="const char* string" type="Final" mod=""/>
@@ -132,8 +132,100 @@
 		<Function name="ICompare" returns="int" arguments="const char* string, int32 length" type="Final" mod="const"/>
 
 
-		<Function name="" returns="" arguments="" type="" mod=""/>
+		<Function name="FindFirst" returns="int32" arguments="const BString& string" type="Final" mod="const"/>
+		<Function name="FindFirst" returns="int32" arguments="const char* string" type="Final" mod="const"/>
+		<Function name="FindFirst" returns="int32" arguments="const BString& string, int32 fromOffset" type="Final" mod="const"/>
+		<Function name="FindFirst" returns="int32" arguments="const char* string, int32 fromOffset" type="Final" mod="const"/>
+		<Function name="FindFirst" returns="int32" arguments="char c" type="Final" mod="const"/>
+		<Function name="FindFirst" returns="int32" arguments="char c, int32 fromOffset" type="Final" mod="const"/>
 
+		<Function name="FindFirstChars" returns="int32" arguments="const BString& string, int32 fromCharOffset" type="Final" mod="const"/>
+		<Function name="FindFirstChars" returns="int32" arguments="const char* string, int32 fromCharOffset" type="Final" mod="const"/>
+
+		<Function name="FindLast" returns="int32" arguments="const BString& string" type="Final" mod="const"/>
+		<Function name="FindLast" returns="int32" arguments="const char* string" type="Final" mod="const"/>
+		<Function name="FindLast" returns="int32" arguments="const BString& string, int32 beforeOffset" type="Final" mod="const"/>
+		<Function name="FindLast" returns="int32" arguments="const char* string, int32 beforeOffset" type="Final" mod="const"/>
+		<Function name="FindLast" returns="int32" arguments="char c" type="Final" mod="const"/>
+		<Function name="FindLast" returns="int32" arguments="char c, int32 beforeOffset" type="Final" mod="const"/>
+
+		<Function name="FindLastChars" returns="int32" arguments="const BString& string, int32 beforeCharOffset" type="Final" mod="const"/>
+		<Function name="FindLastChars" returns="int32" arguments="const char* string, int32 beforeCharOffset" type="Final" mod="const"/>
+
+		<Function name="IFindFirst" returns="int32" arguments="const BString& string" type="Final" mod=""/>
+		<Function name="IFindFirst" returns="int32" arguments="const char* string" type="Final" mod=""/>
+		<Function name="IFindFirst" returns="int32" arguments="const BString& string, int32 fromOffset" type="Final" mod=""/>
+		<Function name="IFindFirst" returns="int32" arguments="const char* string, int32 fromOffset" type="Final" mod=""/>
+
+		<Function name="IFindLast" returns="int32" arguments="const BString& string" type="Final" mod=""/>
+		<Function name="IFindLast" returns="int32" arguments="const char* string" type="Final" mod=""/>
+		<Function name="IFindLast" returns="int32" arguments="const BString& string, int32 beforeOffset" type="Final" mod=""/>
+		<Function name="IFindLast" returns="int32" arguments="const char* string, int32 beforeOffset" type="Final" mod=""/>
+
+
+		<Function name="ReplaceFirst" returns="BString &" arguments="char replaceThis, char withThis" type="Final" mod=""/>
+		<Function name="ReplaceLast" returns="BString &" arguments="char replaceThis, char withThis" type="Final" mod=""/>
+		<Function name="ReplaceAll" returns="BString &" arguments="char replaceThis, char withThis, int32 fromOffset" type="Final" mod=""/>
+		<Function name="Replace" returns="BString &" arguments="char replaceThis, char withThis, int32 maxReplaceCount, int32 fromOffset" type="Final" mod=""/>
+		
+		<Function name="ReplaceFirst" returns="BString &" arguments="const char* replaceThis, const char* withThis" type="Final" mod=""/>
+		<Function name="ReplaceLast" returns="BString &" arguments="const char* replaceThis, const char* withThis" type="Final" mod=""/>
+		<Function name="ReplaceAll" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 fromOffset" type="Final" mod=""/>
+		<Function name="Replace" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 maxReplaceCount, int32 fromOffset" type="Final" mod=""/>
+
+		<Function name="ReplaceAllChars" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 fromCharOffset" type="Final" mod=""/>
+		<Function name="ReplaceChars" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 maxReplaceCount, int32 fromCharOffset" type="Final" mod=""/>
+
+		<Function name="IReplaceFirst" returns="BString &" arguments="char replaceThis, char withThis" type="Final" mod=""/>
+		<Function name="IReplaceLast" returns="BString &" arguments="char replaceThis, char withThis" type="Final" mod=""/>
+		<Function name="IReplaceAll" returns="BString &" arguments="char replaceThis, char withThis, int32 fromOffset" type="Final" mod=""/>
+		<Function name="IReplace" returns="BString &" arguments="char replaceThis, char withThis, int32 maxReplaceCount, int32 fromOffset" type="Final" mod=""/>
+
+		<Function name="IReplaceFirst" returns="BString &" arguments="const char* replaceThis, const char* withThis" type="Final" mod=""/>
+		<Function name="IReplaceLast" returns="BString &" arguments="const char* replaceThis, const char* withThis" type="Final" mod=""/>
+		<Function name="IReplaceAll" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 fromOffset" type="Final" mod=""/>
+		<Function name="IReplace" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 maxReplaceCount, int32 fromOffset" type="Final" mod=""/>
+
+		<Function name="ReplaceSet" returns="BString &" arguments="const char* setOfBytes, char with" type="Final" mod=""/>
+		<Function name="ReplaceSet" returns="BString &" arguments="const char* setOfBytes, const char* with" type="Final" mod=""/>
+
+		<Function name="ReplaceCharsSet" returns="BString &" arguments="const char* setOfChars, const char* with" type="Final" mod=""/>
+
+<!--
+		<Function name="operator[]" returns="BString &" arguments="int32 index" type="Operator" mod="const"/>
+-->
+
+		<Function name="ByteAt" returns="char" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="CharAt" returns="const char*" arguments="int32 charIndex, int32* bytes" type="Final" mod="const"/>
+		<Function name="CharAt" returns="bool" arguments="int32 charIndex, char* buffer, int32* bytes" type="Final" mod="const"/>
+
+		<Function name="LockBuffer" returns="char*" arguments="int32 maxLength" type="Final" mod=""/>
+		<Function name="UnlockBuffer" returns="BString &" arguments="int32 length" type="Final" mod=""/>
+
+		<Function name="ToLower" returns="BString &" arguments="" type="Final" mod=""/>
+		<Function name="ToUpper" returns="BString &" arguments="" type="Final" mod=""/>
+
+		<Function name="Capitalize" returns="BString &" arguments="" type="Final" mod=""/>
+		<Function name="CapitalizeEachWord" returns="BString &" arguments="" type="Final" mod=""/>
+
+
+		<Function name="CharacterEscape" returns="BString &" arguments="const char* original, const char* setOfCharsToEscape, char escapeWith" type="Final" mod=""/>
+		<Function name="CharacterEscape" returns="BString &" arguments="const char* setOfCharsToEscape, char escapeWith" type="Final" mod=""/>
+		<Function name="CharacterDeescape" returns="BString &" arguments="const char* original, char escapeChar" type="Final" mod=""/>
+		<Function name="CharacterDeescape" returns="BString &" arguments="char escapeChar" type="Final" mod=""/>
+
+		<Function name="Trim" returns="BString &" arguments="" type="Final" mod=""/>
+
+		<Function name="operator<<" returns="BString &" arguments="const char* string" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="const BString& string" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="char c" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="int value" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="unsigned int value" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="uint32 value" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="int32 value" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="uint64 value" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="int64 value" type="Operator" mod=""/>
+		<Function name="operator<<" returns="BString &" arguments="float value" type="Operator" mod=""/>
 	</class>
 </Flatten>
 
