@@ -3,7 +3,6 @@
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 
-#include <SupportDefs.h>
 #include <List.h>
 
 
@@ -22,6 +21,21 @@ extern "C" {
 	void be_BList_dtor(BList* self)
 	{
 		delete self;
+	}
+
+	BList * be_BList_opAssign(BList *self, const BList* other)
+	{
+		return &self->operator=(*other);
+	}
+
+	bool be_BList_opEquals(BList *self, const BList* other)
+	{
+		return self->operator==(*other);
+	}
+
+	bool be_BList_opNotEquals(BList *self, const BList* other)
+	{
+		return self->operator!=(*other);
 	}
 
 	bool be_BList_AddItem(BList *self, void * item, int32 index)
