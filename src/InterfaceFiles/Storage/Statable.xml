@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Statable.h" type="system" target="header"/>
+	<Includefile name="Storage/Statable.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BStatable">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="GetStat" returns="status_t" arguments="struct stat *st" type="PureVirtual" mod="const"/>
+		<Function name="_GetStat" returns="status_t" arguments="struct stat_beos *st" type="PureVirtual" mod="const"/>
+
+		<Function name="IsFile" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsDirectory" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsSymLink" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="GetNodeRef" returns="status_t" arguments="node_ref *ref" type="Final" mod="const"/>
+
+		<Function name="GetOwner" returns="status_t" arguments="uid_t *owner" type="Final" mod="const"/>
+		<Function name="SetOwner" returns="status_t" arguments="uid_t owner" type="Final" mod=""/>
+
+		<Function name="GetGroup" returns="status_t" arguments="gid_t *group" type="Final" mod="const"/>
+		<Function name="SetGroup" returns="status_t" arguments="gid_t group" type="Final" mod=""/>
+
+		<Function name="GetPermissions" returns="status_t" arguments="mode_t *perms" type="Final" mod="const"/>
+		<Function name="SetPermissions" returns="status_t" arguments="mode_t perms" type="Final" mod=""/>
+
+		<Function name="GetSize" returns="status_t" arguments="off_t *size" type="Final" mod="const"/>
+
+		<Function name="GetModificationTime" returns="status_t" arguments="time_t *mtime" type="Final" mod="const"/>
+		<Function name="SetModificationTime" returns="status_t" arguments="time_t mtime" type="Final" mod=""/>
+
+		<Function name="GetCreationTime" returns="status_t" arguments="time_t *ctime" type="Final" mod="const"/>
+		<Function name="SetCreationTime" returns="status_t" arguments="time_t ctime" type="Final" mod=""/>
+
+		<Function name="GetAccessTime" returns="status_t" arguments="time_t *atime" type="Final" mod="const"/>
+		<Function name="SetAccessTime" returns="status_t" arguments="time_t atime" type="Final" mod=""/>
+
+		<Function name="GetVolume" returns="status_t" arguments="BVolume *vol" type="Final" mod="const"/>
+
+		<Function name="set_stat" returns="status_t" arguments="struct stat &st, uint32 what" type="PureVirtual" mod=""/>
+
+	</class>
+</Flatten>
+
