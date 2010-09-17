@@ -126,7 +126,7 @@ void buildCProxyClass(InterfaceClassInfo classInfo) {
         if(memberFunc.isPureVirtual || memberFunc.isVirtual) {
             proxyBuffer ~= memberFunc.getReturnString(false) ~ " " ~ classInfo.nameString ~ "Proxy::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(true) ~ ") " ~ memberFunc.mod;
             proxyBuffer ~= "{{";
-            proxyBuffer ~= "\t" ~ (memberFunc.returnString == "void" ? "" : "return") ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(fBindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " :  "") ~ memberFunc.buildArguments(false, true) ~ ");";
+            proxyBuffer ~= "\t" ~ (memberFunc.returnString == "void" ? "" : "return") ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfix ~ "(fBindInstPtr" ~ (memberFunc.countArguments() > 0 ? ", " :  "") ~ memberFunc.buildArguments(false) ~ ");";
             proxyBuffer ~= "}\n";
 
             proxyBuffer ~= memberFunc.getReturnString(false) ~ " " ~ classInfo.nameString ~ "Proxy::" ~ memberFunc.nameString ~ "_super(" ~ memberFunc.buildArguments(true) ~ ") " ~ memberFunc.mod;
