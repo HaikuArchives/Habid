@@ -4,6 +4,7 @@ import Parser.InterfaceParser;
 
 import Writers.HeaderWriter;
 import Writers.CWriter;
+import Writers.DWriter;
 
 import tango.io.Stdout;
 
@@ -23,6 +24,13 @@ int main(char[][] args)
             InterfaceParser.parse(args[i], true);
 
         buildC();
+    } else if(args[1] == "-generate-d") {
+        InterfaceParser.parse(args[2]);
+
+        for(int i = 3; i < args.length; i++)
+            InterfaceParser.parse(args[i], true);
+
+        buildD();
     } else {
         Stdout.formatln("Usage:");
         Stdout.formatln("classflattener -generate-c <input file> > <output file.cpp>");
