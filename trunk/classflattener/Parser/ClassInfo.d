@@ -128,6 +128,8 @@ class MemberFunction
             arg.isRef = Util.contains(_typeString, '&');
             arg.isFuncPtr = (_funcPtrArgs.length > 0);
 
+			arg.isStruct = Util.containsPattern(_typeString, "struct");
+			
             arg.typeString = _typeString.dup;
             arg.nameString = _nameString.dup;
             arg.funcPtrArgs = _funcPtrArgs.dup;
@@ -142,8 +144,9 @@ class MemberFunction
         bool isPtr = false;
         bool isRef = false;
         bool isFuncPtr = false;
+        bool isStruct = false;
 
-        char [] toString(bool withType, bool replaceRef = false) {
+        char [] toString(bool withType, bool replaceRef = false, bool refStruct = false, bool derefStruct = false) {
             if(isFuncPtr) {
                 if(withType)
                     return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " (*" ~ nameString ~ ")(" ~ funcPtrArgs ~ ")").dup;
@@ -152,8 +155,14 @@ class MemberFunction
             } else {
                 if(withType)
                     return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " " ~ nameString).dup;
-                else
-                    return (((replaceRef && isRef) ? ("*" ~ nameString) : nameString)).dup;
+                else {
+                	if(isStruct && isRef && refStruct)
+                		return ("&" ~ nameString).dup;
+                	else if(isStruct && isRef && !refStruct)
+                		return (derefStruct ? "*" : "") ~ nameString.dup;
+                	else
+                    	return (((replaceRef && isRef) ? ("*" ~ nameString) : nameString)).dup;
+                }
             }
         }
 
@@ -350,12 +359,12 @@ class MemberFunction
         return (replaceRef && returnIsRef()) ? Util.replace(returnString.dup, '&', '*').dup : returnString.dup;
     }
 
-    char [] buildArguments(bool withType, bool replaceRef = false) {
+    char [] buildArguments(bool withType, bool replaceRef = false, bool refStruct = false, bool derefStruct = false) {
         char [] buffer;
         foreach(argno, arg; this) {
             if(argno > 0)
                 buffer ~= ", ";
-            buffer ~= arg.toString(withType, replaceRef);
+            buffer ~= arg.toString(withType, replaceRef, refStruct, derefStruct);
         }
 
         return buffer.dup;

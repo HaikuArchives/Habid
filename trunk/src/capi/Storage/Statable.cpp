@@ -9,56 +9,10 @@ BStatableBridge::BStatableBridge()
 : BStatable()
 {
 }
-
-
 BStatableBridge::~BStatableBridge() { }
-
-
 status_t BStatableBridge::GetStat(struct stat * st)const{ }
-
-
 status_t BStatableBridge::_GetStat(struct stat_beos * st)const{ }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 status_t BStatableBridge::set_stat(struct stat & st, uint32 what){ }
-
-
 
 BStatableProxy::BStatableProxy(void *bindInstPtr)
 : fBindInstPtr(bindInstPtr), BStatableBridge() { }
@@ -87,7 +41,7 @@ status_t BStatableProxy::_GetStat_super(struct stat_beos * st) const
 
 status_t BStatableProxy::set_stat(struct stat & st, uint32 what) 
 {
-	return bind_BStatable_set_stat(fBindInstPtr, st, what);
+	return bind_BStatable_set_stat(fBindInstPtr, &st, what);
 }
 
 status_t BStatableProxy::set_stat_super(struct stat & st, uint32 what) 
@@ -213,4 +167,5 @@ extern "C" {
 	}
 
 }
+
 
