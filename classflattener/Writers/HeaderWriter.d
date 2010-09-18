@@ -114,7 +114,6 @@ void buildBindExports(InterfaceClassInfo classInfo) {
         if(memberFunc.isConstructor || memberFunc.isDestructor)
             continue;
         if(memberFunc.isPureVirtual || memberFunc.isVirtual) {
-            Stdout.formatln("Argcount:", memberFunc.argCount);
         	bindBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
         }
     }

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Entry.h" type="system" target="header"/>
+	<Includefile name="Storage/Statable.h" type="local" target="header"/>
+	<includefile name="Storage/Entry.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BEntry">
+		<inherits name="BStatable" access="public"/>
+
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BDirectory* dir, const char* path, bool traverse" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const entry_ref* ref, bool traverse" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char* path, bool traverse" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BEntry& entry" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function  name="InitCheck" returns="status_t" arguments="" type="Final" mod="const"/>
+		<Function  name="Exists" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function  name="GetStat" returns="status_t" arguments="struct stat* stat" type="Virtual" mod="const"/>
+
+		<Function  name="SetTo" returns="status_t" arguments="const BDirectory* dir, const char* path, bool traverse" type="Final" mod=""/>
+		<Function  name="SetTo" returns="status_t" arguments="const entry_ref* ref, bool traverse" type="Final" mod=""/>
+		<Function  name="SetTo" returns="status_t" arguments="const char* path, bool traverse" type="Final" mod=""/>
+		<Function  name="Unset" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function  name="GetRef" returns="status_t" arguments="entry_ref* ref" type="Final" mod="const"/>
+		<Function  name="GetPath" returns="status_t" arguments="BPath* path" type="Final" mod="const"/>
+		<Function  name="GetParent" returns="status_t" arguments="BEntry* entry" type="Final" mod="const"/>
+		<Function  name="GetParent" returns="status_t" arguments="BDirectory* dir" type="Final" mod="const"/>
+		<Function  name="GetName" returns="status_t" arguments="char* buffer" type="Final" mod="const"/>
+
+		<Function  name="Rename" returns="status_t" arguments="const char* path, bool clobber" type="Final" mod=""/>
+		<Function  name="MoveTo" returns="status_t" arguments="BDirectory* dir, const char* path, bool clobber" type="Final" mod=""/>
+		<Function  name="Remove" returns="status_t" arguments="" type="Final" mod=""/>
+
+
+		<Function  name="operator==" returns="bool" arguments="const BEntry& item" type="Operator" mod="const"/>
+		<Function  name="operator!=" returns="bool" arguments="const BEntry& item" type="Operator" mod="const"/>
+
+		<Function  name="operator=" returns="BEntry &" arguments="const BEntry& item" type="Operator" mod="const"/>
+
+	</class>
+</Flatten>
+
