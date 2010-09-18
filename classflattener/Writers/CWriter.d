@@ -185,26 +185,38 @@ void buildCExports(InterfaceClassInfo classInfo) {
 }
 
 void print() {
-    foreach(line; licenseBuffer)
-        Stdout.formatln(line);
+    if(licenseBuffer.length > 0) {
+        foreach(line; licenseBuffer)
+            Stdout.formatln(line);
+
+        Stdout.newline;
+    }
+
+    if(includeBuffer.length > 0) {
+        foreach(line; includeBuffer)
+            Stdout.formatln(line);
+
+        Stdout.newline;
+    }
+
+    if(bridgeBuffer.length > 0) {
+        foreach(line; bridgeBuffer)
+            Stdout.formatln(line);
+
+        Stdout.newline;
+    }
+
+    if(proxyBuffer.length > 0) {
+        foreach(line; proxyBuffer)
+            Stdout.formatln(line);
+
+        Stdout.newline;
+    }
+
+    if(exportBuffer.length > 0) {
+        foreach(line; exportBuffer)
+            Stdout.formatln(line);
+    }
 
     Stdout.newline;
-
-    foreach(line; includeBuffer)
-        Stdout.formatln(line);
-
-    Stdout.newline;
-
-    foreach(line; bridgeBuffer)
-        Stdout.formatln(line);
-
-    Stdout.newline;
-
-    foreach(line; proxyBuffer)
-        Stdout.formatln(line);
-
-    Stdout.newline;
-
-    foreach(line; exportBuffer)
-        Stdout.formatln(line);
 }
