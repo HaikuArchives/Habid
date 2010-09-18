@@ -9,19 +9,6 @@ import tango.io.Stdout;
 
 int main(char[][] args)
 {
-/*
-    for(int i = 1; i < args.length; i++) {
-        switch(args[i]) {
-            case "-include-output-dir": {
-                parser.setIncludeOutputDir(args[i + 1]);
-                i++;
-            } break;
-            default: {
-                parser.parse(args[i]);
-            }
-        }
-    }
-*/
     if(args[1] == "-generate-header") {
         InterfaceParser.parse(args[2]);
 
@@ -37,20 +24,13 @@ int main(char[][] args)
 
         buildC();
     } else {
-        Stdout.formatln("Invalid usage");
+        Stdout.formatln("Usage:");
+        Stdout.formatln("classflattener -generate-c <input file> > <output file.cpp>");
+        Stdout.formatln("classflattener -generate-header <input file> > <output file.h>");
+//        Stdout.formatln("Invalid usage");
         return 0;
     }
 
-
-//    foreach(inputFile; parser.getInputFiles())
-//        inputFile.print();
-
-
-//    parser.parse();
-//    parser.print();
-
-//    CWriter.buildOutput(parser);
-//    CWriter.print();
 
     return 0;
 }
