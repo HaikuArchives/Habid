@@ -11,7 +11,7 @@
 
 		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="const BDirectory* dir, const char* path, bool traverse" type="Constructor" mod=""/>
-		<Function name="" returns="" arguments="const entry_ref* ref, bool traverse" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const entry_ref* _ref, bool traverse" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="const char* path, bool traverse" type="Constructor" mod=""/>
 		<Function name="" returns="" arguments="const BEntry& entry" type="Constructor" mod=""/>
 
@@ -23,11 +23,11 @@
 		<Function  name="GetStat" returns="status_t" arguments="struct stat* stat" type="Virtual" mod="const"/>
 
 		<Function  name="SetTo" returns="status_t" arguments="const BDirectory* dir, const char* path, bool traverse" type="Final" mod=""/>
-		<Function  name="SetTo" returns="status_t" arguments="const entry_ref* ref, bool traverse" type="Final" mod=""/>
+		<Function  name="SetTo" returns="status_t" arguments="const entry_ref* _ref, bool traverse" type="Final" mod=""/>
 		<Function  name="SetTo" returns="status_t" arguments="const char* path, bool traverse" type="Final" mod=""/>
 		<Function  name="Unset" returns="void" arguments="" type="Final" mod=""/>
 
-		<Function  name="GetRef" returns="status_t" arguments="entry_ref* ref" type="Final" mod="const"/>
+		<Function  name="GetRef" returns="status_t" arguments="entry_ref* _ref" type="Final" mod="const"/>
 		<Function  name="GetPath" returns="status_t" arguments="BPath* path" type="Final" mod="const"/>
 		<Function  name="GetParent" returns="status_t" arguments="BEntry* entry" type="Final" mod="const"/>
 		<Function  name="GetParent" returns="status_t" arguments="BDirectory* dir" type="Final" mod="const"/>

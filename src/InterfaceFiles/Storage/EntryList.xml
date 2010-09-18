@@ -10,7 +10,7 @@
 		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
 
 		<Function name="GetNextEntry" returns="status_t" arguments="BEntry *entry, bool traverse" type="PureVirtual" mod=""/>
-		<Function name="GetNextRef" returns="status_t" arguments="entry_ref *ref" type="PureVirtual" mod=""/>
+		<Function name="GetNextRef" returns="status_t" arguments="entry_ref *_ref" type="PureVirtual" mod=""/>
 		<Function name="GetNextDirents" returns="int32" arguments="struct dirent *direntBuffer, size_t bufferSize, int32 maxEntries" type="PureVirtual" mod=""/>
 		<Function name="Rewind" returns="status_t" arguments="" type="PureVirtual" mod=""/>
 		<Function name="CountEntries" returns="int32" arguments="" type="PureVirtual" mod=""/>
