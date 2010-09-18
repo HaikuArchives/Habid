@@ -5,8 +5,6 @@
 
 #include <String.h>
 
-
-
 extern "C" {
 	BString* be_BString_ctor(void *bindInstPtr)
 	{
@@ -824,4 +822,5 @@ extern "C" {
 	}
 
 }
+
 
