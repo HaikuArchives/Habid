@@ -5,8 +5,6 @@
 
 #include <List.h>
 
-
-
 extern "C" {
 	BList* be_BList_ctor(void *bindInstPtr, int32 count)
 	{
@@ -83,7 +81,7 @@ extern "C" {
 		self->MakeEmpty();
 	}
 
-	void be_BList_SortItems(BList *self, int (* comparefunc)(const void *, const void * ))
+	void be_BList_SortItems(BList *self, int (*comparefunc)(const void *, const void *))
 	{
 		self->SortItems(comparefunc);
 	}
@@ -153,15 +151,16 @@ extern "C" {
 		return self->IsEmpty();
 	}
 
-	void be_BList_DoForEach(BList *self, bool (* func)(void *item))
+	void be_BList_DoForEach(BList *self, bool (*func)(void *item))
 	{
 		self->DoForEach(func);
 	}
 
-	void be_BList_DoForEach_1(BList *self, bool (* func)(void *item, void * arg2), void * arg2)
+	void be_BList_DoForEach_1(BList *self, bool (*func)(void *item, void *arg2), void * arg2)
 	{
 		self->DoForEach(func, arg2);
 	}
 
 }
+
 
