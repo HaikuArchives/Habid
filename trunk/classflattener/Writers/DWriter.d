@@ -14,18 +14,40 @@ import Ascii = tango.text.Ascii;
 char [][] licenseBuffer;
 char [][] importBuffer;
 char [][] bindBuffer;
+char [][] classBuffer;
 
 char [][] classNames = [
+    "BArchivable",
+    "BAutolock",
+    "BBlockCache",
+    "BDataIO",
+    "BFlattenable",
+    "BList",
+    "BLocker",
+    "BMallocIO",
+    "BMemoryIO",
     "BBufferIO",
     "BPositionIO",
+    "BStopWatch",
+    "BString",
+
+    "BAppFileInfo",
+    "BDirectory",
     "BEntry",
     "BEntryList",
-    "BString"
-];
-
-char [][] keywords = [
-    "lazy",
-    "with"
+    "BFile",
+    "BFilePanel",
+    "BMimeType",
+    "BNode",
+    "BNodeInfo",
+    "BPath",
+    "BQuery",
+    "BRefFilter",
+    "BResources",
+    "BStatable",
+    "BSymLink",
+    "BVolume",
+    "BVolumeRoster"
 ];
 
 void buildD()
@@ -37,6 +59,8 @@ void buildD()
     foreach(classInfo; inputFile.fClasses) {
         buildBindExports(classInfo);
         buildCImports(classInfo);
+
+        buildBasicClass(classInfo);
     }
 
     print();
@@ -52,13 +76,11 @@ char [] replaceClassNames(char [] buffer) {
             tmpBuffer = Util.substitute(tmpBuffer, "const", "");
     }
 
-    foreach(keyword; keywords) {
-        if(Util.containsPattern(tmpBuffer, keyword))
-            tmpBuffer = Util.substitute(tmpBuffer, keyword, "_" ~ keyword);
-    }
-
     if(Util.containsPattern(tmpBuffer, "unsigned"))
         tmpBuffer = Util.substitute(tmpBuffer, "unsigned", "");
+    if(Util.containsPattern(tmpBuffer, "struct"))
+        tmpBuffer = Util.substitute(tmpBuffer, "struct", "");
+
     return tmpBuffer.dup;
 }
 
@@ -92,7 +114,7 @@ void buildBindExports(InterfaceClassInfo classInfo) {
         if(memberFunc.isConstructor || memberFunc.isDestructor)
             continue;
         if(memberFunc.isPureVirtual || memberFunc.isVirtual) {
-        	bindBuffer ~= "\t" ~ replaceClassNames(memberFunc.getReturnString(true)) ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceConstsNames(memberFunc.buildArguments(true, true)) ~ ") {{";
+        	bindBuffer ~= "\t" ~ replaceClassNames(memberFunc.getReturnString(true)) ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceConstsNames(replaceClassNames(memberFunc.buildArguments(true, true))) ~ ") {{";
         	bindBuffer ~= "\t\tassert(false, \"bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ") Unimplemented\");";
         	bindBuffer ~= "\t}";
         }
@@ -135,6 +157,50 @@ void buildCImports(InterfaceClassInfo classInfo) {
     importBuffer ~= "}\n";
 }
 
+void buildBasicClass(InterfaceClassInfo classInfo)
+{
+    classBuffer ~= "interface I" ~ classInfo.nameString;
+    classBuffer ~= "{{";
+    classBuffer ~= "\tvoid * _GetInstPtr();";
+    classBuffer ~= "}\n";
+
+    classBuffer ~= ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "" : "final ") ~ "class " ~ classInfo.nameString ~ " : I" ~ classInfo.nameString;
+    classBuffer ~= "{{";
+    classBuffer ~= "\tmixin(BObject!());";
+    classBuffer ~= "public:";
+    foreach(memberFunc; classInfo.memberFunctions) {
+        if(memberFunc.isConstructor) {
+            classBuffer ~= "\t// " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "*") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
+            classBuffer ~= "\tthis() {{";
+            classBuffer ~= "\t\tif(fInstancePointer is null) {{";
+            classBuffer ~= "\t\t\tfInstancePointer = be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(cast(void *)this);";
+            classBuffer ~= "\t\t\tfOwnsPointer = true;";
+            classBuffer ~= "\t\t}";
+            classBuffer ~= "\t}\n";
+        } else if(memberFunc.isDestructor) {
+            classBuffer ~= "\t// void be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ "* self);";
+            classBuffer ~= "\t~this() {{";
+            classBuffer ~= "\t\tif(fInstancePointer !is null && fOwnsPointer) {{";
+            classBuffer ~= "\t\t\tbe_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "(_GetInstPtr());";
+            classBuffer ~= "\t\t\tfInstancePointer = null;";
+            classBuffer ~= "\t\t\tfOwnsPointer = false;";
+            classBuffer ~= "\t\t}";
+            classBuffer ~= "\t}\n";
+        } else if(memberFunc.isVariable || memberFunc.isOperator) {
+
+        } else {
+            classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
+            classBuffer ~= "\t" ~ memberFunc.returnString ~ " " ~ memberFunc.nameString ~ "() {{";
+            classBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ "be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(_GetInstPtr());";
+
+            classBuffer ~= "\t}\n";
+        }
+    }
+
+    classBuffer ~= "\tvoid * _GetInstPtr() {{ return fInstancePointer; }";
+
+    classBuffer ~= "}";
+}
 void print() {
     if(licenseBuffer.length > 0) {
         foreach(line; licenseBuffer)
@@ -156,5 +222,13 @@ void print() {
 
         Stdout.newline;
     }
+
+    if(classBuffer.length > 0) {
+        foreach(line; classBuffer)
+            Stdout.formatln(line);
+
+        Stdout.newline;
+    }
+
 }
 

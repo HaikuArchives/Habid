@@ -79,8 +79,8 @@
 		<Function name="InsertChars" returns="BString &" arguments="const BString& string, int32 charCount, int32 charPosition" type="Final" mod=""/>
 		<Function name="InsertChars" returns="BString &" arguments="const BString& string, int32 fromCharOffset, int32 charCount, int32 charPosition" type="Final" mod=""/>
 
-		<Function name="Truncate" returns="BString &" arguments="int32 newLength, bool lazy" type="Final" mod=""/>
-		<Function name="TruncateChars" returns="BString &" arguments="int32 newCharCount, bool lazy" type="Final" mod=""/>
+		<Function name="Truncate" returns="BString &" arguments="int32 newLength, bool _lazy" type="Final" mod=""/>
+		<Function name="TruncateChars" returns="BString &" arguments="int32 newCharCount, bool _lazy" type="Final" mod=""/>
 
 		<Function name="Remove" returns="BString &" arguments="int32 from, int32 length" type="Final" mod=""/>
 		<Function name="RemoveChars" returns="BString &" arguments="int32 fromCharOffset, int32 charCount" type="Final" mod=""/>
@@ -186,10 +186,10 @@
 		<Function name="IReplaceAll" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 fromOffset" type="Final" mod=""/>
 		<Function name="IReplace" returns="BString &" arguments="const char* replaceThis, const char* withThis, int32 maxReplaceCount, int32 fromOffset" type="Final" mod=""/>
 
-		<Function name="ReplaceSet" returns="BString &" arguments="const char* setOfBytes, char with" type="Final" mod=""/>
-		<Function name="ReplaceSet" returns="BString &" arguments="const char* setOfBytes, const char* with" type="Final" mod=""/>
+		<Function name="ReplaceSet" returns="BString &" arguments="const char* setOfBytes, char _with" type="Final" mod=""/>
+		<Function name="ReplaceSet" returns="BString &" arguments="const char* setOfBytes, const char* _with" type="Final" mod=""/>
 
-		<Function name="ReplaceCharsSet" returns="BString &" arguments="const char* setOfChars, const char* with" type="Final" mod=""/>
+		<Function name="ReplaceCharsSet" returns="BString &" arguments="const char* setOfChars, const char* _with" type="Final" mod=""/>
 
 <!--
 		<Function name="operator[]" returns="BString &" arguments="int32 index" type="Operator" mod="const"/>
