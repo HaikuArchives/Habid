@@ -178,8 +178,10 @@ public:
                     memberFunc.mod = child.attributes.name(null, "mod").value().dup;
                     memberFunc.functionType = parseType(child.attributes.name(null, "type").value());
 
-                    parseArguments(child.attributes.name(null, "arguments").value(), memberFunc);
+//                    parseArguments(child.attributes.name(null, "arguments").value().dup, memberFunc);
 
+                    memberFunc.argString = child.attributes.name(null, "arguments").value().dup;
+                    memberFunc.countArgs();
 
                     if(memberFunc.isFinal) classInfo.hasFinal = true;
                     else if(memberFunc.isVirtual) classInfo.hasVirtual = true;
@@ -191,7 +193,7 @@ public:
                         memberFunc.nameString = "dtor";
 
                     if(classInfo.countNames(memberFunc.nameString) > 0) {
-                        memberFunc.postfix = "_" ~ Integer.toString(classInfo.countNames(memberFunc.nameString));
+                        memberFunc.postfixString = "_" ~ Integer.toString(classInfo.countNames(memberFunc.nameString));
                     }
                     classInfo.memberFunctions ~= memberFunc;
                 } break;
@@ -208,6 +210,7 @@ public:
         }
     }
 
+/*
     void parseArguments(char [] args, inout MemberFunction memberFunc) {
         if(args == "") return;
 
@@ -228,7 +231,7 @@ public:
                 arg.nameString = Util.trim(trimmedToken[loc + 1..$]).dup;
             } else {
                	loc = Util.locatePrior(trimmedToken, ' ');
-                	
+
                 arg.typeString = Util.trim(trimmedToken[0..loc + 1]).dup;
                 arg.nameString = Util.trim(trimmedToken[loc + 1..$]).dup;
             }
@@ -236,7 +239,7 @@ public:
             memberFunc.arguments ~= arg;
         }
     }
-
+*/
     FunctionType parseType(char [] type) {
         switch(Ascii.toLower(type.dup)) {
             case "constructor": {

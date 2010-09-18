@@ -63,7 +63,7 @@ class InterfaceClassInfo
 
     MemberFunction getMemberFunction(char [] name) {
         foreach(memberFunc; memberFunctions)
-            if(memberFunc.nameString ~ memberFunc.postfix == name)
+            if(memberFunc.nameString ~ memberFunc.postfixString == name)
                 return memberFunc;
 
         return null;
@@ -121,22 +121,171 @@ class MemberFunction
 {
     struct Argument
     {
+        static Argument opCall(char [] _typeString, char [] _nameString, char [] _funcPtrArgs = "") {
+            Argument arg;
+
+            arg.isPtr = Util.contains(_typeString, '*');
+            arg.isRef = Util.contains(_typeString, '&');
+            arg.isFuncPtr = (_funcPtrArgs.length > 0);
+
+            arg.typeString = _typeString.dup;
+            arg.nameString = _nameString.dup;
+            arg.funcPtrArgs = _funcPtrArgs.dup;
+
+            return arg;
+        }
+
         char [] typeString;
         char [] nameString;
+        char [] funcPtrArgs;
 
         bool isPtr = false;
         bool isRef = false;
+        bool isFuncPtr = false;
+
+        char [] toString(bool withType, bool replaceRef = false) {
+            if(isFuncPtr) {
+                if(withType)
+                    return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " (*" ~ nameString ~ ")(" ~ funcPtrArgs ~ ")").dup;
+                else
+                    return nameString.dup;
+            } else {
+                if(withType)
+                    return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " " ~ nameString).dup;
+                else
+                    return (((replaceRef && isRef) ? ("*" ~ nameString) : nameString)).dup;
+            }
+        }
+
+        static char [] getFuncPtrName(char [] funcPtrString) {
+            int begin = 0;
+            int end = 0;
+            int p = 0;
+
+            foreach(loc, c; funcPtrString) {
+                if(c == '(') {
+                   begin = loc + 1;
+                   break;
+                }
+            }
+
+            foreach(loc, c; funcPtrString) {
+                if(c == ')') {
+                    end = loc;
+                   break;
+                }
+            }
+
+            return funcPtrString[begin + 1..end];
+        }
+
+        static char [] getFuncPtrType(char [] funcPtrString) {
+            return funcPtrString[0..Util.locate(funcPtrString, ' ')];
+        }
+
+        static char [] getFuncPtrArgs(char [] funcPtrString) {
+            int begin = 0;
+            int end = 0;
+            int p = 0;
+
+            foreach(loc, c; funcPtrString) {
+                if(c == '(')
+                   begin = loc + 1;
+                if(c == ')')
+                    end = loc;
+            }
+
+
+            return funcPtrString[begin..end];
+
+        }
     }
 
     char [] nameString;
     char [] returnString;
-    char [] postfix;
+    char [] postfixString;
+    char [] argString;
+    int argCount = 0;
 
     char [] mod;
 
-    Argument [] arguments;
-
     FunctionType functionType;
+
+    char [][] splitArguments() {
+        char [][] args;
+        int paranthesis = 0;
+        uint lastLoc = 0;
+
+        foreach(loc, c; argString) {
+            if(c == '(') paranthesis++;
+            else if(c == ')') paranthesis--;
+
+            if((c == ',' && paranthesis == 0)) {
+                args ~= argString[lastLoc..loc];
+                lastLoc = loc + 1;
+            } else if(loc == argString.length - 1) {
+                args ~= argString[lastLoc..loc + 1];
+                lastLoc = loc;
+            }
+        }
+
+        return args.dup;
+    }
+
+    int opApply(int delegate(ref Argument argument) dg) {
+        int result = 0;
+        char [][] tokens = splitArguments(); // Util.split(argString.dup, ",");
+
+        foreach(token; tokens) {
+            int ArgLoc = 0;
+            if(token.length == 0) continue;
+
+            if(Util.contains(token, '*')) ArgLoc = Util.locatePrior(token, '*');
+            else if(Util.contains(token, '&')) ArgLoc = Util.locatePrior(token, '&');
+            else ArgLoc = Util.locatePrior(token, ' ');
+
+            if((result = dg(Argument(Util.trim(token[0..ArgLoc + 1].dup), Util.trim(token[ArgLoc + 1..$].dup)))) != 0)
+                break;
+        }
+
+        return result;
+    }
+
+    int opApply(int delegate(ref uint index, ref Argument argument) dg) {
+        int result = 0;
+
+        char [][] tokens = splitArguments(); // Util.split(argString.dup, ",");
+
+        foreach(i, token; tokens) {
+            int ArgLoc = 0;
+
+            if(token.length == 0) continue;
+
+            if(Util.contains(token, '(')) {
+                if((result = dg(i, Argument(Util.trim(MemberFunction.Argument.getFuncPtrType(token)),
+                                            Util.trim(MemberFunction.Argument.getFuncPtrName(token)),
+                                            Util.trim(MemberFunction.Argument.getFuncPtrArgs(token))))) != 0)
+                    break;
+
+            } else {
+                if(Util.contains(token, '*')) ArgLoc = Util.locatePrior(token, '*');
+                else if(Util.contains(token, '&')) ArgLoc = Util.locatePrior(token, '&');
+                else ArgLoc = Util.locatePrior(token, ' ');
+
+                if((result = dg(i, Argument(Util.trim(token[0..ArgLoc + 1].dup), Util.trim(token[ArgLoc + 1..$].dup)))) != 0)
+                    break;
+            }
+        }
+
+        return result;
+    }
+
+    uint countArgs() {
+        if(argString.length > 0)
+            argCount = splitArguments().length;
+
+        return argCount;
+    }
 
     char [] getOperatorName() {
         switch(Util.chopl(nameString.dup, "operator")) {
@@ -201,39 +350,15 @@ class MemberFunction
         return (replaceRef && returnIsRef()) ? Util.replace(returnString.dup, '&', '*').dup : returnString.dup;
     }
 
-    char [] getArgument(int argno, bool withType, bool replaceRef = false) {
-        if(argno > arguments.length) return null;
-
-        char [] buffer;
-        if(withType) {
-            if(replaceRef && arguments[argno].isRef) {
-                buffer = Util.replace(arguments[argno].typeString.dup, '&', '*') ~ " " ~ arguments[argno].nameString;
-            } else {
-                buffer = arguments[argno].typeString ~ " " ~ arguments[argno].nameString;
-            }
-        } else { /* Treat as a deref if type is not to be there */
-            if(replaceRef && arguments[argno].isRef)
-                buffer = "*" ~ arguments[argno].nameString;
-            else
-                buffer = arguments[argno].nameString;
-        }
-
-        return buffer.dup;
-    }
-
     char [] buildArguments(bool withType, bool replaceRef = false) {
         char [] buffer;
-        for(int i = 0; i < arguments.length; i++) {
-            if(i > 0)
+        foreach(argno, arg; this) {
+            if(argno > 0)
                 buffer ~= ", ";
-            buffer ~= getArgument(i, withType, replaceRef);
+            buffer ~= arg.toString(withType, replaceRef);
         }
 
         return buffer.dup;
-    }
-
-    int countArguments() {
-        return arguments.length;
     }
 
     bool isFinal() {
