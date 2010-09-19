@@ -46,5 +46,6 @@ extern "C" {
 	status_t bind_BArchivable_AllUnarchived(void *bindInstPtr, const BMessage* archive);
 	status_t bind_BArchivable_AllArchived(void *bindInstPtr, BMessage* archive);
 }
+
 #endif // HABID_BArchivable_
 

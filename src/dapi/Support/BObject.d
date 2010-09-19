@@ -10,9 +10,9 @@ template BObject()
 {
 	const char [] BObject =
 	"
-	private:
+/*	private:
 	void *fInstancePointer = null;
-	bool fOwnsPointer;
+	bool fOwnsPointer; */
 	public:
 		this(void *instancePointer, bool ownsPointer)
 		{

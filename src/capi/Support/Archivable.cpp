@@ -9,25 +9,11 @@ BArchivableBridge::BArchivableBridge()
 : BArchivable()
 {
 }
-
-
 BArchivableBridge::BArchivableBridge(BMessage* from)
 : BArchivable(from)
 {
 }
-
-
 BArchivableBridge::~BArchivableBridge() { }
-
-
-
-
-
-
-
-
-
-
 
 BArchivableProxy::BArchivableProxy(void *bindInstPtr)
 : fBindInstPtr(bindInstPtr), BArchivableBridge() { }
@@ -99,6 +85,11 @@ extern "C" {
 		return self->Archive_super(into, deep);
 	}
 
+	BArchivable * be_BArchivable_Instantiate_static(BMessage * archive)
+	{
+		return BArchivable::Instantiate(archive);
+	}
+
 	status_t be_BArchivable_Perform(BArchivableProxy *self, perform_code d, void* arg)
 	{
 		return self->Perform_super(d, arg);
@@ -115,4 +106,5 @@ extern "C" {
 	}
 
 }
+
 
