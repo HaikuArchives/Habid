@@ -81,7 +81,7 @@ char [] replaceClassNames(char [] buffer) {
     if(Util.containsPattern(tmpBuffer, "struct"))
         tmpBuffer = Util.substitute(tmpBuffer, "struct", "");
 
-    return tmpBuffer.dup;
+    return Util.trim(tmpBuffer).dup;
 }
 
 char [] replaceConstsNames(char [] buffer) {
@@ -90,7 +90,7 @@ char [] replaceConstsNames(char [] buffer) {
     if(Util.containsPattern(tmpBuffer, "const"))
         tmpBuffer = Util.substitute(tmpBuffer, "const", "");
 
-    return tmpBuffer.dup;
+    return Util.trim(tmpBuffer).dup;
 }
 
 void buildLicense(InputFile inputFile) {
@@ -161,12 +161,31 @@ void buildBasicClass(InterfaceClassInfo classInfo)
 {
     classBuffer ~= "interface I" ~ classInfo.nameString;
     classBuffer ~= "{{";
-    classBuffer ~= "\tvoid * _GetInstPtr();";
+    foreach(memberFunc; classInfo.memberFunctions) {
+        if(memberFunc.isConstructor) {
+            continue;
+        } else if(memberFunc.isDestructor) {
+            continue;
+        } else if(memberFunc.isOperator) {
+            classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
+            classBuffer ~= "\t//" ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.getOperatorName() ~ "();\n";
+        } else if(memberFunc.isVariable) {
+
+        } else {
+            classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
+            classBuffer ~= "\t" ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.nameString ~ "();\n";
+        }
+    }
+
+    classBuffer ~= "\tvoid * _InstPtr();";
+    classBuffer ~= "\tbool _OwnsPtr();";
     classBuffer ~= "}\n";
 
     classBuffer ~= ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "" : "final ") ~ "class " ~ classInfo.nameString ~ " : I" ~ classInfo.nameString;
     classBuffer ~= "{{";
-    classBuffer ~= "\tmixin(BObject!());";
+    classBuffer ~= "private:";
+    classBuffer ~= "\tvoid *fInstancePointer = null;";
+    classBuffer ~= "\tbool fOwnsPointer = false;";
     classBuffer ~= "public:";
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
@@ -181,25 +200,37 @@ void buildBasicClass(InterfaceClassInfo classInfo)
             classBuffer ~= "\t// void be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ "* self);";
             classBuffer ~= "\t~this() {{";
             classBuffer ~= "\t\tif(fInstancePointer !is null && fOwnsPointer) {{";
-            classBuffer ~= "\t\t\tbe_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "(_GetInstPtr());";
+            classBuffer ~= "\t\t\tbe_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "(_InstPtr());";
             classBuffer ~= "\t\t\tfInstancePointer = null;";
             classBuffer ~= "\t\t\tfOwnsPointer = false;";
             classBuffer ~= "\t\t}";
             classBuffer ~= "\t}\n";
-        } else if(memberFunc.isVariable || memberFunc.isOperator) {
+        } else if(memberFunc.isOperator) {
+            classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
+            classBuffer ~= "\t//" ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.getOperatorName() ~ "();\n";
+        } else if(memberFunc.isVariable) {
+            classBuffer ~= "\t//void be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varSet(" ~ classInfo.nameString ~ " *self, " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ ")";
+            classBuffer ~= "\tvoid " ~ memberFunc.nameString ~ "(" ~ memberFunc.getReturnString(true) ~ " _" ~ memberFunc.nameString ~ ") {{";
+            classBuffer ~= "\t\tbe_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varSet(_InstPtr(), _" ~ memberFunc.nameString ~ ");";
+            classBuffer ~= "\t}\n";
 
-        } else {
-            classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
+            classBuffer ~= "\t//" ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(" ~ classInfo.nameString ~ " *self)";
             classBuffer ~= "\t" ~ memberFunc.returnString ~ " " ~ memberFunc.nameString ~ "() {{";
-            classBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ "be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(_GetInstPtr());";
+            classBuffer ~= "\t\treturn be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(_GetInstPtr());";
+            classBuffer ~= "\t}\n";
+        } else {
+            classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
+            classBuffer ~= "\t" ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.nameString ~ "() {{";
+            classBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ "be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(_InstPtr());";
 
             classBuffer ~= "\t}\n";
         }
     }
 
-    classBuffer ~= "\tvoid * _GetInstPtr() {{ return fInstancePointer; }";
+    classBuffer ~= "\tvoid * _InstPtr() {{ return fInstancePointer; }";
+    classBuffer ~= "\tbool _OwnsPtr() {{ return fOwnsPointer; }";
+    classBuffer ~= "}\n";
 
-    classBuffer ~= "}";
 }
 void print() {
     if(licenseBuffer.length > 0) {
