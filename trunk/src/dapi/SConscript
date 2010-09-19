@@ -1,17 +1,20 @@
 env = Environment(DPATH='.')
 
 d_srcs = [
-	'App/Looper.d',
-	'Kernel/OS.d',
+#	'App/Looper.d',
+	'App/Message.d',
+#	'Kernel/OS.d',
 
 	'Storage/StorageDefs.d',
 
-	'Support/Autolock.d',
-	'Support/DataIO.d',
-	'Support/BObject.d',
-	'Support/List.d',
-	'Support/Locker.d',
-	'Support/StopWatch.d',
+	'Support/Archivable.d',
+#	'Support/Autolock.d',
+#	'Support/DataIO.d',
+#	'Support/BObject.d',
+#	'Support/List.d',
+#	'Support/Locker.d',
+#	'Support/StopWatch.d',
+	'Support/String.d',
 	'Support/SupportDefs.d',
 	'Support/types.d'
 ]

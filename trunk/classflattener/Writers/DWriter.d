@@ -189,6 +189,7 @@ void buildBasicClass(InterfaceClassInfo classInfo)
     classBuffer ~= "private:";
     classBuffer ~= "\tvoid *fInstancePointer = null;";
     classBuffer ~= "\tbool fOwnsPointer = false;";
+    classBuffer ~= "\tmixin(BObject!());";
     classBuffer ~= "public:";
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
@@ -249,6 +250,10 @@ void print() {
         Stdout.newline;
     }
 
+	Stdout.formatln("import Support.SupportDefs;");
+	Stdout.formatln("import Support.types;");
+	Stdout.formatln("import Support.BObject;").newline;
+	
     if(importBuffer.length > 0) {
         foreach(line; importBuffer)
             Stdout.formatln(line);
