@@ -20,7 +20,8 @@ enum FunctionType : uint
     FT_PURE_VIRTUAL = 16,
     FT_OPERATOR = 32,
     FT_VARIABLE = 64,
-    FT_NONE = 128
+    FT_STATIC = 128,
+    FT_NONE = 256
 }
 
 struct IncludeFile
@@ -129,7 +130,7 @@ class MemberFunction
             arg.isFuncPtr = (_funcPtrArgs.length > 0);
 
 			arg.isStruct = Util.containsPattern(_typeString, "struct");
-			
+
             arg.typeString = _typeString.dup;
             arg.nameString = _nameString.dup;
             arg.funcPtrArgs = _funcPtrArgs.dup;
@@ -395,6 +396,10 @@ class MemberFunction
 
     bool isVariable() {
         return functionType == FunctionType.FT_VARIABLE;
+    }
+
+    bool isStatic() {
+        return functionType == FunctionType.FT_STATIC;
     }
 
     bool returnIsRef() {

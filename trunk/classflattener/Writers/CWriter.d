@@ -164,6 +164,11 @@ void buildCExports(InterfaceClassInfo classInfo) {
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\treturn self->" ~ memberFunc.nameString ~ ";";
             exportBuffer ~= "\t}";
+        } else if(memberFunc.isStatic) {
+            exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ memberFunc.buildArguments(true, true) ~ ")";
+            exportBuffer ~= "\t{{";
+            exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ classInfo.nameString ~ "::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
+            exportBuffer ~= "\t}\n";
         } else {
             if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";

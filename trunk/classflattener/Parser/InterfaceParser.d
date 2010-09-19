@@ -263,6 +263,9 @@ public:
             case "variable": {
                 return FunctionType.FT_VARIABLE;
             } break;
+            case "static": {
+                return FunctionType.FT_STATIC;
+            } break;
             default: {
                 return FunctionType.FT_NONE;
             }

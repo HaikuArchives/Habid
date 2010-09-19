@@ -12,6 +12,8 @@
 
 		<Function name="Archive" returns="status_t" arguments="BMessage* into, bool deep" type="Virtual" mod="const"/>
 
+		<Function name="Instantiate" returns="BArchivable *" arguments="BMessage *archive" type="static" mod=""/>
+
 		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
 		
 		<Function name="AllUnarchived" returns="status_t" arguments="const BMessage* archive" type="Virtual" mod=""/>
