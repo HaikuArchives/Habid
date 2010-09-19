@@ -142,6 +142,9 @@ void buildCImports(InterfaceClassInfo classInfo) {
 
             importBuffer ~= "\t// " ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(" ~ classInfo.nameString ~ " *self);";
             importBuffer ~= "\t" ~ replaceClassNames(memberFunc.returnString) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(void *self);\n";
+        } else if(memberFunc.isStatic) {
+            importBuffer ~= "\t//" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ memberFunc.buildArguments(true, true) ~ ")";
+            importBuffer ~= "\t" ~ replaceConstsNames(memberFunc.getReturnString(true)) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ replaceClassNames(memberFunc.buildArguments(true, true)) ~ ");\n";
         } else {
             if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
                 importBuffer ~= "\t// " ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
@@ -217,6 +220,12 @@ void buildBasicClass(InterfaceClassInfo classInfo)
             classBuffer ~= "\t//" ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(" ~ classInfo.nameString ~ " *self)";
             classBuffer ~= "\t" ~ memberFunc.returnString ~ " " ~ memberFunc.nameString ~ "() {{";
             classBuffer ~= "\t\treturn be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(_GetInstPtr());";
+            classBuffer ~= "\t}\n";
+        } else if(memberFunc.isStatic) {
+            classBuffer ~= "\t//" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ memberFunc.buildArguments(true, true) ~ ")";
+            classBuffer ~= "\tstatic " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(true, true) ~ ")";
+            classBuffer ~= "\t{{";
+            // importBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ classInfo.nameString ~ "::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
             classBuffer ~= "\t}\n";
         } else {
             classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
