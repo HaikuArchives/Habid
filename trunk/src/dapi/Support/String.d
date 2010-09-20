@@ -582,133 +582,133 @@ interface IBString
 
 	// BString & be_BString_Append(BString *self, const BString& string);
 	IBString Append(IBString string);
-/*
+
 	// BString & be_BString_Append_1(BString *self, const char* string);
-	BString & Append();
+	IBString Append(char [] string);
 
 	// BString & be_BString_Append_2(BString *self, const BString& string, int32 length);
-	BString & Append();
+	IBString Append(IBString string, int32 length);
 
 	// BString & be_BString_Append_3(BString *self, const char* string, int32 length);
-	BString & Append();
+	IBString Append(char [] string, int32 length);
 
 	// BString & be_BString_Append_4(BString *self, char c, int32 count);
-	BString & Append();
+	IBString Append(char c, int32 count);
 
 	// BString & be_BString_AppendChars(BString *self, const BString& string, int32 charCount);
-	BString & AppendChars();
+	IBString AppendChars(IBString string, int32 charCount);
 
 	// BString & be_BString_AppendChars_1(BString *self, const char* string, int32 charCount);
-	BString & AppendChars();
+	IBString AppendChars(char [] string, int32 charCount);
 
 	// BString & be_BString_Prepend(BString *self, const char* string);
-	BString & Prepend();
+	IBString Prepend(char [] string);
 
 	// BString & be_BString_Prepend_1(BString *self, const BString& string);
-	BString & Prepend();
+	IBString Prepend(IBString string);
 
 	// BString & be_BString_Prepend_2(BString *self, const char* string, int32 length);
-	BString & Prepend();
+	IBString Prepend(char [] string, int32 length);
 
 	// BString & be_BString_Prepend_3(BString *self, const BString& string, int32 length);
-	BString & Prepend();
+	IBString Prepend(IBString string, int32 length);
 
 	// BString & be_BString_Prepend_4(BString *self, char c, int32 count);
-	BString & Prepend();
+	IBString Prepend(char c, int32 count);
 
 	// BString & be_BString_PrependChars(BString *self, const char* string, int32 charCount);
-	BString & PrependChars();
+	IBString PrependChars(char [] string, int32 charCount);
 
 	// BString & be_BString_PrependChars_1(BString *self, const BString& string, int32 charCount);
-	BString & PrependChars();
+	IBString PrependChars(IBString string, int32 charCount);
 
 	// BString & be_BString_Insert(BString *self, const char* string, int32 position);
-	BString & Insert();
+	IBString Insert(char [] string, int32 position);
 
 	// BString & be_BString_Insert_1(BString *self, const char* string, int32 length, int32 position);
-	BString & Insert();
+	IBString Insert(char [] string, int32 length, int32 position);
 
 	// BString & be_BString_Insert_2(BString *self, const char* string, int32 fromOffset, int32 length, int32 position);
-	BString & Insert();
+	IBString Insert(char [] string, int32 fromOffset, int32 length, int32 position);
 
 	// BString & be_BString_Insert_3(BString *self, const BString& string, int32 position);
-	BString & Insert();
+	IBString Insert(IBString string, int32 position);
 
 	// BString & be_BString_Insert_4(BString *self, const BString& string, int32 length, int32 position);
-	BString & Insert();
+	IBString Insert(IBString string, int32 length, int32 position);
 
 	// BString & be_BString_Insert_5(BString *self, const BString& string, int32 fromOffset, int32 length, int32 position);
-	BString & Insert();
+	IBString Insert(IBString string, int32 fromOffset, int32 length, int32 position);
 
 	// BString & be_BString_Insert_6(BString *self, char c, int32 count, int32 position);
-	BString & Insert();
+	IBString Insert(char c, int32 count, int32 position);
 
 	// BString & be_BString_InsertChars(BString *self, const char* string, int32 charPosition);
-	BString & InsertChars();
+	IBString InsertChars(char [] string, int32 charPosition);
 
 	// BString & be_BString_InsertChars_1(BString *self, const char* string, int32 charCount, int32 charPosition);
-	BString & InsertChars();
+	IBString InsertChars(char [] string, int32 charCount, int32 charPosition);
 
 	// BString & be_BString_InsertChars_2(BString *self, const char* string, int32 fromCharOffset, int32 charCount, int32 charPosition);
-	BString & InsertChars();
+	IBString InsertChars(char [] string, int32 fromCharOffset, int32 charCount, int32 charPosition);
 
 	// BString & be_BString_InsertChars_3(BString *self, const BString& string, int32 charPosition);
-	BString & InsertChars();
+	IBString InsertChars(IBString string, int32 charPosition);
 
 	// BString & be_BString_InsertChars_4(BString *self, const BString& string, int32 charCount, int32 charPosition);
-	BString & InsertChars();
+	IBString InsertChars(IBString string, int32 charCount, int32 charPosition);
 
 	// BString & be_BString_InsertChars_5(BString *self, const BString& string, int32 fromCharOffset, int32 charCount, int32 charPosition);
-	BString & InsertChars();
+	IBString InsertChars(IBString string, int32 fromCharOffset, int32 charCount, int32 charPosition);
 
 	// BString & be_BString_Truncate(BString *self, int32 newLength, bool _lazy);
-	BString & Truncate();
+	IBString Truncate(int32 newLength, bool _lazy);
 
 	// BString & be_BString_TruncateChars(BString *self, int32 newCharCount, bool _lazy);
-	BString & TruncateChars();
+	IBString TruncateChars(int32 newCharCount, bool _lazy);
 
 	// BString & be_BString_Remove(BString *self, int32 from, int32 length);
-	BString & Remove();
+	IBString Remove(int32 from, int32 length);
 
 	// BString & be_BString_RemoveChars(BString *self, int32 fromCharOffset, int32 charCount);
-	BString & RemoveChars();
+	IBString RemoveChars(int32 fromCharOffset, int32 charCount);
 
 	// BString & be_BString_RemoveFirst(BString *self, const BString& string);
-	BString & RemoveFirst();
+	IBString RemoveFirst(IBString string);
 
 	// BString & be_BString_RemoveLast(BString *self, const BString& string);
-	BString & RemoveLast();
+	IBString RemoveLast(IBString string);
 
 	// BString & be_BString_RemoveAll(BString *self, const BString& string);
-	BString & RemoveAll();
+	IBString RemoveAll(IBString string);
 
 	// BString & be_BString_RemoveFirst_1(BString *self, const char* string);
-	BString & RemoveFirst();
+	IBString RemoveFirst(char [] string);
 
 	// BString & be_BString_RemoveLast_1(BString *self, const char* string);
-	BString & RemoveLast();
+	IBString RemoveLast(char [] string);
 
 	// BString & be_BString_RemoveAll_1(BString *self, const char* string);
-	BString & RemoveAll();
+	IBString RemoveAll(char [] string);
 
 	// BString & be_BString_RemoveSet(BString *self, const char* setOfBytesToRemove);
-	BString & RemoveSet();
+	IBString RemoveSet(char [] setOfBytesToRemove);
 
 	// BString & be_BString_RemoveCharsSet(BString *self, const char* setOfCharsToRemove);
-	BString & RemoveCharsSet();
+	IBString RemoveCharsSet(char [] setOfCharsToRemove);
 
 	// BString & be_BString_MoveInto(BString *self, BString& into, int32 from, int32 length);
-	BString & MoveInto();
+	IBString MoveInto(IBString into, int32 from, int32 length);
 
 	// void be_BString_MoveInto_1(BString *self, char* into, int32 from, int32 length);
-	void MoveInto();
+	void MoveInto(inout char [] into, int32 from, int32 length);
 
 	// BString & be_BString_MoveCharsInto(BString *self, BString& into, int32 fromCharOffset, int32 charCount);
-	BString & MoveCharsInto();
+	IBString MoveCharsInto(IBString into, int32 fromCharOffset, int32 charCount);
 
 	// void be_BString_MoveCharsInto_1(BString *self, char* into, int32* intoLength, int32 fromCharOffset, int32 charCount);
-	void MoveCharsInto();
-
+	void MoveCharsInto(inout char [] into, inout int32 intoLength, int32 fromCharOffset, int32 charCount);
+/*
 	// bool be_BString_opCmpLess(BString *self, const BString& string);
 	//bool opCmpLess();
 
@@ -744,7 +744,8 @@ interface IBString
 
 	// bool be_BString_opNotEquals_1(BString *self, const char* string);
 	//bool opNotEquals();
-
+*/
+/*
 	// int be_BString_Compare(BString *self, const BString& string);
 	int Compare();
 
@@ -1161,217 +1162,229 @@ public:
 	IBString Append(IBString string) {
 		return new BString(be_BString_Append(_InstPtr(), string._InstPtr()), false);
 	}
-/*
+
 	// BString & be_BString_Append_1(BString *self, const char* string);
-	BString & Append() {
-		return be_BString_Append_1(_InstPtr());
+	IBString Append(char [] string) {
+		return new BString(be_BString_Append_1(_InstPtr(), toStringz(string)), false);
 	}
 
 	// BString & be_BString_Append_2(BString *self, const BString& string, int32 length);
-	BString & Append() {
-		return be_BString_Append_2(_InstPtr());
+	IBString Append(IBString string, int32 length) {
+		return new BString(be_BString_Append_2(_InstPtr(), string._InstPtr(), length), false);
 	}
 
 	// BString & be_BString_Append_3(BString *self, const char* string, int32 length);
-	BString & Append() {
-		return be_BString_Append_3(_InstPtr());
+	IBString Append(char [] string, int32 length) {
+		return new BString(be_BString_Append_3(_InstPtr(), toStringz(string), length), false);
 	}
 
 	// BString & be_BString_Append_4(BString *self, char c, int32 count);
-	BString & Append() {
-		return be_BString_Append_4(_InstPtr());
+	IBString Append(char c, int32 count) {
+		return new BString(be_BString_Append_4(_InstPtr(), c, count), false);
 	}
 
 	// BString & be_BString_AppendChars(BString *self, const BString& string, int32 charCount);
-	BString & AppendChars() {
-		return be_BString_AppendChars(_InstPtr());
+	IBString AppendChars(IBString string, int32 charCount) {
+		return new BString(be_BString_AppendChars(_InstPtr(), string._InstPtr(), charCount), false);
 	}
 
 	// BString & be_BString_AppendChars_1(BString *self, const char* string, int32 charCount);
-	BString & AppendChars() {
-		return be_BString_AppendChars_1(_InstPtr());
+	BString AppendChars(char [] string, int32 charCount) {
+		return new BString(be_BString_AppendChars_1(_InstPtr(), toStringz(string), charCount), false);
 	}
 
 	// BString & be_BString_Prepend(BString *self, const char* string);
-	BString & Prepend() {
-		return be_BString_Prepend(_InstPtr());
+	BString Prepend(char [] string) {
+		return new BString(be_BString_Prepend(_InstPtr(), toStringz(string)), false);
 	}
 
 	// BString & be_BString_Prepend_1(BString *self, const BString& string);
-	BString & Prepend() {
-		return be_BString_Prepend_1(_InstPtr());
+	IBString Prepend(IBString string) {
+		return new BString(be_BString_Prepend_1(_InstPtr(), string._InstPtr()), false);
 	}
 
 	// BString & be_BString_Prepend_2(BString *self, const char* string, int32 length);
-	BString & Prepend() {
-		return be_BString_Prepend_2(_InstPtr());
+	IBString Prepend(char [] string, int32 length) {
+		return new BString(be_BString_Prepend_2(_InstPtr(), toStringz(string), length), false);
 	}
 
 	// BString & be_BString_Prepend_3(BString *self, const BString& string, int32 length);
-	BString & Prepend() {
-		return be_BString_Prepend_3(_InstPtr());
+	IBString Prepend(IBString string, int32 length) {
+		return new BString(be_BString_Prepend_3(_InstPtr(), string._InstPtr(), length), false);
 	}
 
 	// BString & be_BString_Prepend_4(BString *self, char c, int32 count);
-	BString & Prepend() {
-		return be_BString_Prepend_4(_InstPtr());
+	IBString Prepend(char c, int32 count) {
+		return new BString(be_BString_Prepend_4(_InstPtr(), c, count), false);
 	}
 
 	// BString & be_BString_PrependChars(BString *self, const char* string, int32 charCount);
-	BString & PrependChars() {
-		return be_BString_PrependChars(_InstPtr());
+	IBString PrependChars(char [] string, int32 charCount) {
+		return new BString(be_BString_PrependChars(_InstPtr(), toStringz(string), charCount), false);
 	}
 
 	// BString & be_BString_PrependChars_1(BString *self, const BString& string, int32 charCount);
-	BString & PrependChars() {
-		return be_BString_PrependChars_1(_InstPtr());
+	IBString PrependChars(IBString string, int32 charCount) {
+		return new BString(be_BString_PrependChars_1(_InstPtr(), string._InstPtr(), charCount), false);
 	}
 
 	// BString & be_BString_Insert(BString *self, const char* string, int32 position);
-	BString & Insert() {
-		return be_BString_Insert(_InstPtr());
+	IBString Insert(char [] string, int32 position) {
+		return new BString(be_BString_Insert(_InstPtr(), toStringz(string), position), false);
 	}
 
 	// BString & be_BString_Insert_1(BString *self, const char* string, int32 length, int32 position);
-	BString & Insert() {
-		return be_BString_Insert_1(_InstPtr());
+	IBString Insert(char [] string, int32 length, int32 position) {
+		return new BString(be_BString_Insert_1(_InstPtr(), toStringz(string), length, position), false);
 	}
 
 	// BString & be_BString_Insert_2(BString *self, const char* string, int32 fromOffset, int32 length, int32 position);
-	BString & Insert() {
-		return be_BString_Insert_2(_InstPtr());
+	IBString Insert(char [] string, int32 fromOffset, int32 length, int32 position) {
+		return new BString(be_BString_Insert_2(_InstPtr(), toStringz(string), fromOffset, length, position), false);
 	}
 
 	// BString & be_BString_Insert_3(BString *self, const BString& string, int32 position);
-	BString & Insert() {
-		return be_BString_Insert_3(_InstPtr());
+	IBString Insert(IBString string, int32 position) {
+		return new BString(be_BString_Insert_3(_InstPtr(), string._InstPtr(), position), false);
 	}
 
 	// BString & be_BString_Insert_4(BString *self, const BString& string, int32 length, int32 position);
-	BString & Insert() {
-		return be_BString_Insert_4(_InstPtr());
+	IBString Insert(IBString string, int32 length, int32 position) {
+		return new BString(be_BString_Insert_4(_InstPtr(), string._InstPtr(), length, position), false);
 	}
 
 	// BString & be_BString_Insert_5(BString *self, const BString& string, int32 fromOffset, int32 length, int32 position);
-	BString & Insert() {
-		return be_BString_Insert_5(_InstPtr());
+	IBString Insert(IBString string, int32 fromOffset, int32 length, int32 position) {
+		return new BString(be_BString_Insert_5(_InstPtr(), string._InstPtr(), fromOffset, length, position), false);
 	}
 
 	// BString & be_BString_Insert_6(BString *self, char c, int32 count, int32 position);
-	BString & Insert() {
-		return be_BString_Insert_6(_InstPtr());
+	IBString Insert(char c, int32 count, int32 position) {
+		return new BString(be_BString_Insert_6(_InstPtr(), c, count, position), false);
 	}
 
 	// BString & be_BString_InsertChars(BString *self, const char* string, int32 charPosition);
-	BString & InsertChars() {
-		return be_BString_InsertChars(_InstPtr());
+	IBString InsertChars(char [] string, int32 charPosition) {
+		return new BString(be_BString_InsertChars(_InstPtr(), toStringz(string), charPosition), false);
 	}
 
 	// BString & be_BString_InsertChars_1(BString *self, const char* string, int32 charCount, int32 charPosition);
-	BString & InsertChars() {
-		return be_BString_InsertChars_1(_InstPtr());
+	IBString InsertChars(char [] string, int32 charCount, int32 charPosition) {
+		return new BString(be_BString_InsertChars_1(_InstPtr(), toStringz(string), charCount, charPosition), false);
 	}
 
 	// BString & be_BString_InsertChars_2(BString *self, const char* string, int32 fromCharOffset, int32 charCount, int32 charPosition);
-	BString & InsertChars() {
-		return be_BString_InsertChars_2(_InstPtr());
+	IBString InsertChars(char [] string, int32 fromCharOffset, int32 charCount, int32 charPosition) {
+		return new BString(be_BString_InsertChars_2(_InstPtr(), toStringz(string), fromCharOffset, charCount, charPosition), false);
 	}
 
 	// BString & be_BString_InsertChars_3(BString *self, const BString& string, int32 charPosition);
-	BString & InsertChars() {
-		return be_BString_InsertChars_3(_InstPtr());
+	IBString InsertChars(IBString string, int32 charPosition) {
+		return new BString(be_BString_InsertChars_3(_InstPtr(), string._InstPtr(), charPosition), false);
 	}
 
 	// BString & be_BString_InsertChars_4(BString *self, const BString& string, int32 charCount, int32 charPosition);
-	BString & InsertChars() {
-		return be_BString_InsertChars_4(_InstPtr());
+	IBString InsertChars(IBString string, int32 charCount, int32 charPosition) {
+		return new BString(be_BString_InsertChars_4(_InstPtr(), string._InstPtr(), charCount, charPosition), false);
 	}
 
 	// BString & be_BString_InsertChars_5(BString *self, const BString& string, int32 fromCharOffset, int32 charCount, int32 charPosition);
-	BString & InsertChars() {
-		return be_BString_InsertChars_5(_InstPtr());
+	IBString InsertChars(IBString string, int32 fromCharOffset, int32 charCount, int32 charPosition) {
+		return new BString(be_BString_InsertChars_5(_InstPtr(), string._InstPtr(), fromCharOffset, charCount, charPosition), false);
 	}
 
 	// BString & be_BString_Truncate(BString *self, int32 newLength, bool _lazy);
-	BString & Truncate() {
-		return be_BString_Truncate(_InstPtr());
+	IBString Truncate(int32 newLength, bool _lazy = true) {
+		return new BString(be_BString_Truncate(_InstPtr(), newLength, _lazy), false);
 	}
 
 	// BString & be_BString_TruncateChars(BString *self, int32 newCharCount, bool _lazy);
-	BString & TruncateChars() {
-		return be_BString_TruncateChars(_InstPtr());
+	IBString TruncateChars(int32 newCharCount, bool _lazy = true) {
+		return new BString(be_BString_TruncateChars(_InstPtr(), newCharCount, _lazy), false);
 	}
 
 	// BString & be_BString_Remove(BString *self, int32 from, int32 length);
-	BString & Remove() {
-		return be_BString_Remove(_InstPtr());
+	IBString Remove(int32 from, int32 length) {
+		return new BString(be_BString_Remove(_InstPtr(), from, length), false);
 	}
 
 	// BString & be_BString_RemoveChars(BString *self, int32 fromCharOffset, int32 charCount);
-	BString & RemoveChars() {
-		return be_BString_RemoveChars(_InstPtr());
+	IBString RemoveChars(int32 fromCharOffset, int32 charCount) {
+		return new BString(be_BString_RemoveChars(_InstPtr(), fromCharOffset, charCount), false);
 	}
 
 	// BString & be_BString_RemoveFirst(BString *self, const BString& string);
-	BString & RemoveFirst() {
-		return be_BString_RemoveFirst(_InstPtr());
+	IBString RemoveFirst(IBString string) {
+		return new BString(be_BString_RemoveFirst(_InstPtr(), string._InstPtr()), false);
 	}
 
 	// BString & be_BString_RemoveLast(BString *self, const BString& string);
-	BString & RemoveLast() {
-		return be_BString_RemoveLast(_InstPtr());
+	IBString RemoveLast(IBString string) {
+		return new BString(be_BString_RemoveLast(_InstPtr(), string._InstPtr()), false);
 	}
 
 	// BString & be_BString_RemoveAll(BString *self, const BString& string);
-	BString & RemoveAll() {
-		return be_BString_RemoveAll(_InstPtr());
+	IBString RemoveAll(IBString string) {
+		return new BString(be_BString_RemoveAll(_InstPtr(), string._InstPtr()), false);
 	}
 
 	// BString & be_BString_RemoveFirst_1(BString *self, const char* string);
-	BString & RemoveFirst() {
-		return be_BString_RemoveFirst_1(_InstPtr());
+	IBString RemoveFirst(char [] string) {
+		return new BString(be_BString_RemoveFirst_1(_InstPtr(), toStringz(string)), false);
 	}
 
 	// BString & be_BString_RemoveLast_1(BString *self, const char* string);
-	BString & RemoveLast() {
-		return be_BString_RemoveLast_1(_InstPtr());
+	IBString RemoveLast(char [] string) {
+		return new BString(be_BString_RemoveLast_1(_InstPtr(), toStringz(string)), false);
 	}
 
 	// BString & be_BString_RemoveAll_1(BString *self, const char* string);
-	BString & RemoveAll() {
-		return be_BString_RemoveAll_1(_InstPtr());
+	IBString RemoveAll(char [] string) {
+		return new BString(be_BString_RemoveAll_1(_InstPtr(), toStringz(string)), false);
 	}
 
 	// BString & be_BString_RemoveSet(BString *self, const char* setOfBytesToRemove);
-	BString & RemoveSet() {
-		return be_BString_RemoveSet(_InstPtr());
+	IBString RemoveSet(char [] setOfBytesToRemove) {
+		return new BString(be_BString_RemoveSet(_InstPtr(), toStringz(setOfBytesToRemove)), false);
 	}
 
 	// BString & be_BString_RemoveCharsSet(BString *self, const char* setOfCharsToRemove);
-	BString & RemoveCharsSet() {
-		return be_BString_RemoveCharsSet(_InstPtr());
+	IBString RemoveCharsSet(char [] setOfCharsToRemove) {
+		return new BString(be_BString_RemoveCharsSet(_InstPtr(), toStringz(setOfCharsToRemove)), false);
 	}
 
 	// BString & be_BString_MoveInto(BString *self, BString& into, int32 from, int32 length);
-	BString & MoveInto() {
-		return be_BString_MoveInto(_InstPtr());
+	IBString MoveInto(IBString into, int32 from, int32 length) {
+		return new BString(be_BString_MoveInto(_InstPtr(), into._InstPtr(), from, length), false);
 	}
 
 	// void be_BString_MoveInto_1(BString *self, char* into, int32 from, int32 length);
-	void MoveInto() {
-		be_BString_MoveInto_1(_InstPtr());
+	void MoveInto(inout char [] into, int32 from, int32 length) {
+		char *buffer = cast(char *)malloc(length + 1);
+		
+		be_BString_MoveInto_1(_InstPtr(), buffer, from, length);
+		
+		into = fromStringz(buffer).dup;
+		
+		free(buffer);
 	}
 
 	// BString & be_BString_MoveCharsInto(BString *self, BString& into, int32 fromCharOffset, int32 charCount);
-	BString & MoveCharsInto() {
-		return be_BString_MoveCharsInto(_InstPtr());
+	IBString MoveCharsInto(IBString into, int32 fromCharOffset, int32 charCount) {
+		return new BString(be_BString_MoveCharsInto(_InstPtr(), into._InstPtr(), fromCharOffset, charCount), false);
 	}
 
 	// void be_BString_MoveCharsInto_1(BString *self, char* into, int32* intoLength, int32 fromCharOffset, int32 charCount);
-	void MoveCharsInto() {
-		be_BString_MoveCharsInto_1(_InstPtr());
-	}
+	void MoveCharsInto(inout char [] into, inout int32 intoLength, int32 fromCharOffset, int32 charCount) {
+		char *buffer; // = cast(char *)malloc(length + 1);
+		
+		be_BString_MoveCharsInto_1(_InstPtr(), buffer, &intoLength, fromCharOffset, charCount);
 
+		into = fromStringz(buffer).dup;
+		
+		free(buffer);
+	}
+/*
 	// bool be_BString_opCmpLess(BString *self, const BString& string);
 	//bool opCmpLess();
 
@@ -1407,7 +1420,8 @@ public:
 
 	// bool be_BString_opNotEquals_1(BString *self, const char* string);
 	//bool opNotEquals();
-
+*/
+/*
 	// int be_BString_Compare(BString *self, const BString& string);
 	int Compare() {
 		return be_BString_Compare(_InstPtr());
