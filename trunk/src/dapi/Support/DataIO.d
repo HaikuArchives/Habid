@@ -2,6 +2,8 @@
  * Copyright 2010 Tomas Wilhelmsson <tomas.wilhelmsson@gmail.com>
  * All rights reserved. Distributed under the terms of the MIT license.
  */
+module Support.DataIO;
+
 
 import Support.SupportDefs;
 import Support.types;

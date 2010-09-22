@@ -3,10 +3,7 @@
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 
-#include <SupportDefs.h>
 #include <Locker.h>
-
-
 
 extern "C" {
 	BLocker* be_BLocker_ctor(void *bindInstPtr)
@@ -80,4 +77,5 @@ extern "C" {
 	}
 
 }
+
 
