@@ -3,6 +3,9 @@
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 
+#ifndef HABID_BDataIO_BPositionIO_BMemoryIO_BMallocIO_
+#define HABID_BDataIO_BPositionIO_BMemoryIO_BMallocIO_
+
 #include <SupportDefs.h>
 #include <DataIO.h>
 
@@ -163,7 +166,7 @@ extern "C" {
 	off_t bind_BMallocIO_Seek(void *bindInstPtr, off_t position, uint32 seekMode);
 	off_t bind_BMallocIO_Position(void *bindInstPtr);
 	status_t bind_BMallocIO_SetSize(void *bindInstPtr, off_t size);
-	void bind_BMallocIO_SetBlockSize(void *bindInstPtr, size_t blockSize);
-	const void * bind_BMallocIO_Buffer(void *bindInstPtr);
-	size_t bind_BMallocIO_BufferLength(void *bindInstPtr);
 }
+
+#endif // HABID_BDataIO_BPositionIO_BMemoryIO_BMallocIO_
+

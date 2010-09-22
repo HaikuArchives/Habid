@@ -5,7 +5,7 @@ c_srcs = [
 
 #	'Support/Autolock.cpp',
 	'Support/Archivable.cpp',
-#	'Support/DataIO.cpp',
+	'Support/DataIO.cpp',
 #	'Support/BufferIO.cpp',
 #	'Support/BlockCache.cpp',
 	'Support/List.cpp',
