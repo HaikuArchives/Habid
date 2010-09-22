@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Message.h" type="system" target="source"/>
+	<Includefile name="Messenger.h" type="system" target="source"/>
+	
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BMessage">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="uint32 what" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BMessage &other" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="what" returns="uint32" arguments="" type="Variable" mod=""/>
+
+		<Function name="GetInfo" returns="status_t" arguments="type_code typeRequested, int32 index, char **nameFound, type_code *typeFound, int32 *countFound" type="Final" mod="const"/>
+		<Function name="GetInfo" returns="status_t" arguments="const char *name, type_code *typeFound, int32 *countFound" type="Final" mod="const"/>
+		<Function name="GetInfo" returns="status_t" arguments="const char *name, type_code *typeFound, bool *fixedSize" type="Final" mod="const"/>
+
+		<Function name="CountNames" returns="int32" arguments="type_code type" type="Final" mod="const"/>
+		<Function name="IsEmpty" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsSystem" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsReply" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+
+		<Function name="Rename" returns="status_t" arguments="const char *oldEntry, const char *newEntry" type="Final" mod="const"/>
+
+		<Function name="WasDelivered" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsSourceWaiting" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsSourceRemote" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="ReturnAddress" returns="BMessenger" arguments="" type="Final" mod="const"/>
+		<Function name="Previous" returns="const BMessage *" arguments="" type="Final" mod="const"/>
+		<Function name="WasDropped" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="DropPoint" returns="BPoint" arguments="BPoint *offset" type="Final" mod="const"/>
+
+		<Function name="SendReply" returns="status_t" arguments="uint32 command, BHandler *replyTo" type="Final" mod=""/>
+		<Function name="SendReply" returns="status_t" arguments="BMessage *reply, BHandler *replyTo, bigtime_t timeout" type="Final" mod=""/>
+		<Function name="SendReply" returns="status_t" arguments="BMessage *reply, BMessenger replyTo, bigtime_t timeout" type="Final" mod=""/>
+		<Function name="SendReply" returns="status_t" arguments="uint32 command, BMessage *replyToReply" type="Final" mod=""/>
+		<Function name="SendReply" returns="status_t" arguments="BMessage *the_reply, BMessage *replyToReply, bigtime_t sendTimeout, bigtime_t replyTimeout" type="Final" mod=""/>
+
+		<Function name="FlattenedSize" returns="ssize_t" arguments="" type="Final" mod="const"/>
+		<Function name="Flatten" returns="status_t" arguments="char *buffer, ssize_t size" type="Final" mod="const"/>
+		<Function name="Flatten" returns="status_t" arguments="BDataIO *stream, ssize_t *size" type="Final" mod="const"/>
+		<Function name="Unflatten" returns="status_t" arguments="const char *flatBuffer" type="Final" mod=""/>
+		<Function name="Unflatten" returns="status_t" arguments="BDataIO *stream" type="Final" mod=""/>
+
+		<Function name="AddSpecifier" returns="status_t" arguments="const char *property" type="Final" mod=""/>
+		<Function name="AddSpecifier" returns="status_t" arguments="const char *property, int32 index" type="Final" mod=""/>
+		<Function name="AddSpecifier" returns="status_t" arguments="const char *property, int32 index, int32 range" type="Final" mod=""/>
+		<Function name="AddSpecifier" returns="status_t" arguments="const char *property, const char *name" type="Final" mod=""/>
+		<Function name="AddSpecifier" returns="status_t" arguments="const BMessage *specifier" type="Final" mod=""/>
+
+		<Function name="SetCurrentSpecifier" returns="status_t" arguments="int32 index" type="Final" mod=""/>
+		<Function name="GetCurrentSpecifier" returns="status_t" arguments="int32 *index, BMessage *specifier, int32 *what, const char **property" type="Final" mod=""/>
+		<Function name="HasSpecifiers" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="PopSpecifier" returns="status_t" arguments="" type="Final" mod=""/>
+
+
+		<Function name="AddAlignment" returns="status_t" arguments="const char* name, const BAlignment& alignment" type="Final" mod=""/>
+		<Function name="AddRect" returns="status_t" arguments="const char *name, BRect aRect" type="Final" mod=""/>
+		<Function name="AddPoint" returns="status_t" arguments="const char *name, BPoint aPoint" type="Final" mod=""/>
+		<Function name="AddSize" returns="status_t" arguments="const char* name, BSize aSize" type="Final" mod=""/>
+		<Function name="AddString" returns="status_t" arguments="const char *name, const char *aString" type="Final" mod=""/>
+		<Function name="AddString" returns="status_t" arguments="const char *name, const BString &aString" type="Final" mod=""/>
+		<Function name="AddInt8" returns="status_t" arguments="const char *name, int8 value" type="Final" mod=""/>
+		<Function name="AddUInt8" returns="status_t" arguments="const char *name, uint8 value" type="Final" mod=""/>
+		<Function name="AddInt16" returns="status_t" arguments="const char *name, int16 value" type="Final" mod=""/>
+		<Function name="AddUInt16" returns="status_t" arguments="const char *name, uint16 value" type="Final" mod=""/>
+		<Function name="AddInt32" returns="status_t" arguments="const char *name, int32 value" type="Final" mod=""/>
+		<Function name="AddUInt32" returns="status_t" arguments="const char *name, uint32 value" type="Final" mod=""/>
+		<Function name="AddInt64" returns="status_t" arguments="const char *name, int64 value" type="Final" mod=""/>
+		<Function name="AddUInt64" returns="status_t" arguments="const char *name, uint64 value" type="Final" mod=""/>
+		<Function name="AddBool" returns="status_t" arguments="const char *name, bool aBoolean" type="Final" mod=""/>
+		<Function name="AddFloat" returns="status_t" arguments="const char *name, float aFloat" type="Final" mod=""/>
+		<Function name="AddDouble" returns="status_t" arguments="const char *name, double aDouble" type="Final" mod=""/>
+		<Function name="AddPointer" returns="status_t" arguments="const char *name, const void *aPointer" type="Final" mod=""/>
+		<Function name="AddMessenger" returns="status_t" arguments="const char *name, BMessenger messenger" type="Final" mod=""/>
+		<Function name="AddRef" returns="status_t" arguments="const char *name, const entry_ref *ref" type="Final" mod=""/>
+		<Function name="AddMessage" returns="status_t" arguments="const char *name, const BMessage *message" type="Final" mod=""/>
+		<Function name="AddFlat" returns="status_t" arguments="const char *name, BFlattenable *object, int32 count" type="Final" mod=""/>
+		<Function name="AddData" returns="status_t" arguments="const char *name, type_code type, const void *data, ssize_t numBytes, bool isFixedSize, int32 count" type="Final" mod=""/>
+		
+		<Function name="RemoveData" returns="status_t" arguments="const char *name, int32 index" type="Final" mod=""/>
+		<Function name="RemoveName" returns="status_t" arguments="const char *name" type="Final" mod=""/>
+		<Function name="MakeEmpty" returns="status_t" arguments="" type="Final" mod=""/>
+		
+		<Function name="FindAlignment" returns="status_t" arguments="const char* name, BAlignment* alignment" type="Final" mod="const"/>
+		<Function name="FindAlignment" returns="status_t" arguments="const char* name, int32 index, BAlignment* alignment" type="Final" mod="const"/>
+		
+		<Function name="FindRect" returns="status_t" arguments="const char *name, BRect *rect" type="Final" mod="const"/>
+		<Function name="FindRect" returns="status_t" arguments="const char *name, int32 index, BRect *rect" type="Final" mod="const"/>
+		<Function name="FindPoint" returns="status_t" arguments="const char *name, BPoint *point" type="Final" mod="const"/>
+		<Function name="FindPoint" returns="status_t" arguments="const char *name, int32 index, BPoint *point" type="Final" mod="const"/>
+		
+		<Function name="FindSize" returns="status_t" arguments="const char *name, BSize* size" type="Final" mod="const"/>
+		<Function name="FindSize" returns="status_t" arguments="const char *name, int32 index, BSize* size" type="Final" mod="const"/>
+		
+		<Function name="FindString" returns="status_t" arguments="const char *name, const char **string" type="Final" mod="const"/>
+		<Function name="FindString" returns="status_t" arguments="const char *name, int32 index, const char **string" type="Final" mod="const"/>
+		<Function name="FindString" returns="status_t" arguments="const char *name, BString *string" type="Final" mod="const"/>
+		<Function name="FindString" returns="status_t" arguments="const char *name, int32 index, BString *string" type="Final" mod="const"/>
+		<Function name="FindInt8" returns="status_t" arguments="const char *name, int8 *value" type="Final" mod="const"/>
+		<Function name="FindInt8" returns="status_t" arguments="const char *name, int32 index, int8 *value" type="Final" mod="const"/>
+		<Function name="FindUInt8" returns="status_t" arguments="const char *name, uint8 *value" type="Final" mod="const"/>
+		<Function name="FindUInt8" returns="status_t" arguments="const char *name, int32 index, uint8 *value" type="Final" mod="const"/>
+		<Function name="FindInt16" returns="status_t" arguments="const char *name, int16 *value" type="Final" mod="const"/>
+		<Function name="FindInt16" returns="status_t" arguments="const char *name, int32 index, int16 *value" type="Final" mod="const"/>
+		<Function name="FindUInt16" returns="status_t" arguments="const char *name, uint16 *value" type="Final" mod="const"/>
+		<Function name="FindUInt16" returns="status_t" arguments="const char *name, int32 index, uint16 *value" type="Final" mod="const"/>
+		<Function name="FindInt32" returns="status_t" arguments="const char *name, int32 *value" type="Final" mod="const"/>
+		<Function name="FindInt32" returns="status_t" arguments="const char *name, int32 index, int32 *value" type="Final" mod="const"/>
+		<Function name="FindUInt32" returns="status_t" arguments="const char *name, uint32 *value" type="Final" mod="const"/>
+		<Function name="FindUInt32" returns="status_t" arguments="const char *name, int32 index, uint32 *value" type="Final" mod="const"/>
+		<Function name="FindInt64" returns="status_t" arguments="const char *name, int64 *value" type="Final" mod="const"/>
+		<Function name="FindInt64" returns="status_t" arguments="const char *name, int32 index, int64 *value" type="Final" mod="const"/>
+		<Function name="FindUInt64" returns="status_t" arguments="const char *name, uint64 *value" type="Final" mod="const"/>
+		<Function name="FindUInt64" returns="status_t" arguments="const char *name, int32 index, uint64 *value" type="Final" mod="const"/>
+		<Function name="FindBool" returns="status_t" arguments="const char *name, bool *value" type="Final" mod="const"/>
+		<Function name="FindBool" returns="status_t" arguments="const char *name, int32 index, bool *value" type="Final" mod="const"/>
+		<Function name="FindFloat" returns="status_t" arguments="const char *name, float *value" type="Final" mod="const"/>
+		<Function name="FindFloat" returns="status_t" arguments="const char *name, int32 index, float *value" type="Final" mod="const"/>
+		<Function name="FindDouble" returns="status_t" arguments="const char *name, double *value" type="Final" mod="const"/>
+		<Function name="FindDouble" returns="status_t" arguments="const char *name, int32 index, double *value" type="Final" mod="const"/>
+		<Function name="FindPointer" returns="status_t" arguments="const char *name, void **pointer" type="Final" mod="const"/>
+		<Function name="FindPointer" returns="status_t" arguments="const char *name, int32 index, void **pointer" type="Final" mod="const"/>
+		<Function name="FindMessenger" returns="status_t" arguments="const char *name, BMessenger *messenger" type="Final" mod="const"/>
+		<Function name="FindMessenger" returns="status_t" arguments="const char *name, int32 index, BMessenger *messenger" type="Final" mod="const"/>
+		<Function name="FindRef" returns="status_t" arguments="const char *name, entry_ref *ref" type="Final" mod="const"/>
+		<Function name="FindRef" returns="status_t" arguments="const char *name, int32 index, entry_ref *ref" type="Final" mod="const"/>
+		<Function name="FindMessage" returns="status_t" arguments="const char *name, BMessage *message" type="Final" mod="const"/>
+		<Function name="FindMessage" returns="status_t" arguments="const char *name, int32 index, BMessage *message" type="Final" mod="const"/>
+		<Function name="FindFlat" returns="status_t" arguments="const char *name, BFlattenable *object" type="Final" mod="const"/>
+		<Function name="FindFlat" returns="status_t" arguments="const char *name, int32 index, BFlattenable *object" type="Final" mod="const"/>
+		<Function name="FindData" returns="status_t" arguments="const char *name, type_code type, const void **data, ssize_t *numBytes" type="Final" mod="const"/>
+		<Function name="FindData" returns="status_t" arguments="const char *name, type_code type, int32 index, const void **data, ssize_t *numBytes" type="Final" mod="const"/>
+		
+		
+		<Function name="ReplaceAlignment" returns="status_t" arguments="const char* name, const BAlignment& alignment" type="Final" mod=""/>
+		<Function name="ReplaceAlignment" returns="status_t" arguments="const char* name, int32 index, const BAlignment& alignment" type="Final" mod=""/>
+		
+		<Function name="ReplaceRect" returns="status_t" arguments="const char *name, BRect aRect" type="Final" mod=""/>
+		<Function name="ReplaceRect" returns="status_t" arguments="const char *name, int32 index, BRect aRect" type="Final" mod=""/>
+		
+		<Function name="ReplacePoint" returns="status_t" arguments="const char *name, BPoint aPoint" type="Final" mod=""/>
+		<Function name="ReplacePoint" returns="status_t" arguments="const char *name, int32 index, BPoint aPoint" type="Final" mod=""/>
+		<Function name="ReplaceSize" returns="status_t" arguments="const char* name, BSize aSize" type="Final" mod=""/>
+		<Function name="ReplaceSize" returns="status_t" arguments="const char* name, int32 index, BSize aSize" type="Final" mod=""/>
+		
+		<Function name="ReplaceString" returns="status_t" arguments="const char *name, const char *aString" type="Final" mod=""/>
+		<Function name="ReplaceString" returns="status_t" arguments="const char *name, int32 index, const char *aString" type="Final" mod=""/>
+		<Function name="ReplaceString" returns="status_t" arguments="const char *name, const BString &aString" type="Final" mod=""/>
+		<Function name="ReplaceString" returns="status_t" arguments="const char *name, int32 index, const BString &aString" type="Final" mod=""/>
+		<Function name="ReplaceInt8" returns="status_t" arguments="const char *name, int8 value" type="Final" mod=""/>
+		<Function name="ReplaceInt8" returns="status_t" arguments="const char *name, int32 index, int8 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt8" returns="status_t" arguments="const char *name, uint8 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt8" returns="status_t" arguments="const char *name, int32 index, uint8 value" type="Final" mod=""/>
+		<Function name="ReplaceInt16" returns="status_t" arguments="const char *name, int16 value" type="Final" mod=""/>
+		<Function name="ReplaceInt16" returns="status_t" arguments="const char *name, int32 index, int16 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt16" returns="status_t" arguments="const char *name, uint16 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt16" returns="status_t" arguments="const char *name, int32 index, uint16 value" type="Final" mod=""/>
+		<Function name="ReplaceInt32" returns="status_t" arguments="const char *name, int32 value" type="Final" mod=""/>
+		<Function name="ReplaceInt32" returns="status_t" arguments="const char *name, int32 index, int32 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt32" returns="status_t" arguments="const char *name, uint32 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt32" returns="status_t" arguments="const char *name, int32 index, uint32 value" type="Final" mod=""/>
+		<Function name="ReplaceInt64" returns="status_t" arguments="const char *name, int64 value" type="Final" mod=""/>
+		<Function name="ReplaceInt64" returns="status_t" arguments="const char *name, int32 index, int64 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt64" returns="status_t" arguments="const char *name, uint64 value" type="Final" mod=""/>
+		<Function name="ReplaceUInt64" returns="status_t" arguments="const char *name, int32 index, uint64 value" type="Final" mod=""/>
+		<Function name="ReplaceBool" returns="status_t" arguments="const char *name, bool aBoolean" type="Final" mod=""/>
+		<Function name="ReplaceBool" returns="status_t" arguments="const char *name, int32 index, bool aBoolean" type="Final" mod=""/>
+		<Function name="ReplaceFloat" returns="status_t" arguments="const char *name, float aFloat" type="Final" mod=""/>
+		<Function name="ReplaceFloat" returns="status_t" arguments="const char *name, int32 index, float aFloat" type="Final" mod=""/>
+		<Function name="ReplaceDouble" returns="status_t" arguments="const char *name, double aDouble" type="Final" mod=""/>
+		<Function name="ReplaceDouble" returns="status_t" arguments="const char *name, int32 index, double aDouble" type="Final" mod=""/>
+		<Function name="ReplacePointer" returns="status_t" arguments="const char *name, const void *pointer" type="Final" mod=""/>
+		<Function name="ReplacePointer" returns="status_t" arguments="const char *name,int32 index,const void *pointer" type="Final" mod=""/>
+		<Function name="ReplaceMessenger" returns="status_t" arguments="const char *name, BMessenger messenger" type="Final" mod=""/>
+		<Function name="ReplaceMessenger" returns="status_t" arguments="const char *name, int32 index, BMessenger messenger" type="Final" mod=""/>
+		<Function name="ReplaceRef" returns="status_t" arguments="const char *name,const entry_ref *ref" type="Final" mod=""/>
+		<Function name="ReplaceRef" returns="status_t" arguments="const char *name, int32 index, const entry_ref *ref" type="Final" mod=""/>
+		<Function name="ReplaceMessage" returns="status_t" arguments="const char *name, const BMessage *message" type="Final" mod=""/>
+		<Function name="ReplaceMessage" returns="status_t" arguments="const char *name, int32 index, const BMessage *message" type="Final" mod=""/>
+		<Function name="ReplaceFlat" returns="status_t" arguments="const char *name, BFlattenable *object" type="Final" mod=""/>
+		<Function name="ReplaceFlat" returns="status_t" arguments="const char *name, int32 index, BFlattenable *object" type="Final" mod=""/>
+		<Function name="ReplaceData" returns="status_t" arguments="const char *name, type_code type, const void *data, ssize_t numBytes" type="Final" mod=""/>
+		<Function name="ReplaceData" returns="status_t" arguments="const char *name, type_code type, int32 index, const void *data, ssize_t numBytes" type="Final" mod=""/>
+		
+		<Function name="HasSameData" returns="bool" arguments="const BMessage &other, bool ignoreFieldOrder, bool deep" type="Final" mod="const"/>
+
+
+		<Function name="HasAlignment" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasRect" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasPoint" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasSize" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasString" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasInt8" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasUInt8" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasInt16" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasUInt16" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasInt32" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasUInt32" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasInt64" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasUInt64" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasBool" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasFloat" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasDouble" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasPointer" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasMessenger" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasRef" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasMessage" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="HasFlat" returns="bool" arguments="const char* name, const BFlattenable *flat" type="Final" mod="const"/>
+		<Function name="HasFlat" returns="bool" arguments="const char* name, int32 n, const BFlattenable *flat" type="Final" mod="const"/>
+		<Function name="HasData" returns="bool" arguments="const char* name, type_code code, int32 n" type="Final" mod="const"/>
+		
+		<Function name="FindRect" returns="BRect" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindPoint" returns="BPoint" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindString" returns="const char *" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindInt8" returns="int8" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindInt16" returns="int16" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindInt32" returns="int32" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindInt64" returns="int64" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindBool" returns="bool" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindFloat" returns="float" arguments="const char* name, int32 n" type="Final" mod="const"/>
+		<Function name="FindDouble" returns="double" arguments="const char* name, int32 n" type="Final" mod="const"/>
+	</class>
+</Flatten>
+
