@@ -52,5 +52,6 @@ extern "C" {
 	status_t bind_BBufferIO_SetSize(void *bindInstPtr, off_t size);
 	status_t bind_BBufferIO_Flush(void *bindInstPtr);
 }
+
 #endif // HABID_BBufferIO_
 
