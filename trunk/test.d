@@ -6,6 +6,11 @@ int main() {
 	BString string = new BString;
 
 	string.SetTo("Hello");
+	string << " " << cast(float)64.0f;
+	string += " hooora";
+
+	string += new BString("jag är en ny string");
+
 	Stdout.formatln(string.String());
 
 	BString str2 = new BString();
@@ -18,6 +23,8 @@ int main() {
 	Stdout.formatln(string.String());
 
 	char [] buffer = new char[256];
+
+	string = "hejsan";
 
 	string.CopyInto(buffer, 0, 5);
 
