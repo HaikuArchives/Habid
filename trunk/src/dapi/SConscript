@@ -11,7 +11,7 @@ d_srcs = [
 #	'Support/Autolock.d',
 #	'Support/DataIO.d',
 #	'Support/BObject.d',
-#	'Support/List.d',
+	'Support/List.d',
 #	'Support/Locker.d',
 #	'Support/StopWatch.d',
 	'Support/String.d',
