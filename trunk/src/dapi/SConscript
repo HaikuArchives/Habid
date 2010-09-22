@@ -9,7 +9,7 @@ d_srcs = [
 
 	'Support/Archivable.d',
 #	'Support/Autolock.d',
-#	'Support/DataIO.d',
+	'Support/DataIO.d',
 #	'Support/BObject.d',
 	'Support/List.d',
 #	'Support/Locker.d',

@@ -4,103 +4,38 @@
  */
 
 #include <SupportDefs.h>
-#include <DataIO.h>
 #include "Support/DataIO.h"
 
 BDataIOBridge::BDataIOBridge()
 : BDataIO()
 {
 }
-
-
 BDataIOBridge::~BDataIOBridge() { }
-
-
 ssize_t BDataIOBridge::Read(void * buffer, size_t size){ }
-
-
 ssize_t BDataIOBridge::Write(const void * buffer, size_t size){ }
-
-
 BPositionIOBridge::BPositionIOBridge()
 : BPositionIO()
 {
 }
-
-
 BPositionIOBridge::~BPositionIOBridge() { }
-
-
-
-
-
-
 ssize_t BPositionIOBridge::ReadAt(off_t position, void * buffer, size_t size){ }
-
-
 ssize_t BPositionIOBridge::WriteAt(off_t position, const void * buffer, size_t size){ }
-
-
 off_t BPositionIOBridge::Seek(off_t position, uint32 seekMode){ }
-
-
 off_t BPositionIOBridge::Position()const{ }
-
-
-
-
-
-
 BMemoryIOBridge::BMemoryIOBridge(void * data, size_t length)
 : BMemoryIO(data, length)
 {
 }
-
-
 BMemoryIOBridge::BMemoryIOBridge(const void * data, size_t length)
 : BMemoryIO(data, length)
 {
 }
-
-
 BMemoryIOBridge::~BMemoryIOBridge() { }
-
-
-
-
-
-
-
-
-
-
-
-
 BMallocIOBridge::BMallocIOBridge()
 : BMallocIO()
 {
 }
-
-
 BMallocIOBridge::~BMallocIOBridge() { }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 BDataIOProxy::BDataIOProxy(void *bindInstPtr)
 : fBindInstPtr(bindInstPtr), BDataIOBridge() { }
@@ -497,4 +432,5 @@ extern "C" {
 	}
 
 }
+
 

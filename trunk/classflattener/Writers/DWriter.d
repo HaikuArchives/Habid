@@ -116,11 +116,11 @@ void buildBindExports(InterfaceClassInfo classInfo) {
         if(memberFunc.isPureVirtual || memberFunc.isVirtual) {
         	bindBuffer ~= "\t" ~ replaceClassNames(memberFunc.getReturnString(true)) ~ " bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceConstsNames(replaceClassNames(memberFunc.buildArguments(true, true))) ~ ") {{";
         	bindBuffer ~= "\t\tassert(false, \"bind_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ") Unimplemented\");";
-        	bindBuffer ~= "\t}";
+        	bindBuffer ~= "\t}\n";
         }
     }
 
-    bindBuffer ~= "}";
+    bindBuffer ~= "}\n";
 }
 
 void buildCImports(InterfaceClassInfo classInfo) {
