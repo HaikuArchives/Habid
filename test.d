@@ -9,19 +9,17 @@ import Support.SupportDefs;
 // import tango.stdc.posix.sys.types;
 import Support.BlockCache;
 import tango.stdc.stdlib;
+import Support.Locker;
 
 int main() {
-	BBlockCache cache = new BBlockCache(10, 256, B_OBJECT_CACHE);
+	BLocker lock = new BLocker("Test locker");
 
-	void *data2 = cast(void *)malloc(256);
+	if(lock.InitCheck() != 0)
+		Stdout.formatln("Failed to lock");
 
+	lock.Lock();
+	lock.Unlock();
 
-	void [] data = cache.Get(128);
-
-	Stdout.formatln("data length: {}", data.length);
-
-	cache.Save(data.ptr, 128);
-	cache.Save(data2, 256);
-
+	delete lock;
 	return 0;
 }

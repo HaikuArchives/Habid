@@ -2,9 +2,8 @@
  * Copyright 2010 Tomas Wilhelmsson <tomas.wilhelmsson@gmail.com>
  * All rights reserved. Distributed under the terms of the MIT license.
  */
-
-
 module Support.types;
+
 
 alias byte		__haiku_std_int8;
 alias ubyte		__haiku_std_uint8;

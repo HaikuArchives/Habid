@@ -8,8 +8,9 @@ c_srcs = [
 	'Support/DataIO.cpp',
 	'Support/BufferIO.cpp',
 	'Support/BlockCache.cpp',
+	'Support/Flattenable.cpp',
 	'Support/List.cpp',
-#	'Support/Locker.cpp',
+	'Support/Locker.cpp',
 	'Support/StopWatch.cpp',
 	'Support/String.cpp'
 
