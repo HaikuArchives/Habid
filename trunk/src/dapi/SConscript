@@ -11,6 +11,7 @@ d_srcs = [
 #	'Support/Autolock.d',
 	'Support/DataIO.d',
 	'Support/BufferIO.d',
+	'Support/BlockCache.d',
 #	'Support/BObject.d',
 	'Support/List.d',
 #	'Support/Locker.d',

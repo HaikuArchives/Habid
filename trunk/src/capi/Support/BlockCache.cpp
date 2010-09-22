@@ -5,8 +5,6 @@
 
 #include <BlockCache.h>
 
-
-
 extern "C" {
 	BBlockCache* be_BBlockCache_ctor(void *bindInstPtr, uint32 blockCount, size_t blockSize, uint32 allocationType)
 	{
@@ -29,4 +27,5 @@ extern "C" {
 	}
 
 }
+
 
