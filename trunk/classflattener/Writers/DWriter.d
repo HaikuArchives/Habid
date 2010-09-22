@@ -16,40 +16,6 @@ char [][] importBuffer;
 char [][] bindBuffer;
 char [][] classBuffer;
 
-char [][] classNames = [
-    "BArchivable",
-    "BAutolock",
-    "BBlockCache",
-    "BDataIO",
-    "BFlattenable",
-    "BList",
-    "BLocker",
-    "BMallocIO",
-    "BMemoryIO",
-    "BBufferIO",
-    "BPositionIO",
-    "BStopWatch",
-    "BString",
-
-    "BAppFileInfo",
-    "BDirectory",
-    "BEntry",
-    "BEntryList",
-    "BFile",
-    "BFilePanel",
-    "BMimeType",
-    "BNode",
-    "BNodeInfo",
-    "BPath",
-    "BQuery",
-    "BRefFilter",
-    "BResources",
-    "BStatable",
-    "BSymLink",
-    "BVolume",
-    "BVolumeRoster"
-];
-
 void buildD()
 {
     InputFile inputFile = InterfaceParser.getInputFile();
@@ -69,12 +35,9 @@ void buildD()
 char [] replaceClassNames(char [] buffer) {
     char [] tmpBuffer = buffer.dup;
 
-    foreach(className; classNames) {
-        if(Util.containsPattern(tmpBuffer, className))
-            tmpBuffer = Util.substitute(tmpBuffer, className, "void").dup;
-        if(Util.containsPattern(tmpBuffer, "const"))
-            tmpBuffer = Util.substitute(tmpBuffer, "const", "");
-    }
+
+    if(Util.containsPattern(tmpBuffer, "const"))
+        tmpBuffer = Util.substitute(tmpBuffer, "const", "");
 
     if(Util.containsPattern(tmpBuffer, "unsigned"))
         tmpBuffer = Util.substitute(tmpBuffer, "unsigned", "");
@@ -129,13 +92,13 @@ void buildCImports(InterfaceClassInfo classInfo) {
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
             importBuffer ~= "\t// " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "*") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
-            importBuffer ~= "\tvoid * be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true)) ~ ");\n";
+            importBuffer ~= "\tvoid * be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true, false, false, true)) ~ ");\n";
         } else if(memberFunc.isDestructor) {
             importBuffer ~= "\t// void be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ "* self);";
             importBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_dtor(void* self);\n";
         } else if(memberFunc.isOperator) {
             importBuffer ~= "\t// " ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
-            importBuffer ~= "\t" ~ replaceClassNames(memberFunc.getReturnString(true)) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ memberFunc.postfixString ~ "(void *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true)) ~ ");\n";
+            importBuffer ~= "\t" ~ (InterfaceParser.isClass(memberFunc.getReturnString(true)) ? "void *" : replaceClassNames(memberFunc.getReturnString(true))) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.getOperatorName() ~ memberFunc.postfixString ~ "(void *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true, false, false, true)) ~ ");\n";
         } else if(memberFunc.isVariable) {
             importBuffer ~= "\t// void be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varSet(" ~ classInfo.nameString ~ " *self, " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ ");";
             importBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varSet(void *self, " ~ memberFunc.getReturnString(true) ~ " " ~ memberFunc.nameString ~ ");\n";
@@ -144,14 +107,14 @@ void buildCImports(InterfaceClassInfo classInfo) {
             importBuffer ~= "\t" ~ replaceClassNames(memberFunc.returnString) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(void *self);\n";
         } else if(memberFunc.isStatic) {
             importBuffer ~= "\t//" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ memberFunc.buildArguments(true, true) ~ ")";
-            importBuffer ~= "\t" ~ replaceConstsNames(memberFunc.getReturnString(true)) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ replaceClassNames(memberFunc.buildArguments(true, true)) ~ ");\n";
+            importBuffer ~= "\t" ~ (InterfaceParser.isClass(memberFunc.getReturnString(true)) ? "void *" : replaceConstsNames(memberFunc.getReturnString(true))) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ replaceClassNames(memberFunc.buildArguments(true, true, false, false, true)) ~ ");\n";
         } else {
             if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
                 importBuffer ~= "\t// " ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
-                importBuffer ~= "\t" ~ replaceClassNames(memberFunc.getReturnString(true)) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true)) ~ ");\n";
+                importBuffer ~= "\t" ~ (InterfaceParser.isClass(memberFunc.getReturnString(true)) ? "void *" : replaceClassNames(memberFunc.getReturnString(true))) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true, false, false, true)) ~ ");\n";
             } else {
                 importBuffer ~= "\t// " ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
-                importBuffer ~= "\t" ~ replaceClassNames(memberFunc.getReturnString(true)) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true)) ~ ");\n";
+                importBuffer ~= "\t" ~ (InterfaceParser.isClass(memberFunc.getReturnString(true)) ? "void *" : replaceClassNames(memberFunc.getReturnString(true))) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(void *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ replaceClassNames(memberFunc.buildArguments(true, true, false, false, true)) ~ ");\n";
             }
         }
     }
@@ -253,7 +216,7 @@ void print() {
 	Stdout.formatln("import Support.SupportDefs;");
 	Stdout.formatln("import Support.types;");
 	Stdout.formatln("import Support.BObject;").newline;
-	
+
     if(importBuffer.length > 0) {
         foreach(line; importBuffer)
             Stdout.formatln(line);

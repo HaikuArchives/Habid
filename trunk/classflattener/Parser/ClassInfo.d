@@ -128,7 +128,10 @@ class MemberFunction
             arg.isPtr = Util.contains(_typeString, '*');
             arg.isRef = Util.contains(_typeString, '&');
             arg.isFuncPtr = (_funcPtrArgs.length > 0);
+            arg.isClass = InterfaceParser.isClass(_typeString.dup);
 
+            if(arg.isClass)
+                Stderr.formatln("IsClass " ~ _typeString);
 			arg.isStruct = Util.containsPattern(_typeString, "struct");
 
             arg.typeString = _typeString.dup;
@@ -146,21 +149,32 @@ class MemberFunction
         bool isRef = false;
         bool isFuncPtr = false;
         bool isStruct = false;
+        bool isClass = false;
 
-        char [] toString(bool withType, bool replaceRef = false, bool refStruct = false, bool derefStruct = false) {
+        char [] toString(bool withType, bool replaceRef = false, bool refStruct = false, bool derefStruct = false, bool replaceClassNameWithVoid = false) {
             if(isFuncPtr) {
                 if(withType)
                     return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " (*" ~ nameString ~ ")(" ~ funcPtrArgs ~ ")").dup;
                 else
                     return nameString.dup;
             } else {
-                if(withType)
-                    return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " " ~ nameString).dup;
-                else {
+                if(withType) {
+                    if(replaceRef && isRef && !isClass)
+                        return (((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString) ~ " " ~ nameString).dup;
+                    else if(isClass && isPtr)
+                        return (((replaceClassNameWithVoid) ? "void *" : typeString) ~ " " ~ nameString).dup;
+                    else if(isClass && isRef)
+                        return (((replaceClassNameWithVoid) ? "void *" : ((replaceRef) ? Util.replace(typeString.dup, '&', '*') : typeString)) ~ " " ~ nameString).dup;
+                    else
+                        return (((replaceClassNameWithVoid && isClass) ? "void" : typeString) ~ " " ~ ((isClass && !isRef && !isPtr) ? "*" : "") ~ nameString).dup;
+
+                } else {
                 	if(isStruct && isRef && refStruct)
                 		return ("&" ~ nameString).dup;
                 	else if(isStruct && isRef && !refStruct)
                 		return (derefStruct ? "*" : "") ~ nameString.dup;
+                    else if(isClass && !isRef && !isPtr)
+                        return (replaceClassNameWithVoid ? "void" : ("*" ~ nameString.dup)).dup;
                 	else
                     	return (((replaceRef && isRef) ? ("*" ~ nameString) : nameString)).dup;
                 }
@@ -357,15 +371,18 @@ class MemberFunction
     }
 
     char [] getReturnString(bool replaceRef) {
-        return (replaceRef && returnIsRef()) ? Util.replace(returnString.dup, '&', '*').dup : returnString.dup;
+        if(InterfaceParser.isClass(returnString) && !Util.contains(returnString, '&') && !Util.contains(returnString, '*'))
+            return (returnString ~ " *").dup;
+        else
+            return (replaceRef && returnIsRef()) ? Util.replace(returnString.dup, '&', '*').dup : returnString.dup;
     }
 
-    char [] buildArguments(bool withType, bool replaceRef = false, bool refStruct = false, bool derefStruct = false) {
+    char [] buildArguments(bool withType, bool replaceRef = false, bool refStruct = false, bool derefStruct = false, bool replaceClassNameWithVoid = false) {
         char [] buffer;
         foreach(argno, arg; this) {
             if(argno > 0)
                 buffer ~= ", ";
-            buffer ~= arg.toString(withType, replaceRef, refStruct, derefStruct);
+            buffer ~= arg.toString(withType, replaceRef, refStruct, derefStruct, replaceClassNameWithVoid);
         }
 
         return buffer.dup;
