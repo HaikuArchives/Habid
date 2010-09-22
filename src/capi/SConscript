@@ -2,6 +2,7 @@ env = Environment(CPPPATH='include')
 
 c_srcs = [
 #	'App/Looper.cpp',
+	'App/Message.cpp',
 
 #	'Support/Autolock.cpp',
 	'Support/Archivable.cpp',
