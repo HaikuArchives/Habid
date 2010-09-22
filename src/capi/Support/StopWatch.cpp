@@ -3,10 +3,7 @@
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 
-#include <SupportDefs.h>
 #include <StopWatch.h>
-
-
 
 extern "C" {
 	BStopWatch* be_BStopWatch_ctor(void *bindInstPtr, const char * name, bool silent)
@@ -50,4 +47,5 @@ extern "C" {
 	}
 
 }
+
 

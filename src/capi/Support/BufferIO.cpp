@@ -10,33 +10,7 @@ BBufferIOBridge::BBufferIOBridge(BPositionIO * stream, size_t bufferSize, bool o
 : BBufferIO(stream, bufferSize, ownsStream)
 {
 }
-
-
 BBufferIOBridge::~BBufferIOBridge() { }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 BBufferIOProxy::BBufferIOProxy(void *bindInstPtr, BPositionIO * stream, size_t bufferSize, bool ownsStream)
 : fBindInstPtr(bindInstPtr), BPositionIOProxy(bindInstPtr), BBufferIOBridge(stream, bufferSize, ownsStream) { }
@@ -171,4 +145,5 @@ extern "C" {
 	}
 
 }
+
 

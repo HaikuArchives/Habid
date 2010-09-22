@@ -10,10 +10,11 @@ d_srcs = [
 	'Support/Archivable.d',
 #	'Support/Autolock.d',
 	'Support/DataIO.d',
+	'Support/BufferIO.d',
 #	'Support/BObject.d',
 	'Support/List.d',
 #	'Support/Locker.d',
-#	'Support/StopWatch.d',
+	'Support/StopWatch.d',
 	'Support/String.d',
 	'Support/SupportDefs.d',
 	'Support/types.d'

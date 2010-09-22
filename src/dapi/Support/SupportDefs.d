@@ -8,7 +8,7 @@ module Support.SupportDefs;
 
 import Support.types;
 
-import tango.stdc.posix.sys.types;
+public import tango.stdc.posix.sys.types;
 
 alias __haiku_int8            int8;
 alias __haiku_uint8           uint8;

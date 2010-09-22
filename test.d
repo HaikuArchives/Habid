@@ -6,7 +6,7 @@ import tango.stdc.stringz;
 import Support.DataIO;
 
 import Support.SupportDefs;
-import tango.stdc.posix.sys.types;
+// import tango.stdc.posix.sys.types;
 
 class MyMemoryIO : BMemoryIO
 {
