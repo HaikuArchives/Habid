@@ -88,6 +88,9 @@ private:
     InputFile fInputFile;
 
     InputFile [] fOtherInputs;
+
+    char [] fClassNames;
+
 public:
     bool parse(char [] filename, bool otherInput = false) {
         InputFile inputFile = new InputFile;
@@ -131,6 +134,7 @@ public:
                         classinfo.nameString = child.attributes.name(null, "name").value().dup;
                         parseClassNode(child, classinfo);
                         inputFile.fClasses ~= classinfo;
+                        fClassNames ~= " " ~ classinfo.nameString.dup;
                     } break;
                     case "includefile": {
                         IncludeFile inc;
@@ -143,6 +147,9 @@ public:
                         inputFile.fAuthor = child.attributes.name(null, "name").value().dup;
                         inputFile.fAuthorEmail = child.attributes.name(null, "email").value().dup;
                         inputFile.fLicense = child.attributes.name(null, "license").value().dup;
+                    } break;
+                    case "classnames": {
+                        fClassNames ~= child.attributes.name(null, "names").value().dup;
                     } break;
                     default: {
                         Stdout.formatln("InterfaceParser::parse Unhandled node ({})", name);
@@ -297,6 +304,20 @@ public:
 
         return null;
     }
+
+
+    bool isClass(char [] name) {
+        char [][] splits = Util.split(fClassNames.dup, " ");
+
+        foreach(split; splits) {
+            char [] trimmedSplit = Util.trim(split.dup);
+            if(Util.containsPattern(name, trimmedSplit)) return true;
+        }
+
+        return false;
+    }
+
+
 
 /*
     IncludeFile [] getIncludes() {

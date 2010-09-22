@@ -3,6 +3,7 @@
 	<Includefile name="Message.h" type="system" target="source"/>
 	<Includefile name="Messenger.h" type="system" target="source"/>
 	
+	<ClassNames names="BSize  BRect  BPoint  BMessenger  BString  BAlignment BHandler BFlattenable"/>
 
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 

@@ -30,6 +30,7 @@
 		<Unit filename="Parser/ClassInfo.d" />
 		<Unit filename="Parser/InterfaceParser.d" />
 		<Unit filename="Writers/CWriter.d" />
+		<Unit filename="Writers/DWriter.d" />
 		<Unit filename="Writers/HeaderWriter.d" />
 		<Unit filename="hello.d" />
 		<Extensions>
