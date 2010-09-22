@@ -1,34 +1,23 @@
 import tango.io.Stdout;
 
 import Support.String;
+import Support.List;
+import tango.stdc.stringz;
 
 int main() {
-	BString string = new BString;
+	BList list = new BList;
 
-	string.SetTo("Hello");
-	string << " " << cast(float)64.0f;
-	string += " hooora";
+	char [] buffer = "testing";
 
-	string += new BString("jag är en ny string");
+	list.AddItem(buffer.ptr);
 
-	Stdout.formatln(string.String());
+	Stdout.formatln("List count: {}", list.CountItems());
 
-	BString str2 = new BString();
+	char *test = cast(char *)list.FirstItem;
 
-	string.CopyInto(str2, 0, 4);
+	Stdout.formatln("Content: {}", fromStringz(test));
 
-	Stdout.formatln(str2.String());
-
-	delete str2;
-	Stdout.formatln(string.String());
-
-	char [] buffer = new char[256];
-
-	string = "hejsan";
-
-	string.CopyInto(buffer, 0, 5);
-
-	Stdout.formatln("buffer: {}", buffer);
+	delete list;
 
 	return 0;
 }
