@@ -5,6 +5,7 @@
 
 
 import Storage.Path;
+import Storage.Volume;
 
 import Storage.StorageDefs;
 import Support.SupportDefs;
@@ -30,5 +31,6 @@ int main()
 	assert(path.Path() == "/boot/home/config/settings", "Assert find_directory failed");
 	
 	Stdout.formatln("User Settings Directory: {}", path.Path());
+	
 	return B_OK;
 }
