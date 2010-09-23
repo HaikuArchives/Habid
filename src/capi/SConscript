@@ -13,11 +13,17 @@ c_srcs = [
 	'Support/List.cpp',
 	'Support/Locker.cpp',
 	'Support/StopWatch.cpp',
-	'Support/String.cpp'
+	'Support/String.cpp',
 
 #	'Storage/EntryList.cpp',
-#	'Storage/Entry.cpp',
-#	'Storage/Statable.cpp'
+	'Storage/Entry.cpp',
+	'Storage/Node.cpp',
+	'Storage/Statable.cpp',
+	'Storage/Directory.cpp',
+	'Storage/EntryList.cpp',
+	'Storage/File.cpp',
+	'Storage/Path.cpp',
+	'Storage/Volume.cpp'
 ]
 
 c_objs = env.SharedObject(c_srcs)

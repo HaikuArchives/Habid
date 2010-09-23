@@ -16,7 +16,7 @@
 		<Function name="IsDirectory" returns="bool" arguments="" type="Final" mod="const"/>
 		<Function name="IsSymLink" returns="bool" arguments="" type="Final" mod="const"/>
 
-		<Function name="GetNodeRef" returns="status_t" arguments="node_ref *ref" type="Final" mod="const"/>
+		<Function name="GetNodeRef" returns="status_t" arguments="node_ref *_ref" type="Final" mod="const"/>
 
 		<Function name="GetOwner" returns="status_t" arguments="uid_t *owner" type="Final" mod="const"/>
 		<Function name="SetOwner" returns="status_t" arguments="uid_t owner" type="Final" mod=""/>

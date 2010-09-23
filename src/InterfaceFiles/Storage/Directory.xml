@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Directory.h" type="system" target="header"/>
+
+	<Includefile name="Storage/Node.h" type="local" target="header"/>
+	<Includefile name="Storage/EntryList.h" type="local" target="header"/>
+
+	<Includefile name="Storage/Directory.h" type="local" target="source"/>
+	
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BDirectory">
+		<Inherits name="BNode" access="public"/>
+		<Inherits name="BEntryList" access="public"/>
+		
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BDirectory &dir" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const entry_ref *_ref" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const node_ref *nref" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BEntry *entry" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char *path" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BDirectory *dir, const char *path" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="SetTo" returns="status_t" arguments="const entry_ref *_ref" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const node_ref *nref" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BEntry *entry" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const char *path" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BDirectory *dir, const char *path" type="Final" mod=""/>
+
+		<Function name="GetEntry" returns="status_t" arguments="BEntry *entry" type="Final" mod="const"/>
+
+		<Function name="IsRootDirectory" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="FindEntry" returns="status_t" arguments="const char *path, BEntry *entry, bool traverse" type="Final" mod="const"/>
+
+		<Function name="Contains" returns="bool" arguments="const char *path, int32 nodeFlags" type="Final" mod="const"/>
+		<Function name="Contains" returns="bool" arguments="const BEntry *entry, int32 nodeFlags" type="Final" mod="const"/>
+
+		<Function name="GetStatFor" returns="status_t" arguments="const char *path, struct stat *st" type="Final" mod="const"/>
+
+		<Function name="GetNextEntry" returns="status_t" arguments="BEntry *entry, bool traverse" type="Virtual" mod=""/>
+		<Function name="GetNextRef" returns="status_t" arguments="entry_ref *_ref" type="Virtual" mod=""/>
+		<Function name="GetNextDirents" returns="int32" arguments="dirent *buf, size_t bufSize, int32 count" type="Virtual" mod=""/>
+		<Function name="Rewind" returns="status_t" arguments="" type="Virtual" mod=""/>
+		<Function name="CountEntries" returns="int32" arguments="" type="Virtual" mod=""/>
+
+		<Function name="CreateDirectory" returns="status_t" arguments="const char *path, BDirectory *dir" type="Final" mod=""/>
+		<Function name="CreateFile" returns="status_t" arguments="const char *path, BFile *file, bool failIfExists" type="Final" mod=""/>
+		<Function name="CreateSymLink" returns="status_t" arguments="const char *path, const char *linkToPath, BSymLink *link" type="Final" mod=""/>
+
+		<Function name="operator=" returns="BDirectory &" arguments="const BDirectory &dir" type="Operator" mod=""/>
+	</class>
+</Flatten>
+

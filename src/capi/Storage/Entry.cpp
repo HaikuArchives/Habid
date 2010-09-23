@@ -13,8 +13,8 @@ BEntryBridge::BEntryBridge(const BDirectory* dir, const char* path, bool travers
 : BEntry(dir, path, traverse)
 {
 }
-BEntryBridge::BEntryBridge(const entry_ref* ref, bool traverse)
-: BEntry(ref, traverse)
+BEntryBridge::BEntryBridge(const entry_ref* _ref, bool traverse)
+: BEntry(_ref, traverse)
 {
 }
 BEntryBridge::BEntryBridge(const char* path, bool traverse)
@@ -33,8 +33,8 @@ BEntryProxy::BEntryProxy(void *bindInstPtr)
 BEntryProxy::BEntryProxy(void *bindInstPtr, const BDirectory* dir, const char* path, bool traverse)
 : fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(dir, path, traverse) { }
 
-BEntryProxy::BEntryProxy(void *bindInstPtr, const entry_ref* ref, bool traverse)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(ref, traverse) { }
+BEntryProxy::BEntryProxy(void *bindInstPtr, const entry_ref* _ref, bool traverse)
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(_ref, traverse) { }
 
 BEntryProxy::BEntryProxy(void *bindInstPtr, const char* path, bool traverse)
 : fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(path, traverse) { }
@@ -66,9 +66,9 @@ extern "C" {
 		return new BEntryProxy(bindInstPtr, dir, path, traverse);
 	}
 
-	BEntryProxy * be_BEntry_ctor_2(void *bindInstPtr, const entry_ref* ref, bool traverse)
+	BEntryProxy * be_BEntry_ctor_2(void *bindInstPtr, const entry_ref* _ref, bool traverse)
 	{
-		return new BEntryProxy(bindInstPtr, ref, traverse);
+		return new BEntryProxy(bindInstPtr, _ref, traverse);
 	}
 
 	BEntryProxy * be_BEntry_ctor_3(void *bindInstPtr, const char* path, bool traverse)
@@ -106,9 +106,9 @@ extern "C" {
 		return self->SetTo(dir, path, traverse);
 	}
 
-	status_t be_BEntry_SetTo_1(BEntryProxy *self, const entry_ref* ref, bool traverse)
+	status_t be_BEntry_SetTo_1(BEntryProxy *self, const entry_ref* _ref, bool traverse)
 	{
-		return self->SetTo(ref, traverse);
+		return self->SetTo(_ref, traverse);
 	}
 
 	status_t be_BEntry_SetTo_2(BEntryProxy *self, const char* path, bool traverse)
@@ -121,9 +121,9 @@ extern "C" {
 		self->Unset();
 	}
 
-	status_t be_BEntry_GetRef(BEntryProxy *self, entry_ref* ref)
+	status_t be_BEntry_GetRef(BEntryProxy *self, entry_ref* _ref)
 	{
-		return self->GetRef(ref);
+		return self->GetRef(_ref);
 	}
 
 	status_t be_BEntry_GetPath(BEntryProxy *self, BPath* path)

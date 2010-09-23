@@ -7,10 +7,7 @@ import Support.SupportDefs;
 import Support.types;
 import Support.BObject;
 
-struct entry_ref
-{
-	
-}
+struct entry_ref { }
 
 extern (C) extern {
 	// BMessage* be_BMessage_ctor(void *bindInstPtr);
@@ -67,8 +64,8 @@ extern (C) extern {
 	// bool be_BMessage_IsSourceRemote(BMessage *self);
 	bool be_BMessage_IsSourceRemote(void *self);
 
-	// BMessenger be_BMessage_ReturnAddress(BMessage *self);
-	void *be_BMessage_ReturnAddress(void *self);
+	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
+	void * be_BMessage_ReturnAddress(void *self);
 
 	// const BMessage * be_BMessage_Previous(BMessage *self);
 	void * be_BMessage_Previous(void *self);
@@ -76,8 +73,8 @@ extern (C) extern {
 	// bool be_BMessage_WasDropped(BMessage *self);
 	bool be_BMessage_WasDropped(void *self);
 
-	// BPoint be_BMessage_DropPoint(BMessage *self, BPoint * offset);
-	void *be_BMessage_DropPoint(void *self, void * offset);
+	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
+	void * be_BMessage_DropPoint(void *self, void * offset);
 
 	// status_t be_BMessage_SendReply(BMessage *self, uint32 command, BHandler * replyTo);
 	status_t be_BMessage_SendReply(void *self, uint32 command, void * replyTo);
@@ -137,7 +134,7 @@ extern (C) extern {
 	status_t be_BMessage_PopSpecifier(void *self);
 
 	// status_t be_BMessage_AddAlignment(BMessage *self, const char* name, const BAlignment* alignment);
-	status_t be_BMessage_AddAlignment(void *self, char* name,  void* alignment);
+	status_t be_BMessage_AddAlignment(void *self, char* name, void * alignment);
 
 	// status_t be_BMessage_AddRect(BMessage *self, const char * name, BRect *aRect);
 	status_t be_BMessage_AddRect(void *self, char * name, void *aRect);
@@ -152,7 +149,7 @@ extern (C) extern {
 	status_t be_BMessage_AddString(void *self, char * name,  char * aString);
 
 	// status_t be_BMessage_AddString_1(BMessage *self, const char * name, const BString * aString);
-	status_t be_BMessage_AddString_1(void *self, char * name,  void * aString);
+	status_t be_BMessage_AddString_1(void *self, char * name, void * aString);
 
 	// status_t be_BMessage_AddInt8(BMessage *self, const char * name, int8 value);
 	status_t be_BMessage_AddInt8(void *self, char * name, int8 value);
@@ -190,14 +187,14 @@ extern (C) extern {
 	// status_t be_BMessage_AddPointer(BMessage *self, const char * name, const void * aPointer);
 	status_t be_BMessage_AddPointer(void *self, char * name,  void * aPointer);
 
-	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger messenger);
+	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger *messenger);
 	status_t be_BMessage_AddMessenger(void *self, char * name, void *messenger);
 
 	// status_t be_BMessage_AddRef(BMessage *self, const char * name, const entry_ref * _ref);
 	status_t be_BMessage_AddRef(void *self, char * name,  entry_ref * _ref);
 
 	// status_t be_BMessage_AddMessage(BMessage *self, const char * name, const BMessage * message);
-	status_t be_BMessage_AddMessage(void *self, char * name,  void * message);
+	status_t be_BMessage_AddMessage(void *self, char * name, void * message);
 
 	// status_t be_BMessage_AddFlat(BMessage *self, const char * name, BFlattenable * object, int32 count);
 	status_t be_BMessage_AddFlat(void *self, char * name, void * object, int32 count);
@@ -215,10 +212,10 @@ extern (C) extern {
 	status_t be_BMessage_MakeEmpty(void *self);
 
 	// status_t be_BMessage_FindAlignment(BMessage *self, const char* name, BAlignment* alignment);
-	status_t be_BMessage_FindAlignment(void *self, char* name, void* alignment);
+	status_t be_BMessage_FindAlignment(void *self, char* name, void * alignment);
 
 	// status_t be_BMessage_FindAlignment_1(BMessage *self, const char* name, int32 index, BAlignment* alignment);
-	status_t be_BMessage_FindAlignment_1(void *self, char* name, int32 index, void* alignment);
+	status_t be_BMessage_FindAlignment_1(void *self, char* name, int32 index, void * alignment);
 
 	// status_t be_BMessage_FindRect(BMessage *self, const char * name, BRect * rect);
 	status_t be_BMessage_FindRect(void *self, char * name, void * rect);
@@ -233,10 +230,10 @@ extern (C) extern {
 	status_t be_BMessage_FindPoint_1(void *self, char * name, int32 index, void * point);
 
 	// status_t be_BMessage_FindSize(BMessage *self, const char * name, BSize* size);
-	status_t be_BMessage_FindSize(void *self, char * name, void* size);
+	status_t be_BMessage_FindSize(void *self, char * name, void * size);
 
 	// status_t be_BMessage_FindSize_1(BMessage *self, const char * name, int32 index, BSize* size);
-	status_t be_BMessage_FindSize_1(void *self, char * name, int32 index, void* size);
+	status_t be_BMessage_FindSize_1(void *self, char * name, int32 index, void * size);
 
 	// status_t be_BMessage_FindString(BMessage *self, const char * name, const char ** string);
 	status_t be_BMessage_FindString(void *self, char * name,  char ** string);
@@ -353,10 +350,10 @@ extern (C) extern {
 	status_t be_BMessage_FindData_1(void *self, char * name, type_code type, int32 index,  void ** data, ssize_t * numBytes);
 
 	// status_t be_BMessage_ReplaceAlignment(BMessage *self, const char* name, const BAlignment* alignment);
-	status_t be_BMessage_ReplaceAlignment(void *self, char* name,  void* alignment);
+	status_t be_BMessage_ReplaceAlignment(void *self, char* name, void * alignment);
 
 	// status_t be_BMessage_ReplaceAlignment_1(BMessage *self, const char* name, int32 index, const BAlignment* alignment);
-	status_t be_BMessage_ReplaceAlignment_1(void *self, char* name, int32 index,  void* alignment);
+	status_t be_BMessage_ReplaceAlignment_1(void *self, char* name, int32 index, void * alignment);
 
 	// status_t be_BMessage_ReplaceRect(BMessage *self, const char * name, BRect *aRect);
 	status_t be_BMessage_ReplaceRect(void *self, char * name, void *aRect);
@@ -383,10 +380,10 @@ extern (C) extern {
 	status_t be_BMessage_ReplaceString_1(void *self, char * name, int32 index,  char * aString);
 
 	// status_t be_BMessage_ReplaceString_2(BMessage *self, const char * name, const BString * aString);
-	status_t be_BMessage_ReplaceString_2(void *self, char * name,  void * aString);
+	status_t be_BMessage_ReplaceString_2(void *self, char * name, void * aString);
 
 	// status_t be_BMessage_ReplaceString_3(BMessage *self, const char * name, int32 index, const BString * aString);
-	status_t be_BMessage_ReplaceString_3(void *self, char * name, int32 index,  void * aString);
+	status_t be_BMessage_ReplaceString_3(void *self, char * name, int32 index, void * aString);
 
 	// status_t be_BMessage_ReplaceInt8(BMessage *self, const char * name, int8 value);
 	status_t be_BMessage_ReplaceInt8(void *self, char * name, int8 value);
@@ -473,10 +470,10 @@ extern (C) extern {
 	status_t be_BMessage_ReplaceRef_1(void *self, char * name, int32 index,  entry_ref * _ref);
 
 	// status_t be_BMessage_ReplaceMessage(BMessage *self, const char * name, const BMessage * message);
-	status_t be_BMessage_ReplaceMessage(void *self, char * name,  void * message);
+	status_t be_BMessage_ReplaceMessage(void *self, char * name, void * message);
 
 	// status_t be_BMessage_ReplaceMessage_1(BMessage *self, const char * name, int32 index, const BMessage * message);
-	status_t be_BMessage_ReplaceMessage_1(void *self, char * name, int32 index,  void * message);
+	status_t be_BMessage_ReplaceMessage_1(void *self, char * name, int32 index, void * message);
 
 	// status_t be_BMessage_ReplaceFlat(BMessage *self, const char * name, BFlattenable * object);
 	status_t be_BMessage_ReplaceFlat(void *self, char * name, void * object);
@@ -554,18 +551,18 @@ extern (C) extern {
 	bool be_BMessage_HasMessage(void *self, char* name, int32 n);
 
 	// bool be_BMessage_HasFlat(BMessage *self, const char* name, const BFlattenable * flat);
-	bool be_BMessage_HasFlat(void *self, char* name,  void * flat);
+	bool be_BMessage_HasFlat(void *self, char* name, void * flat);
 
 	// bool be_BMessage_HasFlat_1(BMessage *self, const char* name, int32 n, const BFlattenable * flat);
-	bool be_BMessage_HasFlat_1(void *self, char* name, int32 n,  void * flat);
+	bool be_BMessage_HasFlat_1(void *self, char* name, int32 n, void * flat);
 
 	// bool be_BMessage_HasData(BMessage *self, const char* name, type_code code, int32 n);
 	bool be_BMessage_HasData(void *self, char* name, type_code code, int32 n);
 
-	// BRect be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n);
+	// BRect * be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n);
 	void * be_BMessage_FindRect_2(void *self, char* name, int32 n);
 
-	// BPoint be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n);
+	// BPoint * be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n);
 	void * be_BMessage_FindPoint_2(void *self, char* name, int32 n);
 
 	// const char * be_BMessage_FindString_4(BMessage *self, const char* name, int32 n);
@@ -638,7 +635,7 @@ interface IBMessage
 	// bool be_BMessage_IsSourceRemote(BMessage *self);
 	bool IsSourceRemote();
 
-	// BMessenger be_BMessage_ReturnAddress(BMessage *self);
+	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
 	BMessenger ReturnAddress();
 
 	// const BMessage * be_BMessage_Previous(BMessage *self);
@@ -647,7 +644,7 @@ interface IBMessage
 	// bool be_BMessage_WasDropped(BMessage *self);
 	bool WasDropped();
 
-	// BPoint be_BMessage_DropPoint(BMessage *self, BPoint * offset);
+	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
 	BPoint DropPoint();
 
 	// status_t be_BMessage_SendReply(BMessage *self, uint32 command, BHandler * replyTo);
@@ -656,7 +653,7 @@ interface IBMessage
 	// status_t be_BMessage_SendReply_1(BMessage *self, BMessage * reply, BHandler * replyTo, bigtime_t timeout);
 	status_t SendReply();
 
-	// status_t be_BMessage_SendReply_2(BMessage *self, BMessage * reply, BMessenger replyTo, bigtime_t timeout);
+	// status_t be_BMessage_SendReply_2(BMessage *self, BMessage * reply, BMessenger *replyTo, bigtime_t timeout);
 	status_t SendReply();
 
 	// status_t be_BMessage_SendReply_3(BMessage *self, uint32 command, BMessage * replyToReply);
@@ -761,7 +758,7 @@ interface IBMessage
 	// status_t be_BMessage_AddPointer(BMessage *self, const char * name, const void * aPointer);
 	status_t AddPointer();
 
-	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger messenger);
+	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger *messenger);
 	status_t AddMessenger();
 
 	// status_t be_BMessage_AddRef(BMessage *self, const char * name, const entry_ref * _ref);
@@ -935,10 +932,10 @@ interface IBMessage
 	// status_t be_BMessage_ReplaceRect_1(BMessage *self, const char * name, int32 index, BRect *aRect);
 	status_t ReplaceRect();
 
-	// status_t be_BMessage_ReplacePoint(BMessage *self, const char * name, BPoint aPoint);
+	// status_t be_BMessage_ReplacePoint(BMessage *self, const char * name, BPoint *aPoint);
 	status_t ReplacePoint();
 
-	// status_t be_BMessage_ReplacePoint_1(BMessage *self, const char * name, int32 index, BPoint aPoint);
+	// status_t be_BMessage_ReplacePoint_1(BMessage *self, const char * name, int32 index, BPoint *aPoint);
 	status_t ReplacePoint();
 
 	// status_t be_BMessage_ReplaceSize(BMessage *self, const char* name, BSize *aSize);
@@ -1031,10 +1028,10 @@ interface IBMessage
 	// status_t be_BMessage_ReplacePointer_1(BMessage *self, const char * name, int32 index, const void * pointer);
 	status_t ReplacePointer();
 
-	// status_t be_BMessage_ReplaceMessenger(BMessage *self, const char * name, BMessenger messenger);
+	// status_t be_BMessage_ReplaceMessenger(BMessage *self, const char * name, BMessenger *messenger);
 	status_t ReplaceMessenger();
 
-	// status_t be_BMessage_ReplaceMessenger_1(BMessage *self, const char * name, int32 index, BMessenger messenger);
+	// status_t be_BMessage_ReplaceMessenger_1(BMessage *self, const char * name, int32 index, BMessenger *messenger);
 	status_t ReplaceMessenger();
 
 	// status_t be_BMessage_ReplaceRef(BMessage *self, const char * name, const entry_ref * _ref);
@@ -1134,10 +1131,10 @@ interface IBMessage
 	bool HasData();
 
 	// BRect * be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n);
-	BRect * FindRect();
+	BRect FindRect();
 
 	// BPoint * be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n);
-	BPoint * FindPoint();
+	BPoint FindPoint();
 
 	// const char * be_BMessage_FindString_4(BMessage *self, const char* name, int32 n);
 	char * FindString();
@@ -1206,7 +1203,7 @@ public:
 			fOwnsPointer = false;
 		}
 	}
-/*
+
 	//void be_BMessage_what_varSet(BMessage *self, uint32 what)
 	void what(uint32 _what) {
 		be_BMessage_what_varSet(_InstPtr(), _what);
@@ -1214,9 +1211,9 @@ public:
 
 	//uint32 be_BMessage_what_varGet(BMessage *self)
 	uint32 what() {
-		return be_BMessage_what_varGet(_GetInstPtr());
+		return be_BMessage_what_varGet(_InstPtr());
 	}
-
+/*
 	// status_t be_BMessage_GetInfo(BMessage *self, type_code typeRequested, int32 index, char ** nameFound, type_code * typeFound, int32 * countFound);
 	status_t GetInfo() {
 		return be_BMessage_GetInfo(_InstPtr());
@@ -1277,7 +1274,7 @@ public:
 		return be_BMessage_IsSourceRemote(_InstPtr());
 	}
 
-	// BMessenger be_BMessage_ReturnAddress(BMessage *self);
+	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
 	BMessenger ReturnAddress() {
 		return be_BMessage_ReturnAddress(_InstPtr());
 	}
@@ -1292,7 +1289,7 @@ public:
 		return be_BMessage_WasDropped(_InstPtr());
 	}
 
-	// BPoint be_BMessage_DropPoint(BMessage *self, BPoint * offset);
+	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
 	BPoint DropPoint() {
 		return be_BMessage_DropPoint(_InstPtr());
 	}
@@ -1307,7 +1304,7 @@ public:
 		return be_BMessage_SendReply_1(_InstPtr());
 	}
 
-	// status_t be_BMessage_SendReply_2(BMessage *self, BMessage * reply, BMessenger replyTo, bigtime_t timeout);
+	// status_t be_BMessage_SendReply_2(BMessage *self, BMessage * reply, BMessenger *replyTo, bigtime_t timeout);
 	status_t SendReply() {
 		return be_BMessage_SendReply_2(_InstPtr());
 	}
@@ -1397,17 +1394,17 @@ public:
 		return be_BMessage_AddAlignment(_InstPtr());
 	}
 
-	// status_t be_BMessage_AddRect(BMessage *self, const char * name, BRect * aRect);
+	// status_t be_BMessage_AddRect(BMessage *self, const char * name, BRect *aRect);
 	status_t AddRect() {
 		return be_BMessage_AddRect(_InstPtr());
 	}
 
-	// status_t be_BMessage_AddPoint(BMessage *self, const char * name, BPoint aPoint);
+	// status_t be_BMessage_AddPoint(BMessage *self, const char * name, BPoint *aPoint);
 	status_t AddPoint() {
 		return be_BMessage_AddPoint(_InstPtr());
 	}
 
-	// status_t be_BMessage_AddSize(BMessage *self, const char* name, BSize aSize);
+	// status_t be_BMessage_AddSize(BMessage *self, const char* name, BSize *aSize);
 	status_t AddSize() {
 		return be_BMessage_AddSize(_InstPtr());
 	}
@@ -1482,7 +1479,7 @@ public:
 		return be_BMessage_AddPointer(_InstPtr());
 	}
 
-	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger messenger);
+	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger *messenger);
 	status_t AddMessenger() {
 		return be_BMessage_AddMessenger(_InstPtr());
 	}
@@ -1712,12 +1709,12 @@ public:
 		return be_BMessage_FindMessenger_1(_InstPtr());
 	}
 
-	// status_t be_BMessage_FindRef(BMessage *self, const char * name, entry_ref * ref);
+	// status_t be_BMessage_FindRef(BMessage *self, const char * name, entry_ref * _ref);
 	status_t FindRef() {
 		return be_BMessage_FindRef(_InstPtr());
 	}
 
-	// status_t be_BMessage_FindRef_1(BMessage *self, const char * name, int32 index, entry_ref * ref);
+	// status_t be_BMessage_FindRef_1(BMessage *self, const char * name, int32 index, entry_ref * _ref);
 	status_t FindRef() {
 		return be_BMessage_FindRef_1(_InstPtr());
 	}
@@ -1772,22 +1769,22 @@ public:
 		return be_BMessage_ReplaceRect_1(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplacePoint(BMessage *self, const char * name, BPoint aPoint);
+	// status_t be_BMessage_ReplacePoint(BMessage *self, const char * name, BPoint *aPoint);
 	status_t ReplacePoint() {
 		return be_BMessage_ReplacePoint(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplacePoint_1(BMessage *self, const char * name, int32 index, BPoint aPoint);
+	// status_t be_BMessage_ReplacePoint_1(BMessage *self, const char * name, int32 index, BPoint *aPoint);
 	status_t ReplacePoint() {
 		return be_BMessage_ReplacePoint_1(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplaceSize(BMessage *self, const char* name, BSize aSize);
+	// status_t be_BMessage_ReplaceSize(BMessage *self, const char* name, BSize *aSize);
 	status_t ReplaceSize() {
 		return be_BMessage_ReplaceSize(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplaceSize_1(BMessage *self, const char* name, int32 index, BSize aSize);
+	// status_t be_BMessage_ReplaceSize_1(BMessage *self, const char* name, int32 index, BSize *aSize);
 	status_t ReplaceSize() {
 		return be_BMessage_ReplaceSize_1(_InstPtr());
 	}
@@ -1932,22 +1929,22 @@ public:
 		return be_BMessage_ReplacePointer_1(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplaceMessenger(BMessage *self, const char * name, BMessenger messenger);
+	// status_t be_BMessage_ReplaceMessenger(BMessage *self, const char * name, BMessenger *messenger);
 	status_t ReplaceMessenger() {
 		return be_BMessage_ReplaceMessenger(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplaceMessenger_1(BMessage *self, const char * name, int32 index, BMessenger messenger);
+	// status_t be_BMessage_ReplaceMessenger_1(BMessage *self, const char * name, int32 index, BMessenger *messenger);
 	status_t ReplaceMessenger() {
 		return be_BMessage_ReplaceMessenger_1(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplaceRef(BMessage *self, const char * name, const entry_ref * ref);
+	// status_t be_BMessage_ReplaceRef(BMessage *self, const char * name, const entry_ref * _ref);
 	status_t ReplaceRef() {
 		return be_BMessage_ReplaceRef(_InstPtr());
 	}
 
-	// status_t be_BMessage_ReplaceRef_1(BMessage *self, const char * name, int32 index, const entry_ref * ref);
+	// status_t be_BMessage_ReplaceRef_1(BMessage *self, const char * name, int32 index, const entry_ref * _ref);
 	status_t ReplaceRef() {
 		return be_BMessage_ReplaceRef_1(_InstPtr());
 	}
@@ -2102,12 +2099,12 @@ public:
 		return be_BMessage_HasData(_InstPtr());
 	}
 
-	// BRect be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n);
+	// BRect * be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n);
 	BRect FindRect() {
 		return be_BMessage_FindRect_2(_InstPtr());
 	}
 
-	// BPoint be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n);
+	// BPoint * be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n);
 	BPoint FindPoint() {
 		return be_BMessage_FindPoint_2(_InstPtr());
 	}

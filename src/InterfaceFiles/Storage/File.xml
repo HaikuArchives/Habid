@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="File.h" type="system" target="header"/>
+
+	<Includefile name="Storage/Node.h" type="local" target="header, source"/>
+	<Includefile name="Support/DataIO.h" type="local" target="header, source"/>
+
+	<Includefile name="Storage/File.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BFile">
+		<Inherits name="BNode" access="public"/>
+		<Inherits name="BPositionIO" access="public"/>
+		
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BFile &file" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const entry_ref *_ref, uint32 openMode" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BEntry *entry, uint32 openMode" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char *path, uint32 openMode" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BDirectory *dir, const char *path, uint32 openMode" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="SetTo" returns="status_t" arguments="const entry_ref *_ref, uint32 openMode" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BEntry *entry, uint32 openMode" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const char *path, uint32 openMode" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BDirectory *dir, const char *path, uint32 openMode" type="Final" mod=""/>
+
+		<Function name="IsReadable" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsWritable" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="Read" returns="ssize_t" arguments="void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="ReadAt" returns="ssize_t" arguments="off_t location, void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="Write" returns="ssize_t" arguments="const void *buffer, size_t size" type="Virtual" mod=""/>
+		<Function name="WriteAt" returns="ssize_t" arguments="off_t location, const void *buffer, size_t size" type="Virtual" mod=""/>
+
+		<Function name="Seek" returns="off_t" arguments="off_t offset, uint32 seekMode" type="Virtual" mod=""/>
+		<Function name="Position" returns="off_t" arguments="" type="Virtual" mod="const"/>
+
+		<Function name="SetSize" returns="status_t" arguments="off_t size" type="Virtual" mod=""/>
+		<Function name="GetSize" returns="status_t" arguments="off_t* size" type="Virtual" mod=""/>
+
+
+		<Function name="operator=" returns="BFile &" arguments="const BFile &file" type="Operator" mod=""/>
+	</class>
+</Flatten>
+

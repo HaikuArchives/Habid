@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Volume.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BBitmap"/>
+	
+	<class name="BVolume">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="dev_t device" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BVolume& volume" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="InitCheck" returns="status_t" arguments="" type="Final" mod="const"/>
+		<Function name="SetTo" returns="status_t" arguments="dev_t device" type="Final" mod=""/>
+		<Function name="Unset" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Device" returns="dev_t" arguments="" type="Final" mod="const"/>
+
+		<Function name="GetRootDirectory" returns="status_t" arguments="BDirectory* directory" type="Final" mod="const"/>
+
+		<Function name="Capacity" returns="off_t" arguments="" type="Final" mod="const"/>
+		<Function name="FreeBytes" returns="off_t" arguments="" type="Final" mod="const"/>
+		<Function name="BlockSize" returns="off_t" arguments="" type="Final" mod="const"/>
+		
+		<Function name="GetName" returns="status_t" arguments="char* name" type="Final" mod="const"/>
+		<Function name="SetName" returns="status_t" arguments="const char* name" type="Final" mod=""/>
+
+		<Function name="GetIcon" returns="status_t" arguments="BBitmap* icon, icon_size which" type="Final" mod=""/>
+		<Function name="GetIcon" returns="status_t" arguments="uint8** _data, size_t* _size, type_code* _type" type="Final" mod=""/>
+
+		<Function name="IsRemovable" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsReadOnly" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsPersistent" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsShared" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="KnowsMime" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="KnowsAttr" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="KnowsQuery" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="operator==" returns="bool" arguments="const BVolume& volume" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BVolume& volume" type="Operator" mod="const"/>
+		<Function name="operator=" returns="BVolume &" arguments="const BVolume& volume" type="Operator" mod=""/>
+	</class>
+</Flatten>
+
