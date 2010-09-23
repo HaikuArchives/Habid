@@ -23,7 +23,8 @@ c_srcs = [
 	'Storage/EntryList.cpp',
 	'Storage/File.cpp',
 	'Storage/Path.cpp',
-	'Storage/Volume.cpp'
+	'Storage/Volume.cpp',
+	'Storage/VolumeRoster.cpp'
 ]
 
 c_objs = env.SharedObject(c_srcs)

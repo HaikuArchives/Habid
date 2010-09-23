@@ -14,6 +14,7 @@ d_srcs = [
 	'Storage/Entry.d',
 	'Storage/EntryList.d',
 	'Storage/Volume.d',
+	'Storage/VolumeRoster.d',
 	'Storage/FindDirectory.d',
 
 	'Support/Archivable.d',

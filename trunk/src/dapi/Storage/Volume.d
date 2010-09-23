@@ -259,7 +259,7 @@ public:
 
 	// status_t be_BVolume_GetName(BVolume *self, char* name);
 	status_t GetName(inout char [] name) {
-		char *buffer = cast(char *)malloc(256);
+		char *buffer = cast(char *)malloc(1024);
 		
 		status_t ret = be_BVolume_GetName(_InstPtr(), buffer);
 		

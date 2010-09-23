@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="VolumeRoster.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger BVolume"/>
+	
+	<class name="BVolumeRoster">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="GetNextVolume" returns="status_t" arguments="BVolume* volume" type="Final" mod=""/>
+		<Function name="Rewind" returns="void" arguments="" type="Final" mod=""/>
+
+
+		<Function name="GetBootVolume" returns="status_t" arguments="BVolume* volume" type="Final" mod=""/>
+
+		<Function name="StartWatching" returns="status_t" arguments="BMessenger messenger" type="Final" mod=""/>
+		<Function name="StopWatching" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="Messenger" returns="BMessenger" arguments="" type="Final" mod="const"/>
+
+	</class>
+</Flatten>
+
