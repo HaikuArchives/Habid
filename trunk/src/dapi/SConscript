@@ -14,6 +14,7 @@ d_srcs = [
 	'Storage/Entry.d',
 	'Storage/EntryList.d',
 	'Storage/Volume.d',
+	'Storage/FindDirectory.d',
 
 	'Support/Archivable.d',
 #	'Support/Autolock.d',
@@ -27,7 +28,8 @@ d_srcs = [
 	'Support/StopWatch.d',
 	'Support/String.d',
 	'Support/SupportDefs.d',
-	'Support/types.d'
+	'Support/types.d',
+	'Support/Errors.d'
 ]
 
 d_objs = env.SharedObject(d_srcs)

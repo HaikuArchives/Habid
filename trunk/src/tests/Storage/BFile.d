@@ -8,6 +8,7 @@ import Storage.File;
 
 import Storage.StorageDefs;
 import Support.SupportDefs;
+import Support.Errors;
 
 import tango.io.Stdout;
 
@@ -15,9 +16,9 @@ int main()
 {
 	BFile file = new BFile("src/tests/Storage/BFile.d", B_READ_ONLY);
 	
-	if(file.InitCheck() < 0) {
+	if(file.InitCheck() != B_OK) {
 		Stdout.formatln("File does not exist!");
-		return -1;
+		return B_ERROR;
 	}
 	
 	off_t size;
@@ -35,5 +36,5 @@ int main()
 	
 	delete file;
 	
-	return 0;	
+	return B_OK;
 }
