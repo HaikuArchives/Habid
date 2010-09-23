@@ -24,6 +24,8 @@ int main() {
 
 	void [] buffer = new void[size + 1];
 
+	file.Seek(10, 0);
+
 	file.Read(buffer, size);
 
 //	file.Lock();
