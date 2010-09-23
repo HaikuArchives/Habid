@@ -183,7 +183,7 @@ void buildBasicClass(InterfaceClassInfo classInfo)
 
             classBuffer ~= "\t//" ~ memberFunc.returnString ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(" ~ classInfo.nameString ~ " *self)";
             classBuffer ~= "\t" ~ memberFunc.returnString ~ " " ~ memberFunc.nameString ~ "() {{";
-            classBuffer ~= "\t\treturn be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(_GetInstPtr());";
+            classBuffer ~= "\t\treturn be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "_varGet(_InstPtr());";
             classBuffer ~= "\t}\n";
         } else if(memberFunc.isStatic) {
             classBuffer ~= "\t//" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "_static(" ~ memberFunc.buildArguments(true, true) ~ ")";

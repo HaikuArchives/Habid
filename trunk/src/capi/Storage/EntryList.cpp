@@ -9,26 +9,12 @@ BEntryListBridge::BEntryListBridge()
 : BEntryList()
 {
 }
-
-
 BEntryListBridge::~BEntryListBridge() { }
-
-
 status_t BEntryListBridge::GetNextEntry(BEntry * entry, bool traverse){ }
-
-
-status_t BEntryListBridge::GetNextRef(entry_ref * ref){ }
-
-
+status_t BEntryListBridge::GetNextRef(entry_ref * _ref){ }
 int32 BEntryListBridge::GetNextDirents(struct dirent * direntBuffer, size_t bufferSize, int32 maxEntries){ }
-
-
 status_t BEntryListBridge::Rewind(){ }
-
-
 int32 BEntryListBridge::CountEntries(){ }
-
-
 
 BEntryListProxy::BEntryListProxy(void *bindInstPtr)
 : fBindInstPtr(bindInstPtr), BEntryListBridge() { }
@@ -45,14 +31,14 @@ status_t BEntryListProxy::GetNextEntry_super(BEntry * entry, bool traverse)
 	return BEntryListBridge::GetNextEntry(entry, traverse);
 }
 
-status_t BEntryListProxy::GetNextRef(entry_ref * ref) 
+status_t BEntryListProxy::GetNextRef(entry_ref * _ref) 
 {
-	return bind_BEntryList_GetNextRef(fBindInstPtr, ref);
+	return bind_BEntryList_GetNextRef(fBindInstPtr, _ref);
 }
 
-status_t BEntryListProxy::GetNextRef_super(entry_ref * ref) 
+status_t BEntryListProxy::GetNextRef_super(entry_ref * _ref) 
 {
-	return BEntryListBridge::GetNextRef(ref);
+	return BEntryListBridge::GetNextRef(_ref);
 }
 
 int32 BEntryListProxy::GetNextDirents(struct dirent * direntBuffer, size_t bufferSize, int32 maxEntries) 
@@ -102,9 +88,9 @@ extern "C" {
 		return self->GetNextEntry_super(entry, traverse);
 	}
 
-	status_t be_BEntryList_GetNextRef(BEntryListProxy *self, entry_ref * ref)
+	status_t be_BEntryList_GetNextRef(BEntryListProxy *self, entry_ref * _ref)
 	{
-		return self->GetNextRef_super(ref);
+		return self->GetNextRef_super(_ref);
 	}
 
 	int32 be_BEntryList_GetNextDirents(BEntryListProxy *self, struct dirent * direntBuffer, size_t bufferSize, int32 maxEntries)
@@ -123,4 +109,5 @@ extern "C" {
 	}
 
 }
+
 

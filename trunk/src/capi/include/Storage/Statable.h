@@ -44,5 +44,6 @@ extern "C" {
 	status_t bind_BStatable__GetStat(void *bindInstPtr, struct stat_beos * st);
 	status_t bind_BStatable_set_stat(void *bindInstPtr, struct stat * st, uint32 what);
 }
+
 #endif // HABID_BStatable_
 

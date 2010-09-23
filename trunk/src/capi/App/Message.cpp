@@ -96,7 +96,7 @@ extern "C" {
 		return self->IsSourceRemote();
 	}
 
-	BMessenger *be_BMessage_ReturnAddress(BMessage *self)
+	BMessenger * be_BMessage_ReturnAddress(BMessage *self)
 	{
 		return new BMessenger(self->ReturnAddress());
 	}
@@ -111,7 +111,7 @@ extern "C" {
 		return self->WasDropped();
 	}
 
-	BPoint *be_BMessage_DropPoint(BMessage *self, BPoint * offset)
+	BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset)
 	{
 		return new BPoint(self->DropPoint(offset));
 	}
@@ -306,9 +306,9 @@ extern "C" {
 		return self->AddMessenger(name, *messenger);
 	}
 
-	status_t be_BMessage_AddRef(BMessage *self, const char * name, const entry_ref * ref)
+	status_t be_BMessage_AddRef(BMessage *self, const char * name, const entry_ref * _ref)
 	{
-		return self->AddRef(name, ref);
+		return self->AddRef(name, _ref);
 	}
 
 	status_t be_BMessage_AddMessage(BMessage *self, const char * name, const BMessage * message)
@@ -531,14 +531,14 @@ extern "C" {
 		return self->FindMessenger(name, index, messenger);
 	}
 
-	status_t be_BMessage_FindRef(BMessage *self, const char * name, entry_ref * ref)
+	status_t be_BMessage_FindRef(BMessage *self, const char * name, entry_ref * _ref)
 	{
-		return self->FindRef(name, ref);
+		return self->FindRef(name, _ref);
 	}
 
-	status_t be_BMessage_FindRef_1(BMessage *self, const char * name, int32 index, entry_ref * ref)
+	status_t be_BMessage_FindRef_1(BMessage *self, const char * name, int32 index, entry_ref * _ref)
 	{
-		return self->FindRef(name, index, ref);
+		return self->FindRef(name, index, _ref);
 	}
 
 	status_t be_BMessage_FindMessage(BMessage *self, const char * name, BMessage * message)
@@ -761,14 +761,14 @@ extern "C" {
 		return self->ReplaceMessenger(name, index, *messenger);
 	}
 
-	status_t be_BMessage_ReplaceRef(BMessage *self, const char * name, const entry_ref * ref)
+	status_t be_BMessage_ReplaceRef(BMessage *self, const char * name, const entry_ref * _ref)
 	{
-		return self->ReplaceRef(name, ref);
+		return self->ReplaceRef(name, _ref);
 	}
 
-	status_t be_BMessage_ReplaceRef_1(BMessage *self, const char * name, int32 index, const entry_ref * ref)
+	status_t be_BMessage_ReplaceRef_1(BMessage *self, const char * name, int32 index, const entry_ref * _ref)
 	{
-		return self->ReplaceRef(name, index, ref);
+		return self->ReplaceRef(name, index, _ref);
 	}
 
 	status_t be_BMessage_ReplaceMessage(BMessage *self, const char * name, const BMessage * message)
@@ -921,12 +921,12 @@ extern "C" {
 		return self->HasData(name, code, n);
 	}
 
-	BRect *be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n)
+	BRect * be_BMessage_FindRect_2(BMessage *self, const char* name, int32 n)
 	{
 		return new BRect(self->FindRect(name, n));
 	}
 
-	BPoint *be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n)
+	BPoint * be_BMessage_FindPoint_2(BMessage *self, const char* name, int32 n)
 	{
 		return new BPoint(self->FindPoint(name, n));
 	}

@@ -6,6 +6,14 @@ d_srcs = [
 #	'Kernel/OS.d',
 
 	'Storage/StorageDefs.d',
+	'Storage/File.d',
+	'Storage/Path.d',
+	'Storage/Directory.d',
+	'Storage/Statable.d',
+	'Storage/Node.d',
+	'Storage/Entry.d',
+	'Storage/EntryList.d',
+	'Storage/Volume.d',
 
 	'Support/Archivable.d',
 #	'Support/Autolock.d',

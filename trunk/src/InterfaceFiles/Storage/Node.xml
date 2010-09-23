@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Node.h" type="system" target="header"/>
+	<Includefile name="Storage/Statable.h" type="local" target="header"/>
+	
+	<Includefile name="Storage/Node.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BDirectory BEntry BString"/>
+
+	<class name="BNode">
+		<Inherits name="BStatable" access="public"/>
+
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const entry_ref *_ref" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BEntry *entry" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char *path" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BDirectory *dir, const char *path" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BNode &node" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="InitCheck" returns="status_t" arguments="" type="" mod="const"/>
+
+		<Function name="GetStat" returns="status_t" arguments="struct stat *st" type="Virtual" mod="const"/>
+
+		<Function name="SetTo" returns="status_t" arguments="const entry_ref *_ref" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BEntry *entry" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const char *path" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BDirectory *dir, const char *path" type="Final" mod=""/>
+		<Function name="Unset" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Lock" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="Unlock" returns="status_t" arguments="" type="Final" mod=""/>
+
+		<Function name="Sync" returns="status_t" arguments="" type="Final" mod=""/>
+
+		<Function name="WriteAttr" returns="ssize_t" arguments="const char *name, type_code type, off_t offset, const void *buffer, size_t len" type="Final" mod=""/>
+		<Function name="ReadAttr" returns="ssize_t" arguments="const char *name, type_code type, off_t offset, void *buffer, size_t len" type="Final" mod="const"/>
+		<Function name="RemoveAttr" returns="status_t" arguments="const char *name" type="Final" mod=""/>
+		<Function name="RenameAttr" returns="status_t" arguments="const char *oldname, const char *newname" type="Final" mod=""/>
+		<Function name="GetAttrInfo" returns="status_t" arguments="const char *name, struct attr_info *info" type="Final" mod="const"/>
+		<Function name="GetNextAttrName" returns="status_t" arguments="char *buffer" type="Final" mod=""/>
+		<Function name="RewindAttrs" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="WriteAttrString" returns="status_t" arguments="const char *name, const BString *data" type="Final" mod=""/>
+		<Function name="ReadAttrString" returns="status_t" arguments="const char *name, BString *result" type="Final" mod="const"/>
+
+		<Function name="operator=" returns="BNode &" arguments="const BNode &node" type="Operator" mod=""/>
+		<Function name="operator==" returns="bool" arguments="const BNode &node" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BNode &node" type="Operator" mod="const"/>
+
+		<Function name="Dup" returns="int" arguments="" type="Final" mod=""/>
+	</class>
+</Flatten>
+

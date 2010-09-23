@@ -6,6 +6,8 @@
 
 	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
+	<ClassNames names="BDirectory BPath"/>
+
 	<class name="BEntry">
 		<inherits name="BStatable" access="public"/>
 

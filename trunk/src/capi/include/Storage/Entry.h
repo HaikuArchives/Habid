@@ -15,7 +15,7 @@ class BEntryBridge
 public:
 	BEntryBridge();
 	BEntryBridge(const BDirectory* dir, const char* path, bool traverse);
-	BEntryBridge(const entry_ref* ref, bool traverse);
+	BEntryBridge(const entry_ref* _ref, bool traverse);
 	BEntryBridge(const char* path, bool traverse);
 	BEntryBridge(const BEntry& entry);
 	~BEntryBridge();
@@ -30,7 +30,7 @@ class BEntryProxy
 public:
 	BEntryProxy(void *bindInstPtr);
 	BEntryProxy(void *bindInstPtr, const BDirectory* dir, const char* path, bool traverse);
-	BEntryProxy(void *bindInstPtr, const entry_ref* ref, bool traverse);
+	BEntryProxy(void *bindInstPtr, const entry_ref* _ref, bool traverse);
 	BEntryProxy(void *bindInstPtr, const char* path, bool traverse);
 	BEntryProxy(void *bindInstPtr, const BEntry& entry);
 	~BEntryProxy();

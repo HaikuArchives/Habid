@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Path.h" type="system" target="header"/>
+
+	<Includefile name="Support/Flattenable.h" type="local" target="header"/>
+	
+	<Includefile name="Storage/Path.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BEntry BDirectory"/>
+	
+	<class name="BPath">
+		<Inherits name="BFlattenable" access="public"/>
+		
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BPath& path" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const entry_ref* _ref" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BEntry* entry" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char* dir, const char* leaf, bool normalize" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BDirectory* dir,  const char* leaf, bool normalize" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="InitCheck" returns="status_t" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetTo" returns="status_t" arguments="const entry_ref* _ref" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BEntry* entry" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const char* path, const char* leaf, bool normalize" type="Final" mod=""/>
+		<Function name="SetTo" returns="status_t" arguments="const BDirectory* dir, const char* leaf, bool normalize" type="Final" mod=""/>
+		<Function name="Unset" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Append" returns="status_t" arguments="const char* path, bool normalize" type="Final" mod=""/>
+
+		<Function name="Path" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="Leaf" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="GetParent" returns="status_t" arguments="BPath* path" type="Final" mod="const"/>
+
+		<Function name="operator==" returns="bool" arguments="const BPath& item" type="Operator" mod="const"/>
+		<Function name="operator==" returns="bool" arguments="const char* path" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BPath& item" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const char* path" type="Operator" mod="const"/>
+		<Function name="operator=" returns="BPath &" arguments="const BPath& item" type="Operator" mod=""/>
+		<Function name="operator=" returns="BPath &" arguments="const char* path" type="Operator" mod=""/>
+
+		<Function name="IsFixedSize" returns="bool" arguments="" type="Virtual" mod="const"/>
+		<Function name="TypeCode" returns="type_code" arguments="" type="Virtual" mod="const"/>
+		<Function name="FlattenedSize" returns="ssize_t" arguments="" type="Virtual" mod="const"/>
+		<Function name="Flatten" returns="status_t" arguments="void* buffer, ssize_t size" type="Virtual" mod="const"/>
+		<Function name="AllowsTypeCode" returns="bool" arguments="type_code code" type="Virtual" mod="const"/>
+		<Function name="Unflatten" returns="status_t" arguments="type_code code, const void* buffer, ssize_t size" type="Virtual" mod=""/>
+	</class>
+</Flatten>
+

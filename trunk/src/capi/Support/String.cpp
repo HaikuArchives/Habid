@@ -286,14 +286,14 @@ extern "C" {
 		return &self->InsertChars(*string, fromCharOffset, charCount, charPosition);
 	}
 
-	BString * be_BString_Truncate(BString *self, int32 newLength, bool lazy)
+	BString * be_BString_Truncate(BString *self, int32 newLength, bool _lazy)
 	{
-		return &self->Truncate(newLength, lazy);
+		return &self->Truncate(newLength, _lazy);
 	}
 
-	BString * be_BString_TruncateChars(BString *self, int32 newCharCount, bool lazy)
+	BString * be_BString_TruncateChars(BString *self, int32 newCharCount, bool _lazy)
 	{
-		return &self->TruncateChars(newCharCount, lazy);
+		return &self->TruncateChars(newCharCount, _lazy);
 	}
 
 	BString * be_BString_Remove(BString *self, int32 from, int32 length)
@@ -686,19 +686,19 @@ extern "C" {
 		return &self->IReplace(replaceThis, withThis, maxReplaceCount, fromOffset);
 	}
 
-	BString * be_BString_ReplaceSet(BString *self, const char* setOfBytes, char with)
+	BString * be_BString_ReplaceSet(BString *self, const char* setOfBytes, char _with)
 	{
-		return &self->ReplaceSet(setOfBytes, with);
+		return &self->ReplaceSet(setOfBytes, _with);
 	}
 
-	BString * be_BString_ReplaceSet_1(BString *self, const char* setOfBytes, const char* with)
+	BString * be_BString_ReplaceSet_1(BString *self, const char* setOfBytes, const char* _with)
 	{
-		return &self->ReplaceSet(setOfBytes, with);
+		return &self->ReplaceSet(setOfBytes, _with);
 	}
 
-	BString * be_BString_ReplaceCharsSet(BString *self, const char* setOfChars, const char* with)
+	BString * be_BString_ReplaceCharsSet(BString *self, const char* setOfChars, const char* _with)
 	{
-		return &self->ReplaceCharsSet(setOfChars, with);
+		return &self->ReplaceCharsSet(setOfChars, _with);
 	}
 
 	char be_BString_ByteAt(BString *self, int32 index)
