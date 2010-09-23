@@ -145,11 +145,11 @@ interface IBPath
 	status_t SetTo(IBEntry);
 
 	// status_t be_BPath_SetTo_2(BPath *self, const char* path, const char* leaf, bool normalize);
-	status_t SetTo(char [], char [], bool);
+	status_t SetTo(char [], char [] = null, bool = false);
 
 	// status_t be_BPath_SetTo_3(BPath *self, const BDirectory* dir, const char* leaf, bool normalize);
-	status_t SetTo(IBDirectory, char [], bool);
-
+	status_t SetTo(IBDirectory, char [] = null, bool = false);
+ 
 	// void be_BPath_Unset(BPath *self);
 	void Unset();
 

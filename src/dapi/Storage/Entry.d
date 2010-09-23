@@ -18,8 +18,28 @@ import tango.stdc.posix.sys.stat;
 import tango.stdc.stringz;
 import tango.stdc.stdlib;
 
+import Support.Errors;
 
 struct entry_ref {
+	static entry_ref opCall() {
+		entry_ref _ref;
+		return _ref;	
+	}
+	
+	static entry_ref opCall(dev_t dev, ino_t dir, char [] name) {
+		entry_ref _ref;
+		_ref.device = dev;
+		_ref.directory = dir;
+		_ref.name = toStringz(name.dup);
+		
+		return _ref;
+	}
+
+	status_t set_name(char [] _name) {
+		name = toStringz(_name.dup);
+		
+		return B_OK;
+	}
 /*
 								entry_ref();
 								entry_ref(dev_t dev, ino_t dir,
@@ -33,9 +53,9 @@ struct entry_ref {
 			bool				operator!=(const entry_ref& ref) const;
 			entry_ref&			operator=(const entry_ref& ref);
 */
-			dev_t				device;
-			ino_t				directory;
-			char*				name;
+	dev_t				device;
+	ino_t				directory;
+	char*				name;
 };
 
 extern (C) extern {

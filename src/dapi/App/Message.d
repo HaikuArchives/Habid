@@ -2,12 +2,14 @@
  * Copyright 2010 Tomas Wilhelmsson <tomas.wilhelmsson@gmail.com>
  * All rights reserved. Distributed under the terms of the MIT license.
  */
+module App.Message;
+
 
 import Support.SupportDefs;
 import Support.types;
 import Support.BObject;
 
-struct entry_ref { }
+import Storage.Entry;
 
 extern (C) extern {
 	// BMessage* be_BMessage_ctor(void *bindInstPtr);
