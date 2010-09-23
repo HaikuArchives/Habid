@@ -5,10 +5,6 @@
 module Storage.FindDirectory;
 
 import Support.SupportDefs;
-import Support.types;
-import Support.BObject;
-
-import Storage.Entry;
 
 import Support.Errors;
 
@@ -82,24 +78,6 @@ enum directory_which {
 	B_APPS_DIRECTORY					= 4000,
 	B_PREFERENCES_DIRECTORY,
 	B_UTILITIES_DIRECTORY,
-
-	/* Obsolete: Legacy BeOS definition to be phased out */
-	B_BEOS_DIRECTORY					= 1000,
-	B_BEOS_SYSTEM_DIRECTORY,
-	B_BEOS_ADDONS_DIRECTORY,
-	B_BEOS_BOOT_DIRECTORY,
-	B_BEOS_FONTS_DIRECTORY,
-	B_BEOS_LIB_DIRECTORY,
- 	B_BEOS_SERVERS_DIRECTORY,
-	B_BEOS_APPS_DIRECTORY,
-	B_BEOS_BIN_DIRECTORY,
-	B_BEOS_ETC_DIRECTORY,
-	B_BEOS_DOCUMENTATION_DIRECTORY,
-	B_BEOS_PREFERENCES_DIRECTORY,
-	B_BEOS_TRANSLATORS_DIRECTORY,
-	B_BEOS_MEDIA_NODES_DIRECTORY,
-	B_BEOS_SOUNDS_DIRECTORY,
-	B_BEOS_DATA_DIRECTORY,
 }
 
 alias directory_which FindDir;

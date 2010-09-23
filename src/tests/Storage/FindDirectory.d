@@ -16,11 +16,19 @@ import tango.io.Stdout;
 int main()
 {
 	BPath path = new BPath;
-	
+
+	/* Desktop dir */	
 	find_directory(FindDir.B_DESKTOP_DIRECTORY, path);
 	
 	assert(path.Path() == "/boot/home/Desktop", "Assert find_directory failed");
+
+	Stdout.formatln("Desktop Directory: {}", path.Path());
+
+	/* User Settings Dir */
+	find_directory(FindDir.B_USER_SETTINGS_DIRECTORY, path);
 	
-	Stdout.formatln("Directory: {}", path.Path());
+	assert(path.Path() == "/boot/home/config/settings", "Assert find_directory failed");
+	
+	Stdout.formatln("User Settings Directory: {}", path.Path());
 	return B_OK;
 }
