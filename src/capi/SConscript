@@ -4,6 +4,8 @@ c_srcs = [
 	'Interface/Point.cpp',
 	'Interface/Rect.cpp',
 	'Interface/Size.cpp',
+	'Interface/Polygon.cpp',
+	'Interface/Region.cpp',
 
 #	'App/Looper.cpp',
 	'App/Message.cpp',
