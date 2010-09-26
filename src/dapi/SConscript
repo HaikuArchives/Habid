@@ -1,6 +1,10 @@
 env = Environment(DPATH='.')
 
 d_srcs = [
+	'Be/Interface/Point.d',
+	'Be/Interface/Rect.d',
+	'Be/Interface/Size.d',
+
 #	'Be/App/Looper.d',
 	'Be/App/Message.d',
 	'Be/Kernel/OS.d',

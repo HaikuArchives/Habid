@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Size.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BSize">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BSize& other" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="float width, float height" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Width" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="Height" returns="float" arguments="" type="Final" mod="const"/>
+
+		<Function name="Set" returns="void" arguments="float width, float height" type="Final" mod=""/>
+		<Function name="SetWidth" returns="void" arguments="float width" type="Final" mod=""/>
+		<Function name="SetHeight" returns="void" arguments="float height" type="Final" mod=""/>
+
+		<Function name="IntegerWidth" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="IntegerHeight" returns="int32" arguments="" type="Final" mod="const"/>
+
+		<Function name="IsWidthSet" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsHeightSet" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="operator==" returns="bool" arguments="const BSize& other" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BSize& other" type="Operator" mod="const"/>
+
+		<Function name="operator=" returns="BSize &" arguments="const BSize& other" type="Operator" mod=""/>
+
+
+
+
+		<Function name="width" returns="float" arguments="" type="Variable" mod=""/>
+		<Function name="height" returns="float" arguments="" type="Variable" mod=""/>
+
+	</class>
+</Flatten>
+

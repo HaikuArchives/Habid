@@ -11,6 +11,10 @@ import Be.Support.BObject;
 
 import Be.Storage.Entry;
 
+import Be.Interface.Point;
+
+import tango.stdc.stringz;
+
 extern (C) extern {
 	// BMessage* be_BMessage_ctor(void *bindInstPtr);
 	void * be_BMessage_ctor(void *bindInstPtr);
@@ -609,9 +613,9 @@ interface IBMessage
 
 	// status_t be_BMessage_GetInfo_2(BMessage *self, const char * name, type_code * typeFound, bool * fixedSize);
 	status_t GetInfo();
-
+*/
 	// int32 be_BMessage_CountNames(BMessage *self, type_code type);
-	int32 CountNames();
+	int32 CountNames(type_code);
 
 	// bool be_BMessage_IsEmpty(BMessage *self);
 	bool IsEmpty();
@@ -626,7 +630,7 @@ interface IBMessage
 	void PrintToStream();
 
 	// status_t be_BMessage_Rename(BMessage *self, const char * oldEntry, const char * newEntry);
-	status_t Rename();
+	status_t Rename(char [], char []);
 
 	// bool be_BMessage_WasDelivered(BMessage *self);
 	bool WasDelivered();
@@ -636,34 +640,35 @@ interface IBMessage
 
 	// bool be_BMessage_IsSourceRemote(BMessage *self);
 	bool IsSourceRemote();
-
+/*
 	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
-	BMessenger ReturnAddress();
-
+	IBMessenger ReturnAddress();
+*/
 	// const BMessage * be_BMessage_Previous(BMessage *self);
-	BMessage * Previous();
+	IBMessage Previous();
 
 	// bool be_BMessage_WasDropped(BMessage *self);
 	bool WasDropped();
 
 	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
-	BPoint DropPoint();
+	IBPoint DropPoint(IBPoint);
+
+/*
 
 	// status_t be_BMessage_SendReply(BMessage *self, uint32 command, BHandler * replyTo);
-	status_t SendReply();
+	status_t SendReply(uint32, IBHandler);
 
 	// status_t be_BMessage_SendReply_1(BMessage *self, BMessage * reply, BHandler * replyTo, bigtime_t timeout);
-	status_t SendReply();
+	status_t SendReply(IBMessage, IBHandler, bigtime_t);
 
 	// status_t be_BMessage_SendReply_2(BMessage *self, BMessage * reply, BMessenger *replyTo, bigtime_t timeout);
-	status_t SendReply();
+	status_t SendReply(IBMessage, IBMessenger, bigtime_t);
 
 	// status_t be_BMessage_SendReply_3(BMessage *self, uint32 command, BMessage * replyToReply);
-	status_t SendReply();
+	status_t SendReply(uint32, IBMessage);
 
 	// status_t be_BMessage_SendReply_4(BMessage *self, BMessage * the_reply, BMessage * replyToReply, bigtime_t sendTimeout, bigtime_t replyTimeout);
-	status_t SendReply();
-
+	status_t SendReply(IBMessage, IBMessage, bigtime_t, bigtime_t);
 	// ssize_t be_BMessage_FlattenedSize(BMessage *self);
 	ssize_t FlattenedSize();
 
@@ -1230,10 +1235,10 @@ public:
 	status_t GetInfo() {
 		return be_BMessage_GetInfo_2(_InstPtr());
 	}
-
+*/
 	// int32 be_BMessage_CountNames(BMessage *self, type_code type);
-	int32 CountNames() {
-		return be_BMessage_CountNames(_InstPtr());
+	int32 CountNames(type_code type) {
+		return be_BMessage_CountNames(_InstPtr(), type);
 	}
 
 	// bool be_BMessage_IsEmpty(BMessage *self);
@@ -1257,8 +1262,8 @@ public:
 	}
 
 	// status_t be_BMessage_Rename(BMessage *self, const char * oldEntry, const char * newEntry);
-	status_t Rename() {
-		return be_BMessage_Rename(_InstPtr());
+	status_t Rename(char [] oldEntry, char [] newEntry) {
+		return be_BMessage_Rename(_InstPtr(), toStringz(oldEntry), toStringz(newEntry));
 	}
 
 	// bool be_BMessage_WasDelivered(BMessage *self);
@@ -1276,14 +1281,16 @@ public:
 		return be_BMessage_IsSourceRemote(_InstPtr());
 	}
 
+/*
+
 	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
-	BMessenger ReturnAddress() {
+	IBMessenger ReturnAddress() {
 		return be_BMessage_ReturnAddress(_InstPtr());
 	}
-
+*/
 	// const BMessage * be_BMessage_Previous(BMessage *self);
-	BMessage * Previous() {
-		return be_BMessage_Previous(_InstPtr());
+	IBMessage Previous() {
+		return new BMessage(be_BMessage_Previous(_InstPtr()), false);
 	}
 
 	// bool be_BMessage_WasDropped(BMessage *self);
@@ -1292,33 +1299,34 @@ public:
 	}
 
 	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
-	BPoint DropPoint() {
-		return be_BMessage_DropPoint(_InstPtr());
+	IBPoint DropPoint(IBPoint offset) {
+		return new BPoint(be_BMessage_DropPoint(_InstPtr(), offset._InstPtr()), false);
 	}
 
+/*
 	// status_t be_BMessage_SendReply(BMessage *self, uint32 command, BHandler * replyTo);
-	status_t SendReply() {
-		return be_BMessage_SendReply(_InstPtr());
+	status_t SendReply(uint32 command, IBHandler replyTo) {
+		return be_BMessage_SendReply(_InstPtr(), command, replyTo);
 	}
 
 	// status_t be_BMessage_SendReply_1(BMessage *self, BMessage * reply, BHandler * replyTo, bigtime_t timeout);
-	status_t SendReply() {
-		return be_BMessage_SendReply_1(_InstPtr());
+	status_t SendReply(IBMessage reply, IBHandler replyTo, bigtime_t timeout) {
+		return be_BMessage_SendReply_1(_InstPtr(), reply._InstPtr(), replyTo._InstPtr(), timeout);
 	}
 
 	// status_t be_BMessage_SendReply_2(BMessage *self, BMessage * reply, BMessenger *replyTo, bigtime_t timeout);
-	status_t SendReply() {
-		return be_BMessage_SendReply_2(_InstPtr());
+	status_t SendReply(IBMessage reply, IBMessenger replyTo, bigtime_t timeout) {
+		return be_BMessage_SendReply_2(_InstPtr(), reply._InstPtr(), replyTo._InstPtr(), timeout);
 	}
 
 	// status_t be_BMessage_SendReply_3(BMessage *self, uint32 command, BMessage * replyToReply);
-	status_t SendReply() {
-		return be_BMessage_SendReply_3(_InstPtr());
+	status_t SendReply(uint32 command, IBMessage replyToReply) {
+		return be_BMessage_SendReply_3(_InstPtr(), command, replyToReply._InstPtr());
 	}
 
 	// status_t be_BMessage_SendReply_4(BMessage *self, BMessage * the_reply, BMessage * replyToReply, bigtime_t sendTimeout, bigtime_t replyTimeout);
-	status_t SendReply() {
-		return be_BMessage_SendReply_4(_InstPtr());
+	status_t SendReply(IBMessage the_reply, IBMessage replyToReply, bigtime_t sendTimeout, bigtime_t replyTimeout) {
+		return be_BMessage_SendReply_4(_InstPtr(), the_reply._InstPtr(), replyToReply._InstPtr(), sendTimeout, replyTimeout);
 	}
 
 	// ssize_t be_BMessage_FlattenedSize(BMessage *self);

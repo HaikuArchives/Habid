@@ -364,6 +364,12 @@ class MemberFunction
             case ">>": {
             	return "opShr";
             } break;
+            case "&": {
+            	return "opAnd";	
+            } break;
+            case "|": {
+            	return "opOr";
+            } break;
             default: {
                 assert(false, "Invalid operator name: " ~ nameString);
             }

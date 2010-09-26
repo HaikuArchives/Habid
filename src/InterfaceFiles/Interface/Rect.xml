@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Point.h" type="system" target="source"/>
+	<Includefile name="Rect.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BPoint BSize"/>
+
+	<class name="BRect">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BRect& other" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="float left, float top, float right, float bottom" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BPoint leftTop, BPoint rightBottom" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BPoint leftTop, BSize size" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="operator=" returns="BRect &" arguments="const BRect& other" type="Operator" mod=""/>
+
+		<Function name="Set" returns="void" arguments="float left, float top, float right, float bottom" type="Final" mod=""/>
+
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+
+		<Function name="LeftTop" returns="BPoint" arguments="" type="Final" mod="const"/>
+		<Function name="RightBottom" returns="BPoint" arguments="" type="Final" mod="const"/>
+		<Function name="LeftBottom" returns="BPoint" arguments="" type="Final" mod="const"/>
+		<Function name="RightTop" returns="BPoint" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetLeftTop" returns="void" arguments="const BPoint leftTop" type="Final" mod=""/>
+		<Function name="SetRightBottom" returns="void" arguments="const BPoint rightBottom" type="Final" mod=""/>
+		<Function name="SetLeftBottom" returns="void" arguments="const BPoint leftBottom" type="Final" mod=""/>
+		<Function name="SetRightTop" returns="void" arguments="const BPoint rightTop" type="Final" mod=""/>
+
+
+		<Function name="InsetBy" returns="void" arguments="BPoint inset" type="Final" mod=""/>
+		<Function name="InsetBy" returns="void" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="OffsetBy" returns="void" arguments="BPoint delta" type="Final" mod=""/>
+		<Function name="OffsetBy" returns="void" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="OffsetTo" returns="void" arguments="BPoint offset" type="Final" mod=""/>
+		<Function name="OffsetTo" returns="void" arguments="float x, float y" type="Final" mod=""/>
+
+
+		<Function name="InsetBySelf" returns="BRect &" arguments="BPoint inset" type="Final" mod=""/>
+		<Function name="InsetBySelf" returns="BRect &" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="InsetByCopy" returns="BRect" arguments="BPoint inset" type="Final" mod=""/>
+		<Function name="InsetByCopy" returns="BRect" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="OffsetBySelf" returns="BRect &" arguments="BPoint offset" type="Final" mod=""/>
+		<Function name="OffsetBySelf" returns="BRect &" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="OffsetByCopy" returns="BRect" arguments="BPoint offset" type="Final" mod=""/>
+		<Function name="OffsetByCopy" returns="BRect" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="OffsetToSelf" returns="BRect &" arguments="BPoint offset" type="Final" mod=""/>
+		<Function name="OffsetToSelf" returns="BRect &" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="OffsetToCopy" returns="BRect" arguments="BPoint offset" type="Final" mod=""/>
+		<Function name="OffsetToCopy" returns="BRect" arguments="float dx, float dy" type="Final" mod=""/>
+
+
+		<Function name="operator==" returns="bool" arguments="BRect r" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="BRect r" type="Operator" mod="const"/>
+
+
+		<Function name="operator&" returns="BRect" arguments="BRect r" type="Operator" mod="const"/>
+		<Function name="operator|" returns="BRect" arguments="BRect r" type="Operator" mod="const"/>
+
+		<Function name="IsValid" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="Width" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="IntegerWidth" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="Height" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="IntegerHeight" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="Size" returns="BSize" arguments="" type="Final" mod="const"/>
+
+		<Function name="Intersects" returns="bool" arguments="BRect r" type="Final" mod="const"/>
+		<Function name="Contains" returns="bool" arguments="BPoint p" type="Final" mod="const"/>
+		<Function name="Contains" returns="bool" arguments="BRect r" type="Final" mod="const"/>
+
+		<Function name="left" returns="float" arguments="" type="Variable" mod=""/>
+		<Function name="top" returns="float" arguments="" type="Variable" mod=""/>
+		<Function name="right" returns="float" arguments="" type="Variable" mod=""/>
+		<Function name="bottom" returns="float" arguments="" type="Variable" mod=""/>
+
+	</class>
+</Flatten>
+
