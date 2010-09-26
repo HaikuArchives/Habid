@@ -9,6 +9,11 @@ import Be.Support.SupportDefs;
 import Be.Support.types;
 import Be.Support.BObject;
 
+enum {
+	B_SIZE_UNSET		= -2,
+	B_SIZE_UNLIMITED	= 1024 * 1024 * 1024,
+}
+
 extern (C) extern {
 	// BSize* be_BSize_ctor(void *bindInstPtr);
 	void * be_BSize_ctor(void *bindInstPtr);

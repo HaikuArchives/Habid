@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Polygon.h" type="system" target="source"/>
+	<Includefile name="Rect.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BRect BPoint"/>
+
+	<class name="BPolygon">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BPoint* points, int32 count" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BPolygon& other" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BPolygon* other" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="operator=" returns="BPolygon &" arguments="const BPolygon& other" type="Operator" mod=""/>
+
+		<Function name="Frame" returns="BRect" arguments="" type="Final" mod="const"/>
+		<Function name="AddPoints" returns="void" arguments="const BPoint* points, int32 count" type="Final" mod=""/>
+		<Function name="CountPoints" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="MapTo" returns="void" arguments="BRect srcRect, BRect dstRect" type="Final" mod=""/>
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+
+
+	</class>
+</Flatten>
+

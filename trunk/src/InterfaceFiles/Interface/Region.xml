@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Region.h" type="system" target="source"/>
+	<Includefile name="Rect.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BRect BPoint"/>
+
+	<class name="BRegion">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BRegion& region" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BRect rect" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="operator=" returns="BRegion &" arguments="const BRegion& from" type="Operator" mod=""/>
+		<Function name="operator==" returns="bool" arguments="const BRegion& other" type="Operator" mod="const"/>
+
+		<Function name="Set" returns="void" arguments="BRect newBounds" type="Final" mod=""/>
+		<Function name="Set" returns="void" arguments="clipping_rect newBounds" type="Final" mod=""/>
+
+		<Function name="Frame" returns="BRect" arguments="" type="Final" mod="const"/>
+		<Function name="FrameInt" returns="clipping_rect" arguments="" type="Final" mod="const"/>
+
+
+		<Function name="RectAt" returns="BRect" arguments="int32 index" type="Final" mod=""/>
+		<Function name="RectAt" returns="BRect" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="RectAtInt" returns="clipping_rect" arguments="int32 index" type="Final" mod=""/>
+		<Function name="RectAtInt" returns="clipping_rect" arguments="int32 index" type="Final" mod="const"/>
+
+
+		<Function name="CountRects" returns="int32" arguments="" type="Final" mod=""/>
+		<Function name="CountRects" returns="int32" arguments="" type="Final" mod="const"/>
+
+		<Function name="Intersects" returns="bool" arguments="BRect rect" type="Final" mod="const"/>
+		<Function name="Intersects" returns="bool" arguments="clipping_rect rect" type="Final" mod="const"/>
+
+		<Function name="Contains" returns="bool" arguments="BPoint point" type="Final" mod=""/>
+		<Function name="Contains" returns="bool" arguments="int32 x, int32 y" type="Final" mod=""/>
+		<Function name="Contains" returns="bool" arguments="int32 x, int32 y" type="Final" mod="const"/>
+
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+
+		<Function name="OffsetBy" returns="void" arguments="int32 x, int32 y" type="Final" mod=""/>
+
+		<Function name="MakeEmpty" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Include" returns="void" arguments="BRect rect" type="Final" mod=""/>
+		<Function name="Include" returns="void" arguments="clipping_rect rect" type="Final" mod=""/>
+		<Function name="Include" returns="void" arguments="const BRegion* region" type="Final" mod=""/>
+
+		<Function name="Exclude" returns="void" arguments="BRect r" type="Final" mod=""/>
+		<Function name="Exclude" returns="void" arguments="clipping_rect r" type="Final" mod=""/>
+		<Function name="Exclude" returns="void" arguments="const BRegion* region" type="Final" mod=""/>
+
+		<Function name="IntersectWith" returns="void" arguments="const BRegion* region" type="Final" mod=""/>
+
+		<Function name="ExclusiveInclude" returns="void" arguments="const BRegion* region" type="Final" mod=""/>
+	</class>
+</Flatten>
+
