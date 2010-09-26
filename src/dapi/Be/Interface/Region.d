@@ -128,7 +128,7 @@ interface IBRegion
 	//BRegion & opAssign();
 
 	// bool be_BRegion_opEquals(BRegion *self, const BRegion& other);
-	//bool opEquals();
+	bool opEquals(BRegion);
 
 	// void be_BRegion_Set(BRegion *self, BRect *newBounds);
 	void Set(BRect);
@@ -256,7 +256,9 @@ public:
 	//BRegion & opAssign();
 
 	// bool be_BRegion_opEquals(BRegion *self, const BRegion& other);
-	//bool opEquals();
+	bool opEquals(BRegion other) {
+		return be_BRegion_opEquals(_InstPtr(), other._InstPtr());	
+	}
 
 	// void be_BRegion_Set(BRegion *self, BRect *newBounds);
 	void Set(BRect newBounds) {

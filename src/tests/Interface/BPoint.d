@@ -3,7 +3,6 @@
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 
-import Be.Interface.Polygon;
 import Be.Interface.Point;
 import Be.Interface.Rect;
 
@@ -11,10 +10,14 @@ import tango.io.Stdout;
 
 int main()
 {
-	BPolygon poly = new BPolygon();
+	BPoint point = new BPoint(200, 200);
 	
-	poly.MapTo(new BRect(0, 0, 0, 0), new BRect(100, 100, 100, 100));
-	poly.PrintToStream();
+	point.PrintToStream();
 
+	point += new BPoint(100, 100);
+		
+	point.PrintToStream();
+	
+	Stdout.formatln("Equals: {}", point == (new BPoint(300, 300)));
 	return 0;
 }
