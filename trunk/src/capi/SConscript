@@ -1,6 +1,10 @@
 env = Environment(CPPPATH='include')
 
 c_srcs = [
+	'Interface/Point.cpp',
+	'Interface/Rect.cpp',
+	'Interface/Size.cpp',
+
 #	'App/Looper.cpp',
 	'App/Message.cpp',
 

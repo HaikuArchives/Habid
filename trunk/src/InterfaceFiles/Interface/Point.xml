@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Point.h" type="system" target="source"/>
+	<Includefile name="Rect.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BRect BPoint"/>
+
+	<class name="BPoint">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="float x, float y" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BPoint& p" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="operator=" returns="BPoint &" arguments="const BPoint& other" type="Operator" mod=""/>
+
+		<Function name="Set" returns="void" arguments="float x, float y" type="Final" mod=""/>
+
+		<Function name="ConstrainTo" returns="void" arguments="BRect rect" type="Final" mod=""/>
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+
+		<Function name="operator-" returns="BPoint" arguments="" type="Operator" mod="const"/>
+		<Function name="operator+" returns="BPoint" arguments="const BPoint& other" type="Operator" mod="const"/>
+		<Function name="operator-" returns="BPoint" arguments="const BPoint& other" type="Operator" mod="const"/>
+		<Function name="operator+=" returns="BPoint &" arguments="const BPoint& other" type="Operator" mod=""/>
+		<Function name="operator-=" returns="BPoint &" arguments="const BPoint& other" type="Operator" mod=""/>
+
+		<Function name="operator!=" returns="bool" arguments="const BPoint& other" type="Operator" mod="const"/>
+		<Function name="operator==" returns="bool" arguments="const BPoint& other" type="Operator" mod="const"/>
+
+		<Function name="x" returns="float" arguments="" type="Variable" mod=""/>
+		<Function name="y" returns="float" arguments="" type="Variable" mod=""/>
+
+	</class>
+</Flatten>
+
