@@ -14,10 +14,12 @@ int main()
 	BRegion region = new BRegion();
 	
 	region.Set(new BRect(0, 0, 200, 200));
-	region.Include(new BRect(-100, -100, 0, 0));
+
+	BRegion region2 = new BRegion(region);
 	
 	region.PrintToStream();
 	
 	Stdout.formatln("Region Has: {} Rect(s)", region.CountRects());
+	Stdout.formatln("Equals: {}", region == region2);
 	return 0;	
 }

@@ -91,25 +91,25 @@ interface IBPoint
 	void PrintToStream();
 
 	// BPoint * be_BPoint_opSub(BPoint *self);
-	//BPoint opSub();
+	BPoint opSub();
 
 	// BPoint * be_BPoint_opAdd(BPoint *self, const BPoint& other);
-	//BPoint opAdd();
+	BPoint opAdd(BPoint);
 
 	// BPoint * be_BPoint_opSub_1(BPoint *self, const BPoint& other);
-	//BPoint opSub();
+	BPoint opSub(BPoint);
 
 	// BPoint & be_BPoint_opAddAssign(BPoint *self, const BPoint& other);
-	//BPoint & opAddAssign();
+	BPoint opAddAssign(BPoint);
 
 	// BPoint & be_BPoint_opSubAssign(BPoint *self, const BPoint& other);
-	//BPoint & opSubAssign();
+	BPoint opSubAssign(BPoint);
 
 	// bool be_BPoint_opNotEquals(BPoint *self, const BPoint& other);
 	//bool opNotEquals();
 
 	// bool be_BPoint_opEquals(BPoint *self, const BPoint& other);
-	//bool opEquals();
+	bool opEquals(BPoint);
 
 	void * _InstPtr();
 	bool _OwnsPtr();
@@ -174,25 +174,42 @@ public:
 	}
 
 	// BPoint * be_BPoint_opSub(BPoint *self);
-	//BPoint opSub();
+	BPoint opSub() {
+		be_BPoint_opSub(_InstPtr());
+		return this;	
+	}
 
 	// BPoint * be_BPoint_opAdd(BPoint *self, const BPoint& other);
-	//BPoint opAdd();
+	BPoint opAdd(BPoint other) {
+		be_BPoint_opAdd(_InstPtr(), other._InstPtr());
+		return this;
+	}
 
 	// BPoint * be_BPoint_opSub_1(BPoint *self, const BPoint& other);
-	//BPoint opSub();
+	BPoint opSub(BPoint other) {
+		be_BPoint_opSub_1(_InstPtr(), other._InstPtr());
+		return this;
+	}
 
 	// BPoint & be_BPoint_opAddAssign(BPoint *self, const BPoint& other);
-	//BPoint & opAddAssign();
+	BPoint opAddAssign(BPoint other) {
+		be_BPoint_opAddAssign(_InstPtr(), other._InstPtr());
+		return this;	
+	}
 
 	// BPoint & be_BPoint_opSubAssign(BPoint *self, const BPoint& other);
-	//BPoint & opSubAssign();
+	BPoint opSubAssign(BPoint other) {
+		be_BPoint_opSubAssign(_InstPtr(), other._InstPtr());
+		return this;	
+	}
 
 	// bool be_BPoint_opNotEquals(BPoint *self, const BPoint& other);
 	//bool opNotEquals();
 
 	// bool be_BPoint_opEquals(BPoint *self, const BPoint& other);
-	//bool opEquals();
+	bool opEquals(BPoint other) {
+		return be_BPoint_opEquals(_InstPtr(), other._InstPtr());	
+	}
 
 	//void be_BPoint_x_varSet(BPoint *self, float x)
 	void x(float _x) {
