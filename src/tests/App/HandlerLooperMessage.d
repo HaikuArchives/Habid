@@ -15,7 +15,7 @@ import tango.stdc.stringz;
 import Be.Support.Errors;
 import Be.Support.SupportDefs;
 
-uint32 kMessage = 99;
+const uint32 kMessage = 99;
 
 class Looper : BLooper
 {
@@ -25,8 +25,14 @@ public:
 	}
 	
 	void MessageReceived(BMessage msg) {
-		Stdout.formatln("Looper message received: {}", msg.what);
-		super.MessageReceived(msg);	
+		switch(msg.what) {
+			case kMessage: {
+				Stdout.formatln("Looper Received Message: {}", msg.what);
+			} break;
+			default: {
+				super.MessageReceived(msg);	
+			} break;
+		}
 	}
 }
 
@@ -38,8 +44,11 @@ public:
 	}
 	
 	void MessageReceived(BMessage msg) {
-		Stdout.formatln("Handler message received: {}", msg.what);
-		super.MessageReceived(msg);	
+		switch(msg.what) {
+			default: {
+				super.MessageReceived(msg);	
+			} break;
+		}
 	}
 }
 
@@ -47,7 +56,11 @@ int main() {
 	Looper looper = new Looper();
 	Handler handler = new Handler();
 	
+	looper.AddHandler(new Handler());
+	looper.AddHandler(new Handler());
 	looper.AddHandler(handler);
+	looper.AddHandler(new Handler());
+	looper.AddHandler(new Handler());
 	
 	Stdout.formatln("Number of handlers: {}", looper.CountHandlers());
 

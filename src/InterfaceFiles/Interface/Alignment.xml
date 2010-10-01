@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Alignment.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BAlignment">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BAlignment& other" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="alignment horizontal, vertical_alignment vertical" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Horizontal" returns="alignment" arguments="" type="Final" mod="const"/>
+		<Function name="Vertical" returns="vertical_alignment" arguments="" type="Final" mod="const"/>
+
+		<Function name="RelativeHorizontal" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="RelativeVertical" returns="float" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetHorizontal" returns="void" arguments="alignment horizontal" type="Final" mod=""/>
+		<Function name="SetVertical" returns="void" arguments="vertical_alignment vertical" type="Final" mod=""/>
+
+		<Function name="IsHorizontalSet" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsVerticalSet" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="operator==" returns="bool" arguments="const BAlignment& other" type="Operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BAlignment& other" type="Operator" mod="const"/>
+
+		<Function name="operator=" returns="BAlignment&" arguments="const BAlignment& other" type="Operator" mod=""/>
+
+		<Function name="horizontal" returns="alignment" arguments="" type="Variable" mod=""/>
+		<Function name="vertical" returns="vertical_alignment" arguments="" type="Variable" mod=""/>
+	</class>
+</Flatten>
+

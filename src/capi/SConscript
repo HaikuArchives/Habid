@@ -6,7 +6,9 @@ c_srcs = [
 	'Interface/Size.cpp',
 	'Interface/Polygon.cpp',
 	'Interface/Region.cpp',
+	'Interface/Alignment.cpp',
 
+	'App/Application.cpp',
 	'App/Looper.cpp',
 	'App/Messenger.cpp',
 	'App/Message.cpp',
