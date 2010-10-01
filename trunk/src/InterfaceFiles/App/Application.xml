@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Application.h" type="system" target="header"/>
+	<Includefile name="App/Application.h" type="local" target="source"/>
+	<Includefile name="App/Looper.h" type="local" target="header"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BApplication">
+		<Inherits name="BLooper" access="public"/>
+
+		<Function name="" returns="" arguments="const char* signature" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char* signature, status_t* error" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* data" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable*" arguments="BMessage* data" type="static" mod=""/>
+
+		<Function name="Archive" returns="status_t" arguments="BMessage* data, bool deep" type="Final" mod="const"/>
+
+		<Function name="InitCheck" returns="status_t" arguments="" type="Final" mod="const"/>
+
+		<Function name="Run" returns="thread_id" arguments="" type="Virtual" mod=""/>
+		<Function name="Quit" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="QuitRequested" returns="bool" arguments="" type="Virtual" mod=""/>
+		<Function name="Pulse" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="ReadyToRun" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="MessageReceived" returns="void" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="ArgvReceived" returns="void" arguments="int32 argc, char** argv" type="Virtual" mod=""/>
+		<Function name="AppActivated" returns="void" arguments="bool active" type="Virtual" mod=""/>
+		<Function name="RefsReceived" returns="void" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="AboutRequested" returns="void" arguments="" type="Virtual" mod=""/>
+
+		<Function name="ResolveSpecifier" returns="BHandler*" arguments="BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property" type="Virtual" mod=""/>
+
+		<Function name="ShowCursor" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="HideCursor" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="ObscureCursor" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="IsCursorHidden" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="SetCursor" returns="void" arguments="const void* cursor" type="Final" mod=""/>
+		<Function name="SetCursor" returns="void" arguments="const BCursor* cursor, bool sync" type="Final" mod=""/>
+
+
+		<Function name="CountWindows" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="WindowAt" returns="BWindow *" arguments="int32 index" type="Final" mod="const"/>
+
+		<Function name="CountLoopers" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="LooperAt" returns="BLooper *" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="IsLaunching" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="GetAppInfo" returns="status_t" arguments="app_info* info" type="Final" mod="const"/>
+		<Function name="AppResources" returns="BResources *" arguments="" type="static" mod=""/>
+
+
+		<Function name="DispatchMessage" returns="void" arguments="BMessage* message, BHandler* handler" type="Virtual" mod=""/>
+		<Function name="SetPulseRate" returns="void" arguments="bigtime_t rate" type="Final" mod=""/>
+
+		<Function name="GetSupportedSuites" returns="status_t" arguments="BMessage* data" type="Virtual" mod=""/>
+
+		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
+	</class>
+</Flatten>
+

@@ -6,7 +6,10 @@ d_srcs = [
 	'Be/Interface/Size.d',
 	'Be/Interface/Polygon.d',
 	'Be/Interface/Region.d',
+	'Be/Interface/Alignment.d',
+	'Be/Interface/InterfaceDefs.d',
 
+	'Be/App/Application.d',
 	'Be/App/Looper.d',
 	'Be/App/Messenger.d',
 	'Be/App/Message.d',

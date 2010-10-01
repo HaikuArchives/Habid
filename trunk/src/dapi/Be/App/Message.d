@@ -8,10 +8,20 @@ module Be.App.Message;
 import Be.Support.SupportDefs;
 import Be.Support.types;
 import Be.Support.BObject;
+import Be.Support.DataIO;
+import Be.Support.String;
+
+import Be.Support.Flattenable;
 
 import Be.Storage.Entry;
 
+import Be.App.Messenger;
+import Be.App.Handler;
+
 import Be.Interface.Point;
+import Be.Interface.Alignment;
+import Be.Interface.Size;
+import Be.Interface.Rect;
 
 import tango.stdc.stringz;
 
@@ -640,20 +650,18 @@ interface IBMessage
 
 	// bool be_BMessage_IsSourceRemote(BMessage *self);
 	bool IsSourceRemote();
-/*
+
 	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
-	IBMessenger ReturnAddress();
-*/
+	BMessenger ReturnAddress();
+
 	// const BMessage * be_BMessage_Previous(BMessage *self);
-	IBMessage Previous();
+	BMessage Previous();
 
 	// bool be_BMessage_WasDropped(BMessage *self);
 	bool WasDropped();
 
 	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
-	IBPoint DropPoint(IBPoint);
-
-/*
+	BPoint DropPoint(IBPoint);
 
 	// status_t be_BMessage_SendReply(BMessage *self, uint32 command, BHandler * replyTo);
 	status_t SendReply(uint32, IBHandler);
@@ -669,41 +677,42 @@ interface IBMessage
 
 	// status_t be_BMessage_SendReply_4(BMessage *self, BMessage * the_reply, BMessage * replyToReply, bigtime_t sendTimeout, bigtime_t replyTimeout);
 	status_t SendReply(IBMessage, IBMessage, bigtime_t, bigtime_t);
+
 	// ssize_t be_BMessage_FlattenedSize(BMessage *self);
 	ssize_t FlattenedSize();
 
 	// status_t be_BMessage_Flatten(BMessage *self, char * buffer, ssize_t size);
-	status_t Flatten();
+	status_t Flatten(char [], ssize_t);
 
 	// status_t be_BMessage_Flatten_1(BMessage *self, BDataIO * stream, ssize_t * size);
-	status_t Flatten();
+	status_t Flatten(IBDataIO, inout ssize_t);
 
 	// status_t be_BMessage_Unflatten(BMessage *self, const char * flatBuffer);
-	status_t Unflatten();
+	status_t Unflatten(inout char []);
 
 	// status_t be_BMessage_Unflatten_1(BMessage *self, BDataIO * stream);
-	status_t Unflatten();
+	status_t Unflatten(IBDataIO);
 
 	// status_t be_BMessage_AddSpecifier(BMessage *self, const char * property);
-	status_t AddSpecifier();
+	status_t AddSpecifier(char []);
 
 	// status_t be_BMessage_AddSpecifier_1(BMessage *self, const char * property, int32 index);
-	status_t AddSpecifier();
+	status_t AddSpecifier(char [], int32);
 
 	// status_t be_BMessage_AddSpecifier_2(BMessage *self, const char * property, int32 index, int32 range);
-	status_t AddSpecifier();
+	status_t AddSpecifier(char [], int32, int32);
 
 	// status_t be_BMessage_AddSpecifier_3(BMessage *self, const char * property, const char * name);
-	status_t AddSpecifier();
+	status_t AddSpecifier(char [], char []);
 
 	// status_t be_BMessage_AddSpecifier_4(BMessage *self, const BMessage * specifier);
-	status_t AddSpecifier();
+	status_t AddSpecifier(BMessage);
 
 	// status_t be_BMessage_SetCurrentSpecifier(BMessage *self, int32 index);
-	status_t SetCurrentSpecifier();
+	status_t SetCurrentSpecifier(int32);
 
 	// status_t be_BMessage_GetCurrentSpecifier(BMessage *self, int32 * index, BMessage * specifier, int32 * what, const char ** property);
-	status_t GetCurrentSpecifier();
+//	status_t GetCurrentSpecifier(inout int32, BMessage, inout int32, inout char []);
 
 	// status_t be_BMessage_HasSpecifiers(BMessage *self);
 	status_t HasSpecifiers();
@@ -712,83 +721,83 @@ interface IBMessage
 	status_t PopSpecifier();
 
 	// status_t be_BMessage_AddAlignment(BMessage *self, const char* name, const BAlignment& alignment);
-	status_t AddAlignment();
+	status_t AddAlignment(char [], BAlignment);
 
 	// status_t be_BMessage_AddRect(BMessage *self, const char * name, BRect *aRect);
-	status_t AddRect();
+	status_t AddRect(char [], BRect);
 
 	// status_t be_BMessage_AddPoint(BMessage *self, const char * name, BPoint *aPoint);
-	status_t AddPoint();
+	status_t AddPoint(char [], BPoint);
 
 	// status_t be_BMessage_AddSize(BMessage *self, const char* name, BSize *aSize);
-	status_t AddSize();
+	status_t AddSize(char [], BSize);
 
 	// status_t be_BMessage_AddString(BMessage *self, const char * name, const char * aString);
-	status_t AddString();
+	status_t AddString(char [], char []);
 
 	// status_t be_BMessage_AddString_1(BMessage *self, const char * name, const BString & aString);
-	status_t AddString();
+	status_t AddString(char [], BString);
 
 	// status_t be_BMessage_AddInt8(BMessage *self, const char * name, int8 value);
-	status_t AddInt8();
+	status_t AddInt8(char [], int8);
 
 	// status_t be_BMessage_AddUInt8(BMessage *self, const char * name, uint8 value);
-	status_t AddUInt8();
+	status_t AddUInt8(char [], uint8);
 
 	// status_t be_BMessage_AddInt16(BMessage *self, const char * name, int16 value);
-	status_t AddInt16();
+	status_t AddInt16(char [], int16);
 
 	// status_t be_BMessage_AddUInt16(BMessage *self, const char * name, uint16 value);
-	status_t AddUInt16();
+	status_t AddUInt16(char [], uint16);
 
 	// status_t be_BMessage_AddInt32(BMessage *self, const char * name, int32 value);
-	status_t AddInt32();
+	status_t AddInt32(char [], int32);
 
 	// status_t be_BMessage_AddUInt32(BMessage *self, const char * name, uint32 value);
-	status_t AddUInt32();
+	status_t AddUInt32(char [], uint32);
 
 	// status_t be_BMessage_AddInt64(BMessage *self, const char * name, int64 value);
-	status_t AddInt64();
+	status_t AddInt64(char [], int64);
 
 	// status_t be_BMessage_AddUInt64(BMessage *self, const char * name, uint64 value);
-	status_t AddUInt64();
+	status_t AddUInt64(char [], uint64);
 
 	// status_t be_BMessage_AddBool(BMessage *self, const char * name, bool aBoolean);
-	status_t AddBool();
+	status_t AddBool(char [], bool);
 
 	// status_t be_BMessage_AddFloat(BMessage *self, const char * name, float aFloat);
-	status_t AddFloat();
+	status_t AddFloat(char [], float);
 
 	// status_t be_BMessage_AddDouble(BMessage *self, const char * name, double aDouble);
-	status_t AddDouble();
+	status_t AddDouble(char [], double);
 
 	// status_t be_BMessage_AddPointer(BMessage *self, const char * name, const void * aPointer);
-	status_t AddPointer();
+	status_t AddPointer(char [], void *);
 
 	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger *messenger);
-	status_t AddMessenger();
+	status_t AddMessenger(char [], BMessenger);
 
 	// status_t be_BMessage_AddRef(BMessage *self, const char * name, const entry_ref * _ref);
-	status_t AddRef();
+	status_t AddRef(char [], entry_ref);
 
 	// status_t be_BMessage_AddMessage(BMessage *self, const char * name, const BMessage * message);
-	status_t AddMessage();
+	status_t AddMessage(char [], BMessage);
 
 	// status_t be_BMessage_AddFlat(BMessage *self, const char * name, BFlattenable * object, int32 count);
-	status_t AddFlat();
+	status_t AddFlat(char [], IBFlattenable, int32);
 
 	// status_t be_BMessage_AddData(BMessage *self, const char * name, type_code type, const void * data, ssize_t numBytes, bool isFixedSize, int32 count);
-	status_t AddData();
+	status_t AddData(char [], type_code, void [], ssize_t, bool, int32);
 
 	// status_t be_BMessage_RemoveData(BMessage *self, const char * name, int32 index);
-	status_t RemoveData();
+	status_t RemoveData(char [], int32);
 
 	// status_t be_BMessage_RemoveName(BMessage *self, const char * name);
-	status_t RemoveName();
+	status_t RemoveName(char []);
 
 	// status_t be_BMessage_MakeEmpty(BMessage *self);
 	status_t MakeEmpty();
-
+/*
 	// status_t be_BMessage_FindAlignment(BMessage *self, const char* name, BAlignment* alignment);
 	status_t FindAlignment();
 
@@ -1284,15 +1293,15 @@ public:
 		return be_BMessage_IsSourceRemote(_InstPtr());
 	}
 
-/*
+
 
 	// BMessenger * be_BMessage_ReturnAddress(BMessage *self);
-	IBMessenger ReturnAddress() {
-		return be_BMessage_ReturnAddress(_InstPtr());
+	BMessenger ReturnAddress() {
+		return new BMessenger(be_BMessage_ReturnAddress(_InstPtr()), false);
 	}
-*/
+
 	// const BMessage * be_BMessage_Previous(BMessage *self);
-	IBMessage Previous() {
+	BMessage Previous() {
 		return new BMessage(be_BMessage_Previous(_InstPtr()), false);
 	}
 
@@ -1302,14 +1311,13 @@ public:
 	}
 
 	// BPoint * be_BMessage_DropPoint(BMessage *self, BPoint * offset);
-	IBPoint DropPoint(IBPoint offset) {
+	BPoint DropPoint(IBPoint offset) {
 		return new BPoint(be_BMessage_DropPoint(_InstPtr(), offset._InstPtr()), false);
 	}
 
-/*
 	// status_t be_BMessage_SendReply(BMessage *self, uint32 command, BHandler * replyTo);
 	status_t SendReply(uint32 command, IBHandler replyTo) {
-		return be_BMessage_SendReply(_InstPtr(), command, replyTo);
+		return be_BMessage_SendReply(_InstPtr(), command, replyTo._InstPtr);
 	}
 
 	// status_t be_BMessage_SendReply_1(BMessage *self, BMessage * reply, BHandler * replyTo, bigtime_t timeout);
@@ -1338,60 +1346,64 @@ public:
 	}
 
 	// status_t be_BMessage_Flatten(BMessage *self, char * buffer, ssize_t size);
-	status_t Flatten() {
-		return be_BMessage_Flatten(_InstPtr());
+	status_t Flatten(char [] buffer, ssize_t size) {
+		return be_BMessage_Flatten(_InstPtr(), buffer.ptr, size);
 	}
 
 	// status_t be_BMessage_Flatten_1(BMessage *self, BDataIO * stream, ssize_t * size);
-	status_t Flatten() {
-		return be_BMessage_Flatten_1(_InstPtr());
+	status_t Flatten(IBDataIO stream, inout ssize_t size) {
+		return be_BMessage_Flatten_1(_InstPtr(), stream._InstPtr, &size);
 	}
 
 	// status_t be_BMessage_Unflatten(BMessage *self, const char * flatBuffer);
-	status_t Unflatten() {
-		return be_BMessage_Unflatten(_InstPtr());
+	status_t Unflatten(inout char [] flatBuffer) {
+		return be_BMessage_Unflatten(_InstPtr(), flatBuffer.ptr);
 	}
 
 	// status_t be_BMessage_Unflatten_1(BMessage *self, BDataIO * stream);
-	status_t Unflatten() {
-		return be_BMessage_Unflatten_1(_InstPtr());
+	status_t Unflatten(IBDataIO stream) {
+		return be_BMessage_Unflatten_1(_InstPtr(), stream._InstPtr);
 	}
 
 	// status_t be_BMessage_AddSpecifier(BMessage *self, const char * property);
-	status_t AddSpecifier() {
-		return be_BMessage_AddSpecifier(_InstPtr());
+	status_t AddSpecifier(char [] property) {
+		return be_BMessage_AddSpecifier(_InstPtr(), toStringz(property));
 	}
 
 	// status_t be_BMessage_AddSpecifier_1(BMessage *self, const char * property, int32 index);
-	status_t AddSpecifier() {
-		return be_BMessage_AddSpecifier_1(_InstPtr());
+	status_t AddSpecifier(char [] property, int32 index) {
+		return be_BMessage_AddSpecifier_1(_InstPtr(), toStringz(property), index);
 	}
 
 	// status_t be_BMessage_AddSpecifier_2(BMessage *self, const char * property, int32 index, int32 range);
-	status_t AddSpecifier() {
-		return be_BMessage_AddSpecifier_2(_InstPtr());
+	status_t AddSpecifier(char [] property, int32 index, int32 range) {
+		return be_BMessage_AddSpecifier_2(_InstPtr(), toStringz(property), index, range);
 	}
 
 	// status_t be_BMessage_AddSpecifier_3(BMessage *self, const char * property, const char * name);
-	status_t AddSpecifier() {
-		return be_BMessage_AddSpecifier_3(_InstPtr());
+	status_t AddSpecifier(char [] property, char [] name) {
+		return be_BMessage_AddSpecifier_3(_InstPtr(), toStringz(property), toStringz(name));
 	}
 
 	// status_t be_BMessage_AddSpecifier_4(BMessage *self, const BMessage * specifier);
-	status_t AddSpecifier() {
-		return be_BMessage_AddSpecifier_4(_InstPtr());
+	status_t AddSpecifier(BMessage specifier) {
+		return be_BMessage_AddSpecifier_4(_InstPtr(), specifier._InstPtr);
 	}
 
 	// status_t be_BMessage_SetCurrentSpecifier(BMessage *self, int32 index);
-	status_t SetCurrentSpecifier() {
-		return be_BMessage_SetCurrentSpecifier(_InstPtr());
+	status_t SetCurrentSpecifier(int32 index) {
+		return be_BMessage_SetCurrentSpecifier(_InstPtr(), index);
 	}
-
+/*
 	// status_t be_BMessage_GetCurrentSpecifier(BMessage *self, int32 * index, BMessage * specifier, int32 * what, const char ** property);
-	status_t GetCurrentSpecifier() {
-		return be_BMessage_GetCurrentSpecifier(_InstPtr());
+	status_t GetCurrentSpecifier(inout int32 index, BMessage specifier, inout int32 what, inout char [] property) {
+		status_t result = be_BMessage_GetCurrentSpecifier(_InstPtr(), &index, specifier._InstPtr, &what, propPtr);
+		
+		property = fromStringz(tmpProp.ptr).dup;
+		
+		return result;
 	}
-
+*/
 	// status_t be_BMessage_HasSpecifiers(BMessage *self);
 	status_t HasSpecifiers() {
 		return be_BMessage_HasSpecifiers(_InstPtr());
@@ -1403,135 +1415,135 @@ public:
 	}
 
 	// status_t be_BMessage_AddAlignment(BMessage *self, const char* name, const BAlignment& alignment);
-	status_t AddAlignment() {
-		return be_BMessage_AddAlignment(_InstPtr());
+	status_t AddAlignment(char [] name, BAlignment alignment) {
+		return be_BMessage_AddAlignment(_InstPtr(), toStringz(name), alignment._InstPtr);
 	}
 
 	// status_t be_BMessage_AddRect(BMessage *self, const char * name, BRect *aRect);
-	status_t AddRect() {
-		return be_BMessage_AddRect(_InstPtr());
+	status_t AddRect(char [] name, BRect aRect) {
+		return be_BMessage_AddRect(_InstPtr(), toStringz(name), aRect._InstPtr);
 	}
 
 	// status_t be_BMessage_AddPoint(BMessage *self, const char * name, BPoint *aPoint);
-	status_t AddPoint() {
-		return be_BMessage_AddPoint(_InstPtr());
+	status_t AddPoint(char [] name, BPoint aPoint) {
+		return be_BMessage_AddPoint(_InstPtr(), toStringz(name), aPoint._InstPtr);
 	}
 
 	// status_t be_BMessage_AddSize(BMessage *self, const char* name, BSize *aSize);
-	status_t AddSize() {
-		return be_BMessage_AddSize(_InstPtr());
+	status_t AddSize(char [] name, BSize aSize) {
+		return be_BMessage_AddSize(_InstPtr(), toStringz(name), aSize._InstPtr);
 	}
 
 	// status_t be_BMessage_AddString(BMessage *self, const char * name, const char * aString);
-	status_t AddString() {
-		return be_BMessage_AddString(_InstPtr());
+	status_t AddString(char [] name, char [] aString) {
+		return be_BMessage_AddString(_InstPtr(), toStringz(name), toStringz(aString));
 	}
 
 	// status_t be_BMessage_AddString_1(BMessage *self, const char * name, const BString & aString);
-	status_t AddString() {
-		return be_BMessage_AddString_1(_InstPtr());
+	status_t AddString(char [] name, BString aString) {
+		return be_BMessage_AddString_1(_InstPtr(), toStringz(name), aString._InstPtr);
 	}
 
 	// status_t be_BMessage_AddInt8(BMessage *self, const char * name, int8 value);
-	status_t AddInt8() {
-		return be_BMessage_AddInt8(_InstPtr());
+	status_t AddInt8(char [] name, int8 value) {
+		return be_BMessage_AddInt8(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddUInt8(BMessage *self, const char * name, uint8 value);
-	status_t AddUInt8() {
-		return be_BMessage_AddUInt8(_InstPtr());
+	status_t AddUInt8(char [] name, uint8 value) {
+		return be_BMessage_AddUInt8(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddInt16(BMessage *self, const char * name, int16 value);
-	status_t AddInt16() {
-		return be_BMessage_AddInt16(_InstPtr());
+	status_t AddInt16(char [] name, int16 value) {
+		return be_BMessage_AddInt16(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddUInt16(BMessage *self, const char * name, uint16 value);
-	status_t AddUInt16() {
-		return be_BMessage_AddUInt16(_InstPtr());
+	status_t AddUInt16(char [] name, uint16 value) {
+		return be_BMessage_AddUInt16(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddInt32(BMessage *self, const char * name, int32 value);
-	status_t AddInt32() {
-		return be_BMessage_AddInt32(_InstPtr());
+	status_t AddInt32(char [] name, int32 value) {
+		return be_BMessage_AddInt32(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddUInt32(BMessage *self, const char * name, uint32 value);
-	status_t AddUInt32() {
-		return be_BMessage_AddUInt32(_InstPtr());
+	status_t AddUInt32(char [] name, uint32 value) {
+		return be_BMessage_AddUInt32(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddInt64(BMessage *self, const char * name, int64 value);
-	status_t AddInt64() {
-		return be_BMessage_AddInt64(_InstPtr());
+	status_t AddInt64(char [] name, int64 value) {
+		return be_BMessage_AddInt64(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddUInt64(BMessage *self, const char * name, uint64 value);
-	status_t AddUInt64() {
-		return be_BMessage_AddUInt64(_InstPtr());
+	status_t AddUInt64(char [] name, uint64 value) {
+		return be_BMessage_AddUInt64(_InstPtr(), toStringz(name), value);
 	}
 
 	// status_t be_BMessage_AddBool(BMessage *self, const char * name, bool aBoolean);
-	status_t AddBool() {
-		return be_BMessage_AddBool(_InstPtr());
+	status_t AddBool(char [] name, bool aBoolean) {
+		return be_BMessage_AddBool(_InstPtr(), toStringz(name), aBoolean);
 	}
 
 	// status_t be_BMessage_AddFloat(BMessage *self, const char * name, float aFloat);
-	status_t AddFloat() {
-		return be_BMessage_AddFloat(_InstPtr());
+	status_t AddFloat(char [] name, float aFloat) {
+		return be_BMessage_AddFloat(_InstPtr(), toStringz(name), aFloat);
 	}
 
 	// status_t be_BMessage_AddDouble(BMessage *self, const char * name, double aDouble);
-	status_t AddDouble() {
-		return be_BMessage_AddDouble(_InstPtr());
+	status_t AddDouble(char [] name, double aDouble) {
+		return be_BMessage_AddDouble(_InstPtr(), toStringz(name), aDouble);
 	}
 
 	// status_t be_BMessage_AddPointer(BMessage *self, const char * name, const void * aPointer);
-	status_t AddPointer() {
-		return be_BMessage_AddPointer(_InstPtr());
+	status_t AddPointer(char [] name, void *aPointer) {
+		return be_BMessage_AddPointer(_InstPtr(), toStringz(name), aPointer);
 	}
 
 	// status_t be_BMessage_AddMessenger(BMessage *self, const char * name, BMessenger *messenger);
-	status_t AddMessenger() {
-		return be_BMessage_AddMessenger(_InstPtr());
+	status_t AddMessenger(char [] name, BMessenger messenger) {
+		return be_BMessage_AddMessenger(_InstPtr(), toStringz(name), messenger._InstPtr);
 	}
 
 	// status_t be_BMessage_AddRef(BMessage *self, const char * name, const entry_ref * _ref);
-	status_t AddRef() {
-		return be_BMessage_AddRef(_InstPtr());
+	status_t AddRef(char [] name, entry_ref _ref) {
+		return be_BMessage_AddRef(_InstPtr(), toStringz(name), &_ref);
 	}
 
 	// status_t be_BMessage_AddMessage(BMessage *self, const char * name, const BMessage * message);
-	status_t AddMessage() {
-		return be_BMessage_AddMessage(_InstPtr());
+	status_t AddMessage(char [] name, BMessage message) {
+		return be_BMessage_AddMessage(_InstPtr(), toStringz(name), message._InstPtr);
 	}
 
 	// status_t be_BMessage_AddFlat(BMessage *self, const char * name, BFlattenable * object, int32 count);
-	status_t AddFlat() {
-		return be_BMessage_AddFlat(_InstPtr());
+	status_t AddFlat(char [] name, IBFlattenable object, int32 count) {
+		return be_BMessage_AddFlat(_InstPtr(), toStringz(name), object._InstPtr, count);
 	}
 
 	// status_t be_BMessage_AddData(BMessage *self, const char * name, type_code type, const void * data, ssize_t numBytes, bool isFixedSize, int32 count);
-	status_t AddData() {
-		return be_BMessage_AddData(_InstPtr());
+	status_t AddData(char [] name, type_code type, void [] data, ssize_t numBytes, bool isFixed, int32 count) {
+		return be_BMessage_AddData(_InstPtr(), toStringz(name), type, data.ptr, numBytes, isFixed, count);
 	}
 
 	// status_t be_BMessage_RemoveData(BMessage *self, const char * name, int32 index);
-	status_t RemoveData() {
-		return be_BMessage_RemoveData(_InstPtr());
+	status_t RemoveData(char [] name, int32 index) {
+		return be_BMessage_RemoveData(_InstPtr(), toStringz(name), index);
 	}
 
 	// status_t be_BMessage_RemoveName(BMessage *self, const char * name);
-	status_t RemoveName() {
-		return be_BMessage_RemoveName(_InstPtr());
+	status_t RemoveName(char [] name) {
+		return be_BMessage_RemoveName(_InstPtr(), toStringz(name));
 	}
 
 	// status_t be_BMessage_MakeEmpty(BMessage *self);
 	status_t MakeEmpty() {
 		return be_BMessage_MakeEmpty(_InstPtr());
 	}
-
+/*
 	// status_t be_BMessage_FindAlignment(BMessage *self, const char* name, BAlignment* alignment);
 	status_t FindAlignment() {
 		return be_BMessage_FindAlignment(_InstPtr());
