@@ -9,6 +9,7 @@ d_srcs = [
 	'Be/Interface/Alignment.d',
 	'Be/Interface/InterfaceDefs.d',
 
+	'Be/App/Cursor.d',
 	'Be/App/Application.d',
 	'Be/App/Looper.d',
 	'Be/App/Messenger.d',

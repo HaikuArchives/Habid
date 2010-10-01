@@ -11,6 +11,7 @@ import Be.Support.BObject;
 import Be.App.Message;
 import Be.App.Looper;
 import Be.App.Handler;
+import Be.App.Cursor;
 
 import Be.Support.Archivable;
 
@@ -254,7 +255,7 @@ interface IBApplication
 	void SetCursor(void []);
 
 	// void be_BApplication_SetCursor_1(BApplication *self, const BCursor* cursor, bool sync);
-//	void SetCursor(BCursor, bool);
+	void SetCursor(BCursor, bool);
 
 	// int32 be_BApplication_CountWindows(BApplication *self);
 	int32 CountWindows();
@@ -435,12 +436,12 @@ public:
 	void SetCursor(void [] cursor) {
 		be_BApplication_SetCursor(_InstPtr(), cursor.ptr);
 	}
-/*
+
 	// void be_BApplication_SetCursor_1(BApplication *self, const BCursor* cursor, bool sync);
 	void SetCursor(BCursor cursor, bool sync = true) {
 		be_BApplication_SetCursor_1(_InstPtr(), cursor._InstPtr, sync);
 	}
-*/
+
 	// int32 be_BApplication_CountWindows(BApplication *self);
 	int32 CountWindows() {
 		return be_BApplication_CountWindows(_InstPtr());

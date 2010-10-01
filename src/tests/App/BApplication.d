@@ -21,7 +21,7 @@ class App : BApplication
 public:
 	this() {
 		super("application/x-vnd.your-app-sig");
-		SetPulseRate(100000);
+		SetPulseRate(1000000);
 	}
 	
 	void MessageReceived(BMessage message) {
