@@ -170,7 +170,10 @@ interface IBFile
 	//BFile & opAssign();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BFile : public BNode, IBPositionIO, IBFile
@@ -182,64 +185,64 @@ private:
 public:
 	// BFileProxy * be_BFile_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFile_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFile_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BFileProxy * be_BFile_ctor_1(void *bindInstPtr, const BFile * file);
 	this(IBFile file) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFile_ctor_1(cast(void *)this, file._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFile_ctor_1(cast(void *)this, file._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BFileProxy * be_BFile_ctor_2(void *bindInstPtr, const entry_ref * ref, uint32 openMode);
 	this(entry_ref _ref, uint32 openMode) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFile_ctor_2(cast(void *)this, &_ref, openMode);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFile_ctor_2(cast(void *)this, &_ref, openMode);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BFileProxy * be_BFile_ctor_3(void *bindInstPtr, const BEntry * entry, uint32 openMode);
 	this(IBEntry entry, uint32 openMode) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFile_ctor_3(cast(void *)this, entry._InstPtr(), openMode);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFile_ctor_3(cast(void *)this, entry._InstPtr(), openMode);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BFileProxy * be_BFile_ctor_4(void *bindInstPtr, const char * path, uint32 openMode);
 	this(char [] path, uint32 openMode) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFile_ctor_4(cast(void *)this, toStringz(path), openMode);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFile_ctor_4(cast(void *)this, toStringz(path), openMode);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BFileProxy * be_BFile_ctor_5(void *bindInstPtr, const BDirectory * dir, const char * path, uint32 openMode);
 	this(IBDirectory dir, char [] path, uint32 openMode) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFile_ctor_5(cast(void *)this, dir._InstPtr(), toStringz(path), openMode);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFile_ctor_5(cast(void *)this, dir._InstPtr(), toStringz(path), openMode);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BFile_dtor(BFile* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BFile_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -317,7 +320,10 @@ public:
 	//BFile & opAssign();
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

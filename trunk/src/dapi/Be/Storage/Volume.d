@@ -174,7 +174,10 @@ interface IBVolume
 	//BVolume & opAssign();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BVolume : IBVolume
@@ -186,34 +189,34 @@ private:
 public:
 	// BVolume* be_BVolume_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BVolume_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BVolume_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BVolume* be_BVolume_ctor_1(void *bindInstPtr, dev_t device);
 	this(dev_t device) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BVolume_ctor_1(cast(void *)this, device);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BVolume_ctor_1(cast(void *)this, device);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BVolume* be_BVolume_ctor_2(void *bindInstPtr, const BVolume* volume);
 	this(IBVolume volume) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BVolume_ctor_2(cast(void *)this, volume._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BVolume_ctor_2(cast(void *)this, volume._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BVolume_dtor(BVolume* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BVolume_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -332,7 +335,10 @@ public:
 	//BVolume & opAssign();
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

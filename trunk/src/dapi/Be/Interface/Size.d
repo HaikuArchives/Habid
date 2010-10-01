@@ -121,7 +121,11 @@ interface IBSize
 	//BSize & opAssign();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
+
 }
 
 final class BSize : IBSize
@@ -133,34 +137,34 @@ private:
 public:
 	// BSize* be_BSize_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BSize_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BSize_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BSize* be_BSize_ctor_1(void *bindInstPtr, const BSize* other);
 	this(IBSize other) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BSize_ctor_1(cast(void *)this, other._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BSize_ctor_1(cast(void *)this, other._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// BSize* be_BSize_ctor_2(void *bindInstPtr, float width, float height);
 	this(float width, float height) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BSize_ctor_2(cast(void *)this, width, height);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BSize_ctor_2(cast(void *)this, width, height);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BSize_dtor(BSize* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BSize_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -239,7 +243,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

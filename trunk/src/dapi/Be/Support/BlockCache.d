@@ -42,7 +42,10 @@ interface IBBlockCache
 	void Save(void *, size_t);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BBlockCache : IBBlockCache
@@ -54,18 +57,18 @@ private:
 public:
 	// BBlockCache* be_BBlockCache_ctor(void *bindInstPtr, uint32 blockCount, size_t blockSize, uint32 allocationType);
 	this(uint32 blockCount, size_t blockSize, uint32 allocationType) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BBlockCache_ctor(cast(void *)this, blockCount, blockSize, allocationType);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BBlockCache_ctor(cast(void *)this, blockCount, blockSize, allocationType);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BBlockCache_dtor(BBlockCache* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BBlockCache_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -80,7 +83,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

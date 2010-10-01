@@ -144,7 +144,9 @@ void buildBasicClass(InterfaceClassInfo classInfo)
     }
 
     classBuffer ~= "\tvoid * _InstPtr();";
+    classBuffer ~= "\tvoid _InstPtr(void *ptr);";
     classBuffer ~= "\tbool _OwnsPtr();";
+    classBuffer ~= "\tvoid _OwnsPtr(bool value);";
     classBuffer ~= "}\n";
 
     classBuffer ~= ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "" : "final ") ~ "class " ~ classInfo.nameString ~ " : I" ~ classInfo.nameString;
@@ -158,18 +160,18 @@ void buildBasicClass(InterfaceClassInfo classInfo)
         if(memberFunc.isConstructor) {
             classBuffer ~= "\t// " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "*") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ");";
             classBuffer ~= "\tthis() {{";
-            classBuffer ~= "\t\tif(fInstancePointer is null) {{";
-            classBuffer ~= "\t\t\tfInstancePointer = be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(cast(void *)this);";
-            classBuffer ~= "\t\t\tfOwnsPointer = true;";
+            classBuffer ~= "\t\tif(_InstPtr is null) {{";
+            classBuffer ~= "\t\t\t_InstPtr = be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(cast(void *)this);";
+            classBuffer ~= "\t\t\t_OwnsPtr = true;";
             classBuffer ~= "\t\t}";
             classBuffer ~= "\t}\n";
         } else if(memberFunc.isDestructor) {
             classBuffer ~= "\t// void be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ "* self);";
             classBuffer ~= "\t~this() {{";
-            classBuffer ~= "\t\tif(fInstancePointer !is null && fOwnsPointer) {{";
+            classBuffer ~= "\t\tif(_InstPtr !is null && _OwnsPtr) {{";
             classBuffer ~= "\t\t\tbe_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ "(_InstPtr());";
-            classBuffer ~= "\t\t\tfInstancePointer = null;";
-            classBuffer ~= "\t\t\tfOwnsPointer = false;";
+            classBuffer ~= "\t\t\t_InstPtr = null;";
+            classBuffer ~= "\t\t\t_OwnsPtr = false;";
             classBuffer ~= "\t\t}";
             classBuffer ~= "\t}\n";
         } else if(memberFunc.isOperator) {
@@ -201,7 +203,9 @@ void buildBasicClass(InterfaceClassInfo classInfo)
     }
 
     classBuffer ~= "\tvoid * _InstPtr() {{ return fInstancePointer; }";
+    classBuffer ~= "\tvoid _InstPtr(void *ptr) {{ fInstancePointer = ptr; }";
     classBuffer ~= "\tbool _OwnsPtr() {{ return fOwnsPointer; }";
+    classBuffer ~= "\tvoid _OwnsPtr(bool value) {{ fOwnsPointer = value; }";
     classBuffer ~= "}\n";
 
 }

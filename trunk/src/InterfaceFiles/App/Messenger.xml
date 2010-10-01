@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Messenger.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger"/>
+
+	<class name="BMessenger">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char *signature, team_id team, status_t *result" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BHandler *handler, const BLooper *looper, status_t *result" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BMessenger &from" type="Constructor" mod=""/>
+
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="IsTargetLocal" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="Target" returns="BHandler *" arguments="BLooper **looper" type="Final" mod="const"/>
+		<Function name="LockTarget" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="LockTargetWithTimeout" returns="status_t" arguments="bigtime_t timeout" type="Final" mod="const"/>
+
+		<Function name="SendMessage" returns="status_t" arguments="uint32 command, BHandler *replyTo" type="Final" mod="const"/>
+		<Function name="SendMessage" returns="status_t" arguments="BMessage *message, BHandler *replyTo, bigtime_t timeout" type="Final" mod="const"/>
+		<Function name="SendMessage" returns="status_t" arguments="BMessage *message, BMessenger replyTo, bigtime_t timeout" type="Final" mod="const"/>
+		<Function name="SendMessage" returns="status_t" arguments="uint32 command, BMessage *reply" type="Final" mod="const"/>
+		<Function name="SendMessage" returns="status_t" arguments="BMessage *message, BMessage *reply, bigtime_t deliveryTimeout, bigtime_t replyTimeout" type="Final" mod="const"/>
+
+
+		<Function name="operator=" returns="BMessenger &" arguments="const BMessenger &from" type="Operator" mod=""/>
+		<Function name="operator==" returns="bool" arguments="const BMessenger &other" type="Operator" mod="const"/>
+
+		<Function name="IsValid" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="Team" returns="team_id" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

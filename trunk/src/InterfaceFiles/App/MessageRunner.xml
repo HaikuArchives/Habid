@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="MessageRunner.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger"/>
+
+	<class name="BMessageRunner">
+		<Function name="" returns="" arguments="BMessenger target, const BMessage *message, bigtime_t interval, int32 count" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessenger target, const BMessage *message, bigtime_t interval, int32 count, BMessenger replyTo" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="InitCheck" returns="status_t" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetInterval" returns="status_t" arguments="bigtime_t interval" type="Final" mod=""/>
+		<Function name="SetCount" returns="status_t" arguments="int32 count" type="Final" mod=""/>
+		<Function name="GetInfo" returns="status_t" arguments="bigtime_t *interval, int32 *count" type="Final" mod="const"/>
+
+		<Function name="StartSending" returns="status_t" arguments="BMessenger target, const BMessage *message, bigtime_t interval, int32 count" type="static" mod=""/>
+		<Function name="StartSending" returns="status_t" arguments="BMessenger target, const BMessage *message, bigtime_t interval, int32 count, BMessenger replyTo" type="static" mod=""/>
+	</class>
+</Flatten>
+

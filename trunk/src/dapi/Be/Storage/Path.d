@@ -202,7 +202,10 @@ interface IBPath
 	status_t Unflatten(type_code, void [], ssize_t);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BPath : BFlattenable, IBPath
@@ -214,64 +217,64 @@ private:
 public:
 	// BPathProxy * be_BPath_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPath_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPath_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BPathProxy * be_BPath_ctor_1(void *bindInstPtr, const BPath* path);
 	this(IBPath path) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPath_ctor_1(cast(void *)this, path._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPath_ctor_1(cast(void *)this, path._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BPathProxy * be_BPath_ctor_2(void *bindInstPtr, const entry_ref* _ref);
 	this(entry_ref _ref) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPath_ctor_2(cast(void *)this, &_ref);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPath_ctor_2(cast(void *)this, &_ref);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BPathProxy * be_BPath_ctor_3(void *bindInstPtr, const BEntry* entry);
 	this(IBEntry entry) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPath_ctor_3(cast(void *)this, entry._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPath_ctor_3(cast(void *)this, entry._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BPathProxy * be_BPath_ctor_4(void *bindInstPtr, const char* dir, const char* leaf, bool normalize);
 	this(char [] dir, char [] leaf = null, bool normalize = false) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPath_ctor_4(cast(void *)this, toStringz(dir), leaf is null ? null : toStringz(leaf), normalize);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPath_ctor_4(cast(void *)this, toStringz(dir), leaf is null ? null : toStringz(leaf), normalize);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BPathProxy * be_BPath_ctor_5(void *bindInstPtr, const BDirectory* dir, const char* leaf, bool normalize);
 	this(IBDirectory dir, char [] leaf = null, bool normalize = false) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPath_ctor_5(cast(void *)this, dir._InstPtr(), leaf is null ? null : toStringz(leaf), normalize);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPath_ctor_5(cast(void *)this, dir._InstPtr(), leaf is null ? null : toStringz(leaf), normalize);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BPath_dtor(BPath* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BPath_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -374,7 +377,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

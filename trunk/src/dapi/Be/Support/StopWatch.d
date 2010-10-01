@@ -66,7 +66,10 @@ interface IBStopWatch
 	char [] Name();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BStopWatch : IBStopWatch
@@ -78,18 +81,18 @@ private:
 public:
 	// BStopWatch* be_BStopWatch_ctor(void *bindInstPtr, const char * name, bool silent);
 	this(char [] name, bool silent = false) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BStopWatch_ctor(cast(void *)this, toStringz(name), silent);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BStopWatch_ctor(cast(void *)this, toStringz(name), silent);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BStopWatch_dtor(BStopWatch* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BStopWatch_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -124,7 +127,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

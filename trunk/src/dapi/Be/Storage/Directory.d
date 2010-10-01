@@ -193,7 +193,10 @@ interface IBDirectory
 	//BDirectory & opAssign();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BDirectory : BNode, IBEntryList, IBDirectory
@@ -205,73 +208,73 @@ private:
 public:
 	// BDirectoryProxy * be_BDirectory_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BDirectoryProxy * be_BDirectory_ctor_1(void *bindInstPtr, const BDirectory * dir);
 	this(IBDirectory dir) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor_1(cast(void *)this, dir._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor_1(cast(void *)this, dir._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BDirectoryProxy * be_BDirectory_ctor_2(void *bindInstPtr, const entry_ref * _ref);
 	this(entry_ref _ref) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor_2(cast(void *)this, &_ref);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor_2(cast(void *)this, &_ref);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BDirectoryProxy * be_BDirectory_ctor_3(void *bindInstPtr, const node_ref * nref);
 	this(node_ref nref) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor_3(cast(void *)this, &nref);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor_3(cast(void *)this, &nref);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BDirectoryProxy * be_BDirectory_ctor_4(void *bindInstPtr, const BEntry * entry);
 	this(IBEntry entry) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor_4(cast(void *)this, entry._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor_4(cast(void *)this, entry._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BDirectoryProxy * be_BDirectory_ctor_5(void *bindInstPtr, const char * path);
 	this(char [] path) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor_5(cast(void *)this, toStringz(path));
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor_5(cast(void *)this, toStringz(path));
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BDirectoryProxy * be_BDirectory_ctor_6(void *bindInstPtr, const BDirectory * dir, const char * path);
 	this(IBDirectory dir, char [] path) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDirectory_ctor_6(cast(void *)this, dir._InstPtr(), toStringz(path));
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDirectory_ctor_6(cast(void *)this, dir._InstPtr(), toStringz(path));
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BDirectory_dtor(BDirectory* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BDirectory_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -375,7 +378,10 @@ public:
 	//BDirectory & opAssign();
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

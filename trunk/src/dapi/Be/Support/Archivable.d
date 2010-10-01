@@ -10,6 +10,7 @@ import Be.Support.BObject;
 
 import Be.App.Message;
 
+
 extern (C) extern {
 	// BArchivableProxy * be_BArchivable_ctor(void *bindInstPtr);
 	void * be_BArchivable_ctor(void *bindInstPtr);
@@ -76,7 +77,10 @@ interface IBArchivable
 	status_t AllArchived(IBMessage);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BArchivable : IBArchivable
@@ -88,26 +92,26 @@ private:
 public:
 	// BArchivableProxy * be_BArchivable_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BArchivable_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BArchivable_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BArchivableProxy * be_BArchivable_ctor_1(void *bindInstPtr, BMessage* from);
 	this(IBMessage from) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BArchivable_ctor_1(cast(void *)this, from._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BArchivable_ctor_1(cast(void *)this, from._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BArchivable_dtor(BArchivable* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BArchivable_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -138,7 +142,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

@@ -209,7 +209,11 @@ interface IBRegion
 	void ExclusiveInclude(BRegion);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
+
 }
 
 final class BRegion : IBRegion
@@ -221,34 +225,34 @@ private:
 public:
 	// BRegion* be_BRegion_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRegion_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRegion_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BRegion* be_BRegion_ctor_1(void *bindInstPtr, const BRegion* region);
 	this(BRegion region) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRegion_ctor_1(cast(void *)this, region._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRegion_ctor_1(cast(void *)this, region._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// BRegion* be_BRegion_ctor_2(void *bindInstPtr, const BRect *rect);
 	this(BRect rect) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRegion_ctor_2(cast(void *)this, rect._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRegion_ctor_2(cast(void *)this, rect._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BRegion_dtor(BRegion* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BRegion_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -398,7 +402,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

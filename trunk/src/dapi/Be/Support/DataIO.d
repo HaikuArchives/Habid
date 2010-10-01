@@ -221,7 +221,10 @@ interface IBDataIO
 	ssize_t Write(void [], size_t);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BDataIO : IBDataIO
@@ -233,18 +236,18 @@ private:
 public:
 	// BDataIOProxy * be_BDataIO_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BDataIO_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BDataIO_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BDataIO_dtor(BDataIO* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BDataIO_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -259,7 +262,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 interface IBPositionIO
@@ -289,7 +295,10 @@ interface IBPositionIO
 	status_t GetSize(inout off_t);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BPositionIO : BDataIO, IBPositionIO
@@ -301,19 +310,19 @@ private:
 public:
 	// BPositionIOProxy * be_BPositionIO_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPositionIO_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPositionIO_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BPositionIO_dtor(BPositionIO* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BPositionIO_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -358,7 +367,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 interface IBMemoryIO
@@ -379,7 +391,10 @@ interface IBMemoryIO
 	status_t SetSize(off_t);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BMemoryIO : BPositionIO, IBMemoryIO
@@ -391,9 +406,9 @@ private:
 public:
 	// BMemoryIOProxy * be_BMemoryIO_ctor(void *bindInstPtr, void * data, size_t length);
 	this(void [] data) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BMemoryIO_ctor(cast(void *)this, data.ptr, data.length);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BMemoryIO_ctor(cast(void *)this, data.ptr, data.length);
+			_OwnsPtr = true;
 		}
 		super();
 	}
@@ -408,10 +423,10 @@ public:
 */
 	// void be_BMemoryIO_dtor(BMemoryIO* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BMemoryIO_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -441,7 +456,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 interface IBMallocIO
@@ -471,7 +489,10 @@ interface IBMallocIO
 	size_t BufferLength();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BMallocIO : BPositionIO, IBMallocIO
@@ -483,19 +504,19 @@ private:
 public:
 	// BMallocIOProxy * be_BMallocIO_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BMallocIO_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BMallocIO_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BMallocIO_dtor(BMallocIO* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BMallocIO_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -540,7 +561,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 
