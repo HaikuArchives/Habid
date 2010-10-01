@@ -210,7 +210,10 @@ interface IBNode
 	int Dup();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BNode : BStatable, IBNode
@@ -222,64 +225,64 @@ private:
 public:
 	// BNodeProxy * be_BNode_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BNode_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BNode_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BNodeProxy * be_BNode_ctor_1(void *bindInstPtr, const entry_ref * ref);
 	this(entry_ref _ref) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BNode_ctor_1(cast(void *)this, &_ref);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BNode_ctor_1(cast(void *)this, &_ref);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BNodeProxy * be_BNode_ctor_2(void *bindInstPtr, const BEntry * entry);
 	this(IBEntry entry) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BNode_ctor_2(cast(void *)this, entry._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BNode_ctor_2(cast(void *)this, entry._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BNodeProxy * be_BNode_ctor_3(void *bindInstPtr, const char * path);
 	this(char [] path) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BNode_ctor_3(cast(void *)this, toStringz(path));
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BNode_ctor_3(cast(void *)this, toStringz(path));
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BNodeProxy * be_BNode_ctor_4(void *bindInstPtr, const BDirectory * dir, const char * path);
 	this(IBDirectory dir, char [] path) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BNode_ctor_4(cast(void *)this, dir._InstPtr(), toStringz(path));
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BNode_ctor_4(cast(void *)this, dir._InstPtr(), toStringz(path));
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BNodeProxy * be_BNode_ctor_5(void *bindInstPtr, const BNode * node);
 	this(IBNode node) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BNode_ctor_5(cast(void *)this, node._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BNode_ctor_5(cast(void *)this, node._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BNode_dtor(BNode* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BNode_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -401,7 +404,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

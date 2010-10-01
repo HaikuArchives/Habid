@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="MessageFilter.h" type="system" target="header"/>
+	<Includefile name="App/MessageFilter.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BMessageFilter">
+		<Function name="" returns="" arguments="uint32 what, filter_hook func" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="message_delivery delivery, message_source source, filter_hook func" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="message_delivery delivery, message_source source, uint32 what, filter_hook func" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BMessageFilter* filter" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="operator=" returns="BMessageFilter&" arguments="const BMessageFilter& from" type="Operator" mod=""/>
+
+		<Function name="Filter" returns="filter_result" arguments="BMessage* message, BHandler** _target" type="Virtual" mod=""/>
+
+		<Function name="MessageDelivery" returns="message_delivery" arguments="" type="Final" mod="const"/>
+		<Function name="MessageSource" returns="message_source" arguments="" type="Final" mod="const"/>
+		<Function name="Command" returns="uint32" arguments="" type="Final" mod="const"/>
+		<Function name="FiltersAnyCommand" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="Looper" returns="BLooper*" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

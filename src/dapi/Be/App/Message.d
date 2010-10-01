@@ -1168,7 +1168,10 @@ interface IBMessage
 	double FindDouble();
 */
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BMessage : IBMessage
@@ -1180,34 +1183,34 @@ private:
 public:
 	// BMessage* be_BMessage_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BMessage_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BMessage_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BMessage* be_BMessage_ctor_1(void *bindInstPtr, uint32 what);
 	this(uint32 what) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BMessage_ctor_1(cast(void *)this, what);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BMessage_ctor_1(cast(void *)this, what);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BMessage* be_BMessage_ctor_2(void *bindInstPtr, const BMessage * other);
 	this(IBMessage other) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BMessage_ctor_2(cast(void *)this, other._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BMessage_ctor_2(cast(void *)this, other._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BMessage_dtor(BMessage* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && fOwnsPointer) {
 			be_BMessage_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -2160,7 +2163,10 @@ public:
 	}
 */
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

@@ -199,7 +199,10 @@ interface IBEntry
 	//BEntry & opAssign();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BEntry : BStatable, IBEntry
@@ -211,55 +214,55 @@ private:
 public:
 	// BEntryProxy * be_BEntry_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BEntry_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BEntry_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BEntryProxy * be_BEntry_ctor_1(void *bindInstPtr, const BDirectory* dir, const char* path, bool traverse);
 	this(IBDirectory dir, char [] path, bool traverse = false) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BEntry_ctor_1(cast(void *)this, dir._InstPtr(), toStringz(path), traverse);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BEntry_ctor_1(cast(void *)this, dir._InstPtr(), toStringz(path), traverse);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BEntryProxy * be_BEntry_ctor_2(void *bindInstPtr, const entry_ref* _ref, bool traverse);
 	this(entry_ref _ref, bool traverse = false) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BEntry_ctor_2(cast(void *)this, &_ref, traverse);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BEntry_ctor_2(cast(void *)this, &_ref, traverse);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BEntryProxy * be_BEntry_ctor_3(void *bindInstPtr, const char* path, bool traverse);
 	this(char [] path, bool traverse = false) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BEntry_ctor_3(cast(void *)this, toStringz(path), traverse);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BEntry_ctor_3(cast(void *)this, toStringz(path), traverse);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// BEntryProxy * be_BEntry_ctor_4(void *bindInstPtr, const BEntry* entry);
 	this(IBEntry entry) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BEntry_ctor_4(cast(void *)this, entry._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BEntry_ctor_4(cast(void *)this, entry._InstPtr());
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BEntry_dtor(BEntry* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BEntry_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -356,7 +359,10 @@ public:
 	//BEntry & opAssign();
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

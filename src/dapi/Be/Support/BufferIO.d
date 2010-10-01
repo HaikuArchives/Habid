@@ -118,7 +118,10 @@ interface IBBufferIO
 	void PrintToStream();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 class BBufferIO : public BPositionIO, IBBufferIO
@@ -130,19 +133,19 @@ private:
 public:
 	// BBufferIOProxy * be_BBufferIO_ctor(void *bindInstPtr, BPositionIO * stream, size_t bufferSize, bool ownsStream);
 	this(IBPositionIO stream, size_t bufferSize = 65536L, bool ownsStream = true) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BBufferIO_ctor(cast(void *)this, stream._InstPtr(), bufferSize, ownsStream);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BBufferIO_ctor(cast(void *)this, stream._InstPtr(), bufferSize, ownsStream);
+			_OwnsPtr = true;
 		}
 		super();
 	}
 
 	// void be_BBufferIO_dtor(BBufferIO* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BBufferIO_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -202,7 +205,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

@@ -92,7 +92,10 @@ interface IBLocker
 	sem_id Sem();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BLocker : IBLocker
@@ -104,42 +107,42 @@ private:
 public:
 	// BLocker* be_BLocker_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BLocker_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BLocker_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BLocker* be_BLocker_ctor_1(void *bindInstPtr, const char * name);
 	this(char [] name) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BLocker_ctor_1(cast(void *)this, toStringz(name));
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BLocker_ctor_1(cast(void *)this, toStringz(name));
+			_OwnsPtr = true;
 		}
 	}
 
 	// BLocker* be_BLocker_ctor_2(void *bindInstPtr, bool benaphoreStyle);
 	this(bool benaphoreStyle) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BLocker_ctor_2(cast(void *)this, benaphoreStyle);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BLocker_ctor_2(cast(void *)this, benaphoreStyle);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BLocker* be_BLocker_ctor_3(void *bindInstPtr, const char * name, bool benaphoreStyle);
 	this(char [] name, bool benaphoreStyle) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BLocker_ctor_3(cast(void *)this, toStringz(name), benaphoreStyle);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BLocker_ctor_3(cast(void *)this, toStringz(name), benaphoreStyle);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BLocker_dtor(BLocker* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && fOwnsPointer) {
 			be_BLocker_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -189,7 +192,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

@@ -62,7 +62,7 @@ interface IBPolygon
 	BRect Frame();
 
 	// void be_BPolygon_AddPoints(BPolygon *self, const BPoint* points, int32 count);
-//	void AddPoints(IBPoint [] points, int32 count);
+	void AddPoints(BPoint [] points, int32 count);
 
 	// int32 be_BPolygon_CountPoints(BPolygon *self);
 	int32 CountPoints();
@@ -74,7 +74,11 @@ interface IBPolygon
 	void PrintToStream();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
+
 }
 
 final class BPolygon : IBPolygon
@@ -86,48 +90,46 @@ private:
 public:
 	// BPolygon* be_BPolygon_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPolygon_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPolygon_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BPolygon* be_BPolygon_ctor_1(void *bindInstPtr, const BPoint* points, int32 count);
-/*
-	this(IBPoint [] points, int32 count) {
-		if(fInstancePointer is null) {
-			void * [] ptrList;
-			foreach(point; points)
-				ptrList ~= point._InstPtr();
-				
-			fInstancePointer = be_BPolygon_ctor_1(cast(void *)this, ptrList.ptr, count);
-			fOwnsPointer = true;
+
+	this(BPoint [] points, int32 count) {
+		if(_InstPtr is null) {
+			_InstPtr = be_BPolygon_ctor(cast(void *)this);
+			
+			AddPoints(points, count);
+			
+			_OwnsPtr = true;
 		}
 	}
-*/
+
 	// BPolygon* be_BPolygon_ctor_2(void *bindInstPtr, const BPolygon* other);
 	this(BPolygon other) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPolygon_ctor_2(cast(void *)this, other._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPolygon_ctor_2(cast(void *)this, other._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// BPolygon* be_BPolygon_ctor_3(void *bindInstPtr, const BPolygon* other);
-/*
-	this(IBPolygon other) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPolygon_ctor_3(cast(void *)this);
-			fOwnsPointer = true;
+	this(BPolygon other) {
+		if(_InstPtr is null) {
+			_InstPtr = be_BPolygon_ctor_3(cast(void *)this, other._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
-*/
+
 	// void be_BPolygon_dtor(BPolygon* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BPolygon_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -140,11 +142,12 @@ public:
 	}
 
 	// void be_BPolygon_AddPoints(BPolygon *self, const BPoint* points, int32 count);
-/*
-	void AddPoints(IBPoint [] points, int32 count) {
-		be_BPolygon_AddPoints(_InstPtr(), ptrList.ptr, count);
+
+	void AddPoints(BPoint [] points, int32 count) {
+		foreach(point; points)
+			be_BPolygon_AddPoints(_InstPtr(), point._InstPtr(), 1);
 	}
-*/
+
 	// int32 be_BPolygon_CountPoints(BPolygon *self);
 	int32 CountPoints() {
 		return be_BPolygon_CountPoints(_InstPtr());
@@ -161,7 +164,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

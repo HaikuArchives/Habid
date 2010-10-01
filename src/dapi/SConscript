@@ -7,8 +7,14 @@ d_srcs = [
 	'Be/Interface/Polygon.d',
 	'Be/Interface/Region.d',
 
-#	'Be/App/Looper.d',
+	'Be/App/Looper.d',
+	'Be/App/Messenger.d',
 	'Be/App/Message.d',
+	'Be/App/MessageFilter.d',
+	'Be/App/MessageQueue.d',
+	'Be/App/MessageRunner.d',
+	'Be/App/Handler.d',
+
 	'Be/Kernel/OS.d',
 
 	'Be/Storage/StorageDefs.d',

@@ -195,7 +195,10 @@ interface IBList
 //	void DoForEach();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BList : IBList
@@ -207,26 +210,26 @@ private:
 public:
 	// BList* be_BList_ctor(void *bindInstPtr, int32 count);
 	this(int32 count = 20) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BList_ctor(cast(void *)this, count);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BList_ctor(cast(void *)this, count);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BList* be_BList_ctor_1(void *bindInstPtr, const BList * anotherList);
 	this(IBList anotherList) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BList_ctor_1(cast(void *)this, anotherList._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BList_ctor_1(cast(void *)this, anotherList._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BList_dtor(BList* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BList_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -372,7 +375,10 @@ public:
 	}
 */
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

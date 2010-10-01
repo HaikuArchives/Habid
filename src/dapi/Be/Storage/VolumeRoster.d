@@ -62,7 +62,10 @@ interface IBVolumeRoster
 //	BMessenger Messenger();
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BVolumeRoster : IBVolumeRoster
@@ -74,18 +77,18 @@ private:
 public:
 	// BVolumeRoster* be_BVolumeRoster_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BVolumeRoster_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BVolumeRoster_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BVolumeRoster_dtor(BVolumeRoster* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BVolumeRoster_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -122,7 +125,10 @@ public:
 	}
 */
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

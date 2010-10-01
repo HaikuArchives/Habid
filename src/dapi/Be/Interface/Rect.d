@@ -316,7 +316,11 @@ interface IBRect
 	bool Contains(IBRect);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
+
 }
 
 final class BRect : IBRect
@@ -328,50 +332,50 @@ private:
 public:
 	// BRect* be_BRect_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRect_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRect_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BRect* be_BRect_ctor_1(void *bindInstPtr, const BRect* other);
 	this(IBRect other) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRect_ctor_1(cast(void *)this, other._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRect_ctor_1(cast(void *)this, other._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// BRect* be_BRect_ctor_2(void *bindInstPtr, float left, float top, float right, float bottom);
 	this(float left, float top, float right, float bottom) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRect_ctor_2(cast(void *)this, left, top, right, bottom);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRect_ctor_2(cast(void *)this, left, top, right, bottom);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BRect* be_BRect_ctor_3(void *bindInstPtr, BPoint *leftTop, BPoint *rightBottom);
 	this(IBPoint leftTop, IBPoint rightBottom) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRect_ctor_3(cast(void *)this, leftTop._InstPtr(), rightBottom._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRect_ctor_3(cast(void *)this, leftTop._InstPtr(), rightBottom._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// BRect* be_BRect_ctor_4(void *bindInstPtr, BPoint *leftTop, BSize *size);
 	this(IBPoint leftTop, IBSize size) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BRect_ctor_4(cast(void *)this, leftTop._InstPtr(), size._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BRect_ctor_4(cast(void *)this, leftTop._InstPtr(), size._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BRect_dtor(BRect* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BRect_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -622,7 +626,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

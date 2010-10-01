@@ -11,9 +11,18 @@ import tango.io.Stdout;
 
 int main()
 {
-	BPolygon poly = new BPolygon();
+
+	BPoint [] points;
 	
-	poly.MapTo(new BRect(0, 0, 0, 0), new BRect(100, 100, 100, 100));
+	for(int i = 0; i < 10; i++) {
+		points ~= new BPoint(i, cast(float)i);
+		Stdout.formatln("Adding Point ({}, {})", points[i].x, points[i].y);
+	}
+	
+	BPolygon poly = new BPolygon(points, points.length);
+	
+	Stdout.formatln("Resulting BPolygon");
+	
 	poly.PrintToStream();
 
 	return 0;

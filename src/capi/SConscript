@@ -7,8 +7,13 @@ c_srcs = [
 	'Interface/Polygon.cpp',
 	'Interface/Region.cpp',
 
-#	'App/Looper.cpp',
+	'App/Looper.cpp',
+	'App/Messenger.cpp',
 	'App/Message.cpp',
+	'App/MessageFilter.cpp',
+	'App/MessageQueue.cpp',
+	'App/MessageRunner.cpp',
+	'App/Handler.cpp',
 
 #	'Support/Autolock.cpp',
 	'Support/Archivable.cpp',

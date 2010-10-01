@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Handler.h" type="system" target="header"/>
+	<Includefile name="Archivable.h" type="system" target="header"/>
+	<Includefile name="Support/Archivable.h" type="local" target="header"/>
+	<Includefile name="App/Handler.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger"/>
+	
+	<class name="BHandler">
+		<Inherits name="BArchivable" access="public"/>
+		
+		<Function name="" returns="" arguments="const char* name" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* data" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable*" arguments="BMessage* data " type="static" mod=""/>
+		<Function name="Archive" returns="status_t" arguments="BMessage* data, bool deep" type="Virtual" mod="const"/>
+
+		<Function name="MessageReceived" returns="void" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="Looper" returns="BLooper*" arguments="" type="Final" mod="const"/>
+		<Function name="SetName" returns="void" arguments="const char* name" type="Final" mod=""/>
+		<Function name="Name" returns="const char *" arguments="" type="Final" mod="const"/>
+		<Function name="SetNextHandler" returns="void" arguments="BHandler* handler" type="Virtual" mod=""/>
+		<Function name="NextHandler" returns="BHandler *" arguments="" type="Final" mod="const"/>
+
+
+		<Function name="AddFilter" returns="void" arguments="BMessageFilter* filter" type="Virtual" mod=""/>
+		<Function name="RemoveFilter" returns="bool" arguments="BMessageFilter* filter" type="Virtual" mod=""/>
+		<Function name="SetFilterList" returns="void" arguments="BList* filters" type="Virtual" mod=""/>
+		<Function name="FilterList" returns="BList*" arguments="" type="Virtual" mod=""/>
+
+
+		<Function name="LockLooper" returns="bool" arguments="" type="Final" mod=""/>
+		<Function name="LockLooperWithTimeout" returns="status_t" arguments="bigtime_t timeout" type="Final" mod=""/>
+		<Function name="UnlockLooper" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="ResolveSpecifier" returns="BHandler*" arguments="BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property" type="Virtual" mod=""/>
+		<Function name="GetSupportedSuites" returns="status_t" arguments="BMessage* data" type="Virtual" mod=""/>
+
+
+		<Function name="StartWatching" returns="status_t" arguments="BMessenger target, uint32 what" type="Final" mod=""/>
+		<Function name="StartWatchingAll" returns="status_t" arguments="BMessenger target" type="Final" mod=""/>
+		<Function name="StopWatching" returns="status_t" arguments="BMessenger target, uint32 what" type="Final" mod=""/>
+		<Function name="StopWatchingAll" returns="status_t" arguments="BMessenger target" type="Final" mod=""/>
+
+		<Function name="StartWatching" returns="status_t" arguments="BHandler* observer, uint32 what" type="Final" mod=""/>
+		<Function name="StartWatchingAll" returns="status_t" arguments="BHandler* observer" type="Final" mod=""/>
+		<Function name="StopWatching" returns="status_t" arguments="BHandler* observer, uint32 what" type="Final" mod=""/>
+		<Function name="StopWatchingAll" returns="status_t" arguments="BHandler* observer" type="Final" mod=""/>
+
+
+		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
+
+
+		<Function name="SendNotices" returns="void" arguments="uint32 what, const BMessage* notice" type="Virtual" mod=""/>
+		<Function name="IsWatched" returns="bool" arguments="" type="Final" mod="const"/>
+
+	</class>
+</Flatten>
+

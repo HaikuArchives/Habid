@@ -112,7 +112,10 @@ interface IBPoint
 	bool opEquals(BPoint);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 final class BPoint : IBPoint
@@ -124,34 +127,34 @@ private:
 public:
 	// BPoint* be_BPoint_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPoint_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPoint_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BPoint* be_BPoint_ctor_1(void *bindInstPtr, float x, float y);
 	this(float x, float y) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPoint_ctor_1(cast(void *)this, x, y);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPoint_ctor_1(cast(void *)this, x, y);
+			_OwnsPtr = true;
 		}
 	}
 
 	// BPoint* be_BPoint_ctor_2(void *bindInstPtr, const BPoint* p);
 	this(IBPoint p) {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BPoint_ctor_2(cast(void *)this, p._InstPtr());
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BPoint_ctor_2(cast(void *)this, p._InstPtr());
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BPoint_dtor(BPoint* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BPoint_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -232,7 +235,10 @@ public:
 	}
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

@@ -2,7 +2,7 @@
 <Flatten>
 	<Includefile name="" type="" target=""/>
 
-	<Author name="" email="" license=""/>
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
 
 	<class name="">
 		<Function name="" returns="" arguments="" type="Constructor" mod=""/>

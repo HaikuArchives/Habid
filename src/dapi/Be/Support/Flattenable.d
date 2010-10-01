@@ -87,7 +87,10 @@ interface IBFlattenable
 	status_t Unflatten(type_code, void [], ssize_t);
 
 	void * _InstPtr();
+	void _InstPtr(void *ptr);
+	
 	bool _OwnsPtr();
+	void _OwnsPtr(bool value);
 }
 
 abstract class BFlattenable : IBFlattenable
@@ -99,18 +102,18 @@ private:
 public:
 	// BFlattenableProxy * be_BFlattenable_ctor(void *bindInstPtr);
 	this() {
-		if(fInstancePointer is null) {
-			fInstancePointer = be_BFlattenable_ctor(cast(void *)this);
-			fOwnsPointer = true;
+		if(_InstPtr is null) {
+			_InstPtr = be_BFlattenable_ctor(cast(void *)this);
+			_OwnsPtr = true;
 		}
 	}
 
 	// void be_BFlattenable_dtor(BFlattenable* self);
 	~this() {
-		if(fInstancePointer !is null && fOwnsPointer) {
+		if(_InstPtr !is null && _OwnsPtr) {
 			be_BFlattenable_dtor(_InstPtr());
-			fInstancePointer = null;
-			fOwnsPointer = false;
+			_InstPtr = null;
+			_OwnsPtr = false;
 		}
 	}
 
@@ -133,7 +136,10 @@ public:
 	abstract status_t Unflatten(type_code code, void [] buffer, ssize_t size);
 
 	void * _InstPtr() { return fInstancePointer; }
+	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
+	
 	bool _OwnsPtr() { return fOwnsPointer; }
+	void _OwnsPtr(bool value) { fOwnsPointer = value; }
 }
 
 

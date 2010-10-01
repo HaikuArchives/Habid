@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Looper.h" type="system" target="header"/>
+	<Includefile name="App/Handler.h" type="local" target="header"/>
+	<Includefile name="App/Looper.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BLooper">
+		<Inherits name="BHandler" access="public"/>
+
+		<Function name="" returns="" arguments="const char* name, int32 priority, int32 port_capacity" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* data" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable *" arguments="BMessage* data" type="static" mod=""/>
+		<Function name="Archive" returns="status_t" arguments="BMessage* data, bool deep" type="Virtual" mod="const"/>
+
+
+		<Function name="PostMessage" returns="status_t" arguments="uint32 command" type="Final" mod=""/>
+		<Function name="PostMessage" returns="status_t" arguments="BMessage* message" type="Final" mod=""/>
+		<Function name="PostMessage" returns="status_t" arguments="uint32 command, BHandler* handler, BHandler* replyTo" type="Final" mod=""/>
+		<Function name="PostMessage" returns="status_t" arguments="BMessage* message, BHandler* handler, BHandler* replyTo" type="Final" mod=""/>
+
+		<Function name="DispatchMessage" returns="void" arguments="BMessage* message, BHandler* handler" type="Virtual" mod=""/>
+		<Function name="MessageReceived" returns="void" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="CurrentMessage" returns="BMessage*" arguments="" type="Final" mod="const"/>
+		<Function name="DetachCurrentMessage" returns="BMessage*" arguments="" type="Final" mod=""/>
+		<Function name="MessageQueue" returns="BMessageQueue*" arguments="" type="Final" mod="const"/>
+		<Function name="IsMessageWaiting" returns="bool" arguments="" type="Final" mod="const"/>
+
+
+
+		<Function name="AddHandler" returns="void" arguments="BHandler* handler" type="Final" mod=""/>
+		<Function name="RemoveHandler" returns="bool" arguments="BHandler* handler" type="Final" mod=""/>
+		<Function name="CountHandlers" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="HandlerAt" returns="BHandler*" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="IndexOf" returns="int32" arguments="BHandler* handler" type="Final" mod="const"/>
+
+		<Function name="PreferredHandler" returns="BHandler*" arguments="" type="Final" mod="const"/>
+		<Function name="SetPreferredHandler" returns="void" arguments="BHandler* handler" type="Final" mod=""/>
+
+		<Function name="Run" returns="thread_id" arguments="" type="Virtual" mod=""/>
+		<Function name="Quit" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="QuitRequested" returns="bool" arguments="" type="Virtual" mod=""/>
+		<Function name="Lock" returns="bool" arguments="" type="" mod=""/>
+		<Function name="Unlock" returns="void" arguments="" type="" mod=""/>
+		<Function name="IsLocked" returns="bool" arguments="" type="" mod="const"/>
+		<Function name="LockWithTimeout" returns="status_t" arguments="bigtime_t timeout" type="" mod=""/>
+		<Function name="Thread" returns="thread_id" arguments="" type="" mod="const"/>
+		<Function name="Team" returns="team_id" arguments="" type="" mod="const"/>
+		<Function name="LooperForThread" returns="BLooper*" arguments="thread_id thread" type="Virtual" mod=""/>
+
+
+		<Function name="LockingThread" returns="thread_id" arguments="" type="Final" mod="const"/>
+		<Function name="CountLocks" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="CountLockRequests" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="Sem" returns="sem_id" arguments="" type="Final" mod="const"/>
+
+		<Function name="ResolveSpecifier" returns="BHandler*" arguments="BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property" type="Virtual" mod=""/>
+		<Function name="GetSupportedSuites" returns="status_t" arguments="BMessage* data" type="Virtual" mod=""/>
+
+
+		<Function name="AddCommonFilter" returns="void" arguments="BMessageFilter* filter" type="Virtual" mod=""/>
+		<Function name="RemoveCommonFilter" returns="bool" arguments="BMessageFilter* filter" type="Virtual" mod=""/>
+		<Function name="SetCommonFilterList" returns="void" arguments="BList* filters" type="Virtual" mod=""/>
+		<Function name="CommonFilterList" returns="BList*" arguments="" type="Virtual" mod="const"/>
+
+
+		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
+	</class>
+</Flatten>
+
