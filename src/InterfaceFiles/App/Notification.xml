@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Notification.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BNotification">
+		<Function name="" returns="" arguments="notification_type type" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Type" returns="notification_type" arguments="" type="Final" mod="const"/>
+
+		<Function name="Application" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="SetApplication" returns="void" arguments="const BString& app" type="Final" mod=""/>
+
+		<Function name="Title" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="SetTitle" returns="void" arguments="const BString& title" type="Final" mod=""/>
+
+		<Function name="Content" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="SetContent" returns="void" arguments="const BString& content" type="Final" mod=""/>
+
+		<Function name="MessageID" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="SetMessageID" returns="void" arguments="const BString& id" type="Final" mod=""/>
+
+		<Function name="Progress" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="SetProgress" returns="void" arguments="float progress" type="Final" mod=""/>
+
+		<Function name="OnClickApp" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="SetOnClickApp" returns="void" arguments="const BString& app" type="Final" mod=""/>
+
+		<Function name="OnClickFile" returns="const entry_ref*" arguments="" type="Final" mod="const"/>
+		<Function name="SetOnClickFile" returns="status_t" arguments="const entry_ref* file" type="Final" mod=""/>
+
+		<Function name="AddOnClickRef" returns="status_t" arguments="const entry_ref* ref" type="Final" mod=""/>
+		<Function name="CountOnClickRefs" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="OnClickRefAt" returns="const entry_ref*" arguments="int32 index" type="Final" mod="const"/>
+
+		<Function name="AddOnClickArg" returns="status_t" arguments="const BString& arg" type="Final" mod=""/>
+		<Function name="CountOnClickArgs" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="OnClickArgAt" returns="const char*" arguments="int32 index" type="Final" mod="const"/>
+
+		<Function name="Icon" returns="const BBitmap*" arguments="" type="Final" mod="const"/>
+		<Function name="SetIcon" returns="status_t" arguments="const BBitmap* icon" type="Final" mod=""/>
+	</class>
+</Flatten>
+

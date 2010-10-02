@@ -19,6 +19,7 @@ d_srcs = [
 	'Be/App/MessageFilter.d',
 	'Be/App/MessageQueue.d',
 	'Be/App/MessageRunner.d',
+	'Be/App/Notification.d',
 	'Be/App/Handler.d',
 
 	'Be/Kernel/OS.d',
