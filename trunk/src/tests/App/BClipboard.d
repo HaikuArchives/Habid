@@ -16,6 +16,8 @@ import Be.Support.Errors;
 import Be.Support.SupportDefs;
 import Be.App.Application;
 
+import Be.App.Clipboard;
+
 class App : BApplication
 {
 public:
@@ -27,6 +29,9 @@ public:
 	void MessageReceived(BMessage message) {
 		Stdout.formatln("ReceivedMessage: {}", message.what);
 		switch(message.what) {
+			case B_CLIPBOARD_CHANGED: {
+				Stdout.formatln("Clipboard Changed!");
+			} break;
 			default: {
 				super.MessageReceived(message);	
 			}	
@@ -44,8 +49,22 @@ public:
 }
 
 int main() {
+	BClipboard clipboard = new BClipboard("Clipboard testing");
+	
 	App app = new App;
 
+	status_t error = clipboard.StartWatching(be_app_messenger);
+	
+	clipboard.Lock();
+
+	clipboard.Data().AddString("test", "testing");
+	clipboard.Commit();
+	
+	clipboard.Unlock();
+	
+	if(error != B_OK)
+		Stdout.formatln("Failed to start watching clipboard");
+		
 	app.Run();
 	
 	return 0;	

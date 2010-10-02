@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Clipboard.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger"/>
+	<class name="BClipboard">
+		<Function name="" returns="" arguments="const char* name, bool transient" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Name" returns="const char*" arguments="" type="Final" mod="const"/>
+
+		<Function name="LocalCount" returns="uint32" arguments="" type="Final" mod="const"/>
+		<Function name="SystemCount" returns="uint32" arguments="" type="Final" mod="const"/>
+		<Function name="StartWatching" returns="status_t" arguments="BMessenger target" type="Final" mod=""/>
+		<Function name="StopWatching" returns="status_t" arguments="BMessenger target" type="Final" mod=""/>
+
+		<Function name="Lock" returns="bool" arguments="" type="Final" mod=""/>
+		<Function name="Unlock" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="IsLocked" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="Clear" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="Commit" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="Commit" returns="status_t" arguments="bool failIfChanged" type="Final" mod=""/>
+		<Function name="Revert" returns="status_t" arguments="" type="Final" mod=""/>
+
+		<Function name="DataSource" returns="BMessenger" arguments="" type="Final" mod="const"/>
+		<Function name="Data" returns="BMessage*" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

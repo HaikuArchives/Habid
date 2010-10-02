@@ -263,7 +263,7 @@ private:
 	char [] fname;
 public:
 	this() {
-		this("foobar");
+		super();
 	}
 	
 	// BHandlerProxy * be_BHandler_ctor(void *bindInstPtr, const char* name);

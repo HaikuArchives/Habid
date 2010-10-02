@@ -9,6 +9,7 @@ c_srcs = [
 	'Interface/Alignment.cpp',
 
 	'App/Application.cpp',
+	'App/Clipboard.cpp',
 	'App/Cursor.cpp',
 	'App/Looper.cpp',
 	'App/Messenger.cpp',
