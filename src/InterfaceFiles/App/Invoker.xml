@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Invoker.h" type="system" target="header"/>
+	<Includefile name="App/Invoker.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger BHandler BLooper BMessage"/>
+
+	<class name="BInvoker">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* message, const BHandler* handler, const BLooper* looper" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* message, BMessenger target" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="SetMessage" returns="status_t" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="Message" returns="BMessage*" arguments="" type="Final" mod="const"/>
+		<Function name="Command" returns="uint32" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetTarget" returns="status_t" arguments="const BHandler* handler, const BLooper* looper" type="Virtual" mod=""/>
+		<Function name="SetTarget" returns="status_t" arguments="BMessenger messenger" type="Virtual" mod=""/>
+		<Function name="IsTargetLocal" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="Target" returns="BHandler*" arguments="BLooper** _looper" type="Final" mod="const"/>
+		<Function name="Messenger" returns="BMessenger" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetHandlerForReply" returns="status_t" arguments="BHandler* handler" type="Virtual" mod=""/>
+		<Function name="HandlerForReply" returns="BHandler*" arguments="" type="Final" mod="const"/>
+
+		<Function name="Invoke" returns="status_t" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="InvokeNotify" returns="status_t" arguments="BMessage* message, uint32 kind" type="Final" mod=""/>
+		<Function name="SetTimeout" returns="status_t" arguments="bigtime_t timeout" type="Final" mod=""/>
+		<Function name="Timeout" returns="bigtime_t" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

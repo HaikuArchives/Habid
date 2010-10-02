@@ -177,7 +177,7 @@ void buildCExports(InterfaceClassInfo classInfo) {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
                 exportBuffer ~= "\t{{";
                 if(InterfaceParser.isClass(memberFunc.returnString) && !Util.contains(memberFunc.returnString, '&') && !Util.contains(memberFunc.returnString, '*'))
-                    assert(false, "Return");
+                    exportBuffer ~= "\t\t" ~ "return new " ~ memberFunc.returnString ~ "(" ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true) ~ "));";
                 else
                     exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
                 exportBuffer ~= "\t}\n";

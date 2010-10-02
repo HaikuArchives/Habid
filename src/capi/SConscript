@@ -12,6 +12,7 @@ c_srcs = [
 	'App/Clipboard.cpp',
 	'App/Cursor.cpp',
 	'App/Looper.cpp',
+	'App/Invoker.cpp',
 	'App/Messenger.cpp',
 	'App/Message.cpp',
 	'App/MessageFilter.cpp',
