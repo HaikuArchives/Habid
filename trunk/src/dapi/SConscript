@@ -13,6 +13,7 @@ d_srcs = [
 	'Be/App/Clipboard.d',
 	'Be/App/Cursor.d',
 	'Be/App/Looper.d',
+	'Be/App/Invoker.d',
 	'Be/App/Messenger.d',
 	'Be/App/Message.d',
 	'Be/App/MessageFilter.d',
