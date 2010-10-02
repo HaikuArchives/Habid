@@ -352,6 +352,10 @@ private:
 	bool fOwnsPointer = false;
 	mixin(BObject!());
 public:
+	this() {
+		super();	
+	}
+	
 	// BLooperProxy * be_BLooper_ctor(void *bindInstPtr, const char* name, int32 priority, int32 port_capacity);
 	this(char [] name, int32 priority = B_NORMAL_PRIORITY, int32 port_capacity = B_LOOPER_PORT_DEFAULT_CAPACITY) {
 		if(_InstPtr() is null) {

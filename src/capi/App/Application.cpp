@@ -358,7 +358,14 @@ extern "C" {
 	{
 		return self->Perform_super(d, arg);
 	}
-
+	
+	BMessenger * get_be_app_messenger() {
+		return &be_app_messenger;	
+	}
+	
+	BApplication * get_be_app() {
+		return be_app;	
+	}
 }
 
 

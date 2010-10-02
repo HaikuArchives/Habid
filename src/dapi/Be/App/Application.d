@@ -9,6 +9,7 @@ import Be.Support.types;
 import Be.Support.BObject;
 
 import Be.App.Message;
+import Be.App.Messenger;
 import Be.App.Looper;
 import Be.App.Handler;
 import Be.App.Cursor;
@@ -21,6 +22,18 @@ import tango.stdc.stringz;
 import tango.stdc.stdlib;
 
 struct app_info { }
+
+extern (C) {
+	void * get_be_app_messenger();
+	void * get_be_app();
+}
+
+BMessenger be_app_messenger;
+BApplication be_app;
+
+static this() {
+
+}
 
 extern (C) extern {
 	// BApplicationProxy * be_BApplication_ctor(void *bindInstPtr, const char* signature);
@@ -296,7 +309,7 @@ interface IBApplication
 	void _OwnsPtr(bool value);
 }
 
-class BApplication : IBApplication
+class BApplication : BLooper, IBApplication
 {
 private:
 	void *fInstancePointer = null;
@@ -309,6 +322,11 @@ public:
 			_InstPtr = be_BApplication_ctor(cast(void *)this, toStringz(signature));
 			_OwnsPtr = true;
 		}
+
+		be_app_messenger = new BMessenger(get_be_app_messenger(), false);
+		be_app = new BApplication(get_be_app(), false);
+		
+		super();
 	}
 
 	// BApplicationProxy * be_BApplication_ctor_1(void *bindInstPtr, const char* signature, status_t* error);
@@ -317,6 +335,11 @@ public:
 			_InstPtr = be_BApplication_ctor_1(cast(void *)this, toStringz(signature), &error);
 			_OwnsPtr = true;
 		}
+
+		be_app_messenger = new BMessenger(get_be_app_messenger(), false);
+		be_app = new BApplication(get_be_app(), false);
+		
+		super();
 	}
 
 	// BApplicationProxy * be_BApplication_ctor_2(void *bindInstPtr, BMessage* data);
@@ -325,6 +348,11 @@ public:
 			_InstPtr = be_BApplication_ctor_2(cast(void *)this, data._InstPtr);
 			_OwnsPtr = true;
 		}
+
+		be_app_messenger = new BMessenger(get_be_app_messenger(), false);
+		be_app = new BApplication(get_be_app(), false);
+		
+		super();
 	}
 
 	// void be_BApplication_dtor(BApplication* self);
