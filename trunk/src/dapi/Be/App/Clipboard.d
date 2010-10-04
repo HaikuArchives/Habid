@@ -16,7 +16,7 @@ import Be.Support.HelperFunctions;
 import tango.stdc.stringz;
 
 
-const B_CLIPBOARD_CHANGED = MakeValue("CLCH");
+const B_CLIPBOARD_CHANGED = MakeValue!("CLCH");
 
 
 

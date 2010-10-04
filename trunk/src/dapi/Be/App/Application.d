@@ -13,6 +13,7 @@ import Be.App.Messenger;
 import Be.App.Looper;
 import Be.App.Handler;
 import Be.App.Cursor;
+import Be.App.Roster;
 
 import Be.Support.Archivable;
 
@@ -20,8 +21,6 @@ import Be.Kernel.OS;
 
 import tango.stdc.stringz;
 import tango.stdc.stdlib;
-
-struct app_info { }
 
 extern (C) {
 	void * get_be_app_messenger();

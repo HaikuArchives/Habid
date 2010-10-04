@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="PropertyInfo.h" type="system" target="header"/>
+	<Includefile name="Support/Flattenable.h" type="system" target="header"/>
+	<Includefile name="App/PropertyInfo.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BPropertyInfo">
+		<Inherits name="BFlattenable" access="public"/>
+
+		<Function name="" returns="" arguments="property_info* prop, value_info* value, bool freeOnDelete" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+
+		<Function name="FindMatch" returns="int32" arguments="BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* prop, void* data" type="Virtual" mod=""/>
+
+		<Function name="IsFixedSize" returns="bool" arguments="" type="Virtual" mod="const"/>
+		<Function name="TypeCode" returns="type_code" arguments="" type="Virtual" mod="const"/>
+		<Function name="FlattenedSize" returns="ssize_t" arguments="" type="Virtual" mod="const"/>
+		<Function name="Flatten" returns="status_t" arguments="void* buffer, ssize_t size" type="Virtual" mod="const"/>
+		<Function name="AllowsTypeCode" returns="bool" arguments="type_code code" type="Virtual" mod="const"/>
+		<Function name="Unflatten" returns="status_t" arguments="type_code code, const void* buffer, ssize_t size" type="Virtual" mod=""/>
+
+		<Function name="Properties" returns="const property_info*" arguments="" type="Final" mod="const"/>
+		<Function name="Values" returns="const value_info*" arguments="" type="Final" mod="const"/>
+		<Function name="CountProperties" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="CountValues" returns="int32" arguments="" type="Final" mod="const"/>
+
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

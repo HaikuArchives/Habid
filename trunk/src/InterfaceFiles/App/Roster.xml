@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Roster.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger"/>
+
+	<class name="BRoster">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="IsRunning" returns="bool" arguments="const char *mimeSig" type="Final" mod="const"/>
+		<Function name="IsRunning" returns="bool" arguments="entry_ref *_ref" type="Final" mod="const"/>
+		<Function name="TeamFor" returns="team_id" arguments="const char *mimeSig" type="Final" mod="const"/>
+		<Function name="TeamFor" returns="team_id" arguments="entry_ref *_ref" type="Final" mod="const"/>
+		<Function name="GetAppList" returns="void" arguments="BList *teamIDList" type="Final" mod="const"/>
+		<Function name="GetAppList" returns="void" arguments="const char *sig, BList *teamIDList" type="Final" mod="const"/>
+
+
+		<Function name="GetAppInfo" returns="status_t" arguments="const char *sig, app_info *info" type="Final" mod="const"/>
+		<Function name="GetAppInfo" returns="status_t" arguments="entry_ref *ref, app_info *info" type="Final" mod="const"/>
+		<Function name="GetRunningAppInfo" returns="status_t" arguments="team_id team, app_info *info" type="Final" mod="const"/>
+		<Function name="GetActiveAppInfo" returns="status_t" arguments="app_info *info" type="Final" mod="const"/>
+
+
+		<Function name="FindApp" returns="status_t" arguments="const char *mimeType, entry_ref *app" type="Final" mod="const"/>
+		<Function name="FindApp" returns="status_t" arguments="entry_ref *ref, entry_ref *app" type="Final" mod="const"/>
+
+
+		<Function name="Broadcast" returns="status_t" arguments="BMessage *message" type="Final" mod="const"/>
+		<Function name="Broadcast" returns="status_t" arguments="BMessage *message, BMessenger replyTo" type="Final" mod="const"/>
+
+
+		<Function name="StartWatching" returns="status_t" arguments="BMessenger target, uint32 eventMask" type="Final" mod="const"/>
+		<Function name="StopWatching" returns="status_t" arguments="BMessenger target" type="Final" mod="const"/>
+
+		<Function name="ActivateApp" returns="status_t" arguments="team_id team" type="Final" mod="const"/>
+
+		<Function name="Launch" returns="status_t" arguments="const char *mimeType, BMessage *initialMessage, team_id *appTeam" type="Final" mod="const"/>
+		<Function name="Launch" returns="status_t" arguments="const char *mimeType, BList *messageList, team_id *appTeam" type="Final" mod="const"/>
+		<Function name="Launch" returns="status_t" arguments="const char *mimeType, int argc, char **args, team_id *appTeam" type="Final" mod="const"/>
+		<Function name="Launch" returns="status_t" arguments="const entry_ref *ref, const BMessage *initialMessage, team_id *appTeam" type="Final" mod="const"/>
+		<Function name="Launch" returns="status_t" arguments="const entry_ref *ref, const BList *messageList, team_id *appTeam" type="Final" mod="const"/>
+		<Function name="Launch" returns="status_t" arguments="const entry_ref *ref, int argc, const char * const *args, team_id *appTeam" type="Final" mod="const"/>
+
+
+		<Function name="GetRecentDocuments" returns="void" arguments="BMessage *refList, int32 maxCount, const char *fileType, const char *appSig" type="Final" mod="const"/>
+		<Function name="GetRecentDocuments" returns="void" arguments="BMessage *refList, int32 maxCount, const char *fileTypes[], int32 fileTypesCount, const char *appSig" type="Final" mod="const"/>
+		<Function name="GetRecentFolders" returns="void" arguments="BMessage *refList, int32 maxCount, const char *appSig" type="Final" mod="const"/>
+		<Function name="GetRecentApps" returns="void" arguments="BMessage *refList, int32 maxCount" type="Final" mod="const"/>
+		<Function name="AddToRecentDocuments" returns="void" arguments="const entry_ref *doc, const char *appSig" type="Final" mod="const"/>
+		<Function name="AddToRecentFolders" returns="void" arguments="const entry_ref *folder, const char *appSig" type="Final" mod="const"/>
+
+		<Function name="Notify" returns="status_t" arguments="const BNotification& notification, bigtime_t timeout" type="Final" mod="const"/>
+	</class>
+</Flatten>
+
