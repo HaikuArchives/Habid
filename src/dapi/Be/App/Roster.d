@@ -23,17 +23,17 @@ import Be.Kernel.OS;
 import tango.stdc.stringz;
 
 struct app_info {
-	thread_id	thread;
-	team_id		team;
-	port_id		port;
-	uint32		flags;
+	thread_id	thread = -1;
+	team_id		team = -1;
+	port_id		port = -1;
+	uint32		flags = B_MULTIPLE_LAUNCH | B_ARGV_ONLY;
 	entry_ref	reference;
-	char		signature[B_MIME_TYPE_LENGTH];
+	char		signature[B_MIME_TYPE_LENGTH] = "\0";
 }
 
 // app flags
 const int32 B_SINGLE_LAUNCH			= 	(0x0);
-const int32  B_MULTIPLE_LAUNCH		=	(0x1);
+const int32 B_MULTIPLE_LAUNCH		=	(0x1);
 const int32 B_EXCLUSIVE_LAUNCH		=	(0x2);
 const int32 B_LAUNCH_MASK			=	(0x3);
 const int32 B_BACKGROUND_APP		=	(0x4);
