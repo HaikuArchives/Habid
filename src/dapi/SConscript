@@ -21,6 +21,8 @@ d_srcs = [
 	'Be/App/MessageRunner.d',
 	'Be/App/Notification.d',
 	'Be/App/Handler.d',
+	'Be/App/PropertyInfo.d',
+	'Be/App/Roster.d',
 
 	'Be/Kernel/OS.d',
 

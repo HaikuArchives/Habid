@@ -20,6 +20,8 @@ c_srcs = [
 	'App/MessageRunner.cpp',
 	'App/Notification.cpp',
 	'App/Handler.cpp',
+	'App/PropertyInfo.cpp',
+	'App/Roster.cpp',
 
 #	'Support/Autolock.cpp',
 	'Support/Archivable.cpp',
