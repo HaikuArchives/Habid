@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Input.h" type="system" target="source"/>
+
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BMessenger"/>
+
+	<class name="BInputDevice">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Name" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="Type" returns="input_device_type" arguments="" type="Final" mod="const"/>
+		<Function name="IsRunning" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="Start" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="Stop" returns="status_t" arguments="" type="Final" mod=""/>
+		<Function name="Control" returns="status_t" arguments="uint32 code, BMessage* message" type="Final" mod=""/>
+
+		<Function name="Start" returns="status_t" arguments="input_device_type type" type="static" mod=""/>
+		<Function name="Stop" returns="status_t" arguments="input_device_type type" type="static" mod=""/>
+		<Function name="Control" returns="status_t" arguments="input_device_type type, uint32 code, BMessage* message" type="static" mod=""/>
+	</class>
+</Flatten>
+
