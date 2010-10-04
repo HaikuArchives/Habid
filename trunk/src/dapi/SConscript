@@ -8,6 +8,7 @@ d_srcs = [
 	'Be/Interface/Region.d',
 	'Be/Interface/Alignment.d',
 	'Be/Interface/InterfaceDefs.d',
+	'Be/Interface/Input.d',
 
 	'Be/App/Application.d',
 	'Be/App/Clipboard.d',

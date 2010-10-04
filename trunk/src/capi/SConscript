@@ -7,6 +7,7 @@ c_srcs = [
 	'Interface/Polygon.cpp',
 	'Interface/Region.cpp',
 	'Interface/Alignment.cpp',
+	'Interface/Input.cpp',
 
 	'App/Application.cpp',
 	'App/Clipboard.cpp',
