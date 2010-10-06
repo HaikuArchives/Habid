@@ -10,7 +10,9 @@ d_srcs = [
 	'Be/Interface/InterfaceDefs.d',
 	'Be/Interface/Input.d',
 	'Be/Interface/View.d',
+	'Be/Interface/Window.d',
 
+	'Be/App/AppDefs.d',
 	'Be/App/Application.d',
 	'Be/App/Clipboard.d',
 	'Be/App/Cursor.d',

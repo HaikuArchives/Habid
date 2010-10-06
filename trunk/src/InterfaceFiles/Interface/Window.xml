@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Window.h" type="system" target="header"/>
+	<Includefile name="App/Looper.h" type="local" target="header"/>
+	<Includefile name="Interface/Window.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BPoint BRect BSize "/>
+
+	<class name="BWindow">
+		<Inherits name="BLooper" access="public"/>
+
+		<Function name="" returns="" arguments="BMessage* archive" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BRect frame, const char* title, window_type type, uint32 flags, uint32 workspace" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BRect frame, const char* title, window_look look, window_feel feel, uint32 flags, uint32 workspace" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable *" arguments="BMessage* archive" type="static" mod=""/>
+
+		<Function name="Archive" returns="status_t" arguments="BMessage* archive, bool deep" type="Virtual" mod="const"/>
+
+		<Function name="Quit" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="Close" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="AddChild" returns="void" arguments="BView* child, BView* before" type="Final" mod=""/>
+		<Function name="AddChild" returns="void" arguments="BLayoutItem* child" type="Final" mod=""/>
+		<Function name="RemoveChild" returns="bool" arguments="BView* child" type="Final" mod=""/>
+		<Function name="CountChildren" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="ChildAt" returns="BView*" arguments="int32 index" type="Final" mod="const"/>
+
+		<Function name="DispatchMessage" returns="void" arguments="BMessage* message, BHandler* handler" type="Virtual" mod=""/>
+		<Function name="MessageReceived" returns="void" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="FrameMoved" returns="void" arguments="BPoint newPosition" type="Virtual" mod=""/>
+		<Function name="WorkspacesChanged" returns="void" arguments="uint32 oldWorkspaces, uint32 newWorkspaces" type="Virtual" mod=""/>
+		<Function name="WorkspaceActivated" returns="void" arguments="int32 workspace, bool state" type="Virtual" mod=""/>
+		<Function name="FrameResized" returns="void" arguments="float newWidth, float newHeight" type="Virtual" mod=""/>
+		<Function name="Minimize" returns="void" arguments="bool minimize" type="Virtual" mod=""/>
+		<Function name="Zoom" returns="void" arguments="BPoint origin, float width, float height" type="Virtual" mod=""/>
+		<Function name="Zoom" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="SetZoomLimits" returns="void" arguments="float maxWidth, float maxHeight" type="Final" mod=""/>
+		<Function name="ScreenChanged" returns="void" arguments="BRect screenSize, color_space format" type="Virtual" mod=""/>
+
+		<Function name="SetPulseRate" returns="void" arguments="bigtime_t rate" type="Final" mod=""/>
+		<Function name="PulseRate" returns="bigtime_t" arguments="" type="Final" mod="const"/>
+
+		<Function name="AddShortcut" returns="void" arguments="uint32 key, uint32 modifiers, BMessage* message" type="Final" mod=""/>
+		<Function name="AddShortcut" returns="void" arguments="uint32 key, uint32 modifiers, BMessage* message, BHandler* target" type="Final" mod=""/>
+		<Function name="RemoveShortcut" returns="void" arguments="uint32 key, uint32 modifiers" type="Final" mod=""/>
+
+		<Function name="SetDefaultButton" returns="void" arguments="BButton* button" type="Final" mod=""/>
+		<Function name="DefaultButton" returns="BButton*" arguments="" type="Final" mod="const"/>
+
+		<Function name="MenusBeginning" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="MenusEnded" returns="void" arguments="" type="Virtual" mod=""/>
+
+		<Function name="NeedsUpdate" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="UpdateIfNeeded" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="FindView" returns="BView*" arguments="const char* viewName" type="Final" mod="const"/>
+		<Function name="FindView" returns="BView*" arguments="BPoint pt" type="Final" mod="const"/>
+		<Function name="CurrentFocus" returns="BView*" arguments="" type="Final" mod="const"/>
+
+		<Function name="Activate" returns="void" arguments="bool state" type="Final" mod=""/>
+		<Function name="WindowActivated" returns="void" arguments="bool state" type="Virtual" mod=""/>
+
+		<Function name="ConvertToScreen" returns="void" arguments="BPoint* point" type="Final" mod="const"/>
+		<Function name="ConvertToScreen" returns="BPoint" arguments="BPoint point" type="Final" mod="const"/>
+		<Function name="ConvertFromScreen" returns="void" arguments="BPoint* point" type="Final" mod="const"/>
+		<Function name="ConvertFromScreen" returns="BPoint" arguments="BPoint*point" type="Final" mod="const"/>
+		<Function name="ConvertToScreen" returns="void" arguments="BRect* rect" type="Final" mod="const"/>
+		<Function name="ConvertToScreen" returns="BRect" arguments="BRect rect" type="Final" mod="const"/>
+		<Function name="ConvertFromScreen" returns="void" arguments="BRect* rect" type="Final" mod="const"/>
+		<Function name="ConvertFromScreen" returns="BRect" arguments="BRect rect" type="Final" mod="const"/>
+
+		<Function name="MoveBy" returns="void" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="MoveTo" returns="void" arguments="BPoint pt" type="Final" mod=""/>
+		<Function name="MoveTo" returns="void" arguments="float x, float y" type="Final" mod=""/>
+		<Function name="ResizeBy" returns="void" arguments="float dx, float dy" type="Final" mod=""/>
+		<Function name="ResizeTo" returns="void" arguments="float width, float height" type="Final" mod=""/>
+
+		<Function name="CenterIn" returns="void" arguments="const BRect& rect" type="Final" mod=""/>
+		<Function name="CenterOnScreen" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Show" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="Hide" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="IsHidden" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsMinimized" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="Flush" returns="void" arguments="" type="Final" mod="const"/>
+		<Function name="Sync" returns="void" arguments="" type="Final" mod="const"/>
+
+		<Function name="SendBehind" returns="status_t" arguments="const BWindow* window" type="Final" mod=""/>
+
+		<Function name="DisableUpdates" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="EnableUpdates" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="BeginViewTransaction" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="EndViewTransaction" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="InViewTransaction" returns="void" arguments="" type="Final" mod="const"/>
+
+		<Function name="Bounds" returns="BRect" arguments="" type="Final" mod="const"/>
+		<Function name="Frame" returns="BRect" arguments="" type="Final" mod="const"/>
+		<Function name="DecoratorFrame" returns="BRect" arguments="" type="Final" mod="const"/>
+		<Function name="Size" returns="BSize" arguments="" type="Final" mod="const"/>
+		<Function name="Title" returns="const char*" arguments="" type="Final" mod="const"/>
+		<Function name="SetTitle" returns="void" arguments="const char* title" type="Final" mod="const"/>
+		<Function name="IsFront" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsActive" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetKeyMenuBar" returns="void" arguments="BMenuBar* bar" type="Final" mod=""/>
+		<Function name="KeyMenuBar" returns="BMenuBar*" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetSizeLimits" returns="void" arguments="float minWidth, float maxWidth, float minHeight, float maxHeight" type="Final" mod=""/>
+		<Function name="GetSizeLimits" returns="void" arguments="float* minWidth, float* maxWidth, float* minHeight, float* maxHeight" type="Final" mod=""/>
+
+		<Function name="SetDecoratorSettings" returns="status_t" arguments="const BMessage& settings" type="Final" mod=""/>
+		<Function name="GetDecoratorSettings" returns="status_t" arguments="BMessage* settings" type="Final" mod="const"/>
+
+		<Function name="Workspaces" returns="uint32" arguments="" type="Final" mod="const"/>
+		<Function name="SetWorkspaces" returns="void" arguments="uint32 workspace" type="Final" mod=""/>
+
+		<Function name="LastMouseMovedView" returns="BView*" arguments="" type="Final" mod="const"/>
+
+		<Function name="ResolveSpecifier" returns="BHandler*" arguments="BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property" type="Virtual" mod=""/>
+		<Function name="GetSupportedSuites" returns="status_t" arguments="BMessage* data" type="Virtual" mod=""/>
+
+
+		<Function name="AddToSubset" returns="status_t" arguments="BWindow* window" type="Final" mod=""/>
+		<Function name="RemoveFromSubset" returns="status_t" arguments="BWindow* window" type="Final" mod=""/>
+
+		<Function name="Perform" returns="status_t" arguments="perform_code code, void* data" type="Virtual" mod=""/>
+
+		<Function name="SetType" returns="status_t" arguments="window_type type" type="Final" mod=""/>
+		<Function name="Type" returns="window_type" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetLook" returns="status_t" arguments="window_look look" type="Final" mod=""/>
+		<Function name="Look" returns="window_look" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetFeel" returns="status_t" arguments="window_feel feel" type="Final" mod=""/>
+		<Function name="Feel" returns="window_feel" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetFlags" returns="status_t" arguments="uint32 flags" type="Final" mod=""/>
+		<Function name="Flags" returns="uint32" arguments="" type="Final" mod="const"/>
+
+		<Function name="IsModal" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsFloating" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetWindowAlignment" returns="status_t" arguments="window_alignment mode, int32 h, int32 hOffset, int32 width, int32 widthOffset, int32 v, int32 vOffset, int32 height, int32 heightOffset" type="Final" mod=""/>
+		<Function name="GetWindowAlignment" returns="status_t" arguments="window_alignment* mode, int32* h, int32* hOffset, int32* width, int32* widthOffset, int32* v, int32* vOffset, int32* height, int32* heightOffset" type="Final" mod=""/>
+
+		<Function name="QuitRequested" returns="bool" arguments="" type="Virtual" mod=""/>
+		<Function name="Run" returns="thread_id" arguments="" type="Virtual" mod=""/>
+
+		<Function name="SetLayout" returns="void" arguments="BLayout* layout" type="Virtual" mod=""/>
+		<Function name="GetLayout" returns="BLayout*" arguments="" type="Final" mod="const"/>
+
+		<Function name="InvalidateLayout" returns="void" arguments="bool descendants" type="Final" mod=""/>
+	</class>
+</Flatten>
+

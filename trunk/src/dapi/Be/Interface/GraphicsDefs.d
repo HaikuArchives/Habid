@@ -1,5 +1,5 @@
 /*
- * Copyright 2010 Your Name <your@email.address>
+ * Copyright 2010 Tomas Wilhelmsson <tomas.wilhelmsson@gmail.com>
  * All rights reserved. Distributed under the terms of the MIT license.
  */
 module Be.Interface.GraphicsDefs;
