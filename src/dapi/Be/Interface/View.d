@@ -1829,6 +1829,7 @@ public:
 
 	// void be_BView_AddChild(BView *self, BView* child, BView* before);
 	void AddChild(BView child, BView before) {
+		child._OwnsPtr = false; // BView owns this now
 		be_BView_AddChild(_InstPtr(), child._InstPtr, before._InstPtr);
 	}
 
@@ -1840,6 +1841,7 @@ public:
 */
 	// bool be_BView_RemoveChild(BView *self, BView* child);
 	bool RemoveChild(BView child) {
+		child._OwnsPtr = true; // Ok we own it again :P
 		return be_BView_RemoveChild(_InstPtr(), child._InstPtr);
 	}
 
