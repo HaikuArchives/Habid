@@ -39,7 +39,8 @@ typedef volatile unsigned short vushort;
 typedef volatile unsigned char  vuchar;
 */
 
-alias ushort          unichar;
+alias ubyte				uchar;
+alias ushort          	unichar;
 
 
 alias int32                   status_t;
