@@ -1741,7 +1741,7 @@ interface IBView
 	void _OwnsPtr(bool value);
 }
 
-class BView : IBView
+class BView : BHandler, IBView
 {
 private:
 	void *fInstancePointer = null;

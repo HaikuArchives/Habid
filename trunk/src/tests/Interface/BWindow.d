@@ -61,12 +61,13 @@ class MyWindow : BWindow
 {
 public:
 	this(BRect frame, char [] title) {
-		super(frame, title, window_type.B_TITLED_WINDOW, 0);
+		super(frame, title, window_type.B_TITLED_WINDOW, B_QUIT_ON_WINDOW_CLOSE);
 	}
 	
 	bool QuitRequested() {
 		Stdout.formatln("BWindow::QuitRequested");
-		be_app_messenger.SendMessage(B_QUIT_REQUESTED);
+		/* Do not need to call this if we have B_QUIT_ON_WINDOW_CLOSE */
+//		be_app_messenger.SendMessage(B_QUIT_REQUESTED);
 		return super.QuitRequested();
 	}
 }
