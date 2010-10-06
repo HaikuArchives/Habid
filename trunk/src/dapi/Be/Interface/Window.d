@@ -881,6 +881,7 @@ public:
 
 	// void be_BWindow_AddChild(BWindow *self, BView* child, BView* before);
 	void AddChild(BView child, BView before) {
+		child._OwnsPtr = false; // Turn over the power to the BWindow..
 		be_BWindow_AddChild(_InstPtr(), child._InstPtr, before._InstPtr);
 	}
 /*
@@ -891,6 +892,7 @@ public:
 */
 	// bool be_BWindow_RemoveChild(BWindow *self, BView* child);
 	bool RemoveChild(BView child) {
+		child._OwnsPtr = true; // We got the power back, so we manage the memeory
 		return be_BWindow_RemoveChild(_InstPtr(), child._InstPtr);
 	}
 
