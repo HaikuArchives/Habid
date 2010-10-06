@@ -4,6 +4,8 @@
  */
 module Be.App.Application;
 
+public import Be.App.AppDefs;
+
 import Be.Support.SupportDefs;
 import Be.Support.types;
 import Be.Support.BObject;
