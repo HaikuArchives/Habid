@@ -192,10 +192,10 @@ interface IBNode
 	status_t RewindAttrs();
 
 	// status_t be_BNode_WriteAttrString(BNode *self, const char * name, const BString * data);
-	status_t WriteAttrString(char [], IBString);
+	status_t WriteAttrString(char [], BString);
 
 	// status_t be_BNode_ReadAttrString(BNode *self, const char * name, BString * result);
-	status_t ReadAttrString(char [], IBString);
+	status_t ReadAttrString(char [], BString);
 
 	// BNode & be_BNode_opAssign(BNode *self, const BNode & node);
 	//BNode & opAssign();
@@ -380,12 +380,12 @@ public:
 	}
 
 	// status_t be_BNode_WriteAttrString(BNode *self, const char * name, const BString * data);
-	status_t WriteAttrString(char [] name, IBString data) {
+	status_t WriteAttrString(char [] name, BString data) {
 		return be_BNode_WriteAttrString(_InstPtr(), toStringz(name), data._InstPtr());
 	}
 
 	// status_t be_BNode_ReadAttrString(BNode *self, const char * name, BString * result);
-	status_t ReadAttrString(char [] name, IBString result) {
+	status_t ReadAttrString(char [] name, BString result) {
 		return be_BNode_ReadAttrString(_InstPtr(), toStringz(name), result._InstPtr());
 	}
 

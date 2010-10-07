@@ -101,86 +101,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBVolume
-{
-	// status_t be_BVolume_InitCheck(BVolume *self);
-	status_t InitCheck();
-
-	// status_t be_BVolume_SetTo(BVolume *self, dev_t device);
-	status_t SetTo(dev_t);
-
-	// void be_BVolume_Unset(BVolume *self);
-	void Unset();
-
-	// dev_t be_BVolume_Device(BVolume *self);
-	dev_t Device();
-
-	// status_t be_BVolume_GetRootDirectory(BVolume *self, BDirectory* directory);
-	status_t GetRootDirectory(IBDirectory);
-
-	// off_t be_BVolume_Capacity(BVolume *self);
-	off_t Capacity();
-
-	// off_t be_BVolume_FreeBytes(BVolume *self);
-	off_t FreeBytes();
-
-	// off_t be_BVolume_BlockSize(BVolume *self);
-	off_t BlockSize();
-
-	// status_t be_BVolume_GetName(BVolume *self, char* name);
-	status_t GetName(inout char []);
-
-	// status_t be_BVolume_SetName(BVolume *self, const char* name);
-	status_t SetName(char []);
-
-	// status_t be_BVolume_GetIcon(BVolume *self, BBitmap* icon, icon_size which);
-//	status_t GetIcon(IBBitmap, icon_size);
-
-	// status_t be_BVolume_GetIcon_1(BVolume *self, uint8** _data, size_t* _size, type_code* _type);
-//	status_t GetIcon(inout uint8 [], inout size_t, inout type_code);
-
-	// bool be_BVolume_IsRemovable(BVolume *self);
-	bool IsRemovable();
-
-	// bool be_BVolume_IsReadOnly(BVolume *self);
-	bool IsReadOnly();
-
-	// bool be_BVolume_IsPersistent(BVolume *self);
-	bool IsPersistent();
-
-	// bool be_BVolume_IsShared(BVolume *self);
-	bool IsShared();
-
-	// bool be_BVolume_KnowsMime(BVolume *self);
-	bool KnowsMime();
-
-	// bool be_BVolume_KnowsAttr(BVolume *self);
-	bool KnowsAttr();
-
-	// bool be_BVolume_KnowsQuery(BVolume *self);
-	bool KnowsQuery();
-
-	// bool be_BVolume_opEquals(BVolume *self, const BVolume& volume);
-	//bool opEquals();
-
-	// bool be_BVolume_opNotEquals(BVolume *self, const BVolume& volume);
-	//bool opNotEquals();
-
-	// BVolume & be_BVolume_opAssign(BVolume *self, const BVolume& volume);
-	//BVolume & opAssign();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BVolume : IBVolume
+final class BVolume
 {
 private:
 	void *fInstancePointer = null;
@@ -204,7 +125,7 @@ public:
 	}
 
 	// BVolume* be_BVolume_ctor_2(void *bindInstPtr, const BVolume* volume);
-	this(IBVolume volume) {
+	this(BVolume volume) {
 		if(_InstPtr is null) {
 			_InstPtr = be_BVolume_ctor_2(cast(void *)this, volume._InstPtr());
 			_OwnsPtr = true;

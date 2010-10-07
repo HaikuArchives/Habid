@@ -105,103 +105,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-interface IBList
-{
-	// BList & be_BList_opAssign(BList *self, const BList& other);
-	//BList & opAssign();
-
-	// bool be_BList_opEquals(BList *self, const BList& other);
-	//bool opEquals();
-
-	// bool be_BList_opNotEquals(BList *self, const BList& other);
-	//bool opNotEquals();
-
-	// bool be_BList_AddItem(BList *self, void * item, int32 index);
-	bool AddItem(void *, int32);
-
-	// bool be_BList_AddItem_1(BList *self, void * item);
-	bool AddItem(void *);
-
-	// bool be_BList_AddList(BList *self, const BList * list, int32 index);
-	bool AddList(IBList, int32);
-
-	// bool be_BList_AddList_1(BList *self, const BList * list);
-	bool AddList(IBList);
-
-	// bool be_BList_RemoveItem(BList *self, void * item);
-	bool RemoveItem(void *);
-
-	// void * be_BList_RemoveItem_1(BList *self, int32 index);
-	void * RemoveItem(int32);
-
-	// bool be_BList_RemoveItems(BList *self, int32 index, int32 count);
-	bool RemoveItems(int32, int32);
-
-	// bool be_BList_ReplaceItem(BList *self, int32 index, void * newItem);
-	bool ReplaceItem(int32, void *);
-
-	// void be_BList_MakeEmpty(BList *self);
-	void MakeEmpty();
-
-	// void be_BList_SortItems(BList *self, int (*comparefunc)(const void *, const void *));
-//	void SortItems();
-
-	// bool be_BList_SwapItems(BList *self, int32 indexA, int32 indexB);
-	bool SwapItems(int32, int32);
-
-	// bool be_BList_MoveItem(BList *self, int32 fromIndex, int32 toIndex);
-	bool MoveItem(int32, int32);
-
-	// void * be_BList_ItemAt(BList *self, int32 index);
-	void * ItemAt(int32);
-
-	// void * be_BList_FirstItem(BList *self);
-	void * FirstItem();
-
-	// void * be_BList_ItemAtFast(BList *self, int32 index);
-	void * ItemAtFast(int32);
-
-	// void be_BList_LastItem(BList *self);
-	void LastItem();
-
-	// void * be_BList_Items(BList *self);
-	void * Items();
-
-	// bool be_BList_HasItem(BList *self, void * item);
-	bool HasItem(void *);
-
-	// bool be_BList_HasItem_1(BList *self, const void * item);
-//	bool HasItem();
-
-	// int32 be_BList_IndexOf(BList *self, void * item);
-	int32 IndexOf(void *);
-
-	// int32 be_BList_IndexOf_1(BList *self, const void * item);
-//	int32 IndexOf();
-
-	// int32 be_BList_CountItems(BList *self);
-	int32 CountItems();
-
-	// bool be_BList_IsEmpty(BList *self);
-	bool IsEmpty();
-
-	// void be_BList_DoForEach(BList *self, bool (*func)(void *item));
-//	void DoForEach();
-
-	// void be_BList_DoForEach_1(BList *self, bool (*func)(void *item, void *arg2), void * arg2);
-//	void DoForEach();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BList : IBList
+final class BList
 {
 private:
 	void *fInstancePointer = null;
@@ -217,7 +121,7 @@ public:
 	}
 
 	// BList* be_BList_ctor_1(void *bindInstPtr, const BList * anotherList);
-	this(IBList anotherList) {
+	this(BList anotherList) {
 		if(_InstPtr is null) {
 			_InstPtr = be_BList_ctor_1(cast(void *)this, anotherList._InstPtr());
 			_OwnsPtr = true;
@@ -253,12 +157,12 @@ public:
 	}
 
 	// bool be_BList_AddList(BList *self, const BList * list, int32 index);
-	bool AddList(IBList list, int32 index) {
+	bool AddList(BList list, int32 index) {
 		return be_BList_AddList(_InstPtr(), list._InstPtr(), index);
 	}
 
 	// bool be_BList_AddList_1(BList *self, const BList * list);
-	bool AddList(IBList list) {
+	bool AddList(BList list) {
 		return be_BList_AddList_1(_InstPtr(), list._InstPtr());
 	}
 

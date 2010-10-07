@@ -42,38 +42,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBMessageRunner
-{
-	// status_t be_BMessageRunner_InitCheck(BMessageRunner *self);
-	status_t InitCheck();
-
-	// status_t be_BMessageRunner_SetInterval(BMessageRunner *self, bigtime_t interval);
-	status_t SetInterval(bigtime_t);
-
-	// status_t be_BMessageRunner_SetCount(BMessageRunner *self, int32 count);
-	status_t SetCount(int32);
-
-	// status_t be_BMessageRunner_GetInfo(BMessageRunner *self, bigtime_t * interval, int32 * count);
-	status_t GetInfo(inout bigtime_t, inout int32);
-
-	// status_t be_BMessageRunner_StartSending(BMessageRunner *self, BMessenger *target, const BMessage * message, bigtime_t interval, int32 count);
-//	status_t StartSending(BMessenger, BMessage, bigtime_t, int32);
-
-	// status_t be_BMessageRunner_StartSending_1(BMessageRunner *self, BMessenger *target, const BMessage * message, bigtime_t interval, int32 count, BMessenger *replyTo);
-//	status_t StartSending(BMessenger, BMessage, bigtime_t, int32, BMessenger);
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BMessageRunner : IBMessageRunner
+final class BMessageRunner
 {
 private:
 	void *fInstancePointer = null;

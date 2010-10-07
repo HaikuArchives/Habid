@@ -37,38 +37,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBVolumeRoster
-{
-	// status_t be_BVolumeRoster_GetNextVolume(BVolumeRoster *self, BVolume* volume);
-	status_t GetNextVolume(IBVolume);
-
-	// void be_BVolumeRoster_Rewind(BVolumeRoster *self);
-	void Rewind();
-
-	// status_t be_BVolumeRoster_GetBootVolume(BVolumeRoster *self, BVolume* volume);
-	status_t GetBootVolume(IBVolume);
-
-	// status_t be_BVolumeRoster_StartWatching(BVolumeRoster *self, BMessenger *messenger);
-//	status_t StartWatching(IBMessenger);
-
-	// void be_BVolumeRoster_StopWatching(BVolumeRoster *self);
-	void StopWatching();
-
-	// BMessenger * be_BVolumeRoster_Messenger(BVolumeRoster *self);
-//	BMessenger Messenger();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BVolumeRoster : IBVolumeRoster
+final class BVolumeRoster
 {
 private:
 	void *fInstancePointer = null;
@@ -93,7 +62,7 @@ public:
 	}
 
 	// status_t be_BVolumeRoster_GetNextVolume(BVolumeRoster *self, BVolume* volume);
-	status_t GetNextVolume(IBVolume volume) {
+	status_t GetNextVolume(BVolume volume) {
 		return be_BVolumeRoster_GetNextVolume(_InstPtr(), volume._InstPtr());
 	}
 
@@ -103,7 +72,7 @@ public:
 	}
 
 	// status_t be_BVolumeRoster_GetBootVolume(BVolumeRoster *self, BVolume* volume);
-	status_t GetBootVolume(IBVolume volume) {
+	status_t GetBootVolume(BVolume volume) {
 		return be_BVolumeRoster_GetBootVolume(_InstPtr(), volume._InstPtr());
 	}
 

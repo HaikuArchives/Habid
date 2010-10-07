@@ -74,59 +74,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBMessenger
-{
-	// bool be_BMessenger_IsTargetLocal(BMessenger *self);
-	bool IsTargetLocal();
-
-	// BHandler * be_BMessenger_Target(BMessenger *self, BLooper ** looper);
-	BHandler Target(BLooper);
-
-	// bool be_BMessenger_LockTarget(BMessenger *self);
-	bool LockTarget();
-
-	// status_t be_BMessenger_LockTargetWithTimeout(BMessenger *self, bigtime_t timeout);
-	status_t LockTargetWithTimeout(bigtime_t);
-
-	// status_t be_BMessenger_SendMessage(BMessenger *self, uint32 command, BHandler * replyTo);
-	status_t SendMessage(uint32, BHandler);
-
-	// status_t be_BMessenger_SendMessage_1(BMessenger *self, BMessage * message, BHandler * replyTo, bigtime_t timeout);
-	status_t SendMessage(BMessage, BHandler, bigtime_t);
-
-	// status_t be_BMessenger_SendMessage_2(BMessenger *self, BMessage * message, BMessenger *replyTo, bigtime_t timeout);
-	status_t SendMessage(BMessage, BMessenger, bigtime_t);
-
-	// status_t be_BMessenger_SendMessage_3(BMessenger *self, uint32 command, BMessage * reply);
-	status_t SendMessage(uint32, BMessage);
-
-	// status_t be_BMessenger_SendMessage_4(BMessenger *self, BMessage * message, BMessage * reply, bigtime_t deliveryTimeout, bigtime_t replyTimeout);
-	status_t SendMessage(BMessage, BMessage, bigtime_t, bigtime_t);
-
-	// BMessenger & be_BMessenger_opAssign(BMessenger *self, const BMessenger & from);
-	//BMessenger & opAssign();
-
-	// bool be_BMessenger_opEquals(BMessenger *self, const BMessenger & other);
-	//bool opEquals();
-
-	// bool be_BMessenger_IsValid(BMessenger *self);
-	bool IsValid();
-
-	// team_id be_BMessenger_Team(BMessenger *self);
-	team_id Team();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BMessenger : IBMessenger
+final class BMessenger
 {
 private:
 	void *fInstancePointer = null;
