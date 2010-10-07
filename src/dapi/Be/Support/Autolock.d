@@ -34,21 +34,8 @@ extern (C) extern
 	void be_BAutolock_Unlock(void *self);
 }
 
-extern (C)
-{
-	
-}
 
-interface IBAutolock
-{
-	bool IsLocked();
-	bool Lock();
-	void Unlock();
-	
-	void * _GetInstPtr();
-}
-
-final class BAutolock : IBAutolock
+final class BAutolock
 {
 	mixin(BObject!());
 public:

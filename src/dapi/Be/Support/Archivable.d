@@ -62,19 +62,19 @@ extern (C) {
 interface IBArchivable
 {
 	// status_t be_BArchivable_Archive(BArchivable *self, BMessage* into, bool deep);
-	status_t Archive(IBMessage, bool);
+	status_t Archive(BMessage, bool);
 
 	// BArchivable * be_BArchivable_Instantiate(BArchivable *self, BMessage * archive);
-	static IBArchivable Instantiate(IBMessage);
+	static IBArchivable Instantiate(BMessage);
 
 	// status_t be_BArchivable_Perform(BArchivable *self, perform_code d, void* arg);
 	status_t Perform(perform_code, void*);
 
 	// status_t be_BArchivable_AllUnarchived(BArchivable *self, const BMessage* archive);
-	status_t AllUnarchived(IBMessage);
+	status_t AllUnarchived(BMessage);
 
 	// status_t be_BArchivable_AllArchived(BArchivable *self, BMessage* archive);
-	status_t AllArchived(IBMessage);
+	status_t AllArchived(BMessage);
 
 	void * _InstPtr();
 	void _InstPtr(void *ptr);
@@ -99,7 +99,7 @@ public:
 	}
 
 	// BArchivableProxy * be_BArchivable_ctor_1(void *bindInstPtr, BMessage* from);
-	this(IBMessage from) {
+	this(BMessage from) {
 		if(_InstPtr is null) {
 			_InstPtr = be_BArchivable_ctor_1(cast(void *)this, from._InstPtr());
 			_OwnsPtr = true;
@@ -116,12 +116,12 @@ public:
 	}
 
 	// status_t be_BArchivable_Archive(BArchivable *self, BMessage* into, bool deep);
-	status_t Archive(IBMessage into, bool deep = true) {
+	status_t Archive(BMessage into, bool deep = true) {
 		return be_BArchivable_Archive(_InstPtr(), into._InstPtr(), deep);
 	}
 
 	//BArchivable * be_BArchivable_Instantiate_static(BMessage * archive)
-	static IBArchivable Instantiate(IBMessage archive)
+	static IBArchivable Instantiate(BMessage archive)
 	{
 		return new BArchivable(archive._InstPtr(), true);
 	}
@@ -132,12 +132,12 @@ public:
 	}
 
 	// status_t be_BArchivable_AllUnarchived(BArchivable *self, const BMessage* archive);
-	status_t AllUnarchived(IBMessage archive) {
+	status_t AllUnarchived(BMessage archive) {
 		return be_BArchivable_AllUnarchived(_InstPtr(), archive._InstPtr());
 	}
 
 	// status_t be_BArchivable_AllArchived(BArchivable *self, BMessage* archive);
-	status_t AllArchived(IBMessage archive) {
+	status_t AllArchived(BMessage archive) {
 		return be_BArchivable_AllArchived(_InstPtr(), archive._InstPtr());
 	}
 

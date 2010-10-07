@@ -189,7 +189,7 @@ interface IBStatable
 	status_t SetAccessTime(time_t);
 
 	// status_t be_BStatable_GetVolume(BStatable *self, BVolume * vol);
-	status_t GetVolume(IBVolume);
+	status_t GetVolume(BVolume);
 
 	// status_t be_BStatable_set_stat(BStatable *self, struct stat & st, uint32 what);
 	status_t set_stat(stat_t, uint32);
@@ -321,7 +321,7 @@ public:
 	}
 
 	// status_t be_BStatable_GetVolume(BStatable *self, BVolume * vol);
-	status_t GetVolume(IBVolume vol) {
+	status_t GetVolume(BVolume vol) {
 		return be_BStatable_GetVolume(_InstPtr(), vol._InstPtr());
 	}
 

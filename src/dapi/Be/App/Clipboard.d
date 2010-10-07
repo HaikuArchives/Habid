@@ -72,61 +72,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBClipboard
-{
-	// const char* be_BClipboard_Name(BClipboard *self);
-	char [] Name();
-
-	// uint32 be_BClipboard_LocalCount(BClipboard *self);
-	uint32 LocalCount();
-
-	// uint32 be_BClipboard_SystemCount(BClipboard *self);
-	uint32 SystemCount();
-
-	// status_t be_BClipboard_StartWatching(BClipboard *self, BMessenger *target);
-	status_t StartWatching(BMessenger);
-
-	// status_t be_BClipboard_StopWatching(BClipboard *self, BMessenger *target);
-	status_t StopWatching(BMessenger);
-
-	// bool be_BClipboard_Lock(BClipboard *self);
-	bool Lock();
-
-	// void be_BClipboard_Unlock(BClipboard *self);
-	void Unlock();
-
-	// bool be_BClipboard_IsLocked(BClipboard *self);
-	bool IsLocked();
-
-	// status_t be_BClipboard_Clear(BClipboard *self);
-	status_t Clear();
-
-	// status_t be_BClipboard_Commit(BClipboard *self);
-	status_t Commit();
-
-	// status_t be_BClipboard_Commit_1(BClipboard *self, bool failIfChanged);
-	status_t Commit(bool);
-
-	// status_t be_BClipboard_Revert(BClipboard *self);
-	status_t Revert();
-
-	// BMessenger * be_BClipboard_DataSource(BClipboard *self);
-	BMessenger DataSource();
-
-	// BMessage* be_BClipboard_Data(BClipboard *self);
-	BMessage Data();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BClipboard : IBClipboard
+final class BClipboard
 {
 private:
 	void *fInstancePointer = null;

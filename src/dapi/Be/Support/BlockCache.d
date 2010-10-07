@@ -29,26 +29,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBBlockCache
-{
-	// void * be_BBlockCache_Get(BBlockCache *self, size_t blockSize);
-	void [] Get(size_t);
-
-	// void be_BBlockCache_Save(BBlockCache *self, void * pointer, size_t blockSize);
-	void Save(void *, size_t);
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BBlockCache : IBBlockCache
+final class BBlockCache
 {
 private:
 	void *fInstancePointer = null;

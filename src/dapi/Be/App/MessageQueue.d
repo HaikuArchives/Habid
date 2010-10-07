@@ -53,53 +53,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBMessageQueue
-{
-	// void be_BMessageQueue_AddMessage(BMessageQueue *self, BMessage* message);
-	void AddMessage(BMessage);
-
-	// void be_BMessageQueue_RemoveMessage(BMessageQueue *self, BMessage* message);
-	void RemoveMessage(BMessage);
-
-	// int32 be_BMessageQueue_CountMessages(BMessageQueue *self);
-	int32 CountMessages();
-
-	// bool be_BMessageQueue_IsEmpty(BMessageQueue *self);
-	bool IsEmpty();
-
-	// BMessage* be_BMessageQueue_FindMessage(BMessageQueue *self, int32 index);
-	BMessage FindMessage(int32);
-
-	// BMessage* be_BMessageQueue_FindMessage_1(BMessageQueue *self, uint32 what, int32 index);
-	BMessage FindMessage(uint32, int32);
-
-	// bool be_BMessageQueue_Lock(BMessageQueue *self);
-	bool Lock();
-
-	// void be_BMessageQueue_Unlock(BMessageQueue *self);
-	void Unlock();
-
-	// bool be_BMessageQueue_IsLocked(BMessageQueue *self);
-	bool IsLocked();
-
-	// BMessage * be_BMessageQueue_NextMessage(BMessageQueue *self);
-	BMessage NextMessage();
-
-	// bool be_BMessageQueue_IsNextMessage(BMessageQueue *self, const BMessage* message);
-	bool IsNextMessage(BMessage);
-	
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BMessageQueue : IBMessageQueue
+final class BMessageQueue
 {
 private:
 	void *fInstancePointer = null;

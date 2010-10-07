@@ -58,47 +58,7 @@ extern (C) extern {
 }
 
 
-extern (C) {
-}
-
-
-interface IBLocker
-{
-	// status_t be_BLocker_InitCheck(BLocker *self);
-	status_t InitCheck();
-
-	// bool be_BLocker_Lock(BLocker *self);
-	bool Lock();
-
-	// bool be_BLocker_LockWithTimeout(BLocker *self, bigtime_t timeout);
-	bool LockWithTimeout(bigtime_t timeout);
-
-	// void be_BLocker_Unlock(BLocker *self);
-	void Unlock();
-
-	// thread_id be_BLocker_LockingThread(BLocker *self);
-	thread_id LockingThread();
-
-	// bool be_BLocker_IsLocked(BLocker *self);
-	bool IsLocked();
-
-	// int32 be_BLocker_CountLocks(BLocker *self);
-	int32 CountLocks();
-
-	// int32 be_BLocker_CountLockRequests(BLocker *self);
-	int32 CountLockRequests();
-
-	// sem_id be_BLocker_Sem(BLocker *self);
-	sem_id Sem();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BLocker : IBLocker
+final class BLocker
 {
 private:
 	void *fInstancePointer = null;

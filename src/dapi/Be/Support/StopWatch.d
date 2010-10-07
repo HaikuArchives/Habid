@@ -40,39 +40,7 @@ extern (C) extern {
 
 }
 
-
-extern (C) {
-}
-
-
-interface IBStopWatch
-{
-	// void be_BStopWatch_Suspend(BStopWatch *self);
-	void Suspend();
-
-	// void be_BStopWatch_Resume(BStopWatch *self);
-	void Resume();
-
-	// bigtime_t be_BStopWatch_Lap(BStopWatch *self);
-	bigtime_t Lap();
-
-	// bigtime_t be_BStopWatch_ElapsedTime(BStopWatch *self);
-	bigtime_t ElapsedTime();
-
-	// void be_BStopWatch_Reset(BStopWatch *self);
-	void Reset();
-
-	// const char * be_BStopWatch_Name(BStopWatch *self);
-	char [] Name();
-
-	void * _InstPtr();
-	void _InstPtr(void *ptr);
-	
-	bool _OwnsPtr();
-	void _OwnsPtr(bool value);
-}
-
-final class BStopWatch : IBStopWatch
+final class BStopWatch
 {
 private:
 	void *fInstancePointer = null;

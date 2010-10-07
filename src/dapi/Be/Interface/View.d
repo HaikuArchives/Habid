@@ -1754,6 +1754,7 @@ public:
 			_InstPtr = be_BView_ctor(cast(void *)this, archive._InstPtr);
 			_OwnsPtr = true;
 		}
+		super();
 	}
 
 	// BViewProxy * be_BView_ctor_1(void *bindInstPtr, const char* name, uint32 flags, BLayout* layout);
@@ -1762,6 +1763,7 @@ public:
 			_InstPtr = be_BView_ctor_1(cast(void *)this, toStringz(name), flags, null);
 			_OwnsPtr = true;
 		}
+		super();
 	}
 
 	// BViewProxy * be_BView_ctor_2(void *bindInstPtr, BRect *frame, const char* name, uint32 resizeMask, uint32 flags);
@@ -1770,6 +1772,7 @@ public:
 			_InstPtr = be_BView_ctor_2(cast(void *)this, rect._InstPtr, toStringz(name), resizeMask, flags);
 			_OwnsPtr = true;
 		}
+		super();
 	}
 
 	// void be_BView_dtor(BView* self);

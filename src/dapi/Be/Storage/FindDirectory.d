@@ -104,7 +104,7 @@ status_t find_directory(directory_which which, dev_t volume, bool createIt, inou
 	return ret;
 }
 
-status_t find_directory(directory_which which, IBPath path, bool createIt = false, IBVolume volume = null) {
+status_t find_directory(directory_which which, IBPath path, bool createIt = false, BVolume volume = null) {
 	if(path is null)
 		return B_BAD_VALUE;
 		
