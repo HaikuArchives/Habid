@@ -10,6 +10,7 @@ import Be.Support.BObject;
 
 import Be.App.Message;
 import Be.App.Handler;
+import Be.App.Cursor;
 
 import Be.Interface.Rect;
 import Be.Interface.Point;
@@ -17,6 +18,7 @@ import Be.Interface.Polygon;
 import Be.Interface.Region;
 import Be.Interface.Alignment;
 import Be.Interface.Size;
+import Be.Interface.Window;
 
 import Be.Interface.GraphicsDefs;
 import Be.Interface.InterfaceDefs;
@@ -1082,7 +1084,7 @@ interface IBView
 
 
 	// BWindow* be_BView_Window(BView *self);
-//	BWindow* Window();
+	BWindow Window();
 
 	// void be_BView_Draw(BView *self, BRect *updateRect);
 	void Draw(BRect);
@@ -1146,138 +1148,138 @@ interface IBView
 
 	// BRect * be_BView_Frame(BView *self);
 	BRect Frame();
-/*
+
 	// void be_BView_ConvertToScreen(BView *self, BPoint* pt);
-	void ConvertToScreen();
+	void ConvertToScreen(BPoint pt);
 
 	// BPoint * be_BView_ConvertToScreen_1(BView *self, BPoint *pt);
-	BPoint ConvertToScreen();
+	BPoint ConvertToScreen(BPoint pt);
 
 	// void be_BView_ConvertFromScreen(BView *self, BPoint* pt);
-	void ConvertFromScreen();
+	void ConvertFromScreen(BPoint pt);
 
 	// BPoint * be_BView_ConvertFromScreen_1(BView *self, BPoint *pt);
-	BPoint ConvertFromScreen();
+	BPoint ConvertFromScreen(BPoint pt);
 
 	// void be_BView_ConvertToScreen_2(BView *self, BRect* r);
-	void ConvertToScreen();
+	void ConvertToScreen(BRect r);
 
 	// BRect * be_BView_ConvertToScreen_3(BView *self, BRect *r);
-	BRect ConvertToScreen();
+	BRect ConvertToScreen(BRect r);
 
 	// void be_BView_ConvertFromScreen_2(BView *self, BRect* r);
-	void ConvertFromScreen();
+	void ConvertFromScreen(BRect r);
 
 	// BRect * be_BView_ConvertFromScreen_3(BView *self, BRect *r);
-	BRect ConvertFromScreen();
+	BRect ConvertFromScreen(BRect r);
 
 	// void be_BView_ConvertToParent(BView *self, BPoint* pt);
-	void ConvertToParent();
+	void ConvertToParent(BPoint pt);
 
 	// BPoint * be_BView_ConvertToParent_1(BView *self, BPoint *pt);
-	BPoint ConvertToParent();
+	BPoint ConvertToParent(BPoint pt);
 
 	// void be_BView_ConvertFromParent(BView *self, BPoint* pt);
-	void ConvertFromParent();
+	void ConvertFromParent(BPoint pt);
 
 	// BPoint * be_BView_ConvertFromParent_1(BView *self, BPoint *pt);
-	BPoint ConvertFromParent();
+	BPoint ConvertFromParent(BPoint pt);
 
 	// void be_BView_ConvertToParent_2(BView *self, BRect* r);
-	void ConvertToParent();
+	void ConvertToParent(BRect r);
 
 	// BRect * be_BView_ConvertToParent_3(BView *self, BRect *r);
-	BRect ConvertToParent();
+	BRect ConvertToParent(BRect r);
 
 	// void be_BView_ConvertFromParent_2(BView *self, BRect* r);
-	void ConvertFromParent();
+	void ConvertFromParent(BRect r);
 
 	// BRect * be_BView_ConvertFromParent_3(BView *self, BRect *r);
-	BRect ConvertFromParent();
+	BRect ConvertFromParent(BRect r);
 
 	// BPoint * be_BView_LeftTop(BView *self);
 	BPoint LeftTop();
 
 	// void be_BView_GetClippingRegion(BView *self, BRegion* region);
-	void GetClippingRegion();
+	void GetClippingRegion(BRegion);
 
 	// void be_BView_ConstrainClippingRegion(BView *self, BRegion* region);
-	void ConstrainClippingRegion();
+	void ConstrainClippingRegion(BRegion);
 
 	// void be_BView_ClipToPicture(BView *self, BPicture* picture, BPoint *where, bool sync);
-	void ClipToPicture();
+//	void ClipToPicture(BPicture, BPoint, bool);
 
 	// void be_BView_ClipToPicture_1(BView *self, BPicture* picture, BPoint *where, bool sync);
-	void ClipToPicture();
+//	void ClipToPicture(BPicture, BPoint, bool);
 
 	// void be_BView_SetDrawingMode(BView *self, drawing_mode mode);
-	void SetDrawingMode();
+	void SetDrawingMode(drawing_mode);
 
 	// drawing_mode be_BView_DrawingMode(BView *self);
 	drawing_mode DrawingMode();
 
 	// void be_BView_SetBlendingMode(BView *self, source_alpha srcAlpha, alpha_function alphaFunc);
-	void SetBlendingMode();
+	void SetBlendingMode(source_alpha, alpha_function);
 
 	// void be_BView_GetBlendingMode(BView *self, source_alpha* srcAlpha, alpha_function* alphaFunc);
-	void GetBlendingMode();
+	void GetBlendingMode(inout source_alpha, inout alpha_function);
 
 	// void be_BView_SetPenSize(BView *self, float size);
-	void SetPenSize();
+	void SetPenSize(float);
 
 	// float be_BView_PenSize(BView *self);
 	float PenSize();
 
 	// void be_BView_SetViewCursor(BView *self, const BCursor* cursor, bool sync);
-	void SetViewCursor();
+	void SetViewCursor(BCursor, bool);
 
 	// void be_BView_SetViewColor(BView *self, rgb_color c);
-	void SetViewColor();
+	void SetViewColor(rgb_color);
 
 	// void be_BView_SetViewColor_1(BView *self, uchar r, uchar g, uchar b, uchar a);
-	void SetViewColor();
+	void SetViewColor(uchar, uchar, uchar, uchar);
 
 	// rgb_color be_BView_ViewColor(BView *self);
 	rgb_color ViewColor();
-
+/*
 	// void be_BView_SetViewBitmap(BView *self, const BBitmap* bitmap, BRect *srcRect, BRect *dstRect, uint32 followFlags, uint32 options);
-	void SetViewBitmap();
+	void SetViewBitmap(BBitmap, BRect, BRect, uint32, uint32);
 
 	// void be_BView_SetViewBitmap_1(BView *self, const BBitmap* bitmap, uint32 followFlags, uint32 options);
 	void SetViewBitmap();
-
+*/
 	// void be_BView_ClearViewBitmap(BView *self);
 	void ClearViewBitmap();
-
+/*
 	// status_t be_BView_SetViewOverlay(BView *self, const BBitmap* overlay, BRect *srcRect, BRect *dstRect, rgb_color* colorKey, uint32 followFlags, uint32 options);
 	status_t SetViewOverlay();
 
 	// status_t be_BView_SetViewOverlay_1(BView *self, const BBitmap* overlay, rgb_color* colorKey, uint32 followFlags, uint32 options);
 	status_t SetViewOverlay();
-
+*/
 	// void be_BView_ClearViewOverlay(BView *self);
 	void ClearViewOverlay();
 
 	// void be_BView_SetHighColor(BView *self, rgb_color a_color);
-	void SetHighColor();
+	void SetHighColor(rgb_color);
 
 	// void be_BView_SetHighColor_1(BView *self, uchar r, uchar g, uchar b, uchar a);
-	void SetHighColor();
+	void SetHighColor(uchar, uchar, uchar, uchar);
 
 	// rgb_color be_BView_HighColor(BView *self);
 	rgb_color HighColor();
 
 	// void be_BView_SetLowColor(BView *self, rgb_color a_color);
-	void SetLowColor();
+	void SetLowColor(rgb_color);
 
 	// void be_BView_SetLowColor_1(BView *self, uchar r, uchar g, uchar b, uchar a);
-	void SetLowColor();
+	void SetLowColor(uchar, uchar, uchar, uchar);
 
 	// rgb_color be_BView_LowColor(BView *self);
 	rgb_color LowColor();
 
 	// void be_BView_SetLineMode(BView *self, cap_mode lineCap, join_mode lineJoin, float miterLimit);
-	void SetLineMode();
+	void SetLineMode(cap_mode, join_mode, float);
 
 	// join_mode be_BView_LineJoinMode(BView *self);
 	join_mode LineJoinMode();
@@ -1289,10 +1291,10 @@ interface IBView
 	float LineMiterLimit();
 
 	// void be_BView_SetOrigin(BView *self, BPoint *pt);
-	void SetOrigin();
+	void SetOrigin(BPoint);
 
 	// void be_BView_SetOrigin_1(BView *self, float x, float y);
-	void SetOrigin();
+	void SetOrigin(float, float);
 
 	// BPoint * be_BView_Origin(BView *self);
 	BPoint Origin();
@@ -1304,143 +1306,143 @@ interface IBView
 	void PopState();
 
 	// void be_BView_MovePenTo(BView *self, BPoint *pt);
-	void MovePenTo();
+	void MovePenTo(BPoint);
 
 	// void be_BView_MovePenTo_1(BView *self, float x, float y);
-	void MovePenTo();
+	void MovePenTo(float, float);
 
 	// void be_BView_MovePenBy(BView *self, float x, float y);
-	void MovePenBy();
+	void MovePenBy(float, float);
 
 	// BPoint * be_BView_PenLocation(BView *self);
 	BPoint PenLocation();
 
 	// void be_BView_StrokeLine(BView *self, BPoint *toPt, pattern p);
-	void StrokeLine();
+	void StrokeLine(BPoint, pattern);
 
 	// void be_BView_StrokeLine_1(BView *self, BPoint *a, BPoint *b, pattern p);
-	void StrokeLine();
+	void StrokeLine(BPoint, BPoint, pattern);
 
 	// void be_BView_BeginLineArray(BView *self, int32 count);
-	void BeginLineArray();
+	void BeginLineArray(int32);
 
 	// void be_BView_AddLine(BView *self, BPoint *a, BPoint *b, rgb_color color);
-	void AddLine();
+	void AddLine(BPoint, BPoint, rgb_color);
 
 	// void be_BView_EndLineArray(BView *self);
 	void EndLineArray();
 
 	// void be_BView_StrokePolygon(BView *self, const BPolygon* polygon, bool closed, pattern p);
-	void StrokePolygon();
+	void StrokePolygon(BPolygon, bool, pattern);
 
 	// void be_BView_StrokePolygon_1(BView *self, const BPoint* ptArray, int32 numPts, bool closed, pattern p);
-	void StrokePolygon();
+//	void StrokePolygon(BPoint [], int32, bool, pattern);
 
 	// void be_BView_StrokePolygon_2(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, bool closed);
-	void StrokePolygon();
+//	void StrokePolygon(BPoint [], int32, BRect, bool);
 
 	// void be_BView_FillPolygon(BView *self, const BPolygon* polygon, pattern p);
-	void FillPolygon();
+	void FillPolygon(BPolygon, pattern);
 
 	// void be_BView_FillPolygon_1(BView *self, const BPoint* ptArray, int32 numPts, pattern p);
-	void FillPolygon();
+//	void FillPolygon(BPoint [], int32, pattern);
 
 	// void be_BView_FillPolygon_2(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, pattern p);
-	void FillPolygon();
+//	void FillPolygon(BPoint [], int32, BRect, pattern);
 
 	// void be_BView_FillPolygon_3(BView *self, const BPolygon* polygon, const BGradient& gradient);
-	void FillPolygon();
-
+//	void FillPolygon(BPolygon, BGradient);
+/*
 	// void be_BView_FillPolygon_4(BView *self, const BPoint* ptArray, int32 numPts, const BGradient& gradient);
-	void FillPolygon();
+	void FillPolygon(BPoint [], int32, BGradient);
 
 	// void be_BView_FillPolygon_5(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, const BGradient& gradient);
 	void FillPolygon();
-
+*/
 	// void be_BView_StrokeRect(BView *self, BRect *r, pattern p);
-	void StrokeRect();
+	void StrokeRect(BRect, pattern);
 
 	// void be_BView_FillRect(BView *self, BRect *r, pattern p);
-	void FillRect();
+	void FillRect(BRect, pattern);
 
 	// void be_BView_FillRect_1(BView *self, BRect *r, const BGradient& gradient);
-	void FillRect();
+//	void FillRect(BRect, BGradient);
 
 	// void be_BView_FillRegion(BView *self, BRegion* region, pattern p);
-	void FillRegion();
+	void FillRegion(BRegion, pattern);
 
 	// void be_BView_FillRegion_1(BView *self, BRegion* region, const BGradient& gradient);
-	void FillRegion();
+//	void FillRegion(BRegion, BGradient);
 
 	// void be_BView_InvertRect(BView *self, BRect *r);
-	void InvertRect();
+	void InvertRect(BRect);
 
 	// void be_BView_StrokeRoundRect(BView *self, BRect *r, float xRadius, float yRadius, pattern p);
-	void StrokeRoundRect();
+	void StrokeRoundRect(BRect, float, float, pattern);
 
 	// void be_BView_FillRoundRect(BView *self, BRect *r, float xRadius, float yRadius, pattern p);
-	void FillRoundRect();
+	void FillRoundRect(BRect, float, float, pattern);
 
 	// void be_BView_FillRoundRect_1(BView *self, BRect *r, float xRadius, float yRadius, const BGradient& gradient);
-	void FillRoundRect();
+//	void FillRoundRect(BRect, float float, BGradient);
 
 	// void be_BView_StrokeEllipse(BView *self, BPoint *center, float xRadius, float yRadius, pattern p);
-	void StrokeEllipse();
+	void StrokeEllipse(BPoint, float, float, pattern);
 
 	// void be_BView_StrokeEllipse_1(BView *self, BRect *r, pattern p);
-	void StrokeEllipse();
+	void StrokeEllipse(BRect, pattern);
 
 	// void be_BView_FillEllipse(BView *self, BPoint *center, float xRadius, float yRadius, pattern p);
-	void FillEllipse();
+	void FillEllipse(BPoint, float, float, pattern);
 
 	// void be_BView_FillEllipse_1(BView *self, BRect *r, pattern p);
-	void FillEllipse();
+	void FillEllipse(BRect, pattern);
 
 	// void be_BView_FillEllipse_2(BView *self, BPoint *center, float xRadius, float yRadius, const BGradient& gradient);
-	void FillEllipse();
+//	void FillEllipse(BPoint, float, float, BGradient);
 
 	// void be_BView_FillEllipse_3(BView *self, BRect *r, const BGradient& gradient);
-	void FillEllipse();
+//	void FillEllipse(BRect, BGradient);
 
 	// void be_BView_StrokeArc(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p);
-	void StrokeArc();
+	void StrokeArc(BPoint, float, float, float, float, pattern);
 
 	// void be_BView_StrokeArc_1(BView *self, BRect *r, float startAngle, float arcAngle, pattern p);
-	void StrokeArc();
+	void StrokeArc(BRect, float, float, pattern);
 
 	// void be_BView_FillArc(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p);
-	void FillArc();
+	void FillArc(BPoint, float, float, float, float, pattern);
 
 	// void be_BView_FillArc_1(BView *self, BRect *r, float startAngle, float arcAngle, pattern p);
-	void FillArc();
+	void FillArc(BRect, float, float, pattern);
 
 	// void be_BView_FillArc_2(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, const BGradient& gradient);
-	void FillArc();
+//	void FillArc(BPoint, float, float, float, float, BGradient);
 
 	// void be_BView_FillArc_3(BView *self, BRect *r, float startAngle, float arcAngle, const BGradient& gradient);
-	void FillArc();
+//	void FillArc(BRect, float, float, BGradient);
 
 	// void be_BView_StrokeBezier(BView *self, BPoint* controlPoints, pattern p);
-	void StrokeBezier();
+//	void StrokeBezier();
 
 	// void be_BView_FillBezier(BView *self, BPoint* controlPoints, pattern p);
-	void FillBezier();
+//	void FillBezier();
 
 	// void be_BView_FillBezier_1(BView *self, BPoint* controlPoints, const BGradient& gradient);
-	void FillBezier();
+//	void FillBezier();
 
 	// void be_BView_StrokeShape(BView *self, BShape* shape, pattern p);
-	void StrokeShape();
+//	void StrokeShape();
 
 	// void be_BView_FillShape(BView *self, BShape* shape, pattern p);
-	void FillShape();
+//	void FillShape();
 
 	// void be_BView_FillShape_1(BView *self, BShape* shape, const BGradient& gradien);
-	void FillShape();
+//	void FillShape();
 
 	// void be_BView_CopyBits(BView *self, BRect *src, BRect *dst);
-	void CopyBits();
-
+	void CopyBits(BRect, BRect);
+/*
 	// void be_BView_DrawBitmapAsync(BView *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect, uint32 options);
 	void DrawBitmapAsync();
 
@@ -1470,31 +1472,31 @@ interface IBView
 
 	// void be_BView_DrawBitmap_4(BView *self, const BBitmap* aBitmap);
 	void DrawBitmap();
-
+*/
 	// void be_BView_DrawChar(BView *self, char aChar);
-	void DrawChar();
+	void DrawChar(char);
 
 	// void be_BView_DrawChar_1(BView *self, char aChar, BPoint *location);
-	void DrawChar();
+	void DrawChar(char, BPoint);
 
 	// void be_BView_DrawString(BView *self, const char* string, escapement_delta* delta);
-	void DrawString();
+	void DrawString(char [], escapement_delta);
 
 	// void be_BView_DrawString_1(BView *self, const char* string, BPoint *location, escapement_delta* delta);
-	void DrawString();
+	void DrawString(char [], BPoint, escapement_delta);
 
 	// void be_BView_DrawString_2(BView *self, const char* string, int32 length, escapement_delta* delta);
-	void DrawString();
+	void DrawString(char [], int32, escapement_delta);
 
 	// void be_BView_DrawString_3(BView *self, const char* string, int32 length, BPoint *location, escapement_delta* delta);
-	void DrawString();
+	void DrawString(char [], int32, BPoint, escapement_delta);
 
 	// void be_BView_DrawString_4(BView *self, const char* string, const BPoint* locations, int32 locationCount);
-	void DrawString();
+//	void DrawString(char [], BPoint [], int32);
 
 	// void be_BView_DrawString_5(BView *self, const char* string, int32 length, const BPoint* locations, int32 locationCount);
-	void DrawString();
-
+//	void DrawString(char [], int32, BPoint [], int32);
+/*
 	// void be_BView_SetFont(BView *self, const BFont* font, uint32 mask);
 	void SetFont();
 
@@ -1872,13 +1874,12 @@ public:
 	bool RemoveSelf() {
 		return be_BView_RemoveSelf(_InstPtr());
 	}
-/*
 
 	// BWindow* be_BView_Window(BView *self);
-	BWindow* Window() {
-		return be_BView_Window(_InstPtr());
+	BWindow Window() {
+		return new BWindow(be_BView_Window(_InstPtr()), false);
 	}
-*/
+	
 	// void be_BView_Draw(BView *self, BRect *updateRect);
 	void Draw(BRect updateRect) {
 		be_BView_Draw(_InstPtr(), updateRect._InstPtr);
@@ -1985,115 +1986,115 @@ public:
 	BRect Frame() {
 		return new BRect(be_BView_Frame(_InstPtr()), false);
 	}
-/*
+
 	// void be_BView_ConvertToScreen(BView *self, BPoint* pt);
-	void ConvertToScreen() {
-		be_BView_ConvertToScreen(_InstPtr());
+	void ConvertToScreen(BPoint pt) {
+		be_BView_ConvertToScreen(_InstPtr(), pt._InstPtr);
 	}
 
 	// BPoint * be_BView_ConvertToScreen_1(BView *self, BPoint *pt);
-	BPoint ConvertToScreen() {
-		return be_BView_ConvertToScreen_1(_InstPtr());
+	BPoint ConvertToScreen(BPoint pt) {
+		return new BPoint(be_BView_ConvertToScreen_1(_InstPtr(), pt._InstPtr), true);
 	}
 
 	// void be_BView_ConvertFromScreen(BView *self, BPoint* pt);
-	void ConvertFromScreen() {
-		be_BView_ConvertFromScreen(_InstPtr());
+	void ConvertFromScreen(BPoint pt) {
+		be_BView_ConvertFromScreen(_InstPtr(), pt._InstPtr);
 	}
 
 	// BPoint * be_BView_ConvertFromScreen_1(BView *self, BPoint *pt);
-	BPoint ConvertFromScreen() {
-		return be_BView_ConvertFromScreen_1(_InstPtr());
+	BPoint ConvertFromScreen(BPoint pt) {
+		return new BPoint(be_BView_ConvertFromScreen_1(_InstPtr(), pt._InstPtr), true);
 	}
 
 	// void be_BView_ConvertToScreen_2(BView *self, BRect* r);
-	void ConvertToScreen() {
-		be_BView_ConvertToScreen_2(_InstPtr());
+	void ConvertToScreen(BRect r) {
+		be_BView_ConvertToScreen_2(_InstPtr(), r._InstPtr);
 	}
 
 	// BRect * be_BView_ConvertToScreen_3(BView *self, BRect *r);
-	BRect ConvertToScreen() {
-		return be_BView_ConvertToScreen_3(_InstPtr());
+	BRect ConvertToScreen(BRect r) {
+		return new BRect(be_BView_ConvertToScreen_3(_InstPtr(), r._InstPtr), true);
 	}
 
 	// void be_BView_ConvertFromScreen_2(BView *self, BRect* r);
-	void ConvertFromScreen() {
-		be_BView_ConvertFromScreen_2(_InstPtr());
+	void ConvertFromScreen(BRect r) {
+		be_BView_ConvertFromScreen_2(_InstPtr(), r._InstPtr);
 	}
 
 	// BRect * be_BView_ConvertFromScreen_3(BView *self, BRect *r);
-	BRect ConvertFromScreen() {
-		return be_BView_ConvertFromScreen_3(_InstPtr());
+	BRect ConvertFromScreen(BRect r) {
+		return new BRect(be_BView_ConvertFromScreen_3(_InstPtr(), r._InstPtr), true);
 	}
 
 	// void be_BView_ConvertToParent(BView *self, BPoint* pt);
-	void ConvertToParent() {
-		be_BView_ConvertToParent(_InstPtr());
+	void ConvertToParent(BPoint pt) {
+		be_BView_ConvertToParent(_InstPtr(), pt._InstPtr);
 	}
 
 	// BPoint * be_BView_ConvertToParent_1(BView *self, BPoint *pt);
-	BPoint ConvertToParent() {
-		return be_BView_ConvertToParent_1(_InstPtr());
+	BPoint ConvertToParent(BPoint pt) {
+		return new BPoint(be_BView_ConvertToParent_1(_InstPtr(), pt._InstPtr), true);
 	}
 
 	// void be_BView_ConvertFromParent(BView *self, BPoint* pt);
-	void ConvertFromParent() {
-		be_BView_ConvertFromParent(_InstPtr());
+	void ConvertFromParent(BPoint pt) {
+		be_BView_ConvertFromParent(_InstPtr(), pt._InstPtr);
 	}
 
 	// BPoint * be_BView_ConvertFromParent_1(BView *self, BPoint *pt);
-	BPoint ConvertFromParent() {
-		return be_BView_ConvertFromParent_1(_InstPtr());
+	BPoint ConvertFromParent(BPoint pt) {
+		return new BPoint(be_BView_ConvertFromParent_1(_InstPtr(), pt._InstPtr), true);
 	}
 
 	// void be_BView_ConvertToParent_2(BView *self, BRect* r);
-	void ConvertToParent() {
-		be_BView_ConvertToParent_2(_InstPtr());
+	void ConvertToParent(BRect r) {
+		be_BView_ConvertToParent_2(_InstPtr(), r._InstPtr);
 	}
 
 	// BRect * be_BView_ConvertToParent_3(BView *self, BRect *r);
-	BRect ConvertToParent() {
-		return be_BView_ConvertToParent_3(_InstPtr());
+	BRect ConvertToParent(BRect r) {
+		return new BRect(be_BView_ConvertToParent_3(_InstPtr(), r._InstPtr), true);
 	}
 
 	// void be_BView_ConvertFromParent_2(BView *self, BRect* r);
-	void ConvertFromParent() {
-		be_BView_ConvertFromParent_2(_InstPtr());
+	void ConvertFromParent(BRect r) {
+		be_BView_ConvertFromParent_2(_InstPtr(), r._InstPtr);
 	}
 
 	// BRect * be_BView_ConvertFromParent_3(BView *self, BRect *r);
-	BRect ConvertFromParent() {
-		return be_BView_ConvertFromParent_3(_InstPtr());
+	BRect ConvertFromParent(BRect r) {
+		return new BRect(be_BView_ConvertFromParent_3(_InstPtr(), r._InstPtr), true);
 	}
 
 	// BPoint * be_BView_LeftTop(BView *self);
 	BPoint LeftTop() {
-		return be_BView_LeftTop(_InstPtr());
+		return new BPoint(be_BView_LeftTop(_InstPtr()), true);
 	}
 
 	// void be_BView_GetClippingRegion(BView *self, BRegion* region);
-	void GetClippingRegion() {
-		be_BView_GetClippingRegion(_InstPtr());
+	void GetClippingRegion(BRegion region) {
+		be_BView_GetClippingRegion(_InstPtr(), region._InstPtr);
 	}
 
 	// void be_BView_ConstrainClippingRegion(BView *self, BRegion* region);
-	void ConstrainClippingRegion() {
-		be_BView_ConstrainClippingRegion(_InstPtr());
+	void ConstrainClippingRegion(BRegion region) {
+		be_BView_ConstrainClippingRegion(_InstPtr(), region._InstPtr);
 	}
-
+/*
 	// void be_BView_ClipToPicture(BView *self, BPicture* picture, BPoint *where, bool sync);
-	void ClipToPicture() {
-		be_BView_ClipToPicture(_InstPtr());
+	void ClipToPicture(BPicture picture, BPoint where, bool sync = true) {
+		be_BView_ClipToPicture(_InstPtr(), picture._InstPtr, where._InstPtr, sync);
 	}
 
 	// void be_BView_ClipToPicture_1(BView *self, BPicture* picture, BPoint *where, bool sync);
-	void ClipToPicture() {
-		be_BView_ClipToPicture_1(_InstPtr());
+	void ClipToPicture(BPicture picture, BPoint where, bool sync = true) {
+		be_BView_ClipToPicture_1(_InstPtr(), picture._InstPtr, where._InstPtr, sync);
 	}
-
+*/
 	// void be_BView_SetDrawingMode(BView *self, drawing_mode mode);
-	void SetDrawingMode() {
-		be_BView_SetDrawingMode(_InstPtr());
+	void SetDrawingMode(drawing_mode mode) {
+		be_BView_SetDrawingMode(_InstPtr(), mode);
 	}
 
 	// drawing_mode be_BView_DrawingMode(BView *self);
@@ -2102,18 +2103,18 @@ public:
 	}
 
 	// void be_BView_SetBlendingMode(BView *self, source_alpha srcAlpha, alpha_function alphaFunc);
-	void SetBlendingMode() {
-		be_BView_SetBlendingMode(_InstPtr());
+	void SetBlendingMode(source_alpha srcAlpha, alpha_function alphaFunc) {
+		be_BView_SetBlendingMode(_InstPtr(), srcAlpha, alphaFunc);
 	}
 
 	// void be_BView_GetBlendingMode(BView *self, source_alpha* srcAlpha, alpha_function* alphaFunc);
-	void GetBlendingMode() {
-		be_BView_GetBlendingMode(_InstPtr());
+	void GetBlendingMode(inout source_alpha srcAlpha, inout alpha_function alphaFunc) {
+		be_BView_GetBlendingMode(_InstPtr(), &srcAlpha, &alphaFunc);
 	}
 
 	// void be_BView_SetPenSize(BView *self, float size);
-	void SetPenSize() {
-		be_BView_SetPenSize(_InstPtr());
+	void SetPenSize(float size) {
+		be_BView_SetPenSize(_InstPtr(), size);
 	}
 
 	// float be_BView_PenSize(BView *self);
@@ -2122,27 +2123,27 @@ public:
 	}
 
 	// void be_BView_SetViewCursor(BView *self, const BCursor* cursor, bool sync);
-	void SetViewCursor() {
-		be_BView_SetViewCursor(_InstPtr());
+	void SetViewCursor(BCursor cursor, bool sync = true) {
+		be_BView_SetViewCursor(_InstPtr(), cursor._InstPtr, sync);
 	}
 
 	// void be_BView_SetViewColor(BView *self, rgb_color c);
-	void SetViewColor() {
-		be_BView_SetViewColor(_InstPtr());
+	void SetViewColor(rgb_color c) {
+		be_BView_SetViewColor(_InstPtr(), c);
 	}
 
 	// void be_BView_SetViewColor_1(BView *self, uchar r, uchar g, uchar b, uchar a);
-	void SetViewColor() {
-		be_BView_SetViewColor_1(_InstPtr());
+	void SetViewColor(uchar r, uchar g, uchar b, uchar a = 255) {
+		be_BView_SetViewColor_1(_InstPtr(), r, g, b, a);
 	}
 
 	// rgb_color be_BView_ViewColor(BView *self);
 	rgb_color ViewColor() {
 		return be_BView_ViewColor(_InstPtr());
 	}
-
+/*
 	// void be_BView_SetViewBitmap(BView *self, const BBitmap* bitmap, BRect *srcRect, BRect *dstRect, uint32 followFlags, uint32 options);
-	void SetViewBitmap() {
+	void SetViewBitmap(BBitmpa bitmap, BRect srcRect, BRect dstRect, uint32 followFlags = B_FOLLOW_TOP | B_FOLLOW_LEFT, uint32 options = B_TILE_BITMAP) {
 		be_BView_SetViewBitmap(_InstPtr());
 	}
 
@@ -2150,12 +2151,12 @@ public:
 	void SetViewBitmap() {
 		be_BView_SetViewBitmap_1(_InstPtr());
 	}
-
+*/
 	// void be_BView_ClearViewBitmap(BView *self);
 	void ClearViewBitmap() {
 		be_BView_ClearViewBitmap(_InstPtr());
 	}
-
+/*
 	// status_t be_BView_SetViewOverlay(BView *self, const BBitmap* overlay, BRect *srcRect, BRect *dstRect, rgb_color* colorKey, uint32 followFlags, uint32 options);
 	status_t SetViewOverlay() {
 		return be_BView_SetViewOverlay(_InstPtr());
@@ -2165,20 +2166,20 @@ public:
 	status_t SetViewOverlay() {
 		return be_BView_SetViewOverlay_1(_InstPtr());
 	}
-
+*/
 	// void be_BView_ClearViewOverlay(BView *self);
 	void ClearViewOverlay() {
 		be_BView_ClearViewOverlay(_InstPtr());
 	}
 
 	// void be_BView_SetHighColor(BView *self, rgb_color a_color);
-	void SetHighColor() {
-		be_BView_SetHighColor(_InstPtr());
+	void SetHighColor(rgb_color color) {
+		be_BView_SetHighColor(_InstPtr(), color);
 	}
 
 	// void be_BView_SetHighColor_1(BView *self, uchar r, uchar g, uchar b, uchar a);
-	void SetHighColor() {
-		be_BView_SetHighColor_1(_InstPtr());
+	void SetHighColor(uchar r, uchar g, uchar b, uchar a = 255) {
+		be_BView_SetHighColor_1(_InstPtr(), r, g, b, a);
 	}
 
 	// rgb_color be_BView_HighColor(BView *self);
@@ -2187,13 +2188,13 @@ public:
 	}
 
 	// void be_BView_SetLowColor(BView *self, rgb_color a_color);
-	void SetLowColor() {
-		be_BView_SetLowColor(_InstPtr());
+	void SetLowColor(rgb_color color) {
+		be_BView_SetLowColor(_InstPtr(), color);
 	}
 
 	// void be_BView_SetLowColor_1(BView *self, uchar r, uchar g, uchar b, uchar a);
-	void SetLowColor() {
-		be_BView_SetLowColor_1(_InstPtr());
+	void SetLowColor(uchar r, uchar g, uchar b, uchar a = 255) {
+		be_BView_SetLowColor_1(_InstPtr(), r, g, b, a);
 	}
 
 	// rgb_color be_BView_LowColor(BView *self);
@@ -2202,8 +2203,8 @@ public:
 	}
 
 	// void be_BView_SetLineMode(BView *self, cap_mode lineCap, join_mode lineJoin, float miterLimit);
-	void SetLineMode() {
-		be_BView_SetLineMode(_InstPtr());
+	void SetLineMode(cap_mode lineCap, join_mode lineJoin, float miterLimit) {
+		be_BView_SetLineMode(_InstPtr(), lineCap, lineJoin, miterLimit);
 	}
 
 	// join_mode be_BView_LineJoinMode(BView *self);
@@ -2222,18 +2223,18 @@ public:
 	}
 
 	// void be_BView_SetOrigin(BView *self, BPoint *pt);
-	void SetOrigin() {
-		be_BView_SetOrigin(_InstPtr());
+	void SetOrigin(BPoint pt) {
+		be_BView_SetOrigin(_InstPtr(), pt._InstPtr);
 	}
 
 	// void be_BView_SetOrigin_1(BView *self, float x, float y);
-	void SetOrigin() {
-		be_BView_SetOrigin_1(_InstPtr());
+	void SetOrigin(float x, float y) {
+		be_BView_SetOrigin_1(_InstPtr(), x, y);
 	}
 
 	// BPoint * be_BView_Origin(BView *self);
 	BPoint Origin() {
-		return be_BView_Origin(_InstPtr());
+		return new BPoint(be_BView_Origin(_InstPtr()), true);
 	}
 
 	// void be_BView_PushState(BView *self);
@@ -2247,43 +2248,43 @@ public:
 	}
 
 	// void be_BView_MovePenTo(BView *self, BPoint *pt);
-	void MovePenTo() {
-		be_BView_MovePenTo(_InstPtr());
+	void MovePenTo(BPoint pt) {
+		be_BView_MovePenTo(_InstPtr(), pt._InstPtr);
 	}
 
 	// void be_BView_MovePenTo_1(BView *self, float x, float y);
-	void MovePenTo() {
-		be_BView_MovePenTo_1(_InstPtr());
+	void MovePenTo(float x, float y) {
+		be_BView_MovePenTo_1(_InstPtr(), x, y);
 	}
 
 	// void be_BView_MovePenBy(BView *self, float x, float y);
-	void MovePenBy() {
-		be_BView_MovePenBy(_InstPtr());
+	void MovePenBy(float x, float y) {
+		be_BView_MovePenBy(_InstPtr(), x, y);
 	}
 
 	// BPoint * be_BView_PenLocation(BView *self);
 	BPoint PenLocation() {
-		return be_BView_PenLocation(_InstPtr());
+		return new BPoint(be_BView_PenLocation(_InstPtr()), true);
 	}
 
 	// void be_BView_StrokeLine(BView *self, BPoint *toPt, pattern p);
-	void StrokeLine() {
-		be_BView_StrokeLine(_InstPtr());
+	void StrokeLine(BPoint toPt, pattern p) {
+		be_BView_StrokeLine(_InstPtr(), toPt._InstPtr, p);
 	}
 
 	// void be_BView_StrokeLine_1(BView *self, BPoint *a, BPoint *b, pattern p);
-	void StrokeLine() {
-		be_BView_StrokeLine_1(_InstPtr());
+	void StrokeLine(BPoint a, BPoint b, pattern p) {
+		be_BView_StrokeLine_1(_InstPtr(), a._InstPtr, b._InstPtr, p);
 	}
 
 	// void be_BView_BeginLineArray(BView *self, int32 count);
-	void BeginLineArray() {
-		be_BView_BeginLineArray(_InstPtr());
+	void BeginLineArray(int32 count) {
+		be_BView_BeginLineArray(_InstPtr(), count);
 	}
 
 	// void be_BView_AddLine(BView *self, BPoint *a, BPoint *b, rgb_color color);
-	void AddLine() {
-		be_BView_AddLine(_InstPtr());
+	void AddLine(BPoint a, BPoint b, rgb_color color) {
+		be_BView_AddLine(_InstPtr(), a._InstPtr, b._InstPtr, color);
 	}
 
 	// void be_BView_EndLineArray(BView *self);
@@ -2292,37 +2293,37 @@ public:
 	}
 
 	// void be_BView_StrokePolygon(BView *self, const BPolygon* polygon, bool closed, pattern p);
-	void StrokePolygon() {
-		be_BView_StrokePolygon(_InstPtr());
+	void StrokePolygon(BPolygon polygon, bool closed, pattern p) {
+		be_BView_StrokePolygon(_InstPtr(), polygon._InstPtr, closed, p);
 	}
-
+/*
 	// void be_BView_StrokePolygon_1(BView *self, const BPoint* ptArray, int32 numPts, bool closed, pattern p);
-	void StrokePolygon() {
+	void StrokePolygon(BPoint [] ptArray, int32 numPts, bool closed, pattern p) {
 		be_BView_StrokePolygon_1(_InstPtr());
 	}
 
 	// void be_BView_StrokePolygon_2(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, bool closed);
-	void StrokePolygon() {
+	void StrokePolygon(BPoint [] ptArray, int32 numPts, BRect bounds, bool closed) {
 		be_BView_StrokePolygon_2(_InstPtr());
 	}
-
+*/
 	// void be_BView_FillPolygon(BView *self, const BPolygon* polygon, pattern p);
-	void FillPolygon() {
-		be_BView_FillPolygon(_InstPtr());
+	void FillPolygon(BPolygon polygon, pattern p) {
+		be_BView_FillPolygon(_InstPtr(), polygon._InstPtr, p);
 	}
-
+/*
 	// void be_BView_FillPolygon_1(BView *self, const BPoint* ptArray, int32 numPts, pattern p);
-	void FillPolygon() {
+	void FillPolygon(BPoint [] ptArray, int32 numPts, pattern p) {
 		be_BView_FillPolygon_1(_InstPtr());
 	}
 
 	// void be_BView_FillPolygon_2(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, pattern p);
-	void FillPolygon() {
+	void FillPolygon(BPoint [] ptArray, int32 numPts, BRect, pattern p) {
 		be_BView_FillPolygon_2(_InstPtr());
 	}
 
 	// void be_BView_FillPolygon_3(BView *self, const BPolygon* polygon, const BGradient& gradient);
-	void FillPolygon() {
+	void FillPolygon(BPolygon, BGradient) {
 		be_BView_FillPolygon_3(_InstPtr());
 	}
 
@@ -2335,72 +2336,72 @@ public:
 	void FillPolygon() {
 		be_BView_FillPolygon_5(_InstPtr());
 	}
-
+*/
 	// void be_BView_StrokeRect(BView *self, BRect *r, pattern p);
-	void StrokeRect() {
-		be_BView_StrokeRect(_InstPtr());
+	void StrokeRect(BRect r, pattern p) {
+		be_BView_StrokeRect(_InstPtr(), r._InstPtr, p);
 	}
 
 	// void be_BView_FillRect(BView *self, BRect *r, pattern p);
-	void FillRect() {
-		be_BView_FillRect(_InstPtr());
+	void FillRect(BRect r, pattern p) {
+		be_BView_FillRect(_InstPtr(), r._InstPtr, p);
 	}
-
+/*
 	// void be_BView_FillRect_1(BView *self, BRect *r, const BGradient& gradient);
 	void FillRect() {
 		be_BView_FillRect_1(_InstPtr());
 	}
-
+*/
 	// void be_BView_FillRegion(BView *self, BRegion* region, pattern p);
-	void FillRegion() {
-		be_BView_FillRegion(_InstPtr());
+	void FillRegion(BRegion region, pattern p) {
+		be_BView_FillRegion(_InstPtr(), region._InstPtr, p);
 	}
-
+/*
 	// void be_BView_FillRegion_1(BView *self, BRegion* region, const BGradient& gradient);
-	void FillRegion() {
+	void FillRegion(BRegion region, BGradient gradient) {
 		be_BView_FillRegion_1(_InstPtr());
 	}
-
+*/
 	// void be_BView_InvertRect(BView *self, BRect *r);
-	void InvertRect() {
-		be_BView_InvertRect(_InstPtr());
+	void InvertRect(BRect r) {
+		be_BView_InvertRect(_InstPtr(), r._InstPtr);
 	}
 
 	// void be_BView_StrokeRoundRect(BView *self, BRect *r, float xRadius, float yRadius, pattern p);
-	void StrokeRoundRect() {
-		be_BView_StrokeRoundRect(_InstPtr());
+	void StrokeRoundRect(BRect r, float xRadius, float yRadius, pattern p) {
+		be_BView_StrokeRoundRect(_InstPtr(), r._InstPtr, xRadius, yRadius, p);
 	}
 
 	// void be_BView_FillRoundRect(BView *self, BRect *r, float xRadius, float yRadius, pattern p);
-	void FillRoundRect() {
-		be_BView_FillRoundRect(_InstPtr());
+	void FillRoundRect(BRect r, float xRadius, float yRadius, pattern p) {
+		be_BView_FillRoundRect(_InstPtr(), r._InstPtr, xRadius, yRadius, p);
 	}
-
+/*
 	// void be_BView_FillRoundRect_1(BView *self, BRect *r, float xRadius, float yRadius, const BGradient& gradient);
 	void FillRoundRect() {
 		be_BView_FillRoundRect_1(_InstPtr());
 	}
-
+*/
 	// void be_BView_StrokeEllipse(BView *self, BPoint *center, float xRadius, float yRadius, pattern p);
-	void StrokeEllipse() {
-		be_BView_StrokeEllipse(_InstPtr());
+	void StrokeEllipse(BPoint center, float xRadius, float yRadius, pattern p) {
+		be_BView_StrokeEllipse(_InstPtr(), center._InstPtr, xRadius, yRadius, p);
 	}
 
 	// void be_BView_StrokeEllipse_1(BView *self, BRect *r, pattern p);
-	void StrokeEllipse() {
-		be_BView_StrokeEllipse_1(_InstPtr());
+	void StrokeEllipse(BRect r, pattern p) {
+		be_BView_StrokeEllipse_1(_InstPtr(), r._InstPtr, p);
 	}
 
 	// void be_BView_FillEllipse(BView *self, BPoint *center, float xRadius, float yRadius, pattern p);
-	void FillEllipse() {
-		be_BView_FillEllipse(_InstPtr());
+	void FillEllipse(BPoint center, float xRadius, float yRadius, pattern p) {
+		be_BView_FillEllipse(_InstPtr(), center._InstPtr, xRadius, yRadius, p);
 	}
 
 	// void be_BView_FillEllipse_1(BView *self, BRect *r, pattern p);
-	void FillEllipse() {
-		be_BView_FillEllipse_1(_InstPtr());
+	void FillEllipse(BRect r, pattern p) {
+		be_BView_FillEllipse_1(_InstPtr(), r._InstPtr, p);
 	}
-
+/*
 	// void be_BView_FillEllipse_2(BView *self, BPoint *center, float xRadius, float yRadius, const BGradient& gradient);
 	void FillEllipse() {
 		be_BView_FillEllipse_2(_InstPtr());
@@ -2410,27 +2411,27 @@ public:
 	void FillEllipse() {
 		be_BView_FillEllipse_3(_InstPtr());
 	}
-
+*/
 	// void be_BView_StrokeArc(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p);
-	void StrokeArc() {
-		be_BView_StrokeArc(_InstPtr());
+	void StrokeArc(BPoint center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p) {
+		be_BView_StrokeArc(_InstPtr(), center._InstPtr, xRadius, yRadius, startAngle, arcAngle, p);
 	}
 
 	// void be_BView_StrokeArc_1(BView *self, BRect *r, float startAngle, float arcAngle, pattern p);
-	void StrokeArc() {
-		be_BView_StrokeArc_1(_InstPtr());
+	void StrokeArc(BRect r, float startAngle, float arcAngle, pattern p) {
+		be_BView_StrokeArc_1(_InstPtr(), r._InstPtr, startAngle, arcAngle, p);
 	}
 
 	// void be_BView_FillArc(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p);
-	void FillArc() {
-		be_BView_FillArc(_InstPtr());
+	void FillArc(BPoint center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p) {
+		be_BView_FillArc(_InstPtr(), center._InstPtr, xRadius, yRadius, startAngle, arcAngle, p);
 	}
 
 	// void be_BView_FillArc_1(BView *self, BRect *r, float startAngle, float arcAngle, pattern p);
-	void FillArc() {
-		be_BView_FillArc_1(_InstPtr());
+	void FillArc(BRect r, float startAngle, float arcAngle, pattern p) {
+		be_BView_FillArc_1(_InstPtr(), r._InstPtr, startAngle, arcAngle, p);
 	}
-
+/*
 	// void be_BView_FillArc_2(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, const BGradient& gradient);
 	void FillArc() {
 		be_BView_FillArc_2(_InstPtr());
@@ -2457,25 +2458,25 @@ public:
 	}
 
 	// void be_BView_StrokeShape(BView *self, BShape* shape, pattern p);
-	void StrokeShape() {
-		be_BView_StrokeShape(_InstPtr());
+	void StrokeShape(BShape shape, pattern p) {
+		be_BView_StrokeShape(_InstPtr(), shape._InstPtr, p);
 	}
 
 	// void be_BView_FillShape(BView *self, BShape* shape, pattern p);
-	void FillShape() {
-		be_BView_FillShape(_InstPtr());
+	void FillShape(BShape shape, pattern p) {
+		be_BView_FillShape(_InstPtr(), shape._InstPtr, p);
 	}
 
 	// void be_BView_FillShape_1(BView *self, BShape* shape, const BGradient& gradien);
 	void FillShape() {
 		be_BView_FillShape_1(_InstPtr());
 	}
-
+*/
 	// void be_BView_CopyBits(BView *self, BRect *src, BRect *dst);
-	void CopyBits() {
-		be_BView_CopyBits(_InstPtr());
+	void CopyBits(BRect src, BRect dst) {
+		be_BView_CopyBits(_InstPtr(), src._InstPtr, dst._InstPtr);
 	}
-
+/*
 	// void be_BView_DrawBitmapAsync(BView *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect, uint32 options);
 	void DrawBitmapAsync() {
 		be_BView_DrawBitmapAsync(_InstPtr());
@@ -2525,45 +2526,46 @@ public:
 	void DrawBitmap() {
 		be_BView_DrawBitmap_4(_InstPtr());
 	}
-
+*/
 	// void be_BView_DrawChar(BView *self, char aChar);
-	void DrawChar() {
-		be_BView_DrawChar(_InstPtr());
+	void DrawChar(char aChar) {
+		be_BView_DrawChar(_InstPtr(), aChar);
 	}
 
 	// void be_BView_DrawChar_1(BView *self, char aChar, BPoint *location);
-	void DrawChar() {
-		be_BView_DrawChar_1(_InstPtr());
+	void DrawChar(char aChar, BPoint location) {
+		be_BView_DrawChar_1(_InstPtr(), aChar, location._InstPtr);
 	}
 
 	// void be_BView_DrawString(BView *self, const char* string, escapement_delta* delta);
-	void DrawString() {
-		be_BView_DrawString(_InstPtr());
+	void DrawString(char [] string, escapement_delta delta) {
+		be_BView_DrawString(_InstPtr(), toStringz(string), &delta);
 	}
 
 	// void be_BView_DrawString_1(BView *self, const char* string, BPoint *location, escapement_delta* delta);
-	void DrawString() {
-		be_BView_DrawString_1(_InstPtr());
+	void DrawString(char [] string, BPoint location, escapement_delta delta) {
+		be_BView_DrawString_1(_InstPtr(), toStringz(string), location._InstPtr, &delta);
 	}
 
 	// void be_BView_DrawString_2(BView *self, const char* string, int32 length, escapement_delta* delta);
-	void DrawString() {
-		be_BView_DrawString_2(_InstPtr());
+	void DrawString(char [] string, int32 length, escapement_delta delta) {
+		be_BView_DrawString_2(_InstPtr(), toStringz(string), length, &delta);
 	}
 
 	// void be_BView_DrawString_3(BView *self, const char* string, int32 length, BPoint *location, escapement_delta* delta);
-	void DrawString() {
-		be_BView_DrawString_3(_InstPtr());
+	void DrawString(char [] string, int32 length, BPoint location, escapement_delta delta) {
+		be_BView_DrawString_3(_InstPtr(), toStringz(string), length, location._InstPtr, &delta);
 	}
 
+/*
 	// void be_BView_DrawString_4(BView *self, const char* string, const BPoint* locations, int32 locationCount);
-	void DrawString() {
-		be_BView_DrawString_4(_InstPtr());
+	void DrawString(char [] string, BPoint [] locations, int32 locationCount) {
+		be_BView_DrawString_4(_InstPtr(), toStringz(string), locations._InstPtr, locationCount);
 	}
 
 	// void be_BView_DrawString_5(BView *self, const char* string, int32 length, const BPoint* locations, int32 locationCount);
-	void DrawString() {
-		be_BView_DrawString_5(_InstPtr());
+	void DrawString(char [] string, int32 length, BPoint [] locations, int32 locationCount) {
+		be_BView_DrawString_5(_InstPtr(), toStringz(string), length, locations._InstPtr, locationCount);
 	}
 
 	// void be_BView_SetFont(BView *self, const BFont* font, uint32 mask);
