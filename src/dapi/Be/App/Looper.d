@@ -448,11 +448,13 @@ public:
 
 	// void be_BLooper_AddHandler(BLooper *self, BHandler* handler);
 	void AddHandler(BHandler handler) {
+		handler._OwnsPtr = false;
 		be_BLooper_AddHandler(_InstPtr(), handler._InstPtr());
 	}
 
 	// bool be_BLooper_RemoveHandler(BLooper *self, BHandler* handler);
 	bool RemoveHandler(BHandler handler) {
+		handler._OwnsPtr = true;
 		return be_BLooper_RemoveHandler(_InstPtr(), handler._InstPtr());
 	}
 
@@ -488,6 +490,7 @@ public:
 
 	// void be_BLooper_Quit(BLooper *self);
 	void Quit() {
+		_OwnsPtr = false; // BLooper deletes itself when told to quit
 		be_BLooper_Quit(_InstPtr());
 	}
 
