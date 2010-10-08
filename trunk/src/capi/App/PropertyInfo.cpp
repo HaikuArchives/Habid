@@ -88,9 +88,9 @@ status_t BPropertyInfoProxy::Unflatten_super(type_code code, const void* buffer,
 
 
 extern "C" {
-	BPropertyInfoProxy * be_BPropertyInfo_ctor(void *bindInstPtr, property_info* prop, value_info* value, bool freeOnDelete)
+	BPropertyInfo * be_BPropertyInfo_ctor(void *bindInstPtr, property_info* prop, value_info* value, bool freeOnDelete)
 	{
-		return new BPropertyInfoProxy(bindInstPtr, prop, value, freeOnDelete);
+		return (BPropertyInfo *)new BPropertyInfoProxy(bindInstPtr, prop, value, freeOnDelete);
 	}
 
 	void be_BPropertyInfo_dtor(BPropertyInfo* self)
@@ -98,66 +98,93 @@ extern "C" {
 		delete self;
 	}
 
-	int32 be_BPropertyInfo_FindMatch(BPropertyInfoProxy *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* prop, void* data)
+	int32 be_BPropertyInfo_FindMatch(BPropertyInfo *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* prop, void* data)
 	{
-		return self->FindMatch_super(msg, index, specifier, form, prop, data);
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->FindMatch_super(msg, index, specifier, form, prop, data);
+		else
+			return self->FindMatch(msg, index, specifier, form, prop, data);
 	}
 
-	bool be_BPropertyInfo_IsFixedSize(BPropertyInfoProxy *self)
+	bool be_BPropertyInfo_IsFixedSize(BPropertyInfo *self)
 	{
-		return self->IsFixedSize_super();
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->IsFixedSize_super();
+		else
+			return self->IsFixedSize();
 	}
 
-	type_code be_BPropertyInfo_TypeCode(BPropertyInfoProxy *self)
+	type_code be_BPropertyInfo_TypeCode(BPropertyInfo *self)
 	{
-		return self->TypeCode_super();
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->TypeCode_super();
+		else
+			return self->TypeCode();
 	}
 
-	ssize_t be_BPropertyInfo_FlattenedSize(BPropertyInfoProxy *self)
+	ssize_t be_BPropertyInfo_FlattenedSize(BPropertyInfo *self)
 	{
-		return self->FlattenedSize_super();
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->FlattenedSize_super();
+		else
+			return self->FlattenedSize();
 	}
 
-	status_t be_BPropertyInfo_Flatten(BPropertyInfoProxy *self, void* buffer, ssize_t size)
+	status_t be_BPropertyInfo_Flatten(BPropertyInfo *self, void* buffer, ssize_t size)
 	{
-		return self->Flatten_super(buffer, size);
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->Flatten_super(buffer, size);
+		else
+			return self->Flatten(buffer, size);
 	}
 
-	bool be_BPropertyInfo_AllowsTypeCode(BPropertyInfoProxy *self, type_code code)
+	bool be_BPropertyInfo_AllowsTypeCode(BPropertyInfo *self, type_code code)
 	{
-		return self->AllowsTypeCode_super(code);
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->AllowsTypeCode_super(code);
+		else
+			return self->AllowsTypeCode(code);
 	}
 
-	status_t be_BPropertyInfo_Unflatten(BPropertyInfoProxy *self, type_code code, const void* buffer, ssize_t size)
+	status_t be_BPropertyInfo_Unflatten(BPropertyInfo *self, type_code code, const void* buffer, ssize_t size)
 	{
-		return self->Unflatten_super(code, buffer, size);
+		BPropertyInfoProxy *proxy = dynamic_cast<BPropertyInfoProxy *>(self);
+		if(proxy)
+			return proxy->Unflatten_super(code, buffer, size);
+		else
+			return self->Unflatten(code, buffer, size);
 	}
 
-	const property_info* be_BPropertyInfo_Properties(BPropertyInfoProxy *self)
+	const property_info* be_BPropertyInfo_Properties(BPropertyInfo *self)
 	{
 		return self->Properties();
 	}
 
-	const value_info* be_BPropertyInfo_Values(BPropertyInfoProxy *self)
+	const value_info* be_BPropertyInfo_Values(BPropertyInfo *self)
 	{
 		return self->Values();
 	}
 
-	int32 be_BPropertyInfo_CountProperties(BPropertyInfoProxy *self)
+	int32 be_BPropertyInfo_CountProperties(BPropertyInfo *self)
 	{
 		return self->CountProperties();
 	}
 
-	int32 be_BPropertyInfo_CountValues(BPropertyInfoProxy *self)
+	int32 be_BPropertyInfo_CountValues(BPropertyInfo *self)
 	{
 		return self->CountValues();
 	}
 
-	void be_BPropertyInfo_PrintToStream(BPropertyInfoProxy *self)
+	void be_BPropertyInfo_PrintToStream(BPropertyInfo *self)
 	{
 		self->PrintToStream();
 	}
-
 }
 
 

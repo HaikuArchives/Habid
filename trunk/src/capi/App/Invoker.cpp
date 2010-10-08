@@ -82,19 +82,19 @@ status_t BInvokerProxy::Invoke_super(BMessage* message)
 
 
 extern "C" {
-	BInvokerProxy * be_BInvoker_ctor(void *bindInstPtr)
+	BInvoker * be_BInvoker_ctor(void *bindInstPtr)
 	{
-		return new BInvokerProxy(bindInstPtr);
+		return (BInvoker *)new BInvokerProxy(bindInstPtr);
 	}
 
-	BInvokerProxy * be_BInvoker_ctor_1(void *bindInstPtr, BMessage* message, const BHandler* handler, const BLooper* looper)
+	BInvoker * be_BInvoker_ctor_1(void *bindInstPtr, BMessage* message, const BHandler* handler, const BLooper* looper)
 	{
-		return new BInvokerProxy(bindInstPtr, message, handler, looper);
+		return (BInvoker *)new BInvokerProxy(bindInstPtr, message, handler, looper);
 	}
 
-	BInvokerProxy * be_BInvoker_ctor_2(void *bindInstPtr, BMessage* message, BMessenger *target)
+	BInvoker * be_BInvoker_ctor_2(void *bindInstPtr, BMessage* message, BMessenger *target)
 	{
-		return new BInvokerProxy(bindInstPtr, message, *target);
+		return (BInvoker *)new BInvokerProxy(bindInstPtr, message, *target);
 	}
 
 	void be_BInvoker_dtor(BInvoker* self)
@@ -102,72 +102,92 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BInvoker_SetMessage(BInvokerProxy *self, BMessage* message)
+	status_t be_BInvoker_SetMessage(BInvoker *self, BMessage* message)
 	{
-		return self->SetMessage_super(message);
+		BInvokerProxy *proxy = dynamic_cast<BInvokerProxy *>(self);
+		if(proxy)
+			return proxy->SetMessage_super(message);
+		else
+			return self->SetMessage(message);
 	}
 
-	BMessage* be_BInvoker_Message(BInvokerProxy *self)
+	BMessage* be_BInvoker_Message(BInvoker *self)
 	{
 		return self->Message();
 	}
 
-	uint32 be_BInvoker_Command(BInvokerProxy *self)
+	uint32 be_BInvoker_Command(BInvoker *self)
 	{
 		return self->Command();
 	}
 
-	status_t be_BInvoker_SetTarget(BInvokerProxy *self, const BHandler* handler, const BLooper* looper)
+	status_t be_BInvoker_SetTarget(BInvoker *self, const BHandler* handler, const BLooper* looper)
 	{
-		return self->SetTarget_super(handler, looper);
+		BInvokerProxy *proxy = dynamic_cast<BInvokerProxy *>(self);
+		if(proxy)
+			return proxy->SetTarget_super(handler, looper);
+		else
+			return self->SetTarget(handler, looper);
 	}
 
-	status_t be_BInvoker_SetTarget_1(BInvokerProxy *self, BMessenger *messenger)
+	status_t be_BInvoker_SetTarget_1(BInvoker *self, BMessenger *messenger)
 	{
-		return self->SetTarget_super(*messenger);
+		BInvokerProxy *proxy = dynamic_cast<BInvokerProxy *>(self);
+		if(proxy)
+			return proxy->SetTarget_super(*messenger);
+		else
+			return self->SetTarget(*messenger);
 	}
 
-	bool be_BInvoker_IsTargetLocal(BInvokerProxy *self)
+	bool be_BInvoker_IsTargetLocal(BInvoker *self)
 	{
 		return self->IsTargetLocal();
 	}
 
-	BHandler* be_BInvoker_Target(BInvokerProxy *self, BLooper** _looper)
+	BHandler* be_BInvoker_Target(BInvoker *self, BLooper** _looper)
 	{
 		return self->Target(_looper);
 	}
 
-	BMessenger * be_BInvoker_Messenger(BInvokerProxy *self)
+	BMessenger * be_BInvoker_Messenger(BInvoker *self)
 	{
 		return new BMessenger(self->Messenger());
 	}
 
-	status_t be_BInvoker_SetHandlerForReply(BInvokerProxy *self, BHandler* handler)
+	status_t be_BInvoker_SetHandlerForReply(BInvoker *self, BHandler* handler)
 	{
-		return self->SetHandlerForReply_super(handler);
+		BInvokerProxy *proxy = dynamic_cast<BInvokerProxy *>(self);
+		if(proxy)
+			return proxy->SetHandlerForReply_super(handler);
+		else
+			return self->SetHandlerForReply(handler);
 	}
 
-	BHandler* be_BInvoker_HandlerForReply(BInvokerProxy *self)
+	BHandler* be_BInvoker_HandlerForReply(BInvoker *self)
 	{
 		return self->HandlerForReply();
 	}
 
-	status_t be_BInvoker_Invoke(BInvokerProxy *self, BMessage* message)
+	status_t be_BInvoker_Invoke(BInvoker *self, BMessage* message)
 	{
-		return self->Invoke_super(message);
+		BInvokerProxy *proxy = dynamic_cast<BInvokerProxy *>(self);
+		if(proxy)
+			return proxy->Invoke_super(message);
+		else
+			return self->Invoke(message);
 	}
 
-	status_t be_BInvoker_InvokeNotify(BInvokerProxy *self, BMessage* message, uint32 kind)
+	status_t be_BInvoker_InvokeNotify(BInvoker *self, BMessage* message, uint32 kind)
 	{
 		return self->InvokeNotify(message, kind);
 	}
 
-	status_t be_BInvoker_SetTimeout(BInvokerProxy *self, bigtime_t timeout)
+	status_t be_BInvoker_SetTimeout(BInvoker *self, bigtime_t timeout)
 	{
 		return self->SetTimeout(timeout);
 	}
 
-	bigtime_t be_BInvoker_Timeout(BInvokerProxy *self)
+	bigtime_t be_BInvoker_Timeout(BInvoker *self)
 	{
 		return self->Timeout();
 	}

@@ -49,24 +49,24 @@ status_t BCursorProxy::Archive_super(BMessage* archive, bool deep) const
 
 
 extern "C" {
-	BCursorProxy * be_BCursor_ctor(void *bindInstPtr, const void* cursorData)
+	BCursor * be_BCursor_ctor(void *bindInstPtr, const void* cursorData)
 	{
-		return new BCursorProxy(bindInstPtr, cursorData);
+		return (BCursor *)new BCursorProxy(bindInstPtr, cursorData);
 	}
 
-	BCursorProxy * be_BCursor_ctor_1(void *bindInstPtr, const BCursor* other)
+	BCursor * be_BCursor_ctor_1(void *bindInstPtr, const BCursor* other)
 	{
-		return new BCursorProxy(bindInstPtr, *other);
+		return (BCursor *)new BCursorProxy(bindInstPtr, *other);
 	}
 
-	BCursorProxy * be_BCursor_ctor_2(void *bindInstPtr, BCursorID id)
+	BCursor * be_BCursor_ctor_2(void *bindInstPtr, BCursorID id)
 	{
-		return new BCursorProxy(bindInstPtr, id);
+		return (BCursor *)new BCursorProxy(bindInstPtr, id);
 	}
 
-	BCursorProxy * be_BCursor_ctor_3(void *bindInstPtr, BMessage* data)
+	BCursor * be_BCursor_ctor_3(void *bindInstPtr, BMessage* data)
 	{
-		return new BCursorProxy(bindInstPtr, data);
+		return (BCursor *)new BCursorProxy(bindInstPtr, data);
 	}
 
 	void be_BCursor_dtor(BCursor* self)
@@ -74,9 +74,13 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BCursor_Archive(BCursorProxy *self, BMessage* archive, bool deep)
+	status_t be_BCursor_Archive(BCursor *self, BMessage* archive, bool deep)
 	{
-		return self->Archive_super(archive, deep);
+		BCursorProxy *proxy = dynamic_cast<BCursorProxy *>(self);
+		if(proxy)
+			return proxy->Archive_super(archive, deep);
+		else
+			return self->Archive(archive, deep);
 	}
 
 	BArchivable* be_BCursor_Instantiate_static(BMessage* archive)
