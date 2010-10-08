@@ -69,7 +69,11 @@ int main() {
 	looper.PostMessage(new BMessage(kMessage));
 	
 	looper.Lock();
-	looper.Quit();
+	/*
+	 This turns over ownership of the pointer to BeAPI
+	 so we turn over the power to delete it to itself
+	*/
+	looper.Quit(); 
 
 	return 0;	
 }
