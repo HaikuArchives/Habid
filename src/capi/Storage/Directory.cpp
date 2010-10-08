@@ -112,39 +112,39 @@ int32 BDirectoryProxy::CountEntries_super()
 
 
 extern "C" {
-	BDirectoryProxy * be_BDirectory_ctor(void *bindInstPtr)
+	BDirectory * be_BDirectory_ctor(void *bindInstPtr)
 	{
-		return new BDirectoryProxy(bindInstPtr);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr);
 	}
 
-	BDirectoryProxy * be_BDirectory_ctor_1(void *bindInstPtr, const BDirectory * dir)
+	BDirectory * be_BDirectory_ctor_1(void *bindInstPtr, const BDirectory * dir)
 	{
-		return new BDirectoryProxy(bindInstPtr, *dir);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr, *dir);
 	}
 
-	BDirectoryProxy * be_BDirectory_ctor_2(void *bindInstPtr, const entry_ref * _ref)
+	BDirectory * be_BDirectory_ctor_2(void *bindInstPtr, const entry_ref * _ref)
 	{
-		return new BDirectoryProxy(bindInstPtr, _ref);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr, _ref);
 	}
 
-	BDirectoryProxy * be_BDirectory_ctor_3(void *bindInstPtr, const node_ref * nref)
+	BDirectory * be_BDirectory_ctor_3(void *bindInstPtr, const node_ref * nref)
 	{
-		return new BDirectoryProxy(bindInstPtr, nref);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr, nref);
 	}
 
-	BDirectoryProxy * be_BDirectory_ctor_4(void *bindInstPtr, const BEntry * entry)
+	BDirectory * be_BDirectory_ctor_4(void *bindInstPtr, const BEntry * entry)
 	{
-		return new BDirectoryProxy(bindInstPtr, entry);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr, entry);
 	}
 
-	BDirectoryProxy * be_BDirectory_ctor_5(void *bindInstPtr, const char * path)
+	BDirectory * be_BDirectory_ctor_5(void *bindInstPtr, const char * path)
 	{
-		return new BDirectoryProxy(bindInstPtr, path);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr, path);
 	}
 
-	BDirectoryProxy * be_BDirectory_ctor_6(void *bindInstPtr, const BDirectory * dir, const char * path)
+	BDirectory * be_BDirectory_ctor_6(void *bindInstPtr, const BDirectory * dir, const char * path)
 	{
-		return new BDirectoryProxy(bindInstPtr, dir, path);
+		return (BDirectory *)new BDirectoryProxy(bindInstPtr, dir, path);
 	}
 
 	void be_BDirectory_dtor(BDirectory* self)
@@ -152,97 +152,117 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BDirectory_SetTo(BDirectoryProxy *self, const entry_ref * _ref)
+	status_t be_BDirectory_SetTo(BDirectory *self, const entry_ref * _ref)
 	{
-		return ((BDirectory *)self)->SetTo(_ref);
+		return self->SetTo(_ref);
 	}
 
-	status_t be_BDirectory_SetTo_1(BDirectoryProxy *self, const node_ref * nref)
+	status_t be_BDirectory_SetTo_1(BDirectory *self, const node_ref * nref)
 	{
 		return ((BDirectory *)self)->SetTo(nref);
 	}
 
-	status_t be_BDirectory_SetTo_2(BDirectoryProxy *self, const BEntry * entry)
+	status_t be_BDirectory_SetTo_2(BDirectory *self, const BEntry * entry)
 	{
 		return ((BDirectory *)self)->SetTo(entry);
 	}
 
-	status_t be_BDirectory_SetTo_3(BDirectoryProxy *self, const char * path)
+	status_t be_BDirectory_SetTo_3(BDirectory *self, const char * path)
 	{
 		return ((BDirectory *)self)->SetTo(path);
 	}
 
-	status_t be_BDirectory_SetTo_4(BDirectoryProxy *self, const BDirectory * dir, const char * path)
+	status_t be_BDirectory_SetTo_4(BDirectory *self, const BDirectory * dir, const char * path)
 	{
 		return ((BDirectory *)self)->SetTo(dir, path);
 	}
 
-	status_t be_BDirectory_GetEntry(BDirectoryProxy *self, BEntry * entry)
+	status_t be_BDirectory_GetEntry(BDirectory *self, BEntry * entry)
 	{
 		return self->GetEntry(entry);
 	}
 
-	bool be_BDirectory_IsRootDirectory(BDirectoryProxy *self)
+	bool be_BDirectory_IsRootDirectory(BDirectory *self)
 	{
 		return self->IsRootDirectory();
 	}
 
-	status_t be_BDirectory_FindEntry(BDirectoryProxy *self, const char * path, BEntry * entry, bool traverse)
+	status_t be_BDirectory_FindEntry(BDirectory *self, const char * path, BEntry * entry, bool traverse)
 	{
 		return self->FindEntry(path, entry, traverse);
 	}
 
-	bool be_BDirectory_Contains(BDirectoryProxy *self, const char * path, int32 nodeFlags)
+	bool be_BDirectory_Contains(BDirectory *self, const char * path, int32 nodeFlags)
 	{
 		return self->Contains(path, nodeFlags);
 	}
 
-	bool be_BDirectory_Contains_1(BDirectoryProxy *self, const BEntry * entry, int32 nodeFlags)
+	bool be_BDirectory_Contains_1(BDirectory *self, const BEntry * entry, int32 nodeFlags)
 	{
 		return self->Contains(entry, nodeFlags);
 	}
 
-	status_t be_BDirectory_GetStatFor(BDirectoryProxy *self, const char * path, struct stat * st)
+	status_t be_BDirectory_GetStatFor(BDirectory *self, const char * path, struct stat * st)
 	{
 		return self->GetStatFor(path, st);
 	}
 
-	status_t be_BDirectory_GetNextEntry(BDirectoryProxy *self, BEntry * entry, bool traverse)
+	status_t be_BDirectory_GetNextEntry(BDirectory *self, BEntry * entry, bool traverse)
 	{
-		return self->GetNextEntry_super(entry, traverse);
+		BDirectoryProxy *proxy = dynamic_cast<BDirectoryProxy *>(self);
+		if(proxy)
+			return proxy->GetNextEntry_super(entry, traverse);
+		else
+			return self->GetNextEntry(entry, traverse);
 	}
 
-	status_t be_BDirectory_GetNextRef(BDirectoryProxy *self, entry_ref * _ref)
+	status_t be_BDirectory_GetNextRef(BDirectory *self, entry_ref * _ref)
 	{
-		return self->GetNextRef_super(_ref);
+		BDirectoryProxy *proxy = dynamic_cast<BDirectoryProxy *>(self);
+		if(proxy)
+			return proxy->GetNextRef_super(_ref);
+		else
+			return self->GetNextRef(_ref);
 	}
 
-	int32 be_BDirectory_GetNextDirents(BDirectoryProxy *self, dirent * buf, size_t bufSize, int32 count)
+	int32 be_BDirectory_GetNextDirents(BDirectory *self, dirent * buf, size_t bufSize, int32 count)
 	{
-		return self->GetNextDirents_super(buf, bufSize, count);
+		BDirectoryProxy *proxy = dynamic_cast<BDirectoryProxy *>(self);
+		if(proxy)
+			return proxy->GetNextDirents_super(buf, bufSize, count);
+		else
+			return self->GetNextDirents(buf, bufSize, count);
 	}
 
-	status_t be_BDirectory_Rewind(BDirectoryProxy *self)
+	status_t be_BDirectory_Rewind(BDirectory *self)
 	{
-		return self->Rewind_super();
+		BDirectoryProxy *proxy = dynamic_cast<BDirectoryProxy *>(self);
+		if(proxy)
+			return proxy->Rewind_super();
+		else
+			return self->Rewind();
 	}
 
-	int32 be_BDirectory_CountEntries(BDirectoryProxy *self)
+	int32 be_BDirectory_CountEntries(BDirectory *self)
 	{
-		return self->CountEntries_super();
+		BDirectoryProxy *proxy = dynamic_cast<BDirectoryProxy *>(self);
+		if(proxy)
+			return proxy->CountEntries_super();
+		else
+			return self->CountEntries();
 	}
 
-	status_t be_BDirectory_CreateDirectory(BDirectoryProxy *self, const char * path, BDirectory * dir)
+	status_t be_BDirectory_CreateDirectory(BDirectory *self, const char * path, BDirectory * dir)
 	{
 		return self->CreateDirectory(path, dir);
 	}
 
-	status_t be_BDirectory_CreateFile(BDirectoryProxy *self, const char * path, BFile * file, bool failIfExists)
+	status_t be_BDirectory_CreateFile(BDirectory *self, const char * path, BFile * file, bool failIfExists)
 	{
 		return self->CreateFile(path, file, failIfExists);
 	}
 
-	status_t be_BDirectory_CreateSymLink(BDirectoryProxy *self, const char * path, const char * linkToPath, BSymLink * link)
+	status_t be_BDirectory_CreateSymLink(BDirectory *self, const char * path, const char * linkToPath, BSymLink * link)
 	{
 		return self->CreateSymLink(path, linkToPath, link);
 	}

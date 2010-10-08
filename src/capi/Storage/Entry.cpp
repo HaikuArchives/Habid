@@ -56,29 +56,29 @@ status_t BEntryProxy::GetStat_super(struct stat* stat) const
 
 
 extern "C" {
-	BEntryProxy * be_BEntry_ctor(void *bindInstPtr)
+	BEntry * be_BEntry_ctor(void *bindInstPtr)
 	{
-		return new BEntryProxy(bindInstPtr);
+		return (BEntry *)new BEntryProxy(bindInstPtr);
 	}
 
-	BEntryProxy * be_BEntry_ctor_1(void *bindInstPtr, const BDirectory* dir, const char* path, bool traverse)
+	BEntry * be_BEntry_ctor_1(void *bindInstPtr, const BDirectory* dir, const char* path, bool traverse)
 	{
-		return new BEntryProxy(bindInstPtr, dir, path, traverse);
+		return (BEntry *)new BEntryProxy(bindInstPtr, dir, path, traverse);
 	}
 
-	BEntryProxy * be_BEntry_ctor_2(void *bindInstPtr, const entry_ref* _ref, bool traverse)
+	BEntry * be_BEntry_ctor_2(void *bindInstPtr, const entry_ref* _ref, bool traverse)
 	{
-		return new BEntryProxy(bindInstPtr, _ref, traverse);
+		return (BEntry *)new BEntryProxy(bindInstPtr, _ref, traverse);
 	}
 
-	BEntryProxy * be_BEntry_ctor_3(void *bindInstPtr, const char* path, bool traverse)
+	BEntry * be_BEntry_ctor_3(void *bindInstPtr, const char* path, bool traverse)
 	{
-		return new BEntryProxy(bindInstPtr, path, traverse);
+		return (BEntry *)new BEntryProxy(bindInstPtr, path, traverse);
 	}
 
-	BEntryProxy * be_BEntry_ctor_4(void *bindInstPtr, const BEntry* entry)
+	BEntry * be_BEntry_ctor_4(void *bindInstPtr, const BEntry* entry)
 	{
-		return new BEntryProxy(bindInstPtr, *entry);
+		return (BEntry *)new BEntryProxy(bindInstPtr, *entry);
 	}
 
 	void be_BEntry_dtor(BEntry* self)
@@ -86,77 +86,81 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BEntry_InitCheck(BEntryProxy *self)
+	status_t be_BEntry_InitCheck(BEntry *self)
 	{
 		return self->InitCheck();
 	}
 
-	bool be_BEntry_Exists(BEntryProxy *self)
+	bool be_BEntry_Exists(BEntry *self)
 	{
 		return self->Exists();
 	}
 
-	status_t be_BEntry_GetStat(BEntryProxy *self, struct stat* stat)
+	status_t be_BEntry_GetStat(BEntry *self, struct stat* stat)
 	{
-		return self->GetStat_super(stat);
+		BEntryProxy *proxy = dynamic_cast<BEntryProxy *>(self);
+		if(proxy)
+			return proxy->GetStat_super(stat);
+		else
+			return self->GetStat(stat);
 	}
 
-	status_t be_BEntry_SetTo(BEntryProxy *self, const BDirectory* dir, const char* path, bool traverse)
+	status_t be_BEntry_SetTo(BEntry *self, const BDirectory* dir, const char* path, bool traverse)
 	{
 		return self->SetTo(dir, path, traverse);
 	}
 
-	status_t be_BEntry_SetTo_1(BEntryProxy *self, const entry_ref* _ref, bool traverse)
+	status_t be_BEntry_SetTo_1(BEntry *self, const entry_ref* _ref, bool traverse)
 	{
 		return self->SetTo(_ref, traverse);
 	}
 
-	status_t be_BEntry_SetTo_2(BEntryProxy *self, const char* path, bool traverse)
+	status_t be_BEntry_SetTo_2(BEntry *self, const char* path, bool traverse)
 	{
 		return self->SetTo(path, traverse);
 	}
 
-	void be_BEntry_Unset(BEntryProxy *self)
+	void be_BEntry_Unset(BEntry *self)
 	{
 		self->Unset();
 	}
 
-	status_t be_BEntry_GetRef(BEntryProxy *self, entry_ref* _ref)
+	status_t be_BEntry_GetRef(BEntry *self, entry_ref* _ref)
 	{
 		return self->GetRef(_ref);
 	}
 
-	status_t be_BEntry_GetPath(BEntryProxy *self, BPath* path)
+	status_t be_BEntry_GetPath(BEntry *self, BPath* path)
 	{
 		return self->GetPath(path);
 	}
 
-	status_t be_BEntry_GetParent(BEntryProxy *self, BEntry* entry)
+	status_t be_BEntry_GetParent(BEntry *self, BEntry* entry)
 	{
 		return self->GetParent(entry);
 	}
 
-	status_t be_BEntry_GetParent_1(BEntryProxy *self, BDirectory* dir)
+	status_t be_BEntry_GetParent_1(BEntry *self, BDirectory* dir)
 	{
 		return self->GetParent(dir);
 	}
 
-	status_t be_BEntry_GetName(BEntryProxy *self, char* buffer)
+	status_t be_BEntry_GetName(BEntry *self, char* buffer)
 	{
 		return self->GetName(buffer);
 	}
 
-	status_t be_BEntry_Rename(BEntryProxy *self, const char* path, bool clobber)
+	status_t be_BEntry_Rename(BEntry *self, const char* path, bool clobber)
 	{
 		return self->Rename(path, clobber);
 	}
 
-	status_t be_BEntry_MoveTo(BEntryProxy *self, BDirectory* dir, const char* path, bool clobber)
+	status_t be_BEntry_MoveTo(BEntry *self, BDirectory* dir, const char* path, bool clobber)
 	{
 		return self->MoveTo(dir, path, clobber);
 	}
 
-	status_t be_BEntry_Remove(BEntryProxy *self)
+	status_t be_BEntry_Remove(BEntry *self)
 	{
 		return self->Remove();
 	}
