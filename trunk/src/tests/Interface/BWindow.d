@@ -16,9 +16,10 @@ import Be.Support.Errors;
 import Be.Support.SupportDefs;
 import Be.App.Application;
 
-
 import Be.Interface.Rect;
 import Be.Interface.Window;
+import Be.Interface.View;
+import Be.Interface.GraphicsDefs;
 
 class App : BApplication
 {
@@ -52,6 +53,7 @@ public:
 	void ReadyToRun() {
 		Stdout.formatln("ReadyToRun");
 		fWindow = new MyWindow(new BRect(100, 100, 740, 580), "Window from D (habid)");
+
 		fWindow.Show();
 	}
 }
@@ -59,11 +61,25 @@ public:
 
 class MyWindow : BWindow
 {
+private:
+	BView fView;
+
 public:
 	this(BRect frame, char [] title) {
 		super(frame, title, window_type.B_TITLED_WINDOW, B_QUIT_ON_WINDOW_CLOSE);
+
+		fView = new BView(Bounds(), "MainView", B_FOLLOW_ALL_SIDES, B_WILL_DRAW);
+		fView.SetViewColor(255, 255, 0, 255);
+		
+		rgb_color color = fView.ViewColor();
+		
+		Stdout.formatln("{} {} {}", color.red, color.green, color.blue);
+		
+		fView.AddChild(new BView(new BRect(100, 100, 200, 200), "DohView", B_FOLLOW_ALL_SIDES, B_WILL_DRAW));
+		
+		AddChild(fView);
 	}
-	
+
 	bool QuitRequested() {
 		Stdout.formatln("BWindow::QuitRequested");
 		/* Do not need to call this if we have B_QUIT_ON_WINDOW_CLOSE */

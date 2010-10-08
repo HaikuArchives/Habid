@@ -1,4 +1,4 @@
-env = Environment(CPPPATH='include')
+env = Environment(CPPPATH='include', CXXFLAGS='-frtti')
 
 c_srcs = [
 	'Interface/Point.cpp',

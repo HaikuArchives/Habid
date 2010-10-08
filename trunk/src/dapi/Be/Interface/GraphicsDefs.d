@@ -38,6 +38,17 @@ struct rgb_color {
 	uint8		green;
 	uint8		blue;
 	uint8		alpha;
+	
+
+	static rgb_color opCall(rgb_color other) {
+		rgb_color color;
+		color.red = other.red;
+		color.green = other.green;
+		color.blue = other.blue;
+		color.alpha = other.alpha;
+		
+		return color;	
+	}
 /*
 #if defined(__cplusplus)
 	// some convenient additions

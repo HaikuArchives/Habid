@@ -4,6 +4,7 @@
  */
 
 #include "Interface/Window.h"
+#include "Interface/View.h"
 
 BWindowBridge::BWindowBridge(BMessage* archive)
 : BWindow(archive)
@@ -252,19 +253,19 @@ void BWindowProxy::SetLayout_super(BLayout* layout)
 
 
 extern "C" {
-	BWindowProxy * be_BWindow_ctor(void *bindInstPtr, BMessage* archive)
+	BWindow * be_BWindow_ctor(void *bindInstPtr, BMessage* archive)
 	{
-		return new BWindowProxy(bindInstPtr, archive);
+		return (BWindow *)new BWindowProxy(bindInstPtr, archive);
 	}
 
-	BWindowProxy * be_BWindow_ctor_1(void *bindInstPtr, BRect *frame, const char* title, window_type type, uint32 flags, uint32 workspace)
+	BWindow * be_BWindow_ctor_1(void *bindInstPtr, BRect *frame, const char* title, window_type type, uint32 flags, uint32 workspace)
 	{
-		return new BWindowProxy(bindInstPtr, *frame, title, type, flags, workspace);
+		return  (BWindow *)new BWindowProxy(bindInstPtr, *frame, title, type, flags, workspace);
 	}
 
-	BWindowProxy * be_BWindow_ctor_2(void *bindInstPtr, BRect *frame, const char* title, window_look look, window_feel feel, uint32 flags, uint32 workspace)
+	BWindow * be_BWindow_ctor_2(void *bindInstPtr, BRect *frame, const char* title, window_look look, window_feel feel, uint32 flags, uint32 workspace)
 	{
-		return new BWindowProxy(bindInstPtr, *frame, title, look, feel, flags, workspace);
+		return  (BWindow *)new BWindowProxy(bindInstPtr, *frame, title, look, feel, flags, workspace);
 	}
 
 	void be_BWindow_dtor(BWindow* self)
@@ -277,84 +278,124 @@ extern "C" {
 		return BWindow::Instantiate(archive);
 	}
 
-	status_t be_BWindow_Archive(BWindowProxy *self, BMessage* archive, bool deep)
+	status_t be_BWindow_Archive(BWindow *self, BMessage* archive, bool deep)
 	{
-		return self->Archive_super(archive, deep);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			return proxy->Archive_super(archive, deep);
+		else
+			return self->Archive(archive, deep);
 	}
 
-	void be_BWindow_Quit(BWindowProxy *self)
+	void be_BWindow_Quit(BWindow *self)
 	{
-		self->Quit_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->Quit_super();
+		else
+			self->Quit();
 	}
 
-	void be_BWindow_Close(BWindowProxy *self)
+	void be_BWindow_Close(BWindow *self)
 	{
 		self->Close();
 	}
 
-	void be_BWindow_AddChild(BWindowProxy *self, BView* child, BView* before)
+	void be_BWindow_AddChild(BWindow *self, BView* child, BView* before)
 	{
 		self->AddChild(child, before);
 	}
 
-	void be_BWindow_AddChild_1(BWindowProxy *self, BLayoutItem* child)
+	void be_BWindow_AddChild_1(BWindow *self, BLayoutItem* child)
 	{
 		self->AddChild(child);
 	}
 
-	bool be_BWindow_RemoveChild(BWindowProxy *self, BView* child)
+	bool be_BWindow_RemoveChild(BWindow *self, BViewProxy* child)
 	{
 		return self->RemoveChild(child);
 	}
 
-	int32 be_BWindow_CountChildren(BWindowProxy *self)
+	int32 be_BWindow_CountChildren(BWindow *self)
 	{
 		return self->CountChildren();
 	}
 
-	BView* be_BWindow_ChildAt(BWindowProxy *self, int32 index)
+	BView* be_BWindow_ChildAt(BWindow *self, int32 index)
 	{
 		return self->ChildAt(index);
 	}
 
-	void be_BWindow_DispatchMessage(BWindowProxy *self, BMessage* message, BHandler* handler)
+	void be_BWindow_DispatchMessage(BWindow *self, BMessage* message, BHandler* handler)
 	{
-		self->DispatchMessage_super(message, handler);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->DispatchMessage_super(message, handler);
+		else
+			self->DispatchMessage(message, handler);
 	}
 
-	void be_BWindow_MessageReceived(BWindowProxy *self, BMessage* message)
+	void be_BWindow_MessageReceived(BWindow *self, BMessage* message)
 	{
-		self->MessageReceived_super(message);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->MessageReceived_super(message);
+		else
+			self->MessageReceived(message);
 	}
 
-	void be_BWindow_FrameMoved(BWindowProxy *self, BPoint *newPosition)
+	void be_BWindow_FrameMoved(BWindow *self, BPoint *newPosition)
 	{
-		self->FrameMoved_super(*newPosition);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->FrameMoved_super(*newPosition);
+		else
+			self->FrameMoved(*newPosition);
 	}
 
-	void be_BWindow_WorkspacesChanged(BWindowProxy *self, uint32 oldWorkspaces, uint32 newWorkspaces)
+	void be_BWindow_WorkspacesChanged(BWindow *self, uint32 oldWorkspaces, uint32 newWorkspaces)
 	{
-		self->WorkspacesChanged_super(oldWorkspaces, newWorkspaces);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->WorkspacesChanged_super(oldWorkspaces, newWorkspaces);
+		else
+			self->WorkspacesChanged(oldWorkspaces, newWorkspaces);
 	}
 
-	void be_BWindow_WorkspaceActivated(BWindowProxy *self, int32 workspace, bool state)
+	void be_BWindow_WorkspaceActivated(BWindow *self, int32 workspace, bool state)
 	{
-		self->WorkspaceActivated_super(workspace, state);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->WorkspaceActivated_super(workspace, state);
+		else
+			self->WorkspaceActivated(workspace, state);
 	}
 
-	void be_BWindow_FrameResized(BWindowProxy *self, float newWidth, float newHeight)
+	void be_BWindow_FrameResized(BWindow *self, float newWidth, float newHeight)
 	{
-		self->FrameResized_super(newWidth, newHeight);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->FrameResized_super(newWidth, newHeight);
+		else
+			self->FrameResized(newWidth, newHeight);
 	}
 
-	void be_BWindow_Minimize(BWindowProxy *self, bool minimize)
+	void be_BWindow_Minimize(BWindow *self, bool minimize)
 	{
-		self->Minimize_super(minimize);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->Minimize_super(minimize);
+		else
+			self->Minimize(minimize);
 	}
 
-	void be_BWindow_Zoom(BWindowProxy *self, BPoint *origin, float width, float height)
+	void be_BWindow_Zoom(BWindow *self, BPoint *origin, float width, float height)
 	{
-		self->Zoom_super(*origin, width, height);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->Zoom_super(*origin, width, height);
+		else
+			self->Zoom(*origin, width, height);
 	}
 
 	void be_BWindow_Zoom_1(BWindow *self)
@@ -362,367 +403,403 @@ extern "C" {
 		self->Zoom();
 	}
 
-	void be_BWindow_SetZoomLimits(BWindowProxy *self, float maxWidth, float maxHeight)
+	void be_BWindow_SetZoomLimits(BWindow *self, float maxWidth, float maxHeight)
 	{
 		self->SetZoomLimits(maxWidth, maxHeight);
 	}
 
-	void be_BWindow_ScreenChanged(BWindowProxy *self, BRect *screenSize, color_space format)
+	void be_BWindow_ScreenChanged(BWindow *self, BRect *screenSize, color_space format)
 	{
-		self->ScreenChanged_super(*screenSize, format);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->ScreenChanged_super(*screenSize, format);
+		else
+			self->ScreenChanged(*screenSize, format);
 	}
 
-	void be_BWindow_SetPulseRate(BWindowProxy *self, bigtime_t rate)
+	void be_BWindow_SetPulseRate(BWindow *self, bigtime_t rate)
 	{
 		self->SetPulseRate(rate);
 	}
 
-	bigtime_t be_BWindow_PulseRate(BWindowProxy *self)
+	bigtime_t be_BWindow_PulseRate(BWindow *self)
 	{
 		return self->PulseRate();
 	}
 
-	void be_BWindow_AddShortcut(BWindowProxy *self, uint32 key, uint32 modifiers, BMessage* message)
+	void be_BWindow_AddShortcut(BWindow *self, uint32 key, uint32 modifiers, BMessage* message)
 	{
 		self->AddShortcut(key, modifiers, message);
 	}
 
-	void be_BWindow_AddShortcut_1(BWindowProxy *self, uint32 key, uint32 modifiers, BMessage* message, BHandler* target)
+	void be_BWindow_AddShortcut_1(BWindow *self, uint32 key, uint32 modifiers, BMessage* message, BHandler* target)
 	{
 		self->AddShortcut(key, modifiers, message, target);
 	}
 
-	void be_BWindow_RemoveShortcut(BWindowProxy *self, uint32 key, uint32 modifiers)
+	void be_BWindow_RemoveShortcut(BWindow *self, uint32 key, uint32 modifiers)
 	{
 		self->RemoveShortcut(key, modifiers);
 	}
 
-	void be_BWindow_SetDefaultButton(BWindowProxy *self, BButton* button)
+	void be_BWindow_SetDefaultButton(BWindow *self, BButton* button)
 	{
 		self->SetDefaultButton(button);
 	}
 
-	BButton* be_BWindow_DefaultButton(BWindowProxy *self)
+	BButton* be_BWindow_DefaultButton(BWindow *self)
 	{
 		return self->DefaultButton();
 	}
 
-	void be_BWindow_MenusBeginning(BWindowProxy *self)
+	void be_BWindow_MenusBeginning(BWindow *self)
 	{
-		self->MenusBeginning_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->MenusBeginning_super();
+		else
+			self->MenusBeginning();
 	}
 
-	void be_BWindow_MenusEnded(BWindowProxy *self)
+	void be_BWindow_MenusEnded(BWindow *self)
 	{
-		self->MenusEnded_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->MenusEnded_super();
+		else
+			self->MenusEnded();
 	}
 
-	bool be_BWindow_NeedsUpdate(BWindowProxy *self)
+	bool be_BWindow_NeedsUpdate(BWindow *self)
 	{
 		return self->NeedsUpdate();
 	}
 
-	void be_BWindow_UpdateIfNeeded(BWindowProxy *self)
+	void be_BWindow_UpdateIfNeeded(BWindow *self)
 	{
 		self->UpdateIfNeeded();
 	}
 
-	BView* be_BWindow_FindView(BWindowProxy *self, const char* viewName)
+	BView * be_BWindow_FindView(BWindow *self, const char* viewName)
 	{
 		return self->FindView(viewName);
 	}
 
-	BView* be_BWindow_FindView_1(BWindowProxy *self, BPoint *pt)
+	BView * be_BWindow_FindView_1(BWindow *self, BPoint *pt)
 	{
 		return self->FindView(*pt);
 	}
 
-	BView* be_BWindow_CurrentFocus(BWindowProxy *self)
+	BView* be_BWindow_CurrentFocus(BWindow *self)
 	{
 		return self->CurrentFocus();
 	}
 
-	void be_BWindow_Activate(BWindowProxy *self, bool state)
+	void be_BWindow_Activate(BWindow *self, bool state)
 	{
 		self->Activate(state);
 	}
 
-	void be_BWindow_WindowActivated(BWindowProxy *self, bool state)
+	void be_BWindow_WindowActivated(BWindow *self, bool state)
 	{
-		self->WindowActivated_super(state);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->WindowActivated_super(state);
+		else
+			self->WindowActivated(state);
 	}
 
-	void be_BWindow_ConvertToScreen(BWindowProxy *self, BPoint* point)
+	void be_BWindow_ConvertToScreen(BWindow *self, BPoint* point)
 	{
 		self->ConvertToScreen(point);
 	}
 
-	BPoint * be_BWindow_ConvertToScreen_1(BWindowProxy *self, BPoint *point)
+	BPoint * be_BWindow_ConvertToScreen_1(BWindow *self, BPoint *point)
 	{
 		return new BPoint(self->ConvertToScreen(*point));
 	}
 
-	void be_BWindow_ConvertFromScreen(BWindowProxy *self, BPoint* point)
+	void be_BWindow_ConvertFromScreen(BWindow *self, BPoint* point)
 	{
 		self->ConvertFromScreen(point);
 	}
 
-	BPoint * be_BWindow_ConvertFromScreen_1(BWindowProxy *self, BPoint* point)
+	BPoint * be_BWindow_ConvertFromScreen_1(BWindow *self, BPoint* point)
 	{
 		return new BPoint(self->ConvertFromScreen(*point));
 	}
 
-	void be_BWindow_ConvertToScreen_2(BWindowProxy *self, BRect* rect)
+	void be_BWindow_ConvertToScreen_2(BWindow *self, BRect* rect)
 	{
 		self->ConvertToScreen(rect);
 	}
 
-	BRect * be_BWindow_ConvertToScreen_3(BWindowProxy *self, BRect *rect)
+	BRect * be_BWindow_ConvertToScreen_3(BWindow *self, BRect *rect)
 	{
 		return new BRect(self->ConvertToScreen(*rect));
 	}
 
-	void be_BWindow_ConvertFromScreen_2(BWindowProxy *self, BRect* rect)
+	void be_BWindow_ConvertFromScreen_2(BWindow *self, BRect* rect)
 	{
 		self->ConvertFromScreen(rect);
 	}
 
-	BRect * be_BWindow_ConvertFromScreen_3(BWindowProxy *self, BRect *rect)
+	BRect * be_BWindow_ConvertFromScreen_3(BWindow *self, BRect *rect)
 	{
 		return new BRect(self->ConvertFromScreen(*rect));
 	}
 
-	void be_BWindow_MoveBy(BWindowProxy *self, float dx, float dy)
+	void be_BWindow_MoveBy(BWindow *self, float dx, float dy)
 	{
 		self->MoveBy(dx, dy);
 	}
 
-	void be_BWindow_MoveTo(BWindowProxy *self, BPoint *pt)
+	void be_BWindow_MoveTo(BWindow *self, BPoint *pt)
 	{
 		self->MoveTo(*pt);
 	}
 
-	void be_BWindow_MoveTo_1(BWindowProxy *self, float x, float y)
+	void be_BWindow_MoveTo_1(BWindow *self, float x, float y)
 	{
 		self->MoveTo(x, y);
 	}
 
-	void be_BWindow_ResizeBy(BWindowProxy *self, float dx, float dy)
+	void be_BWindow_ResizeBy(BWindow *self, float dx, float dy)
 	{
 		self->ResizeBy(dx, dy);
 	}
 
-	void be_BWindow_ResizeTo(BWindowProxy *self, float width, float height)
+	void be_BWindow_ResizeTo(BWindow *self, float width, float height)
 	{
 		self->ResizeTo(width, height);
 	}
 
-	void be_BWindow_CenterIn(BWindowProxy *self, const BRect* rect)
+	void be_BWindow_CenterIn(BWindow *self, const BRect* rect)
 	{
 		self->CenterIn(*rect);
 	}
 
-	void be_BWindow_CenterOnScreen(BWindowProxy *self)
+	void be_BWindow_CenterOnScreen(BWindow *self)
 	{
 		self->CenterOnScreen();
 	}
 
-	void be_BWindow_Show(BWindowProxy *self)
+	void be_BWindow_Show(BWindow *self)
 	{
-		self->Show_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->Show_super();
+		else
+			self->Show();
 	}
 
-	void be_BWindow_Hide(BWindowProxy *self)
+	void be_BWindow_Hide(BWindow *self)
 	{
-		self->Hide_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->Hide_super();
+		else
+			self->Hide();
 	}
 
-	bool be_BWindow_IsHidden(BWindowProxy *self)
+	bool be_BWindow_IsHidden(BWindow *self)
 	{
 		return self->IsHidden();
 	}
 
-	bool be_BWindow_IsMinimized(BWindowProxy *self)
+	bool be_BWindow_IsMinimized(BWindow *self)
 	{
 		return self->IsMinimized();
 	}
 
-	void be_BWindow_Flush(BWindowProxy *self)
+	void be_BWindow_Flush(BWindow *self)
 	{
 		self->Flush();
 	}
 
-	void be_BWindow_Sync(BWindowProxy *self)
+	void be_BWindow_Sync(BWindow *self)
 	{
 		self->Sync();
 	}
 
-	status_t be_BWindow_SendBehind(BWindowProxy *self, const BWindow* window)
+	status_t be_BWindow_SendBehind(BWindow *self, const BWindow* window)
 	{
 		return self->SendBehind(window);
 	}
 
-	void be_BWindow_DisableUpdates(BWindowProxy *self)
+	void be_BWindow_DisableUpdates(BWindow *self)
 	{
 		self->DisableUpdates();
 	}
 
-	void be_BWindow_EnableUpdates(BWindowProxy *self)
+	void be_BWindow_EnableUpdates(BWindow *self)
 	{
 		self->EnableUpdates();
 	}
 
-	void be_BWindow_BeginViewTransaction(BWindowProxy *self)
+	void be_BWindow_BeginViewTransaction(BWindow *self)
 	{
 		self->BeginViewTransaction();
 	}
 
-	void be_BWindow_EndViewTransaction(BWindowProxy *self)
+	void be_BWindow_EndViewTransaction(BWindow *self)
 	{
 		self->EndViewTransaction();
 	}
 
-	void be_BWindow_InViewTransaction(BWindowProxy *self)
+	void be_BWindow_InViewTransaction(BWindow *self)
 	{
 		self->InViewTransaction();
 	}
 
-	BRect * be_BWindow_Bounds(BWindowProxy *self)
+	BRect * be_BWindow_Bounds(BWindow *self)
 	{
 		return new BRect(self->Bounds());
 	}
 
-	BRect * be_BWindow_Frame(BWindowProxy *self)
+	BRect * be_BWindow_Frame(BWindow *self)
 	{
 		return new BRect(self->Frame());
 	}
 
-	BRect * be_BWindow_DecoratorFrame(BWindowProxy *self)
+	BRect * be_BWindow_DecoratorFrame(BWindow *self)
 	{
 		return new BRect(self->DecoratorFrame());
 	}
 
-	BSize * be_BWindow_Size(BWindowProxy *self)
+	BSize * be_BWindow_Size(BWindow *self)
 	{
 		return new BSize(self->Size());
 	}
 
-	const char* be_BWindow_Title(BWindowProxy *self)
+	const char* be_BWindow_Title(BWindow *self)
 	{
 		return self->Title();
 	}
 
-	void be_BWindow_SetTitle(BWindowProxy *self, const char* title)
+	void be_BWindow_SetTitle(BWindow *self, const char* title)
 	{
 		self->SetTitle(title);
 	}
 
-	bool be_BWindow_IsFront(BWindowProxy *self)
+	bool be_BWindow_IsFront(BWindow *self)
 	{
 		return self->IsFront();
 	}
 
-	bool be_BWindow_IsActive(BWindowProxy *self)
+	bool be_BWindow_IsActive(BWindow *self)
 	{
 		return self->IsActive();
 	}
 
-	void be_BWindow_SetKeyMenuBar(BWindowProxy *self, BMenuBar* bar)
+	void be_BWindow_SetKeyMenuBar(BWindow *self, BMenuBar* bar)
 	{
 		self->SetKeyMenuBar(bar);
 	}
 
-	BMenuBar* be_BWindow_KeyMenuBar(BWindowProxy *self)
+	BMenuBar* be_BWindow_KeyMenuBar(BWindow *self)
 	{
 		return self->KeyMenuBar();
 	}
 
-	void be_BWindow_SetSizeLimits(BWindowProxy *self, float minWidth, float maxWidth, float minHeight, float maxHeight)
+	void be_BWindow_SetSizeLimits(BWindow *self, float minWidth, float maxWidth, float minHeight, float maxHeight)
 	{
 		self->SetSizeLimits(minWidth, maxWidth, minHeight, maxHeight);
 	}
 
-	void be_BWindow_GetSizeLimits(BWindowProxy *self, float* minWidth, float* maxWidth, float* minHeight, float* maxHeight)
+	void be_BWindow_GetSizeLimits(BWindow *self, float* minWidth, float* maxWidth, float* minHeight, float* maxHeight)
 	{
 		self->GetSizeLimits(minWidth, maxWidth, minHeight, maxHeight);
 	}
 
-	status_t be_BWindow_SetDecoratorSettings(BWindowProxy *self, const BMessage* settings)
+	status_t be_BWindow_SetDecoratorSettings(BWindow *self, const BMessage* settings)
 	{
 		return self->SetDecoratorSettings(*settings);
 	}
 
-	status_t be_BWindow_GetDecoratorSettings(BWindowProxy *self, BMessage* settings)
+	status_t be_BWindow_GetDecoratorSettings(BWindow *self, BMessage* settings)
 	{
 		return self->GetDecoratorSettings(settings);
 	}
 
-	uint32 be_BWindow_Workspaces(BWindowProxy *self)
+	uint32 be_BWindow_Workspaces(BWindow *self)
 	{
 		return self->Workspaces();
 	}
 
-	void be_BWindow_SetWorkspaces(BWindowProxy *self, uint32 workspace)
+	void be_BWindow_SetWorkspaces(BWindow *self, uint32 workspace)
 	{
 		self->SetWorkspaces(workspace);
 	}
 
-	BView* be_BWindow_LastMouseMovedView(BWindowProxy *self)
+	BView* be_BWindow_LastMouseMovedView(BWindow *self)
 	{
 		return self->LastMouseMovedView();
 	}
 
-	BHandler* be_BWindow_ResolveSpecifier(BWindowProxy *self, BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property)
+	BHandler* be_BWindow_ResolveSpecifier(BWindow *self, BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property)
 	{
-		return self->ResolveSpecifier_super(message, index, specifier, form, property);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			return proxy->ResolveSpecifier_super(message, index, specifier, form, property);
+		else
+			return self->ResolveSpecifier(message, index, specifier, form, property);
 	}
 
-	status_t be_BWindow_GetSupportedSuites(BWindowProxy *self, BMessage* data)
+	status_t be_BWindow_GetSupportedSuites(BWindow *self, BMessage* data)
 	{
-		return self->GetSupportedSuites_super(data);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			return proxy->GetSupportedSuites_super(data);
+		else
+			return self->GetSupportedSuites(data);
 	}
 
-	status_t be_BWindow_AddToSubset(BWindowProxy *self, BWindow* window)
+	status_t be_BWindow_AddToSubset(BWindow *self, BWindow* window)
 	{
 		return self->AddToSubset(window);
 	}
 
-	status_t be_BWindow_RemoveFromSubset(BWindowProxy *self, BWindow* window)
+	status_t be_BWindow_RemoveFromSubset(BWindow *self, BWindow* window)
 	{
 		return self->RemoveFromSubset(window);
 	}
 
-	status_t be_BWindow_Perform(BWindowProxy *self, perform_code code, void* data)
+	status_t be_BWindow_Perform(BWindow *self, perform_code code, void* data)
 	{
-		return self->Perform_super(code, data);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			return proxy->Perform_super(code, data);
+		else
+			return self->Perform(code, data);
 	}
 
-	status_t be_BWindow_SetType(BWindowProxy *self, window_type type)
+	status_t be_BWindow_SetType(BWindow *self, window_type type)
 	{
 		return self->SetType(type);
 	}
 
-	window_type be_BWindow_Type(BWindowProxy *self)
+	window_type be_BWindow_Type(BWindow *self)
 	{
 		return self->Type();
 	}
 
-	status_t be_BWindow_SetLook(BWindowProxy *self, window_look look)
+	status_t be_BWindow_SetLook(BWindow *self, window_look look)
 	{
 		return self->SetLook(look);
 	}
 
-	window_look be_BWindow_Look(BWindowProxy *self)
+	window_look be_BWindow_Look(BWindow *self)
 	{
 		return self->Look();
 	}
 
-	status_t be_BWindow_SetFeel(BWindowProxy *self, window_feel feel)
+	status_t be_BWindow_SetFeel(BWindow *self, window_feel feel)
 	{
 		return self->SetFeel(feel);
 	}
 
-	window_feel be_BWindow_Feel(BWindowProxy *self)
+	window_feel be_BWindow_Feel(BWindow *self)
 	{
 		return self->Feel();
 	}
@@ -732,52 +809,64 @@ extern "C" {
 		return self->SetFlags(flags);
 	}
 
-	uint32 be_BWindow_Flags(BWindowProxy *self)
+	uint32 be_BWindow_Flags(BWindow *self)
 	{
 		return self->Flags();
 	}
 
-	bool be_BWindow_IsModal(BWindowProxy *self)
+	bool be_BWindow_IsModal(BWindow *self)
 	{
 		return self->IsModal();
 	}
 
-	bool be_BWindow_IsFloating(BWindowProxy *self)
+	bool be_BWindow_IsFloating(BWindow *self)
 	{
 		return self->IsFloating();
 	}
 
-	status_t be_BWindow_SetWindowAlignment(BWindowProxy *self, window_alignment mode, int32 h, int32 hOffset, int32 width, int32 widthOffset, int32 v, int32 vOffset, int32 height, int32 heightOffset)
+	status_t be_BWindow_SetWindowAlignment(BWindow *self, window_alignment mode, int32 h, int32 hOffset, int32 width, int32 widthOffset, int32 v, int32 vOffset, int32 height, int32 heightOffset)
 	{
 		return self->SetWindowAlignment(mode, h, hOffset, width, widthOffset, v, vOffset, height, heightOffset);
 	}
 
-	status_t be_BWindow_GetWindowAlignment(BWindowProxy *self, window_alignment* mode, int32* h, int32* hOffset, int32* width, int32* widthOffset, int32* v, int32* vOffset, int32* height, int32* heightOffset)
+	status_t be_BWindow_GetWindowAlignment(BWindow *self, window_alignment* mode, int32* h, int32* hOffset, int32* width, int32* widthOffset, int32* v, int32* vOffset, int32* height, int32* heightOffset)
 	{
 		return self->GetWindowAlignment(mode, h, hOffset, width, widthOffset, v, vOffset, height, heightOffset);
 	}
 
-	bool be_BWindow_QuitRequested(BWindowProxy *self)
+	bool be_BWindow_QuitRequested(BWindow *self)
 	{
-		return self->QuitRequested_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			return proxy->QuitRequested_super();
+		else
+			return self->QuitRequested();
 	}
 
-	thread_id be_BWindow_Run(BWindowProxy *self)
+	thread_id be_BWindow_Run(BWindow *self)
 	{
-		return self->Run_super();
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			return proxy->Run_super();
+		else
+			return self->Run();
 	}
 
-	void be_BWindow_SetLayout(BWindowProxy *self, BLayout* layout)
+	void be_BWindow_SetLayout(BWindow *self, BLayout* layout)
 	{
-		self->SetLayout_super(layout);
+		BWindowProxy *proxy = dynamic_cast<BWindowProxy *>(self);
+		if(proxy)
+			proxy->SetLayout_super(layout);
+		else
+			self->SetLayout(layout);
 	}
 
-	BLayout* be_BWindow_GetLayout(BWindowProxy *self)
+	BLayout* be_BWindow_GetLayout(BWindow *self)
 	{
 		return self->GetLayout();
 	}
 
-	void be_BWindow_InvalidateLayout(BWindowProxy *self, bool descendants)
+	void be_BWindow_InvalidateLayout(BWindow *self, bool descendants)
 	{
 		self->InvalidateLayout(descendants);
 	}
