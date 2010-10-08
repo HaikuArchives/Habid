@@ -3,7 +3,6 @@ BuildDir('build/', 'src/')
 Default('libhabid.so')
 env = Environment()
 
-
 c_objs = env.SConscript('src/capi/SConscript')
 d_objs = env.SConscript('src/dapi/SConscript')
 

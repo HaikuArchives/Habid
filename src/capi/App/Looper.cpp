@@ -165,14 +165,14 @@ status_t BLooperProxy::Perform_super(perform_code d, void* arg)
 
 
 extern "C" {
-	BLooperProxy * be_BLooper_ctor(void *bindInstPtr, const char* name, int32 priority, int32 port_capacity)
+	BLooper * be_BLooper_ctor(void *bindInstPtr, const char* name, int32 priority, int32 port_capacity)
 	{
-		return new BLooperProxy(bindInstPtr, name, priority, port_capacity);
+		return (BLooper *)new BLooperProxy(bindInstPtr, name, priority, port_capacity);
 	}
 
-	BLooperProxy * be_BLooper_ctor_1(void *bindInstPtr, BMessage* data)
+	BLooper * be_BLooper_ctor_1(void *bindInstPtr, BMessage* data)
 	{
-		return new BLooperProxy(bindInstPtr, data);
+		return (BLooper *)new BLooperProxy(bindInstPtr, data);
 	}
 
 	void be_BLooper_dtor(BLooper* self)
@@ -185,199 +185,255 @@ extern "C" {
 		return BLooper::Instantiate(data);
 	}
 
-	status_t be_BLooper_Archive(BLooperProxy *self, BMessage* data, bool deep)
+	status_t be_BLooper_Archive(BLooper *self, BMessage* data, bool deep)
 	{
-		return self->Archive_super(data, deep);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->Archive_super(data, deep);
+		else
+			return self->Archive(data, deep);
 	}
 
-	status_t be_BLooper_PostMessage(BLooperProxy *self, uint32 command)
+	status_t be_BLooper_PostMessage(BLooper *self, uint32 command)
 	{
 		return self->PostMessage(command);
 	}
 
-	status_t be_BLooper_PostMessage_1(BLooperProxy *self, BMessage* message)
+	status_t be_BLooper_PostMessage_1(BLooper *self, BMessage* message)
 	{
 		return self->PostMessage(message);
 	}
 
-	status_t be_BLooper_PostMessage_2(BLooperProxy *self, uint32 command, BHandler* handler, BHandler* replyTo)
+	status_t be_BLooper_PostMessage_2(BLooper *self, uint32 command, BHandler* handler, BHandler* replyTo)
 	{
 		return self->PostMessage(command, handler, replyTo);
 	}
 
-	status_t be_BLooper_PostMessage_3(BLooperProxy *self, BMessage* message, BHandler* handler, BHandler* replyTo)
+	status_t be_BLooper_PostMessage_3(BLooper *self, BMessage* message, BHandler* handler, BHandler* replyTo)
 	{
 		return self->PostMessage(message, handler, replyTo);
 	}
 
-	void be_BLooper_DispatchMessage(BLooperProxy *self, BMessage* message, BHandler* handler)
+	void be_BLooper_DispatchMessage(BLooper *self, BMessage* message, BHandler* handler)
 	{
-		self->DispatchMessage_super(message, handler);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			proxy->DispatchMessage_super(message, handler);
+		else
+			self->DispatchMessage(message, handler);
 	}
 
-	void be_BLooper_MessageReceived(BLooperProxy *self, BMessage* message)
+	void be_BLooper_MessageReceived(BLooper *self, BMessage* message)
 	{
-		self->MessageReceived_super(message);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			proxy->MessageReceived_super(message);
+		else
+			self->MessageReceived(message);
 	}
 
-	BMessage* be_BLooper_CurrentMessage(BLooperProxy *self)
+	BMessage* be_BLooper_CurrentMessage(BLooper *self)
 	{
 		return self->CurrentMessage();
 	}
 
-	BMessage* be_BLooper_DetachCurrentMessage(BLooperProxy *self)
+	BMessage* be_BLooper_DetachCurrentMessage(BLooper *self)
 	{
 		return self->DetachCurrentMessage();
 	}
 
-	BMessageQueue* be_BLooper_MessageQueue(BLooperProxy *self)
+	BMessageQueue* be_BLooper_MessageQueue(BLooper *self)
 	{
 		return self->MessageQueue();
 	}
 
-	bool be_BLooper_IsMessageWaiting(BLooperProxy *self)
+	bool be_BLooper_IsMessageWaiting(BLooper *self)
 	{
 		return self->IsMessageWaiting();
 	}
 
-	void be_BLooper_AddHandler(BLooperProxy *self, BHandler* handler)
+	void be_BLooper_AddHandler(BLooper *self, BHandler* handler)
 	{
 		self->AddHandler(handler);
 	}
 
-	bool be_BLooper_RemoveHandler(BLooperProxy *self, BHandler* handler)
+	bool be_BLooper_RemoveHandler(BLooper *self, BHandler* handler)
 	{
 		return self->RemoveHandler(handler);
 	}
 
-	int32 be_BLooper_CountHandlers(BLooperProxy *self)
+	int32 be_BLooper_CountHandlers(BLooper *self)
 	{
 		return self->CountHandlers();
 	}
 
-	BHandler* be_BLooper_HandlerAt(BLooperProxy *self, int32 index)
+	BHandler* be_BLooper_HandlerAt(BLooper *self, int32 index)
 	{
 		return self->HandlerAt(index);
 	}
 
-	int32 be_BLooper_IndexOf(BLooperProxy *self, BHandler* handler)
+	int32 be_BLooper_IndexOf(BLooper *self, BHandler* handler)
 	{
 		return self->IndexOf(handler);
 	}
 
-	BHandler* be_BLooper_PreferredHandler(BLooperProxy *self)
+	BHandler* be_BLooper_PreferredHandler(BLooper *self)
 	{
 		return self->PreferredHandler();
 	}
 
-	void be_BLooper_SetPreferredHandler(BLooperProxy *self, BHandler* handler)
+	void be_BLooper_SetPreferredHandler(BLooper *self, BHandler* handler)
 	{
 		self->SetPreferredHandler(handler);
 	}
 
-	thread_id be_BLooper_Run(BLooperProxy *self)
+	thread_id be_BLooper_Run(BLooper *self)
 	{
-		return self->Run_super();
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->Run_super();
+		else
+			return self->Run();
 	}
 
-	void be_BLooper_Quit(BLooperProxy *self)
+	void be_BLooper_Quit(BLooper *self)
 	{
-		self->Quit_super();
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			proxy->Quit_super();
+		else
+			self->Quit();
 	}
 
-	bool be_BLooper_QuitRequested(BLooperProxy *self)
+	bool be_BLooper_QuitRequested(BLooper *self)
 	{
-		return self->QuitRequested_super();
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->QuitRequested_super();
+		else
+			return self->QuitRequested();
 	}
 
-	bool be_BLooper_Lock(BLooperProxy *self)
+	bool be_BLooper_Lock(BLooper *self)
 	{
 		return self->Lock();
 	}
 
-	void be_BLooper_Unlock(BLooperProxy *self)
+	void be_BLooper_Unlock(BLooper *self)
 	{
 		self->Unlock();
 	}
 
-	bool be_BLooper_IsLocked(BLooperProxy *self)
+	bool be_BLooper_IsLocked(BLooper *self)
 	{
 		return self->IsLocked();
 	}
 
-	status_t be_BLooper_LockWithTimeout(BLooperProxy *self, bigtime_t timeout)
+	status_t be_BLooper_LockWithTimeout(BLooper *self, bigtime_t timeout)
 	{
 		return self->LockWithTimeout(timeout);
 	}
 
-	thread_id be_BLooper_Thread(BLooperProxy *self)
+	thread_id be_BLooper_Thread(BLooper *self)
 	{
 		return self->Thread();
 	}
 
-	team_id be_BLooper_Team(BLooperProxy *self)
+	team_id be_BLooper_Team(BLooper *self)
 	{
 		return self->Team();
 	}
 
-	BLooper* be_BLooper_LooperForThread(BLooperProxy *self, thread_id thread)
+	BLooper* be_BLooper_LooperForThread(BLooper *self, thread_id thread)
 	{
-		return self->LooperForThread_super(thread);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->LooperForThread_super(thread);
+		else
+			return self->LooperForThread(thread);
 	}
 
-	thread_id be_BLooper_LockingThread(BLooperProxy *self)
+	thread_id be_BLooper_LockingThread(BLooper *self)
 	{
 		return self->LockingThread();
 	}
 
-	int32 be_BLooper_CountLocks(BLooperProxy *self)
+	int32 be_BLooper_CountLocks(BLooper *self)
 	{
 		return self->CountLocks();
 	}
 
-	int32 be_BLooper_CountLockRequests(BLooperProxy *self)
+	int32 be_BLooper_CountLockRequests(BLooper *self)
 	{
 		return self->CountLockRequests();
 	}
 
-	sem_id be_BLooper_Sem(BLooperProxy *self)
+	sem_id be_BLooper_Sem(BLooper *self)
 	{
 		return self->Sem();
 	}
 
-	BHandler* be_BLooper_ResolveSpecifier(BLooperProxy *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property)
+	BHandler* be_BLooper_ResolveSpecifier(BLooper *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property)
 	{
-		return self->ResolveSpecifier_super(msg, index, specifier, form, property);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->ResolveSpecifier_super(msg, index, specifier, form, property);
+		else
+			return self->ResolveSpecifier(msg, index, specifier, form, property);
 	}
 
-	status_t be_BLooper_GetSupportedSuites(BLooperProxy *self, BMessage* data)
+	status_t be_BLooper_GetSupportedSuites(BLooper *self, BMessage* data)
 	{
-		return self->GetSupportedSuites_super(data);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->GetSupportedSuites_super(data);
+		else
+			return self->GetSupportedSuites(data);
 	}
 
-	void be_BLooper_AddCommonFilter(BLooperProxy *self, BMessageFilter* filter)
+	void be_BLooper_AddCommonFilter(BLooper *self, BMessageFilter* filter)
 	{
-		self->AddCommonFilter_super(filter);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			proxy->AddCommonFilter_super(filter);
+		else
+			self->AddCommonFilter(filter);
 	}
 
-	bool be_BLooper_RemoveCommonFilter(BLooperProxy *self, BMessageFilter* filter)
+	bool be_BLooper_RemoveCommonFilter(BLooper *self, BMessageFilter* filter)
 	{
-		return self->RemoveCommonFilter_super(filter);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->RemoveCommonFilter_super(filter);
+		else
+			return self->RemoveCommonFilter(filter);
 	}
 
-	void be_BLooper_SetCommonFilterList(BLooperProxy *self, BList* filters)
+	void be_BLooper_SetCommonFilterList(BLooper *self, BList* filters)
 	{
-		self->SetCommonFilterList_super(filters);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			proxy->SetCommonFilterList_super(filters);
+		else
+			self->SetCommonFilterList(filters);
 	}
 
-	BList* be_BLooper_CommonFilterList(BLooperProxy *self)
+	BList* be_BLooper_CommonFilterList(BLooper *self)
 	{
-		return self->CommonFilterList_super();
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->CommonFilterList_super();
+		else
+			return self->CommonFilterList();
 	}
 
-	status_t be_BLooper_Perform(BLooperProxy *self, perform_code d, void* arg)
+	status_t be_BLooper_Perform(BLooper *self, perform_code d, void* arg)
 	{
-		return self->Perform_super(d, arg);
+		BLooperProxy *proxy = dynamic_cast<BLooperProxy *>(self);
+		if(proxy)
+			return proxy->Perform_super(d, arg);
+		else
+			return self->Perform(d, arg);
 	}
 
 }

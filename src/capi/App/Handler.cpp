@@ -136,14 +136,14 @@ void BHandlerProxy::SendNotices_super(uint32 what, const BMessage* notice)
 
 
 extern "C" {
-	BHandlerProxy * be_BHandler_ctor(void *bindInstPtr, const char* name)
+	BHandler * be_BHandler_ctor(void *bindInstPtr, const char* name)
 	{
-		return new BHandlerProxy(bindInstPtr, name);
+		return (BHandler *)new BHandlerProxy(bindInstPtr, name);
 	}
 
-	BHandlerProxy * be_BHandler_ctor_1(void *bindInstPtr, BMessage* data)
+	BHandler * be_BHandler_ctor_1(void *bindInstPtr, BMessage* data)
 	{
-		return new BHandlerProxy(bindInstPtr, data);
+		return (BHandler *)new BHandlerProxy(bindInstPtr, data);
 	}
 
 	void be_BHandler_dtor(BHandler* self)
@@ -158,135 +158,179 @@ extern "C" {
 
 	status_t be_BHandler_Archive(BHandlerProxy *self, BMessage* data, bool deep)
 	{
-		return self->Archive_super(data, deep);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			return proxy->Archive_super(data, deep);
+		else
+			return self->Archive(data, deep);
 	}
 
-	void be_BHandler_MessageReceived(BHandlerProxy *self, BMessage* message)
+	void be_BHandler_MessageReceived(BHandler *self, BMessage* message)
 	{
-		self->MessageReceived_super(message);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			proxy->MessageReceived_super(message);
+		else
+			self->MessageReceived(message);
 	}
 
-	BLooper* be_BHandler_Looper(BHandlerProxy *self)
+	BLooper* be_BHandler_Looper(BHandler *self)
 	{
 		return self->Looper();
 	}
 
-	void be_BHandler_SetName(BHandlerProxy *self, const char* name)
+	void be_BHandler_SetName(BHandler *self, const char* name)
 	{
 		self->SetName(name);
 	}
 
-	const char * be_BHandler_Name(BHandlerProxy *self)
+	const char * be_BHandler_Name(BHandler *self)
 	{
 		return self->Name();
 	}
 
-	void be_BHandler_SetNextHandler(BHandlerProxy *self, BHandler* handler)
+	void be_BHandler_SetNextHandler(BHandler *self, BHandler* handler)
 	{
-		self->SetNextHandler_super(handler);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			proxy->SetNextHandler_super(handler);
+		else
+			self->SetNextHandler(handler);
 	}
 
-	BHandler * be_BHandler_NextHandler(BHandlerProxy *self)
+	BHandler * be_BHandler_NextHandler(BHandler *self)
 	{
 		return self->NextHandler();
 	}
 
-	void be_BHandler_AddFilter(BHandlerProxy *self, BMessageFilter* filter)
+	void be_BHandler_AddFilter(BHandler *self, BMessageFilter* filter)
 	{
-		self->AddFilter_super(filter);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			proxy->AddFilter_super(filter);
+		else
+			self->AddFilter(filter);
 	}
 
-	bool be_BHandler_RemoveFilter(BHandlerProxy *self, BMessageFilter* filter)
+	bool be_BHandler_RemoveFilter(BHandler *self, BMessageFilter* filter)
 	{
-		return self->RemoveFilter_super(filter);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			return proxy->RemoveFilter_super(filter);
+		else
+			return self->RemoveFilter(filter);
 	}
 
-	void be_BHandler_SetFilterList(BHandlerProxy *self, BList* filters)
+	void be_BHandler_SetFilterList(BHandler *self, BList* filters)
 	{
-		self->SetFilterList_super(filters);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			proxy->SetFilterList_super(filters);
+		else
+			self->SetFilterList(filters);
 	}
 
-	BList* be_BHandler_FilterList(BHandlerProxy *self)
+	BList* be_BHandler_FilterList(BHandler *self)
 	{
-		return self->FilterList_super();
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			return proxy->FilterList_super();
+		else
+			return self->FilterList();
 	}
 
-	bool be_BHandler_LockLooper(BHandlerProxy *self)
+	bool be_BHandler_LockLooper(BHandler *self)
 	{
 		return self->LockLooper();
 	}
 
-	status_t be_BHandler_LockLooperWithTimeout(BHandlerProxy *self, bigtime_t timeout)
+	status_t be_BHandler_LockLooperWithTimeout(BHandler *self, bigtime_t timeout)
 	{
 		return self->LockLooperWithTimeout(timeout);
 	}
 
-	void be_BHandler_UnlockLooper(BHandlerProxy *self)
+	void be_BHandler_UnlockLooper(BHandler *self)
 	{
 		self->UnlockLooper();
 	}
 
-	BHandler* be_BHandler_ResolveSpecifier(BHandlerProxy *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property)
+	BHandler* be_BHandler_ResolveSpecifier(BHandler *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property)
 	{
-		return self->ResolveSpecifier_super(msg, index, specifier, form, property);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			return proxy->ResolveSpecifier_super(msg, index, specifier, form, property);
+		else
+			return self->ResolveSpecifier(msg, index, specifier, form, property);
 	}
 
-	status_t be_BHandler_GetSupportedSuites(BHandlerProxy *self, BMessage* data)
+	status_t be_BHandler_GetSupportedSuites(BHandler *self, BMessage* data)
 	{
-		return self->GetSupportedSuites_super(data);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			return proxy->GetSupportedSuites_super(data);
+		else
+			return self->GetSupportedSuites(data);
 	}
 
-	status_t be_BHandler_StartWatching(BHandlerProxy *self, BMessenger *target, uint32 what)
+	status_t be_BHandler_StartWatching(BHandler *self, BMessenger *target, uint32 what)
 	{
 		return self->StartWatching(*target, what);
 	}
 
-	status_t be_BHandler_StartWatchingAll(BHandlerProxy *self, BMessenger *target)
+	status_t be_BHandler_StartWatchingAll(BHandler *self, BMessenger *target)
 	{
 		return self->StartWatchingAll(*target);
 	}
 
-	status_t be_BHandler_StopWatching(BHandlerProxy *self, BMessenger *target, uint32 what)
+	status_t be_BHandler_StopWatching(BHandler *self, BMessenger *target, uint32 what)
 	{
 		return self->StopWatching(*target, what);
 	}
 
-	status_t be_BHandler_StopWatchingAll(BHandlerProxy *self, BMessenger *target)
+	status_t be_BHandler_StopWatchingAll(BHandler *self, BMessenger *target)
 	{
 		return self->StopWatchingAll(*target);
 	}
 
-	status_t be_BHandler_StartWatching_1(BHandlerProxy *self, BHandler* observer, uint32 what)
+	status_t be_BHandler_StartWatching_1(BHandler *self, BHandler* observer, uint32 what)
 	{
 		return self->StartWatching(observer, what);
 	}
 
-	status_t be_BHandler_StartWatchingAll_1(BHandlerProxy *self, BHandler* observer)
+	status_t be_BHandler_StartWatchingAll_1(BHandler *self, BHandler* observer)
 	{
 		return self->StartWatchingAll(observer);
 	}
 
-	status_t be_BHandler_StopWatching_1(BHandlerProxy *self, BHandler* observer, uint32 what)
+	status_t be_BHandler_StopWatching_1(BHandler *self, BHandler* observer, uint32 what)
 	{
 		return self->StopWatching(observer, what);
 	}
 
-	status_t be_BHandler_StopWatchingAll_1(BHandlerProxy *self, BHandler* observer)
+	status_t be_BHandler_StopWatchingAll_1(BHandler *self, BHandler* observer)
 	{
 		return self->StopWatchingAll(observer);
 	}
 
-	status_t be_BHandler_Perform(BHandlerProxy *self, perform_code d, void* arg)
+	status_t be_BHandler_Perform(BHandler *self, perform_code d, void* arg)
 	{
-		return self->Perform_super(d, arg);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			return proxy->Perform_super(d, arg);
+		else
+			return self->Perform(d, arg);
 	}
 
-	void be_BHandler_SendNotices(BHandlerProxy *self, uint32 what, const BMessage* notice)
+	void be_BHandler_SendNotices(BHandler *self, uint32 what, const BMessage* notice)
 	{
-		self->SendNotices_super(what, notice);
+		BHandlerProxy *proxy = dynamic_cast<BHandlerProxy *>(self);
+		if(proxy)
+			proxy->SendNotices_super(what, notice);
+		else
+			self->SendNotices(what, notice);
 	}
 
-	bool be_BHandler_IsWatched(BHandlerProxy *self)
+	bool be_BHandler_IsWatched(BHandler *self)
 	{
 		return self->IsWatched();
 	}

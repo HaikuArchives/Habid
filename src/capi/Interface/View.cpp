@@ -492,19 +492,19 @@ void BViewProxy::InvalidateLayout_super(bool descendants)
 
 
 extern "C" {
-	BViewProxy * be_BView_ctor(void *bindInstPtr, BMessage* archive)
+	BView * be_BView_ctor(void *bindInstPtr, BMessage* archive)
 	{
-		return new BViewProxy(bindInstPtr, archive);
+		return (BView *)new BViewProxy(bindInstPtr, archive);
 	}
 
-	BViewProxy * be_BView_ctor_1(void *bindInstPtr, const char* name, uint32 flags, BLayout* layout)
+	BView * be_BView_ctor_1(void *bindInstPtr, const char* name, uint32 flags, BLayout* layout)
 	{
-		return new BViewProxy(bindInstPtr, name, flags, layout);
+		return (BView *)new BViewProxy(bindInstPtr, name, flags, layout);
 	}
 
-	BViewProxy * be_BView_ctor_2(void *bindInstPtr, BRect *frame, const char* name, uint32 resizeMask, uint32 flags)
+	BView * be_BView_ctor_2(void *bindInstPtr, BRect *frame, const char* name, uint32 resizeMask, uint32 flags)
 	{
-		return new BViewProxy(bindInstPtr, *frame, name, resizeMask, flags);
+		return (BView *)new BViewProxy(bindInstPtr, *frame, name, resizeMask, flags);
 	}
 
 	void be_BView_dtor(BView* self)
@@ -517,339 +517,431 @@ extern "C" {
 		return BView::Instantiate(archive);
 	}
 
-	status_t be_BView_Archive(BViewProxy *self, BMessage* archive, bool deep)
+	status_t be_BView_Archive(BView *self, BMessage* archive, bool deep)
 	{
-		return self->Archive_super(archive, deep);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->Archive_super(archive, deep);
+		else
+			return self->Archive(archive, deep);
 	}
 
-	status_t be_BView_AllUnarchived(BViewProxy *self, const BMessage* archive)
+	status_t be_BView_AllUnarchived(BView *self, const BMessage* archive)
 	{
-		return self->AllUnarchived_super(archive);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->AllUnarchived_super(archive);
+		else
+			return self->AllUnarchived(archive);
 	}
 
-	status_t be_BView_AllArchived(BViewProxy *self, BMessage* archive)
+	status_t be_BView_AllArchived(BView *self, BMessage* archive)
 	{
-		return self->AllArchived_super(archive);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->AllArchived_super(archive);
+		else
+			return self->AllArchived(archive);
 	}
 
-	void be_BView_AttachedToWindow(BViewProxy *self)
+	void be_BView_AttachedToWindow(BView *self)
 	{
-		self->AttachedToWindow_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->AttachedToWindow_super();
+		else
+			self->AttachedToWindow();
 	}
 
-	void be_BView_AllAttached(BViewProxy *self)
+	void be_BView_AllAttached(BView *self)
 	{
-		self->AllAttached_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->AllAttached_super();
+		else
+			self->AllAttached();
 	}
 
-	void be_BView_DetachedFromWindow(BViewProxy *self)
+	void be_BView_DetachedFromWindow(BView *self)
 	{
-		self->DetachedFromWindow_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->DetachedFromWindow_super();
+		else
+			self->DetachedFromWindow();
 	}
 
-	void be_BView_AllDetached(BViewProxy *self)
+	void be_BView_AllDetached(BView *self)
 	{
-		self->AllDetached_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->AllDetached_super();
+		else
+			self->AllDetached();
 	}
 
-	void be_BView_MessageReceived(BViewProxy *self, BMessage* message)
+	void be_BView_MessageReceived(BView *self, BMessage* message)
 	{
-		self->MessageReceived_super(message);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->MessageReceived_super(message);
+		else
+			self->MessageReceived(message);
 	}
 
-	void be_BView_AddChild(BViewProxy *self, BView* child, BView* before)
+	void be_BView_AddChild(BView *self, BView* child, BView* before)
 	{
 		self->AddChild(child, before);
 	}
 
-	bool be_BView_AddChild_1(BViewProxy *self, BLayoutItem* child)
+	bool be_BView_AddChild_1(BView *self, BLayoutItem* child)
 	{
 		return self->AddChild(child);
 	}
 
-	bool be_BView_RemoveChild(BViewProxy *self, BView* child)
+	bool be_BView_RemoveChild(BView *self, BView* child)
 	{
 		return self->RemoveChild(child);
 	}
 
-	int32 be_BView_CountChildren(BViewProxy *self)
+	int32 be_BView_CountChildren(BView *self)
 	{
 		return self->CountChildren();
 	}
 
-	BView* be_BView_ChildAt(BViewProxy *self, int32 index)
+	BView* be_BView_ChildAt(BView *self, int32 index)
 	{
 		return self->ChildAt(index);
 	}
 
-	BView* be_BView_NextSibling(BViewProxy *self)
+	BView* be_BView_NextSibling(BView *self)
 	{
 		return self->NextSibling();
 	}
 
-	BView* be_BView_PreviousSibling(BViewProxy *self)
+	BView* be_BView_PreviousSibling(BView *self)
 	{
 		return self->PreviousSibling();
 	}
 
-	bool be_BView_RemoveSelf(BViewProxy *self)
+	bool be_BView_RemoveSelf(BView *self)
 	{
 		return self->RemoveSelf();
 	}
 
-	BWindow* be_BView_Window(BViewProxy *self)
+	BWindow* be_BView_Window(BView *self)
 	{
 		return self->Window();
 	}
 
-	void be_BView_Draw(BViewProxy *self, BRect *updateRect)
+	void be_BView_Draw(BView *self, BRect *updateRect)
 	{
-		self->Draw_super(*updateRect);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->Draw_super(*updateRect);
+		else
+			self->Draw(*updateRect);
 	}
 
-	void be_BView_MouseDown(BViewProxy *self, BPoint *where)
+	void be_BView_MouseDown(BView *self, BPoint *where)
 	{
-		self->MouseDown_super(*where);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->MouseDown_super(*where);
+		else
+			self->MouseDown(*where);
 	}
 
-	void be_BView_MouseUp(BViewProxy *self, BPoint *where)
+	void be_BView_MouseUp(BView *self, BPoint *where)
 	{
-		self->MouseUp_super(*where);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->MouseUp_super(*where);
+		else
+			self->MouseUp(*where);
 	}
 
-	void be_BView_MouseMoved(BViewProxy *self, BPoint *where, uint32 code, const BMessage* dragMessage)
+	void be_BView_MouseMoved(BView *self, BPoint *where, uint32 code, const BMessage* dragMessage)
 	{
-		self->MouseMoved_super(*where, code, dragMessage);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->MouseMoved_super(*where, code, dragMessage);
+		else
+			self->MouseMoved(*where, code, dragMessage);
 	}
 
-	void be_BView_WindowActivated(BViewProxy *self, bool state)
+	void be_BView_WindowActivated(BView *self, bool state)
 	{
-		self->WindowActivated_super(state);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->WindowActivated_super(state);
+		else
+			self->WindowActivated(state);
 	}
 
-	void be_BView_KeyDown(BViewProxy *self, const char* bytes, int32 numBytes)
+	void be_BView_KeyDown(BView *self, const char* bytes, int32 numBytes)
 	{
-		self->KeyDown_super(bytes, numBytes);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->KeyDown_super(bytes, numBytes);
+		else
+			self->KeyDown(bytes, numBytes);
 	}
 
-	void be_BView_KeyUp(BViewProxy *self, const char* bytes, int32 numBytes)
+	void be_BView_KeyUp(BView *self, const char* bytes, int32 numBytes)
 	{
-		self->KeyUp_super(bytes, numBytes);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->KeyUp_super(bytes, numBytes);
+		else
+			self->KeyUp(bytes, numBytes);
 	}
 
-	void be_BView_Pulse(BViewProxy *self)
+	void be_BView_Pulse(BView *self)
 	{
-		self->Pulse_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->Pulse_super();
+		else
+			self->Pulse();
 	}
 
-	void be_BView_FrameMoved(BViewProxy *self, BPoint *newPosition)
+	void be_BView_FrameMoved(BView *self, BPoint *newPosition)
 	{
-		self->FrameMoved_super(*newPosition);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->FrameMoved_super(*newPosition);
+		else
+			self->FrameMoved(*newPosition);
 	}
 
-	void be_BView_FrameResized(BViewProxy *self, float newWidth, float newHeight)
+	void be_BView_FrameResized(BView *self, float newWidth, float newHeight)
 	{
-		self->FrameResized_super(newWidth, newHeight);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->FrameResized_super(newWidth, newHeight);
+		else
+			self->FrameResized(newWidth, newHeight);
 	}
 
-	void be_BView_TargetedByScrollView(BViewProxy *self, BScrollView* scrollView)
+	void be_BView_TargetedByScrollView(BView *self, BScrollView* scrollView)
 	{
-		self->TargetedByScrollView_super(scrollView);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->TargetedByScrollView_super(scrollView);
+		else
+			self->TargetedByScrollView(scrollView);
 	}
 
-	void be_BView_BeginRectTracking(BViewProxy *self, BRect *startRect, uint32 style)
+	void be_BView_BeginRectTracking(BView *self, BRect *startRect, uint32 style)
 	{
 		self->BeginRectTracking(*startRect, style);
 	}
 
-	void be_BView_EndRectTracking(BViewProxy *self)
+	void be_BView_EndRectTracking(BView *self)
 	{
 		self->EndRectTracking();
 	}
 
-	void be_BView_GetMouse(BViewProxy *self, BPoint* location, uint32* buttons, bool checkMessageQueue)
+	void be_BView_GetMouse(BView *self, BPoint* location, uint32* buttons, bool checkMessageQueue)
 	{
 		self->GetMouse(location, buttons, checkMessageQueue);
 	}
 
-	void be_BView_DragMessage(BViewProxy *self, BMessage* message, BRect *dragRect, BHandler* replyTo)
+	void be_BView_DragMessage(BView *self, BMessage* message, BRect *dragRect, BHandler* replyTo)
 	{
 		self->DragMessage(message, *dragRect, replyTo);
 	}
 
-	void be_BView_DragMessage_1(BViewProxy *self, BMessage* message, BBitmap* bitmap, BPoint *offset, BHandler* replyTo)
+	void be_BView_DragMessage_1(BView *self, BMessage* message, BBitmap* bitmap, BPoint *offset, BHandler* replyTo)
 	{
 		self->DragMessage(message, bitmap, *offset, replyTo);
 	}
 
-	void be_BView_DragMessage_2(BViewProxy *self, BMessage* message, BBitmap* bitmap, drawing_mode dragMode, BPoint *offset, BHandler* replyTo)
+	void be_BView_DragMessage_2(BView *self, BMessage* message, BBitmap* bitmap, drawing_mode dragMode, BPoint *offset, BHandler* replyTo)
 	{
 		self->DragMessage(message, bitmap, dragMode, *offset, replyTo);
 	}
 
-	BView* be_BView_FindView(BViewProxy *self, const char* name)
+	BView* be_BView_FindView(BView *self, const char* name)
 	{
 		return self->FindView(name);
 	}
 
-	BView* be_BView_Parent(BViewProxy *self)
+	BView* be_BView_Parent(BView *self)
 	{
 		return self->Parent();
 	}
 
-	BRect * be_BView_Bounds(BViewProxy *self)
+	BRect * be_BView_Bounds(BView *self)
 	{
 		return new BRect(self->Bounds());
 	}
 
-	BRect * be_BView_Frame(BViewProxy *self)
+	BRect * be_BView_Frame(BView *self)
 	{
 		return new BRect(self->Frame());
 	}
 
-	void be_BView_ConvertToScreen(BViewProxy *self, BPoint* pt)
+	void be_BView_ConvertToScreen(BView *self, BPoint* pt)
 	{
 		self->ConvertToScreen(pt);
 	}
 
-	BPoint * be_BView_ConvertToScreen_1(BViewProxy *self, BPoint *pt)
+	BPoint * be_BView_ConvertToScreen_1(BView *self, BPoint *pt)
 	{
 		return new BPoint(self->ConvertToScreen(*pt));
 	}
 
-	void be_BView_ConvertFromScreen(BViewProxy *self, BPoint* pt)
+	void be_BView_ConvertFromScreen(BView *self, BPoint* pt)
 	{
 		self->ConvertFromScreen(pt);
 	}
 
-	BPoint * be_BView_ConvertFromScreen_1(BViewProxy *self, BPoint *pt)
+	BPoint * be_BView_ConvertFromScreen_1(BView *self, BPoint *pt)
 	{
 		return new BPoint(self->ConvertFromScreen(*pt));
 	}
 
-	void be_BView_ConvertToScreen_2(BViewProxy *self, BRect* r)
+	void be_BView_ConvertToScreen_2(BView *self, BRect* r)
 	{
 		self->ConvertToScreen(r);
 	}
 
-	BRect * be_BView_ConvertToScreen_3(BViewProxy *self, BRect *r)
+	BRect * be_BView_ConvertToScreen_3(BView *self, BRect *r)
 	{
 		return new BRect(self->ConvertToScreen(*r));
 	}
 
-	void be_BView_ConvertFromScreen_2(BViewProxy *self, BRect* r)
+	void be_BView_ConvertFromScreen_2(BView *self, BRect* r)
 	{
 		self->ConvertFromScreen(r);
 	}
 
-	BRect * be_BView_ConvertFromScreen_3(BViewProxy *self, BRect *r)
+	BRect * be_BView_ConvertFromScreen_3(BView *self, BRect *r)
 	{
 		return new BRect(self->ConvertFromScreen(*r));
 	}
 
-	void be_BView_ConvertToParent(BViewProxy *self, BPoint* pt)
+	void be_BView_ConvertToParent(BView *self, BPoint* pt)
 	{
 		self->ConvertToParent(pt);
 	}
 
-	BPoint * be_BView_ConvertToParent_1(BViewProxy *self, BPoint *pt)
+	BPoint * be_BView_ConvertToParent_1(BView *self, BPoint *pt)
 	{
 		return new BPoint(self->ConvertToParent(*pt));
 	}
 
-	void be_BView_ConvertFromParent(BViewProxy *self, BPoint* pt)
+	void be_BView_ConvertFromParent(BView *self, BPoint* pt)
 	{
 		self->ConvertFromParent(pt);
 	}
 
-	BPoint * be_BView_ConvertFromParent_1(BViewProxy *self, BPoint *pt)
+	BPoint * be_BView_ConvertFromParent_1(BView *self, BPoint *pt)
 	{
 		return new BPoint(self->ConvertFromParent(*pt));
 	}
 
-	void be_BView_ConvertToParent_2(BViewProxy *self, BRect* r)
+	void be_BView_ConvertToParent_2(BView *self, BRect* r)
 	{
 		self->ConvertToParent(r);
 	}
 
-	BRect * be_BView_ConvertToParent_3(BViewProxy *self, BRect *r)
+	BRect * be_BView_ConvertToParent_3(BView *self, BRect *r)
 	{
 		return new BRect(self->ConvertToParent(*r));
 	}
 
-	void be_BView_ConvertFromParent_2(BViewProxy *self, BRect* r)
+	void be_BView_ConvertFromParent_2(BView *self, BRect* r)
 	{
 		self->ConvertFromParent(r);
 	}
 
-	BRect * be_BView_ConvertFromParent_3(BViewProxy *self, BRect *r)
+	BRect * be_BView_ConvertFromParent_3(BView *self, BRect *r)
 	{
 		return new BRect(self->ConvertFromParent(*r));
 	}
 
-	BPoint * be_BView_LeftTop(BViewProxy *self)
+	BPoint * be_BView_LeftTop(BView *self)
 	{
 		return new BPoint(self->LeftTop());
 	}
 
-	void be_BView_GetClippingRegion(BViewProxy *self, BRegion* region)
+	void be_BView_GetClippingRegion(BView *self, BRegion* region)
 	{
 		self->GetClippingRegion(region);
 	}
 
-	void be_BView_ConstrainClippingRegion(BViewProxy *self, BRegion* region)
+	void be_BView_ConstrainClippingRegion(BView *self, BRegion* region)
 	{
-		self->ConstrainClippingRegion_super(region);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->ConstrainClippingRegion_super(region);
+		else
+			self->ConstrainClippingRegion(region);
 	}
 
-	void be_BView_ClipToPicture(BViewProxy *self, BPicture* picture, BPoint *where, bool sync)
+	void be_BView_ClipToPicture(BView *self, BPicture* picture, BPoint *where, bool sync)
 	{
 		self->ClipToPicture(picture, *where, sync);
 	}
 
-	void be_BView_ClipToPicture_1(BViewProxy *self, BPicture* picture, BPoint *where, bool sync)
+	void be_BView_ClipToPicture_1(BView *self, BPicture* picture, BPoint *where, bool sync)
 	{
 		self->ClipToPicture(picture, *where, sync);
 	}
 
-	void be_BView_SetDrawingMode(BViewProxy *self, drawing_mode mode)
+	void be_BView_SetDrawingMode(BView *self, drawing_mode mode)
 	{
-		self->SetDrawingMode_super(mode);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetDrawingMode_super(mode);
+		else
+			self->SetDrawingMode(mode);
 	}
 
-	drawing_mode be_BView_DrawingMode(BViewProxy *self)
+	drawing_mode be_BView_DrawingMode(BView *self)
 	{
 		return self->DrawingMode();
 	}
 
-	void be_BView_SetBlendingMode(BViewProxy *self, source_alpha srcAlpha, alpha_function alphaFunc)
+	void be_BView_SetBlendingMode(BView *self, source_alpha srcAlpha, alpha_function alphaFunc)
 	{
 		self->SetBlendingMode(srcAlpha, alphaFunc);
 	}
 
-	void be_BView_GetBlendingMode(BViewProxy *self, source_alpha* srcAlpha, alpha_function* alphaFunc)
+	void be_BView_GetBlendingMode(BView *self, source_alpha* srcAlpha, alpha_function* alphaFunc)
 	{
 		self->GetBlendingMode(srcAlpha, alphaFunc);
 	}
 
-	void be_BView_SetPenSize(BViewProxy *self, float size)
+	void be_BView_SetPenSize(BView *self, float size)
 	{
-		self->SetPenSize_super(size);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetPenSize_super(size);
+		else
+			self->SetPenSize(size);
 	}
 
-	float be_BView_PenSize(BViewProxy *self)
+	float be_BView_PenSize(BView *self)
 	{
 		return self->PenSize();
 	}
 
-	void be_BView_SetViewCursor(BViewProxy *self, const BCursor* cursor, bool sync)
+	void be_BView_SetViewCursor(BView *self, const BCursor* cursor, bool sync)
 	{
 		self->SetViewCursor(cursor, sync);
 	}
 
-	void be_BView_SetViewColor(BViewProxy *self, rgb_color c)
+	void be_BView_SetViewColor(BView *self, rgb_color c)
 	{
-		self->SetViewColor_super(c);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetViewColor_super(c);
+		else
+			self->SetViewColor(c);
 	}
 
 	void be_BView_SetViewColor_1(BView *self, uchar r, uchar g, uchar b, uchar a)
@@ -857,44 +949,48 @@ extern "C" {
 		self->SetViewColor(r, g, b, a);
 	}
 
-	rgb_color be_BView_ViewColor(BViewProxy *self)
+	rgb_color be_BView_ViewColor(BView *self)
 	{
 		return self->ViewColor();
 	}
 
-	void be_BView_SetViewBitmap(BViewProxy *self, const BBitmap* bitmap, BRect *srcRect, BRect *dstRect, uint32 followFlags, uint32 options)
+	void be_BView_SetViewBitmap(BView *self, const BBitmap* bitmap, BRect *srcRect, BRect *dstRect, uint32 followFlags, uint32 options)
 	{
 		self->SetViewBitmap(bitmap, *srcRect, *dstRect, followFlags, options);
 	}
 
-	void be_BView_SetViewBitmap_1(BViewProxy *self, const BBitmap* bitmap, uint32 followFlags, uint32 options)
+	void be_BView_SetViewBitmap_1(BView *self, const BBitmap* bitmap, uint32 followFlags, uint32 options)
 	{
 		self->SetViewBitmap(bitmap, followFlags, options);
 	}
 
-	void be_BView_ClearViewBitmap(BViewProxy *self)
+	void be_BView_ClearViewBitmap(BView *self)
 	{
 		self->ClearViewBitmap();
 	}
 
-	status_t be_BView_SetViewOverlay(BViewProxy *self, const BBitmap* overlay, BRect *srcRect, BRect *dstRect, rgb_color* colorKey, uint32 followFlags, uint32 options)
+	status_t be_BView_SetViewOverlay(BView *self, const BBitmap* overlay, BRect *srcRect, BRect *dstRect, rgb_color* colorKey, uint32 followFlags, uint32 options)
 	{
 		return self->SetViewOverlay(overlay, *srcRect, *dstRect, colorKey, followFlags, options);
 	}
 
-	status_t be_BView_SetViewOverlay_1(BViewProxy *self, const BBitmap* overlay, rgb_color* colorKey, uint32 followFlags, uint32 options)
+	status_t be_BView_SetViewOverlay_1(BView *self, const BBitmap* overlay, rgb_color* colorKey, uint32 followFlags, uint32 options)
 	{
 		return self->SetViewOverlay(overlay, colorKey, followFlags, options);
 	}
 
-	void be_BView_ClearViewOverlay(BViewProxy *self)
+	void be_BView_ClearViewOverlay(BView *self)
 	{
 		self->ClearViewOverlay();
 	}
 
-	void be_BView_SetHighColor(BViewProxy *self, rgb_color a_color)
+	void be_BView_SetHighColor(BView *self, rgb_color a_color)
 	{
-		self->SetHighColor_super(a_color);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetHighColor_super(a_color);
+		else
+			self->SetHighColor(a_color);
 	}
 
 	void be_BView_SetHighColor_1(BView *self, uchar r, uchar g, uchar b, uchar a)
@@ -902,14 +998,18 @@ extern "C" {
 		self->SetHighColor(r, g, b, a);
 	}
 
-	rgb_color be_BView_HighColor(BViewProxy *self)
+	rgb_color be_BView_HighColor(BView *self)
 	{
 		return self->HighColor();
 	}
 
-	void be_BView_SetLowColor(BViewProxy *self, rgb_color a_color)
+	void be_BView_SetLowColor(BView *self, rgb_color a_color)
 	{
-		self->SetLowColor_super(a_color);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetLowColor_super(a_color);
+		else
+			self->SetLowColor(a_color);
 	}
 
 	void be_BView_SetLowColor_1(BView *self, uchar r, uchar g, uchar b, uchar a)
@@ -917,552 +1017,564 @@ extern "C" {
 		self->SetLowColor(r, g, b, a);
 	}
 
-	rgb_color be_BView_LowColor(BViewProxy *self)
+	rgb_color be_BView_LowColor(BView *self)
 	{
 		return self->LowColor();
 	}
 
-	void be_BView_SetLineMode(BViewProxy *self, cap_mode lineCap, join_mode lineJoin, float miterLimit)
+	void be_BView_SetLineMode(BView *self, cap_mode lineCap, join_mode lineJoin, float miterLimit)
 	{
 		self->SetLineMode(lineCap, lineJoin, miterLimit);
 	}
 
-	join_mode be_BView_LineJoinMode(BViewProxy *self)
+	join_mode be_BView_LineJoinMode(BView *self)
 	{
 		return self->LineJoinMode();
 	}
 
-	cap_mode be_BView_LineCapMode(BViewProxy *self)
+	cap_mode be_BView_LineCapMode(BView *self)
 	{
 		return self->LineCapMode();
 	}
 
-	float be_BView_LineMiterLimit(BViewProxy *self)
+	float be_BView_LineMiterLimit(BView *self)
 	{
 		return self->LineMiterLimit();
 	}
 
-	void be_BView_SetOrigin(BViewProxy *self, BPoint *pt)
+	void be_BView_SetOrigin(BView *self, BPoint *pt)
 	{
 		self->SetOrigin(*pt);
 	}
 
-	void be_BView_SetOrigin_1(BViewProxy *self, float x, float y)
+	void be_BView_SetOrigin_1(BView *self, float x, float y)
 	{
 		self->SetOrigin(x, y);
 	}
 
-	BPoint * be_BView_Origin(BViewProxy *self)
+	BPoint * be_BView_Origin(BView *self)
 	{
 		return new BPoint(self->Origin());
 	}
 
-	void be_BView_PushState(BViewProxy *self)
+	void be_BView_PushState(BView *self)
 	{
 		self->PushState();
 	}
 
-	void be_BView_PopState(BViewProxy *self)
+	void be_BView_PopState(BView *self)
 	{
 		self->PopState();
 	}
 
-	void be_BView_MovePenTo(BViewProxy *self, BPoint *pt)
+	void be_BView_MovePenTo(BView *self, BPoint *pt)
 	{
 		self->MovePenTo(*pt);
 	}
 
-	void be_BView_MovePenTo_1(BViewProxy *self, float x, float y)
+	void be_BView_MovePenTo_1(BView *self, float x, float y)
 	{
 		self->MovePenTo(x, y);
 	}
 
-	void be_BView_MovePenBy(BViewProxy *self, float x, float y)
+	void be_BView_MovePenBy(BView *self, float x, float y)
 	{
 		self->MovePenBy(x, y);
 	}
 
-	BPoint * be_BView_PenLocation(BViewProxy *self)
+	BPoint * be_BView_PenLocation(BView *self)
 	{
 		return new BPoint(self->PenLocation());
 	}
 
-	void be_BView_StrokeLine(BViewProxy *self, BPoint *toPt, pattern p)
+	void be_BView_StrokeLine(BView *self, BPoint *toPt, pattern p)
 	{
 		self->StrokeLine(*toPt, p);
 	}
 
-	void be_BView_StrokeLine_1(BViewProxy *self, BPoint *a, BPoint *b, pattern p)
+	void be_BView_StrokeLine_1(BView *self, BPoint *a, BPoint *b, pattern p)
 	{
 		self->StrokeLine(*a, *b, p);
 	}
 
-	void be_BView_BeginLineArray(BViewProxy *self, int32 count)
+	void be_BView_BeginLineArray(BView *self, int32 count)
 	{
 		self->BeginLineArray(count);
 	}
 
-	void be_BView_AddLine(BViewProxy *self, BPoint *a, BPoint *b, rgb_color color)
+	void be_BView_AddLine(BView *self, BPoint *a, BPoint *b, rgb_color color)
 	{
 		self->AddLine(*a, *b, color);
 	}
 
-	void be_BView_EndLineArray(BViewProxy *self)
+	void be_BView_EndLineArray(BView *self)
 	{
 		self->EndLineArray();
 	}
 
-	void be_BView_StrokePolygon(BViewProxy *self, const BPolygon* polygon, bool closed, pattern p)
+	void be_BView_StrokePolygon(BView *self, const BPolygon* polygon, bool closed, pattern p)
 	{
 		self->StrokePolygon(polygon, closed, p);
 	}
 
-	void be_BView_StrokePolygon_1(BViewProxy *self, const BPoint* ptArray, int32 numPts, bool closed, pattern p)
+	void be_BView_StrokePolygon_1(BView *self, const BPoint* ptArray, int32 numPts, bool closed, pattern p)
 	{
 		self->StrokePolygon(ptArray, numPts, closed, p);
 	}
 
-	void be_BView_StrokePolygon_2(BViewProxy *self, const BPoint* ptArray, int32 numPts, BRect *bounds, bool closed)
+	void be_BView_StrokePolygon_2(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, bool closed)
 	{
 		self->StrokePolygon(ptArray, numPts, *bounds, closed);
 	}
 
-	void be_BView_FillPolygon(BViewProxy *self, const BPolygon* polygon, pattern p)
+	void be_BView_FillPolygon(BView *self, const BPolygon* polygon, pattern p)
 	{
 		self->FillPolygon(polygon, p);
 	}
 
-	void be_BView_FillPolygon_1(BViewProxy *self, const BPoint* ptArray, int32 numPts, pattern p)
+	void be_BView_FillPolygon_1(BView *self, const BPoint* ptArray, int32 numPts, pattern p)
 	{
 		self->FillPolygon(ptArray, numPts, p);
 	}
 
-	void be_BView_FillPolygon_2(BViewProxy *self, const BPoint* ptArray, int32 numPts, BRect *bounds, pattern p)
+	void be_BView_FillPolygon_2(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, pattern p)
 	{
 		self->FillPolygon(ptArray, numPts, *bounds, p);
 	}
 
-	void be_BView_FillPolygon_3(BViewProxy *self, const BPolygon* polygon, const BGradient* gradient)
+	void be_BView_FillPolygon_3(BView *self, const BPolygon* polygon, const BGradient* gradient)
 	{
 		self->FillPolygon(polygon, *gradient);
 	}
 
-	void be_BView_FillPolygon_4(BViewProxy *self, const BPoint* ptArray, int32 numPts, const BGradient* gradient)
+	void be_BView_FillPolygon_4(BView *self, const BPoint* ptArray, int32 numPts, const BGradient* gradient)
 	{
 		self->FillPolygon(ptArray, numPts, *gradient);
 	}
 
-	void be_BView_FillPolygon_5(BViewProxy *self, const BPoint* ptArray, int32 numPts, BRect *bounds, const BGradient* gradient)
+	void be_BView_FillPolygon_5(BView *self, const BPoint* ptArray, int32 numPts, BRect *bounds, const BGradient* gradient)
 	{
 		self->FillPolygon(ptArray, numPts, *bounds, *gradient);
 	}
 
-	void be_BView_StrokeRect(BViewProxy *self, BRect *r, pattern p)
+	void be_BView_StrokeRect(BView *self, BRect *r, pattern p)
 	{
 		self->StrokeRect(*r, p);
 	}
 
-	void be_BView_FillRect(BViewProxy *self, BRect *r, pattern p)
+	void be_BView_FillRect(BView *self, BRect *r, pattern p)
 	{
 		self->FillRect(*r, p);
 	}
 
-	void be_BView_FillRect_1(BViewProxy *self, BRect *r, const BGradient* gradient)
+	void be_BView_FillRect_1(BView *self, BRect *r, const BGradient* gradient)
 	{
 		self->FillRect(*r, *gradient);
 	}
 
-	void be_BView_FillRegion(BViewProxy *self, BRegion* region, pattern p)
+	void be_BView_FillRegion(BView *self, BRegion* region, pattern p)
 	{
 		self->FillRegion(region, p);
 	}
 
-	void be_BView_FillRegion_1(BViewProxy *self, BRegion* region, const BGradient* gradient)
+	void be_BView_FillRegion_1(BView *self, BRegion* region, const BGradient* gradient)
 	{
 		self->FillRegion(region, *gradient);
 	}
 
-	void be_BView_InvertRect(BViewProxy *self, BRect *r)
+	void be_BView_InvertRect(BView *self, BRect *r)
 	{
 		self->InvertRect(*r);
 	}
 
-	void be_BView_StrokeRoundRect(BViewProxy *self, BRect *r, float xRadius, float yRadius, pattern p)
+	void be_BView_StrokeRoundRect(BView *self, BRect *r, float xRadius, float yRadius, pattern p)
 	{
 		self->StrokeRoundRect(*r, xRadius, yRadius, p);
 	}
 
-	void be_BView_FillRoundRect(BViewProxy *self, BRect *r, float xRadius, float yRadius, pattern p)
+	void be_BView_FillRoundRect(BView *self, BRect *r, float xRadius, float yRadius, pattern p)
 	{
 		self->FillRoundRect(*r, xRadius, yRadius, p);
 	}
 
-	void be_BView_FillRoundRect_1(BViewProxy *self, BRect *r, float xRadius, float yRadius, const BGradient* gradient)
+	void be_BView_FillRoundRect_1(BView *self, BRect *r, float xRadius, float yRadius, const BGradient* gradient)
 	{
 		self->FillRoundRect(*r, xRadius, yRadius, *gradient);
 	}
 
-	void be_BView_StrokeEllipse(BViewProxy *self, BPoint *center, float xRadius, float yRadius, pattern p)
+	void be_BView_StrokeEllipse(BView *self, BPoint *center, float xRadius, float yRadius, pattern p)
 	{
 		self->StrokeEllipse(*center, xRadius, yRadius, p);
 	}
 
-	void be_BView_StrokeEllipse_1(BViewProxy *self, BRect *r, pattern p)
+	void be_BView_StrokeEllipse_1(BView *self, BRect *r, pattern p)
 	{
 		self->StrokeEllipse(*r, p);
 	}
 
-	void be_BView_FillEllipse(BViewProxy *self, BPoint *center, float xRadius, float yRadius, pattern p)
+	void be_BView_FillEllipse(BView *self, BPoint *center, float xRadius, float yRadius, pattern p)
 	{
 		self->FillEllipse(*center, xRadius, yRadius, p);
 	}
 
-	void be_BView_FillEllipse_1(BViewProxy *self, BRect *r, pattern p)
+	void be_BView_FillEllipse_1(BView *self, BRect *r, pattern p)
 	{
 		self->FillEllipse(*r, p);
 	}
 
-	void be_BView_FillEllipse_2(BViewProxy *self, BPoint *center, float xRadius, float yRadius, const BGradient* gradient)
+	void be_BView_FillEllipse_2(BView *self, BPoint *center, float xRadius, float yRadius, const BGradient* gradient)
 	{
 		self->FillEllipse(*center, xRadius, yRadius, *gradient);
 	}
 
-	void be_BView_FillEllipse_3(BViewProxy *self, BRect *r, const BGradient* gradient)
+	void be_BView_FillEllipse_3(BView *self, BRect *r, const BGradient* gradient)
 	{
 		self->FillEllipse(*r, *gradient);
 	}
 
-	void be_BView_StrokeArc(BViewProxy *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p)
+	void be_BView_StrokeArc(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p)
 	{
 		self->StrokeArc(*center, xRadius, yRadius, startAngle, arcAngle, p);
 	}
 
-	void be_BView_StrokeArc_1(BViewProxy *self, BRect *r, float startAngle, float arcAngle, pattern p)
+	void be_BView_StrokeArc_1(BView *self, BRect *r, float startAngle, float arcAngle, pattern p)
 	{
 		self->StrokeArc(*r, startAngle, arcAngle, p);
 	}
 
-	void be_BView_FillArc(BViewProxy *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p)
+	void be_BView_FillArc(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, pattern p)
 	{
 		self->FillArc(*center, xRadius, yRadius, startAngle, arcAngle, p);
 	}
 
-	void be_BView_FillArc_1(BViewProxy *self, BRect *r, float startAngle, float arcAngle, pattern p)
+	void be_BView_FillArc_1(BView *self, BRect *r, float startAngle, float arcAngle, pattern p)
 	{
 		self->FillArc(*r, startAngle, arcAngle, p);
 	}
 
-	void be_BView_FillArc_2(BViewProxy *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, const BGradient* gradient)
+	void be_BView_FillArc_2(BView *self, BPoint *center, float xRadius, float yRadius, float startAngle, float arcAngle, const BGradient* gradient)
 	{
 		self->FillArc(*center, xRadius, yRadius, startAngle, arcAngle, *gradient);
 	}
 
-	void be_BView_FillArc_3(BViewProxy *self, BRect *r, float startAngle, float arcAngle, const BGradient* gradient)
+	void be_BView_FillArc_3(BView *self, BRect *r, float startAngle, float arcAngle, const BGradient* gradient)
 	{
 		self->FillArc(*r, startAngle, arcAngle, *gradient);
 	}
 
-	void be_BView_StrokeBezier(BViewProxy *self, BPoint* controlPoints, pattern p)
+	void be_BView_StrokeBezier(BView *self, BPoint* controlPoints, pattern p)
 	{
 		self->StrokeBezier(controlPoints, p);
 	}
 
-	void be_BView_FillBezier(BViewProxy *self, BPoint* controlPoints, pattern p)
+	void be_BView_FillBezier(BView *self, BPoint* controlPoints, pattern p)
 	{
 		self->FillBezier(controlPoints, p);
 	}
 
-	void be_BView_FillBezier_1(BViewProxy *self, BPoint* controlPoints, const BGradient* gradient)
+	void be_BView_FillBezier_1(BView *self, BPoint* controlPoints, const BGradient* gradient)
 	{
 		self->FillBezier(controlPoints, *gradient);
 	}
 
-	void be_BView_StrokeShape(BViewProxy *self, BShape* shape, pattern p)
+	void be_BView_StrokeShape(BView *self, BShape* shape, pattern p)
 	{
 		self->StrokeShape(shape, p);
 	}
 
-	void be_BView_FillShape(BViewProxy *self, BShape* shape, pattern p)
+	void be_BView_FillShape(BView *self, BShape* shape, pattern p)
 	{
 		self->FillShape(shape, p);
 	}
 
-	void be_BView_FillShape_1(BViewProxy *self, BShape* shape, const BGradient* gradien)
+	void be_BView_FillShape_1(BView *self, BShape* shape, const BGradient* gradien)
 	{
 		self->FillShape(shape, *gradien);
 	}
 
-	void be_BView_CopyBits(BViewProxy *self, BRect *src, BRect *dst)
+	void be_BView_CopyBits(BView *self, BRect *src, BRect *dst)
 	{
 		self->CopyBits(*src, *dst);
 	}
 
-	void be_BView_DrawBitmapAsync(BViewProxy *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect, uint32 options)
+	void be_BView_DrawBitmapAsync(BView *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect, uint32 options)
 	{
 		self->DrawBitmapAsync(aBitmap, *bitmapRect, *viewRect, options);
 	}
 
-	void be_BView_DrawBitmapAsync_1(BViewProxy *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect)
+	void be_BView_DrawBitmapAsync_1(BView *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect)
 	{
 		self->DrawBitmapAsync(aBitmap, *bitmapRect, *viewRect);
 	}
 
-	void be_BView_DrawBitmapAsync_2(BViewProxy *self, const BBitmap* aBitmap, BRect *viewRec)
+	void be_BView_DrawBitmapAsync_2(BView *self, const BBitmap* aBitmap, BRect *viewRec)
 	{
 		self->DrawBitmapAsync(aBitmap, *viewRec);
 	}
 
-	void be_BView_DrawBitmapAsync_3(BViewProxy *self, const BBitmap* aBitmap, BPoint *where)
+	void be_BView_DrawBitmapAsync_3(BView *self, const BBitmap* aBitmap, BPoint *where)
 	{
 		self->DrawBitmapAsync(aBitmap, *where);
 	}
 
-	void be_BView_DrawBitmapAsync_4(BViewProxy *self, const BBitmap* aBitmap)
+	void be_BView_DrawBitmapAsync_4(BView *self, const BBitmap* aBitmap)
 	{
 		self->DrawBitmapAsync(aBitmap);
 	}
 
-	void be_BView_DrawBitmap(BViewProxy *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect, uint32 options)
+	void be_BView_DrawBitmap(BView *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect, uint32 options)
 	{
 		self->DrawBitmap(aBitmap, *bitmapRect, *viewRect, options);
 	}
 
-	void be_BView_DrawBitmap_1(BViewProxy *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect)
+	void be_BView_DrawBitmap_1(BView *self, const BBitmap* aBitmap, BRect *bitmapRect, BRect *viewRect)
 	{
 		self->DrawBitmap(aBitmap, *bitmapRect, *viewRect);
 	}
 
-	void be_BView_DrawBitmap_2(BViewProxy *self, const BBitmap* aBitmap, BRect *viewRect)
+	void be_BView_DrawBitmap_2(BView *self, const BBitmap* aBitmap, BRect *viewRect)
 	{
 		self->DrawBitmap(aBitmap, *viewRect);
 	}
 
-	void be_BView_DrawBitmap_3(BViewProxy *self, const BBitmap* aBitmap, BPoint *where)
+	void be_BView_DrawBitmap_3(BView *self, const BBitmap* aBitmap, BPoint *where)
 	{
 		self->DrawBitmap(aBitmap, *where);
 	}
 
-	void be_BView_DrawBitmap_4(BViewProxy *self, const BBitmap* aBitmap)
+	void be_BView_DrawBitmap_4(BView *self, const BBitmap* aBitmap)
 	{
 		self->DrawBitmap(aBitmap);
 	}
 
-	void be_BView_DrawChar(BViewProxy *self, char aChar)
+	void be_BView_DrawChar(BView *self, char aChar)
 	{
 		self->DrawChar(aChar);
 	}
 
-	void be_BView_DrawChar_1(BViewProxy *self, char aChar, BPoint *location)
+	void be_BView_DrawChar_1(BView *self, char aChar, BPoint *location)
 	{
 		self->DrawChar(aChar, *location);
 	}
 
-	void be_BView_DrawString(BViewProxy *self, const char* string, escapement_delta* delta)
+	void be_BView_DrawString(BView *self, const char* string, escapement_delta* delta)
 	{
 		self->DrawString(string, delta);
 	}
 
-	void be_BView_DrawString_1(BViewProxy *self, const char* string, BPoint *location, escapement_delta* delta)
+	void be_BView_DrawString_1(BView *self, const char* string, BPoint *location, escapement_delta* delta)
 	{
 		self->DrawString(string, *location, delta);
 	}
 
-	void be_BView_DrawString_2(BViewProxy *self, const char* string, int32 length, escapement_delta* delta)
+	void be_BView_DrawString_2(BView *self, const char* string, int32 length, escapement_delta* delta)
 	{
 		self->DrawString(string, length, delta);
 	}
 
-	void be_BView_DrawString_3(BViewProxy *self, const char* string, int32 length, BPoint *location, escapement_delta* delta)
+	void be_BView_DrawString_3(BView *self, const char* string, int32 length, BPoint *location, escapement_delta* delta)
 	{
 		self->DrawString(string, length, *location, delta);
 	}
 
-	void be_BView_DrawString_4(BViewProxy *self, const char* string, const BPoint* locations, int32 locationCount)
+	void be_BView_DrawString_4(BView *self, const char* string, const BPoint* locations, int32 locationCount)
 	{
 		self->DrawString(string, locations, locationCount);
 	}
 
-	void be_BView_DrawString_5(BViewProxy *self, const char* string, int32 length, const BPoint* locations, int32 locationCount)
+	void be_BView_DrawString_5(BView *self, const char* string, int32 length, const BPoint* locations, int32 locationCount)
 	{
 		self->DrawString(string, length, locations, locationCount);
 	}
 
-	void be_BView_SetFont(BViewProxy *self, const BFont* font, uint32 mask)
+	void be_BView_SetFont(BView *self, const BFont* font, uint32 mask)
 	{
-		self->SetFont_super(font, mask);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetFont_super(font, mask);
+		else
+			self->SetFont(font, mask);
 	}
 
-	void be_BView_GetFont(BViewProxy *self, BFont* font)
+	void be_BView_GetFont(BView *self, BFont* font)
 	{
 		self->GetFont(font);
 	}
 
-	void be_BView_TruncateString(BViewProxy *self, BString* in_out, uint32 mode, float width)
+	void be_BView_TruncateString(BView *self, BString* in_out, uint32 mode, float width)
 	{
 		self->TruncateString(in_out, mode, width);
 	}
 
-	float be_BView_StringWidth(BViewProxy *self, const char* string)
+	float be_BView_StringWidth(BView *self, const char* string)
 	{
 		return self->StringWidth(string);
 	}
 
-	float be_BView_StringWidth_1(BViewProxy *self, const char* string, int32 length)
+	float be_BView_StringWidth_1(BView *self, const char* string, int32 length)
 	{
 		return self->StringWidth(string, length);
 	}
 
-	void be_BView_GetStringWidths(BViewProxy *self, char* stringArray[], int32 lengthArray[], int32 numStrings, float widthArray[])
+	void be_BView_GetStringWidths(BView *self, char* stringArray[], int32 lengthArray[], int32 numStrings, float widthArray[])
 	{
 		self->GetStringWidths(stringArray, lengthArray, numStrings, widthArray);
 	}
 
-	void be_BView_SetFontSize(BViewProxy *self, float size)
+	void be_BView_SetFontSize(BView *self, float size)
 	{
 		self->SetFontSize(size);
 	}
 
-	void be_BView_ForceFontAliasing(BViewProxy *self, bool enable)
+	void be_BView_ForceFontAliasing(BView *self, bool enable)
 	{
 		self->ForceFontAliasing(enable);
 	}
 
-	void be_BView_GetFontHeight(BViewProxy *self, font_height* height)
+	void be_BView_GetFontHeight(BView *self, font_height* height)
 	{
 		self->GetFontHeight(height);
 	}
 
-	void be_BView_Invalidate(BViewProxy *self, BRect *invalRect)
+	void be_BView_Invalidate(BView *self, BRect *invalRect)
 	{
 		self->Invalidate(*invalRect);
 	}
 
-	void be_BView_Invalidate_1(BViewProxy *self, const BRegion* invalRegion)
+	void be_BView_Invalidate_1(BView *self, const BRegion* invalRegion)
 	{
 		self->Invalidate(invalRegion);
 	}
 
-	void be_BView_Invalidate_2(BViewProxy *self)
+	void be_BView_Invalidate_2(BView *self)
 	{
 		self->Invalidate();
 	}
 
-	void be_BView_SetDiskMode(BViewProxy *self, char* filename, long offset)
+	void be_BView_SetDiskMode(BView *self, char* filename, long offset)
 	{
 		self->SetDiskMode(filename, offset);
 	}
 
-	void be_BView_BeginPicture(BViewProxy *self, BPicture* a_picture)
+	void be_BView_BeginPicture(BView *self, BPicture* a_picture)
 	{
 		self->BeginPicture(a_picture);
 	}
 
-	void be_BView_AppendToPicture(BViewProxy *self, BPicture* a_picture)
+	void be_BView_AppendToPicture(BView *self, BPicture* a_picture)
 	{
 		self->AppendToPicture(a_picture);
 	}
 
-	BPicture* be_BView_EndPicture(BViewProxy *self)
+	BPicture* be_BView_EndPicture(BView *self)
 	{
 		return self->EndPicture();
 	}
 
-	void be_BView_DrawPicture(BViewProxy *self, const BPicture* a_picture)
+	void be_BView_DrawPicture(BView *self, const BPicture* a_picture)
 	{
 		self->DrawPicture(a_picture);
 	}
 
-	void be_BView_DrawPicture_1(BViewProxy *self, const BPicture* a_picture, BPoint *where)
+	void be_BView_DrawPicture_1(BView *self, const BPicture* a_picture, BPoint *where)
 	{
 		self->DrawPicture(a_picture, *where);
 	}
 
-	void be_BView_DrawPicture_2(BViewProxy *self, const char* filename, long offset, BPoint *where)
+	void be_BView_DrawPicture_2(BView *self, const char* filename, long offset, BPoint *where)
 	{
 		self->DrawPicture(filename, offset, *where);
 	}
 
-	void be_BView_DrawPicture_3(BViewProxy *self, const BPicture* a_picture)
+	void be_BView_DrawPicture_3(BView *self, const BPicture* a_picture)
 	{
 		self->DrawPicture(a_picture);
 	}
 
-	void be_BView_DrawPicture_4(BViewProxy *self, const BPicture* a_picture, BPoint *where)
+	void be_BView_DrawPicture_4(BView *self, const BPicture* a_picture, BPoint *where)
 	{
 		self->DrawPicture(a_picture, *where);
 	}
 
-	void be_BView_DrawPicture_5(BViewProxy *self, const char* filename, long offset, BPoint *where)
+	void be_BView_DrawPicture_5(BView *self, const char* filename, long offset, BPoint *where)
 	{
 		self->DrawPicture(filename, offset, *where);
 	}
 
-	status_t be_BView_SetEventMask(BViewProxy *self, uint32 mask, uint32 options)
+	status_t be_BView_SetEventMask(BView *self, uint32 mask, uint32 options)
 	{
 		return self->SetEventMask(mask, options);
 	}
 
-	uint32 be_BView_EventMask(BViewProxy *self)
+	uint32 be_BView_EventMask(BView *self)
 	{
 		return self->EventMask();
 	}
 
-	status_t be_BView_SetMouseEventMask(BViewProxy *self, uint32 mask, uint32 options)
+	status_t be_BView_SetMouseEventMask(BView *self, uint32 mask, uint32 options)
 	{
 		return self->SetMouseEventMask(mask, options);
 	}
 
-	void be_BView_SetFlags(BViewProxy *self, uint32 flags)
+	void be_BView_SetFlags(BView *self, uint32 flags)
 	{
-		self->SetFlags_super(flags);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetFlags_super(flags);
+		else
+			self->SetFlags(flags);
 	}
 
-	uint32 be_BView_Flags(BViewProxy *self)
+	uint32 be_BView_Flags(BView *self)
 	{
 		return self->Flags();
 	}
 
-	void be_BView_SetResizingMode(BViewProxy *self, uint32 mode)
+	void be_BView_SetResizingMode(BView *self, uint32 mode)
 	{
-		self->SetResizingMode_super(mode);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetResizingMode_super(mode);
+		else
+			self->SetResizingMode(mode);
 	}
 
-	uint32 be_BView_ResizingMode(BViewProxy *self)
+	uint32 be_BView_ResizingMode(BView *self)
 	{
 		return self->ResizingMode();
 	}
 
-	void be_BView_MoveBy(BViewProxy *self, float dh, float dv)
+	void be_BView_MoveBy(BView *self, float dh, float dv)
 	{
 		self->MoveBy(dh, dv);
 	}
 
-	void be_BView_MoveTo(BViewProxy *self, BPoint *where)
+	void be_BView_MoveTo(BView *self, BPoint *where)
 	{
 		self->MoveTo(*where);
 	}
 
-	void be_BView_MoveTo_1(BViewProxy *self, float x, float y)
+	void be_BView_MoveTo_1(BView *self, float x, float y)
 	{
 		self->MoveTo(x, y);
 	}
 
-	void be_BView_ResizeBy(BViewProxy *self, float dh, float dv)
+	void be_BView_ResizeBy(BView *self, float dh, float dv)
 	{
 		self->ResizeBy(dh, dv);
 	}
 
-	void be_BView_ResizeTo(BViewProxy *self, float width, float height)
+	void be_BView_ResizeTo(BView *self, float width, float height)
 	{
 		self->ResizeTo(width, height);
 	}
 
-	void be_BView_ResizeTo_1(BViewProxy *self, BSize *size)
+	void be_BView_ResizeTo_1(BView *self, BSize *size)
 	{
 		self->ResizeTo(*size);
 	}
 
-	void be_BView_ScrollBy(BViewProxy *self, float dh, float dv)
+	void be_BView_ScrollBy(BView *self, float dh, float dv)
 	{
 		self->ScrollBy(dh, dv);
 	}
@@ -1472,217 +1584,273 @@ extern "C" {
 		self->ScrollTo(x, y);
 	}
 
-	void be_BView_ScrollTo_1(BViewProxy *self, BPoint *where)
+	void be_BView_ScrollTo_1(BView *self, BPoint *where)
 	{
-		self->ScrollTo_super(*where);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->ScrollTo_super(*where);
+		else
+			self->ScrollTo(*where);
 	}
 
-	void be_BView_MakeFocus(BViewProxy *self, bool focusState)
+	void be_BView_MakeFocus(BView *self, bool focusState)
 	{
-		self->MakeFocus_super(focusState);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->MakeFocus_super(focusState);
+		else
+			self->MakeFocus(focusState);
 	}
 
-	bool be_BView_IsFocus(BViewProxy *self)
+	bool be_BView_IsFocus(BView *self)
 	{
 		return self->IsFocus();
 	}
 
-	void be_BView_Show(BViewProxy *self)
+	void be_BView_Show(BView *self)
 	{
-		self->Show_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->Show_super();
+		else
+			self->Show();
 	}
 
-	void be_BView_Hide(BViewProxy *self)
+	void be_BView_Hide(BView *self)
 	{
-		self->Hide_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->Hide_super();
+		else
+			self->Hide();
 	}
 
-	bool be_BView_IsHidden(BViewProxy *self)
+	bool be_BView_IsHidden(BView *self)
 	{
 		return self->IsHidden();
 	}
 
-	bool be_BView_IsHidden_1(BViewProxy *self, const BView* looking_from)
+	bool be_BView_IsHidden_1(BView *self, const BView* looking_from)
 	{
 		return self->IsHidden(looking_from);
 	}
 
-	void be_BView_Flush(BViewProxy *self)
+	void be_BView_Flush(BView *self)
 	{
 		self->Flush();
 	}
 
-	void be_BView_Sync(BViewProxy *self)
+	void be_BView_Sync(BView *self)
 	{
 		self->Sync();
 	}
 
-	void be_BView_GetPreferredSize(BViewProxy *self, float* width, float* height)
+	void be_BView_GetPreferredSize(BView *self, float* width, float* height)
 	{
-		self->GetPreferredSize_super(width, height);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->GetPreferredSize_super(width, height);
+		else
+			self->GetPreferredSize(width, height);
 	}
 
-	void be_BView_ResizeToPreferred(BViewProxy *self)
+	void be_BView_ResizeToPreferred(BView *self)
 	{
-		self->ResizeToPreferred_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->ResizeToPreferred_super();
+		else
+			self->ResizeToPreferred();
 	}
 
-	BScrollBar* be_BView_ScrollBar(BViewProxy *self, orientation posture)
+	BScrollBar* be_BView_ScrollBar(BView *self, orientation posture)
 	{
 		return self->ScrollBar(posture);
 	}
 
-	BHandler* be_BView_ResolveSpecifier(BViewProxy *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property)
+	BHandler* be_BView_ResolveSpecifier(BView *self, BMessage* msg, int32 index, BMessage* specifier, int32 form, const char* property)
 	{
-		return self->ResolveSpecifier_super(msg, index, specifier, form, property);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->ResolveSpecifier_super(msg, index, specifier, form, property);
+		else
+			return self->ResolveSpecifier(msg, index, specifier, form, property);
 	}
 
-	status_t be_BView_GetSupportedSuites(BViewProxy *self, BMessage* data)
+	status_t be_BView_GetSupportedSuites(BView *self, BMessage* data)
 	{
-		return self->GetSupportedSuites_super(data);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->GetSupportedSuites_super(data);
+		else
+			return self->GetSupportedSuites(data);
 	}
 
-	bool be_BView_IsPrinting(BViewProxy *self)
+	bool be_BView_IsPrinting(BView *self)
 	{
 		return self->IsPrinting();
 	}
 
-	void be_BView_SetScale(BViewProxy *self, float scale)
+	void be_BView_SetScale(BView *self, float scale)
 	{
 		self->SetScale(scale);
 	}
 
-	float be_BView_Scale(BViewProxy *self)
+	float be_BView_Scale(BView *self)
 	{
 		return self->Scale();
 	}
 
-	status_t be_BView_Perform(BViewProxy *self, perform_code code, void* data)
+	status_t be_BView_Perform(BView *self, perform_code code, void* data)
 	{
-		return self->Perform_super(code, data);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->Perform_super(code, data);
+		else
+			return self->Perform(code, data);
 	}
 
-	void be_BView_DrawAfterChildren(BViewProxy *self, BRect *r)
+	void be_BView_DrawAfterChildren(BView *self, BRect *r)
 	{
-		self->DrawAfterChildren_super(*r);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->DrawAfterChildren_super(*r);
+		else
+			self->DrawAfterChildren(*r);
 	}
 
-	BSize * be_BView_MinSize(BViewProxy *self)
+	BSize * be_BView_MinSize(BView *self)
 	{
 		return new BSize(self->MinSize());
 	}
 
-	BSize * be_BView_MaxSize(BViewProxy *self)
+	BSize * be_BView_MaxSize(BView *self)
 	{
 		return new BSize(self->MaxSize());
 	}
 
-	BSize * be_BView_PreferredSize(BViewProxy *self)
+	BSize * be_BView_PreferredSize(BView *self)
 	{
 		return new BSize(self->PreferredSize());
 	}
 
-	BAlignment * be_BView_LayoutAlignment(BViewProxy *self)
+	BAlignment * be_BView_LayoutAlignment(BView *self)
 	{
 		return new BAlignment(self->LayoutAlignment());
 	}
 
-	void be_BView_SetExplicitMinSize(BViewProxy *self, BSize *size)
+	void be_BView_SetExplicitMinSize(BView *self, BSize *size)
 	{
 		self->SetExplicitMinSize(*size);
 	}
 
-	void be_BView_SetExplicitMaxSize(BViewProxy *self, BSize *size)
+	void be_BView_SetExplicitMaxSize(BView *self, BSize *size)
 	{
 		self->SetExplicitMaxSize(*size);
 	}
 
-	void be_BView_SetExplicitPreferredSize(BViewProxy *self, BSize *size)
+	void be_BView_SetExplicitPreferredSize(BView *self, BSize *size)
 	{
 		self->SetExplicitPreferredSize(*size);
 	}
 
-	void be_BView_SetExplicitAlignment(BViewProxy *self, BAlignment *alignment)
+	void be_BView_SetExplicitAlignment(BView *self, BAlignment *alignment)
 	{
 		self->SetExplicitAlignment(*alignment);
 	}
 
-	BSize * be_BView_ExplicitMinSize(BViewProxy *self)
+	BSize * be_BView_ExplicitMinSize(BView *self)
 	{
 		return new BSize(self->ExplicitMinSize());
 	}
 
-	BSize * be_BView_ExplicitMaxSize(BViewProxy *self)
+	BSize * be_BView_ExplicitMaxSize(BView *self)
 	{
 		return new BSize(self->ExplicitMaxSize());
 	}
 
-	BSize * be_BView_ExplicitPreferredSize(BViewProxy *self)
+	BSize * be_BView_ExplicitPreferredSize(BView *self)
 	{
 		return new BSize(self->ExplicitPreferredSize());
 	}
 
-	BAlignment * be_BView_ExplicitAlignment(BViewProxy *self)
+	BAlignment * be_BView_ExplicitAlignment(BView *self)
 	{
 		return new BAlignment(self->ExplicitAlignment());
 	}
 
-	bool be_BView_HasHeightForWidth(BViewProxy *self)
+	bool be_BView_HasHeightForWidth(BView *self)
 	{
-		return self->HasHeightForWidth_super();
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			return proxy->HasHeightForWidth_super();
+		else
+			return self->HasHeightForWidth();
 	}
 
-	void be_BView_GetHeightForWidth(BViewProxy *self, float width, float* min, float* max, float* preferred)
+	void be_BView_GetHeightForWidth(BView *self, float width, float* min, float* max, float* preferred)
 	{
-		self->GetHeightForWidth_super(width, min, max, preferred);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->GetHeightForWidth_super(width, min, max, preferred);
+		else
+			self->GetHeightForWidth(width, min, max, preferred);
 	}
 
-	void be_BView_SetLayout(BViewProxy *self, BLayout* layout)
+	void be_BView_SetLayout(BView *self, BLayout* layout)
 	{
-		self->SetLayout_super(layout);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->SetLayout_super(layout);
+		else
+			self->SetLayout(layout);
 	}
 
-	BLayout* be_BView_GetLayout(BViewProxy *self)
+	BLayout* be_BView_GetLayout(BView *self)
 	{
 		return self->GetLayout();
 	}
 
-	void be_BView_InvalidateLayout(BViewProxy *self, bool descendants)
+	void be_BView_InvalidateLayout(BView *self, bool descendants)
 	{
-		self->InvalidateLayout_super(descendants);
+		BViewProxy *proxy = dynamic_cast<BViewProxy *>(self);
+		if(proxy)
+			proxy->InvalidateLayout_super(descendants);
+		else
+			self->InvalidateLayout(descendants);
 	}
 
-	void be_BView_EnableLayoutInvalidation(BViewProxy *self)
+	void be_BView_EnableLayoutInvalidation(BView *self)
 	{
 		self->EnableLayoutInvalidation();
 	}
 
-	void be_BView_DisableLayoutInvalidation(BViewProxy *self)
+	void be_BView_DisableLayoutInvalidation(BView *self)
 	{
 		self->DisableLayoutInvalidation();
 	}
 
-	bool be_BView_IsLayoutValid(BViewProxy *self)
+	bool be_BView_IsLayoutValid(BView *self)
 	{
 		return self->IsLayoutValid();
 	}
 
-	void be_BView_ResetLayoutInvalidation(BViewProxy *self)
+	void be_BView_ResetLayoutInvalidation(BView *self)
 	{
 		self->ResetLayoutInvalidation();
 	}
 
-	BLayoutContext* be_BView_LayoutContext(BViewProxy *self)
+	BLayoutContext* be_BView_LayoutContext(BView *self)
 	{
 		return self->LayoutContext();
 	}
 
-	void be_BView_Layout(BViewProxy *self, bool force)
+	void be_BView_Layout(BView *self, bool force)
 	{
 		self->Layout(force);
 	}
 
-	void be_BView_Relayout(BViewProxy *self)
+	void be_BView_Relayout(BView *self)
 	{
 		self->Relayout();
 	}

@@ -11,6 +11,7 @@ d_srcs = [
 	'Be/Interface/Input.d',
 	'Be/Interface/View.d',
 	'Be/Interface/Window.d',
+	'Be/Interface/GraphicsDefs.d',
 
 	'Be/App/AppDefs.d',
 	'Be/App/Application.d',

@@ -691,13 +691,13 @@ interface IBWindow
 
 	// void be_BWindow_InViewTransaction(BWindow *self);
 	void InViewTransaction();
-
+*/
 	// BRect * be_BWindow_Bounds(BWindow *self);
 	BRect Bounds();
 
 	// BRect * be_BWindow_Frame(BWindow *self);
 	BRect Frame();
-
+/*
 	// BRect * be_BWindow_DecoratorFrame(BWindow *self);
 	BRect DecoratorFrame();
 
@@ -793,13 +793,13 @@ interface IBWindow
 
 	// status_t be_BWindow_GetWindowAlignment(BWindow *self, window_alignment* mode, int32* h, int32* hOffset, int32* width, int32* widthOffset, int32* v, int32* vOffset, int32* height, int32* heightOffset);
 	status_t GetWindowAlignment();
-
+*/
 	// bool be_BWindow_QuitRequested(BWindow *self);
 	bool QuitRequested();
 
 	// thread_id be_BWindow_Run(BWindow *self);
 	thread_id Run();
-
+/*
 	// void be_BWindow_SetLayout(BWindow *self, BLayout* layout);
 	void SetLayout();
 
@@ -880,9 +880,9 @@ public:
 	}
 
 	// void be_BWindow_AddChild(BWindow *self, BView* child, BView* before);
-	void AddChild(BView child, BView before) {
+	void AddChild(BView child, BView before = null) {
 		child._OwnsPtr = false; // Turn over the power to the BWindow..
-		be_BWindow_AddChild(_InstPtr(), child._InstPtr, before._InstPtr);
+		be_BWindow_AddChild(_InstPtr(), child._InstPtr, null); //, before is null ? null : before._InstPtr);
 	}
 /*
 	// void be_BWindow_AddChild_1(BWindow *self, BLayoutItem* child);
@@ -1175,17 +1175,17 @@ public:
 	void InViewTransaction() {
 		be_BWindow_InViewTransaction(_InstPtr());
 	}
-
+*/
 	// BRect * be_BWindow_Bounds(BWindow *self);
 	BRect Bounds() {
-		return be_BWindow_Bounds(_InstPtr());
+		return new BRect(be_BWindow_Bounds(_InstPtr()), true);
 	}
 
 	// BRect * be_BWindow_Frame(BWindow *self);
 	BRect Frame() {
-		return be_BWindow_Frame(_InstPtr());
+		return new BRect(be_BWindow_Frame(_InstPtr()), true);
 	}
-
+/*
 	// BRect * be_BWindow_DecoratorFrame(BWindow *self);
 	BRect DecoratorFrame() {
 		return be_BWindow_DecoratorFrame(_InstPtr());
@@ -1345,7 +1345,7 @@ public:
 	status_t GetWindowAlignment() {
 		return be_BWindow_GetWindowAlignment(_InstPtr());
 	}
-
+*/
 	// bool be_BWindow_QuitRequested(BWindow *self);
 	bool QuitRequested() {
 		return be_BWindow_QuitRequested(_InstPtr());
@@ -1355,7 +1355,7 @@ public:
 	thread_id Run() {
 		return be_BWindow_Run(_InstPtr());
 	}
-
+/*
 	// void be_BWindow_SetLayout(BWindow *self, BLayout* layout);
 	void SetLayout() {
 		be_BWindow_SetLayout(_InstPtr());

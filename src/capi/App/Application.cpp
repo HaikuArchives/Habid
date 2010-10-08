@@ -6,6 +6,7 @@
 #include "App/Application.h"
 
 #include <string.h>
+#include <typeinfo>
 
 const char* kRegistrarSignature = "application/x-vnd.haiku-registrar";
 
@@ -184,19 +185,19 @@ status_t BApplicationProxy::Perform_super(perform_code d, void* arg)
 
 
 extern "C" {
-	BApplicationProxy * be_BApplication_ctor(void *bindInstPtr, const char* signature)
+	BApplication * be_BApplication_ctor(void *bindInstPtr, const char* signature)
 	{
-		return new BApplicationProxy(bindInstPtr, signature);
+		return (BApplication *)new BApplicationProxy(bindInstPtr, signature);
 	}
 
-	BApplicationProxy * be_BApplication_ctor_1(void *bindInstPtr, const char* signature, status_t* error)
+	BApplication * be_BApplication_ctor_1(void *bindInstPtr, const char* signature, status_t* error)
 	{
-		return new BApplicationProxy(bindInstPtr, signature, error);
+		return (BApplication *)new BApplicationProxy(bindInstPtr, signature, error);
 	}
 
-	BApplicationProxy * be_BApplication_ctor_2(void *bindInstPtr, BMessage* data)
+	BApplication * be_BApplication_ctor_2(void *bindInstPtr, BMessage* data)
 	{
-		return new BApplicationProxy(bindInstPtr, data);
+		return (BApplication *)new BApplicationProxy(bindInstPtr, data);
 	}
 
 	void be_BApplication_dtor(BApplication* self)
@@ -209,127 +210,171 @@ extern "C" {
 		return BApplication::Instantiate(data);
 	}
 
-	status_t be_BApplication_Archive(BApplicationProxy *self, BMessage* data, bool deep)
+	status_t be_BApplication_Archive(BApplication *self, BMessage* data, bool deep)
 	{
-		return ((BApplication *)self)->Archive(data, deep);
+		return self->Archive(data, deep);
 	}
 
-	status_t be_BApplication_InitCheck(BApplicationProxy *self)
+	status_t be_BApplication_InitCheck(BApplication *self)
 	{
 		return self->InitCheck();
 	}
 
-	thread_id be_BApplication_Run(BApplicationProxy *self)
+	thread_id be_BApplication_Run(BApplication *self)
 	{
-		return self->Run_super();
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			return proxy->Run_super();
+		else
+			return self->Run();
 	}
 
-	void be_BApplication_Quit(BApplicationProxy *self)
+	void be_BApplication_Quit(BApplication *self)
 	{
-		self->Quit_super();
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->Quit_super();
+		else
+			self->Quit();
 	}
 
-	bool be_BApplication_QuitRequested(BApplicationProxy *self)
+	bool be_BApplication_QuitRequested(BApplication *self)
 	{
-		return self->QuitRequested_super();
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			return proxy->QuitRequested_super();
+		else
+			return self->QuitRequested();
 	}
 
-	void be_BApplication_Pulse(BApplicationProxy *self)
+	void be_BApplication_Pulse(BApplication *self)
 	{
-		self->Pulse_super();
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->Pulse_super();
+		else
+			self->Pulse();
 	}
 
-	void be_BApplication_ReadyToRun(BApplicationProxy *self)
+	void be_BApplication_ReadyToRun(BApplication *self)
 	{
-		self->ReadyToRun_super();
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->ReadyToRun_super();
+		else
+			self->ReadyToRun();
 	}
 
-	void be_BApplication_MessageReceived(BApplicationProxy *self, BMessage* message)
+	void be_BApplication_MessageReceived(BApplication *self, BMessage* message)
 	{
-		self->MessageReceived_super(message);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->MessageReceived_super(message);
+		else
+			self->MessageReceived(message);
 	}
 
-	void be_BApplication_ArgvReceived(BApplicationProxy *self, int32 argc, char** argv)
+	void be_BApplication_ArgvReceived(BApplication *self, int32 argc, char** argv)
 	{
-		self->ArgvReceived_super(argc, argv);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->ArgvReceived_super(argc, argv);
+		else
+			self->ArgvReceived(argc, argv);
 	}
 
-	void be_BApplication_AppActivated(BApplicationProxy *self, bool active)
+	void be_BApplication_AppActivated(BApplication *self, bool active)
 	{
-		self->AppActivated_super(active);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->AppActivated_super(active);
+		else
+			self->AppActivated(active);
 	}
 
-	void be_BApplication_RefsReceived(BApplicationProxy *self, BMessage* message)
+	void be_BApplication_RefsReceived(BApplication *self, BMessage* message)
 	{
-		self->RefsReceived_super(message);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->RefsReceived_super(message);
+		else
+			self->RefsReceived(message);
 	}
 
-	void be_BApplication_AboutRequested(BApplicationProxy *self)
+	void be_BApplication_AboutRequested(BApplication *self)
 	{
-		self->AboutRequested_super();
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->AboutRequested_super();
+		else
+			self->AboutRequested();
 	}
 
-	BHandler* be_BApplication_ResolveSpecifier(BApplicationProxy *self, BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property)
+	BHandler* be_BApplication_ResolveSpecifier(BApplication *self, BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property)
 	{
-		return self->ResolveSpecifier_super(message, index, specifier, form, property);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			return proxy->ResolveSpecifier_super(message, index, specifier, form, property);
+		else
+			return self->ResolveSpecifier(message, index, specifier, form, property);
 	}
 
-	void be_BApplication_ShowCursor(BApplicationProxy *self)
+	void be_BApplication_ShowCursor(BApplication *self)
 	{
 		self->ShowCursor();
 	}
 
-	void be_BApplication_HideCursor(BApplicationProxy *self)
+	void be_BApplication_HideCursor(BApplication *self)
 	{
 		self->HideCursor();
 	}
 
-	void be_BApplication_ObscureCursor(BApplicationProxy *self)
+	void be_BApplication_ObscureCursor(BApplication *self)
 	{
 		self->ObscureCursor();
 	}
 
-	bool be_BApplication_IsCursorHidden(BApplicationProxy *self)
+	bool be_BApplication_IsCursorHidden(BApplication *self)
 	{
 		return self->IsCursorHidden();
 	}
 
-	void be_BApplication_SetCursor(BApplicationProxy *self, const void* cursor)
+	void be_BApplication_SetCursor(BApplication *self, const void* cursor)
 	{
 		self->SetCursor(cursor);
 	}
 
-	void be_BApplication_SetCursor_1(BApplicationProxy *self, const BCursor* cursor, bool sync)
+	void be_BApplication_SetCursor_1(BApplication *self, const BCursor* cursor, bool sync)
 	{
 		self->SetCursor(cursor, sync);
 	}
 
-	int32 be_BApplication_CountWindows(BApplicationProxy *self)
+	int32 be_BApplication_CountWindows(BApplication *self)
 	{
 		return self->CountWindows();
 	}
 
-	BWindow * be_BApplication_WindowAt(BApplicationProxy *self, int32 index)
+	BWindow * be_BApplication_WindowAt(BApplication *self, int32 index)
 	{
 		return self->WindowAt(index);
 	}
 
-	int32 be_BApplication_CountLoopers(BApplicationProxy *self)
+	int32 be_BApplication_CountLoopers(BApplication *self)
 	{
 		return self->CountLoopers();
 	}
 
-	BLooper * be_BApplication_LooperAt(BApplicationProxy *self, int32 index)
+	BLooper * be_BApplication_LooperAt(BApplication *self, int32 index)
 	{
 		return self->LooperAt(index);
 	}
 
-	bool be_BApplication_IsLaunching(BApplicationProxy *self)
+	bool be_BApplication_IsLaunching(BApplication *self)
 	{
 		return self->IsLaunching();
 	}
 
-	status_t be_BApplication_GetAppInfo(BApplicationProxy *self, app_info* info)
+	status_t be_BApplication_GetAppInfo(BApplication *self, app_info* info)
 	{
 		return self->GetAppInfo(info);
 	}
@@ -339,24 +384,36 @@ extern "C" {
 		return BApplication::AppResources();
 	}
 
-	void be_BApplication_DispatchMessage(BApplicationProxy *self, BMessage* message, BHandler* handler)
+	void be_BApplication_DispatchMessage(BApplication *self, BMessage* message, BHandler* handler)
 	{
-		self->DispatchMessage_super(message, handler);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			proxy->DispatchMessage_super(message, handler);
+		else
+			self->DispatchMessage(message, handler);
 	}
 
-	void be_BApplication_SetPulseRate(BApplicationProxy *self, bigtime_t rate)
+	void be_BApplication_SetPulseRate(BApplication *self, bigtime_t rate)
 	{
 		self->SetPulseRate(rate);
 	}
 
-	status_t be_BApplication_GetSupportedSuites(BApplicationProxy *self, BMessage* data)
+	status_t be_BApplication_GetSupportedSuites(BApplication *self, BMessage* data)
 	{
-		return self->GetSupportedSuites_super(data);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			return proxy->GetSupportedSuites_super(data);
+		else
+			return self->GetSupportedSuites(data);
 	}
 
-	status_t be_BApplication_Perform(BApplicationProxy *self, perform_code d, void* arg)
+	status_t be_BApplication_Perform(BApplication *self, perform_code d, void* arg)
 	{
-		return self->Perform_super(d, arg);
+		BApplicationProxy *proxy = dynamic_cast<BApplicationProxy *>(self);
+		if(proxy)
+			return proxy->Perform_super(d, arg);
+		else
+			return self->Perform(d, arg);
 	}
 	
 	BMessenger * get_be_app_messenger() {

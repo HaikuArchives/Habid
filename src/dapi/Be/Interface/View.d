@@ -843,75 +843,75 @@ extern (C) extern {
 
 extern (C) {
 	status_t bind_BView_Archive(void *bindInstPtr, void* archive, bool deep) {
-		assert(false, "bind_BView_Archive(void *bindInstPtr, BMessage* archive, bool deep) Unimplemented");
+		return (cast(BView)bindInstPtr).Archive(new BMessage(archive, false), deep);
 	}
 
 	status_t bind_BView_AllUnarchived(void *bindInstPtr, void* archive) {
-		assert(false, "bind_BView_AllUnarchived(void *bindInstPtr, const BMessage* archive) Unimplemented");
+		return (cast(BView)bindInstPtr).AllUnarchived(new BMessage(archive, false));
 	}
 
 	status_t bind_BView_AllArchived(void *bindInstPtr, void* archive) {
-		assert(false, "bind_BView_AllArchived(void *bindInstPtr, BMessage* archive) Unimplemented");
+		return (cast(BView)bindInstPtr).AllArchived(new BMessage(archive, false));
 	}
 
 	void bind_BView_AttachedToWindow(void *bindInstPtr) {
-		assert(false, "bind_BView_AttachedToWindow(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).AttachedToWindow();
 	}
 
 	void bind_BView_AllAttached(void *bindInstPtr) {
-		assert(false, "bind_BView_AllAttached(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).AllAttached();
 	}
 
 	void bind_BView_DetachedFromWindow(void *bindInstPtr) {
-		assert(false, "bind_BView_DetachedFromWindow(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).DetachedFromWindow();
 	}
 
 	void bind_BView_AllDetached(void *bindInstPtr) {
-		assert(false, "bind_BView_AllDetached(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).AllDetached();
 	}
 
 	void bind_BView_MessageReceived(void *bindInstPtr, void* message) {
-		assert(false, "bind_BView_MessageReceived(void *bindInstPtr, BMessage* message) Unimplemented");
+		(cast(BView)bindInstPtr).MessageReceived(new BMessage(message, false));
 	}
 
 	void bind_BView_Draw(void *bindInstPtr, void *updateRect) {
-		assert(false, "bind_BView_Draw(void *bindInstPtr, BRect *updateRect) Unimplemented");
+		(cast(BView)bindInstPtr).Draw(new BRect(updateRect, false));
 	}
 
 	void bind_BView_MouseDown(void *bindInstPtr, void *where) {
-		assert(false, "bind_BView_MouseDown(void *bindInstPtr, BPoint *where) Unimplemented");
+		(cast(BView)bindInstPtr).MouseDown(new BPoint(where, false));
 	}
 
 	void bind_BView_MouseUp(void *bindInstPtr, void *where) {
-		assert(false, "bind_BView_MouseUp(void *bindInstPtr, BPoint *where) Unimplemented");
+		(cast(BView)bindInstPtr).MouseUp(new BPoint(where, false));
 	}
 
 	void bind_BView_MouseMoved(void *bindInstPtr, void *where, uint32 code,  void* dragMessage) {
-		assert(false, "bind_BView_MouseMoved(void *bindInstPtr, BPoint *where, uint32 code, const BMessage* dragMessage) Unimplemented");
+		(cast(BView)bindInstPtr).MouseMoved(new BPoint(where, false), code, new BMessage(dragMessage, false));
 	}
 
 	void bind_BView_WindowActivated(void *bindInstPtr, bool state) {
-		assert(false, "bind_BView_WindowActivated(void *bindInstPtr, bool state) Unimplemented");
+		(cast(BView)bindInstPtr).WindowActivated(state);
 	}
 
 	void bind_BView_KeyDown(void *bindInstPtr, char* bytes, int32 numBytes) {
-		assert(false, "bind_BView_KeyDown(void *bindInstPtr, const char* bytes, int32 numBytes) Unimplemented");
+		(cast(BView)bindInstPtr).KeyDown(bytes[0..numBytes], numBytes);
 	}
 
 	void bind_BView_KeyUp(void *bindInstPtr, char* bytes, int32 numBytes) {
-		assert(false, "bind_BView_KeyUp(void *bindInstPtr, const char* bytes, int32 numBytes) Unimplemented");
+		(cast(BView)bindInstPtr).KeyUp(bytes[0..numBytes], numBytes);
 	}
 
 	void bind_BView_Pulse(void *bindInstPtr) {
-		assert(false, "bind_BView_Pulse(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).Pulse();
 	}
 
 	void bind_BView_FrameMoved(void *bindInstPtr, void *newPosition) {
-		assert(false, "bind_BView_FrameMoved(void *bindInstPtr, BPoint *newPosition) Unimplemented");
+		(cast(BView)bindInstPtr).FrameMoved(new BPoint(newPosition, false));
 	}
 
 	void bind_BView_FrameResized(void *bindInstPtr, float newWidth, float newHeight) {
-		assert(false, "bind_BView_FrameResized(void *bindInstPtr, float newWidth, float newHeight) Unimplemented");
+		return (cast(BView)bindInstPtr).FrameResized(newWidth, newHeight);
 	}
 
 	void bind_BView_TargetedByScrollView(void *bindInstPtr, void* scrollView) {
@@ -923,23 +923,23 @@ extern (C) {
 	}
 
 	void bind_BView_SetDrawingMode(void *bindInstPtr, drawing_mode mode) {
-		assert(false, "bind_BView_SetDrawingMode(void *bindInstPtr, drawing_mode mode) Unimplemented");
+		(cast(BView)bindInstPtr).SetDrawingMode(mode);
 	}
 
 	void bind_BView_SetPenSize(void *bindInstPtr, float size) {
-		assert(false, "bind_BView_SetPenSize(void *bindInstPtr, float size) Unimplemented");
+		(cast(BView)bindInstPtr).SetPenSize(size);
 	}
 
 	void bind_BView_SetViewColor(void *bindInstPtr, rgb_color c) {
-		assert(false, "bind_BView_SetViewColor(void *bindInstPtr, rgb_color c) Unimplemented");
+		(cast(BView)bindInstPtr).SetViewColor(c);
 	}
 
 	void bind_BView_SetHighColor(void *bindInstPtr, rgb_color a_color) {
-		assert(false, "bind_BView_SetHighColor(void *bindInstPtr, rgb_color a_color) Unimplemented");
+		(cast(BView)bindInstPtr).SetHighColor(a_color);
 	}
 
 	void bind_BView_SetLowColor(void *bindInstPtr, rgb_color a_color) {
-		assert(false, "bind_BView_SetLowColor(void *bindInstPtr, rgb_color a_color) Unimplemented");
+		(cast(BView)bindInstPtr).SetLowColor(a_color);
 	}
 
 	void bind_BView_SetFont(void *bindInstPtr, void* font, uint32 mask) {
@@ -947,11 +947,11 @@ extern (C) {
 	}
 
 	void bind_BView_SetFlags(void *bindInstPtr, uint32 flags) {
-		assert(false, "bind_BView_SetFlags(void *bindInstPtr, uint32 flags) Unimplemented");
+		(cast(BView)bindInstPtr).SetFlags(flags);
 	}
 
 	void bind_BView_SetResizingMode(void *bindInstPtr, uint32 mode) {
-		assert(false, "bind_BView_SetResizingMode(void *bindInstPtr, uint32 mode) Unimplemented");
+		(cast(BView)bindInstPtr).SetResizingMode(mode);
 	}
 
 	void bind_BView_ScrollTo_1(void *bindInstPtr, void *where) {
@@ -959,15 +959,15 @@ extern (C) {
 	}
 
 	void bind_BView_MakeFocus(void *bindInstPtr, bool focusState) {
-		assert(false, "bind_BView_MakeFocus(void *bindInstPtr, bool focusState) Unimplemented");
+//		return (cast(BView)bindInstPtr).MakeFocus(focusState);
 	}
 
 	void bind_BView_Show(void *bindInstPtr) {
-		assert(false, "bind_BView_Show(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).Show();
 	}
 
 	void bind_BView_Hide(void *bindInstPtr) {
-		assert(false, "bind_BView_Hide(void *bindInstPtr) Unimplemented");
+		(cast(BView)bindInstPtr).Hide();
 	}
 
 	void bind_BView_GetPreferredSize(void *bindInstPtr, float* width, float* height) {
@@ -1023,7 +1023,7 @@ extern (C) {
 	}
 
 	void bind_BView_InvalidateLayout(void *bindInstPtr, bool descendants) {
-		assert(false, "bind_BView_InvalidateLayout(void *bindInstPtr, bool descendants) Unimplemented");
+		return (cast(BView)bindInstPtr).InvalidateLayout(descendants);
 	}
 
 }
@@ -1571,19 +1571,19 @@ interface IBView
 
 	// status_t be_BView_SetMouseEventMask(BView *self, uint32 mask, uint32 options);
 	status_t SetMouseEventMask();
-
+*/
 	// void be_BView_SetFlags(BView *self, uint32 flags);
-	void SetFlags();
+	void SetFlags(uint32);
 
 	// uint32 be_BView_Flags(BView *self);
 	uint32 Flags();
 
 	// void be_BView_SetResizingMode(BView *self, uint32 mode);
-	void SetResizingMode();
+	void SetResizingMode(uint32);
 
 	// uint32 be_BView_ResizingMode(BView *self);
 	uint32 ResizingMode();
-
+/*
 	// void be_BView_MoveBy(BView *self, float dh, float dv);
 	void MoveBy();
 
@@ -1616,13 +1616,13 @@ interface IBView
 
 	// bool be_BView_IsFocus(BView *self);
 	bool IsFocus();
-
+*/
 	// void be_BView_Show(BView *self);
 	void Show();
 
 	// void be_BView_Hide(BView *self);
 	void Hide();
-
+/*
 	// bool be_BView_IsHidden(BView *self);
 	bool IsHidden();
 
@@ -1712,10 +1712,10 @@ interface IBView
 
 	// BLayout* be_BView_GetLayout(BView *self);
 	BLayout* GetLayout();
-
+*/
 	// void be_BView_InvalidateLayout(BView *self, bool descendants);
-	void InvalidateLayout();
-
+	void InvalidateLayout(bool);
+/*
 	// void be_BView_EnableLayoutInvalidation(BView *self);
 	void EnableLayoutInvalidation();
 
@@ -1756,7 +1756,7 @@ public:
 			_InstPtr = be_BView_ctor(cast(void *)this, archive._InstPtr);
 			_OwnsPtr = true;
 		}
-		super();
+		super(archive);
 	}
 
 	// BViewProxy * be_BView_ctor_1(void *bindInstPtr, const char* name, uint32 flags, BLayout* layout);
@@ -1765,7 +1765,7 @@ public:
 			_InstPtr = be_BView_ctor_1(cast(void *)this, toStringz(name), flags, null);
 			_OwnsPtr = true;
 		}
-		super();
+		super(name);
 	}
 
 	// BViewProxy * be_BView_ctor_2(void *bindInstPtr, BRect *frame, const char* name, uint32 resizeMask, uint32 flags);
@@ -1774,7 +1774,7 @@ public:
 			_InstPtr = be_BView_ctor_2(cast(void *)this, rect._InstPtr, toStringz(name), resizeMask, flags);
 			_OwnsPtr = true;
 		}
-		super();
+		super(name);
 	}
 
 	// void be_BView_dtor(BView* self);
@@ -1833,9 +1833,9 @@ public:
 	}
 
 	// void be_BView_AddChild(BView *self, BView* child, BView* before);
-	void AddChild(BView child, BView before) {
+	void AddChild(BView child, BView before = null) {
 		child._OwnsPtr = false; // BView owns this now
-		be_BView_AddChild(_InstPtr(), child._InstPtr, before._InstPtr);
+		be_BView_AddChild(_InstPtr(), child._InstPtr, before is null ? null : before._InstPtr);
 	}
 
 	// bool be_BView_AddChild_1(BView *self, BLayoutItem* child);
@@ -2139,7 +2139,7 @@ public:
 
 	// rgb_color be_BView_ViewColor(BView *self);
 	rgb_color ViewColor() {
-		return be_BView_ViewColor(_InstPtr());
+		return rgb_color(be_BView_ViewColor(_InstPtr()));
 	}
 /*
 	// void be_BView_SetViewBitmap(BView *self, const BBitmap* bitmap, BRect *srcRect, BRect *dstRect, uint32 followFlags, uint32 options);
@@ -2692,10 +2692,10 @@ public:
 	status_t SetMouseEventMask() {
 		return be_BView_SetMouseEventMask(_InstPtr());
 	}
-
+*/
 	// void be_BView_SetFlags(BView *self, uint32 flags);
-	void SetFlags() {
-		be_BView_SetFlags(_InstPtr());
+	void SetFlags(uint32 flags) {
+		be_BView_SetFlags(_InstPtr(), flags);
 	}
 
 	// uint32 be_BView_Flags(BView *self);
@@ -2704,15 +2704,15 @@ public:
 	}
 
 	// void be_BView_SetResizingMode(BView *self, uint32 mode);
-	void SetResizingMode() {
-		be_BView_SetResizingMode(_InstPtr());
+	void SetResizingMode(uint32 mode) {
+		be_BView_SetResizingMode(_InstPtr(), mode);
 	}
 
 	// uint32 be_BView_ResizingMode(BView *self);
 	uint32 ResizingMode() {
 		return be_BView_ResizingMode(_InstPtr());
 	}
-
+/*
 	// void be_BView_MoveBy(BView *self, float dh, float dv);
 	void MoveBy() {
 		be_BView_MoveBy(_InstPtr());
@@ -2767,7 +2767,7 @@ public:
 	bool IsFocus() {
 		return be_BView_IsFocus(_InstPtr());
 	}
-
+*/
 	// void be_BView_Show(BView *self);
 	void Show() {
 		be_BView_Show(_InstPtr());
@@ -2777,7 +2777,7 @@ public:
 	void Hide() {
 		be_BView_Hide(_InstPtr());
 	}
-
+/*
 	// bool be_BView_IsHidden(BView *self);
 	bool IsHidden() {
 		return be_BView_IsHidden(_InstPtr());
@@ -2927,12 +2927,12 @@ public:
 	BLayout* GetLayout() {
 		return be_BView_GetLayout(_InstPtr());
 	}
-
+*/
 	// void be_BView_InvalidateLayout(BView *self, bool descendants);
-	void InvalidateLayout() {
-		be_BView_InvalidateLayout(_InstPtr());
+	void InvalidateLayout(bool descendants) {
+		be_BView_InvalidateLayout(_InstPtr(), descendants);
 	}
-
+/*
 	// void be_BView_EnableLayoutInvalidation(BView *self);
 	void EnableLayoutInvalidation() {
 		be_BView_EnableLayoutInvalidation(_InstPtr());
