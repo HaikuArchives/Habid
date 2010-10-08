@@ -135,34 +135,34 @@ status_t BFileProxy::GetSize_super(off_t* size)
 
 
 extern "C" {
-	BFileProxy * be_BFile_ctor(void *bindInstPtr)
+	BFile * be_BFile_ctor(void *bindInstPtr)
 	{
-		return new BFileProxy(bindInstPtr);
+		return (BFile *)new BFileProxy(bindInstPtr);
 	}
 
-	BFileProxy * be_BFile_ctor_1(void *bindInstPtr, const BFile * file)
+	BFile * be_BFile_ctor_1(void *bindInstPtr, const BFile * file)
 	{
-		return new BFileProxy(bindInstPtr, *file);
+		return (BFile *)new BFileProxy(bindInstPtr, *file);
 	}
 
-	BFileProxy * be_BFile_ctor_2(void *bindInstPtr, const entry_ref * ref, uint32 openMode)
+	BFile * be_BFile_ctor_2(void *bindInstPtr, const entry_ref * ref, uint32 openMode)
 	{
-		return new BFileProxy(bindInstPtr, ref, openMode);
+		return (BFile *)new BFileProxy(bindInstPtr, ref, openMode);
 	}
 
-	BFileProxy * be_BFile_ctor_3(void *bindInstPtr, const BEntry * entry, uint32 openMode)
+	BFile * be_BFile_ctor_3(void *bindInstPtr, const BEntry * entry, uint32 openMode)
 	{
-		return new BFileProxy(bindInstPtr, entry, openMode);
+		return (BFile *)new BFileProxy(bindInstPtr, entry, openMode);
 	}
 
-	BFileProxy * be_BFile_ctor_4(void *bindInstPtr, const char * path, uint32 openMode)
+	BFile * be_BFile_ctor_4(void *bindInstPtr, const char * path, uint32 openMode)
 	{
-		return new BFileProxy(bindInstPtr, path, openMode);
+		return (BFile *)new BFileProxy(bindInstPtr, path, openMode);
 	}
 
-	BFileProxy * be_BFile_ctor_5(void *bindInstPtr, const BDirectory * dir, const char * path, uint32 openMode)
+	BFile * be_BFile_ctor_5(void *bindInstPtr, const BDirectory * dir, const char * path, uint32 openMode)
 	{
-		return new BFileProxy(bindInstPtr, dir, path, openMode);
+		return (BFile *)new BFileProxy(bindInstPtr, dir, path, openMode);
 	}
 
 	void be_BFile_dtor(BFile* self)
@@ -170,74 +170,106 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BFile_SetTo(BFileProxy *self, const entry_ref * ref, uint32 openMode)
+	status_t be_BFile_SetTo(BFile *self, const entry_ref * ref, uint32 openMode)
 	{
-		return ((BFile *)self)->SetTo(ref, openMode);
+		return self->SetTo(ref, openMode);
 	}
 
-	status_t be_BFile_SetTo_1(BFileProxy *self, const BEntry * entry, uint32 openMode)
+	status_t be_BFile_SetTo_1(BFile *self, const BEntry * entry, uint32 openMode)
 	{
-		return ((BFile *)self)->SetTo(entry, openMode);
+		return self->SetTo(entry, openMode);
 	}
 
-	status_t be_BFile_SetTo_2(BFileProxy *self, const char * path, uint32 openMode)
+	status_t be_BFile_SetTo_2(BFile *self, const char * path, uint32 openMode)
 	{
-		return ((BFile *)self)->SetTo(path, openMode);
+		return self->SetTo(path, openMode);
 	}
 
-	status_t be_BFile_SetTo_3(BFileProxy *self, const BDirectory * dir, const char * path, uint32 openMode)
+	status_t be_BFile_SetTo_3(BFile *self, const BDirectory * dir, const char * path, uint32 openMode)
 	{
-		return ((BFile *)self)->SetTo(dir, path, openMode);
+		return self->SetTo(dir, path, openMode);
 	}
 
-	bool be_BFile_IsReadable(BFileProxy *self)
+	bool be_BFile_IsReadable(BFile *self)
 	{
-		return ((BFile *)self)->IsReadable();
+		return self->IsReadable();
 	}
 
-	bool be_BFile_IsWritable(BFileProxy *self)
+	bool be_BFile_IsWritable(BFile *self)
 	{
-		return ((BFile *)self)->IsWritable();
+		return self->IsWritable();
 	}
 
-	ssize_t be_BFile_Read(BFileProxy *self, void * buffer, size_t size)
+	ssize_t be_BFile_Read(BFile *self, void * buffer, size_t size)
 	{
-		return self->Read_super(buffer, size);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->Read_super(buffer, size);
+		else
+			return self->Read(buffer, size);
 	}
 
-	ssize_t be_BFile_ReadAt(BFileProxy *self, off_t location, void * buffer, size_t size)
+	ssize_t be_BFile_ReadAt(BFile *self, off_t location, void * buffer, size_t size)
 	{
-		return self->ReadAt_super(location, buffer, size);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->ReadAt_super(location, buffer, size);
+		else
+			return self->ReadAt(location, buffer, size);
 	}
 
-	ssize_t be_BFile_Write(BFileProxy *self, const void * buffer, size_t size)
+	ssize_t be_BFile_Write(BFile *self, const void * buffer, size_t size)
 	{
-		return self->Write_super(buffer, size);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->Write_super(buffer, size);
+		else
+			return self->Write(buffer, size);
 	}
 
-	ssize_t be_BFile_WriteAt(BFileProxy *self, off_t location, const void * buffer, size_t size)
+	ssize_t be_BFile_WriteAt(BFile *self, off_t location, const void * buffer, size_t size)
 	{
-		return self->WriteAt_super(location, buffer, size);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->WriteAt_super(location, buffer, size);
+		else
+			return self->WriteAt(location, buffer, size);
 	}
 
-	off_t be_BFile_Seek(BFileProxy *self, off_t offset, uint32 seekMode)
+	off_t be_BFile_Seek(BFile *self, off_t offset, uint32 seekMode)
 	{
-		return self->Seek_super(offset, seekMode);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->Seek_super(offset, seekMode);
+		else
+			return self->Seek(offset, seekMode);
 	}
 
-	off_t be_BFile_Position(BFileProxy *self)
+	off_t be_BFile_Position(BFile *self)
 	{
-		return self->Position_super();
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->Position_super();
+		else
+			return self->Position();
 	}
 
-	status_t be_BFile_SetSize(BFileProxy *self, off_t size)
+	status_t be_BFile_SetSize(BFile *self, off_t size)
 	{
-		return self->SetSize_super(size);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->SetSize_super(size);
+		else
+			return self->SetSize(size);
 	}
 
-	status_t be_BFile_GetSize(BFileProxy *self, off_t* size)
+	status_t be_BFile_GetSize(BFile *self, off_t* size)
 	{
-		return self->GetSize_super(size);
+		BFileProxy *proxy = dynamic_cast<BFileProxy *>(self);
+		if(proxy)
+			return proxy->GetSize_super(size);
+		else
+			return self->GetSize(size);
 	}
 
 	BFile * be_BFile_opAssign(BFile *self, const BFile * file)

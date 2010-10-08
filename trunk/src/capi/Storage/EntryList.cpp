@@ -73,9 +73,9 @@ int32 BEntryListProxy::CountEntries_super()
 
 
 extern "C" {
-	BEntryListProxy * be_BEntryList_ctor(void *bindInstPtr)
+	BEntryList * be_BEntryList_ctor(void *bindInstPtr)
 	{
-		return new BEntryListProxy(bindInstPtr);
+		return (BEntryList *)new BEntryListProxy(bindInstPtr);
 	}
 
 	void be_BEntryList_dtor(BEntryList* self)
@@ -83,29 +83,49 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BEntryList_GetNextEntry(BEntryListProxy *self, BEntry * entry, bool traverse)
+	status_t be_BEntryList_GetNextEntry(BEntryList *self, BEntry * entry, bool traverse)
 	{
-		return self->GetNextEntry_super(entry, traverse);
+		BEntryListProxy *proxy = dynamic_cast<BEntryListProxy *>(self);
+		if(proxy)
+			return proxy->GetNextEntry_super(entry, traverse);
+		else
+			return self->GetNextEntry(entry, traverse);
 	}
 
-	status_t be_BEntryList_GetNextRef(BEntryListProxy *self, entry_ref * _ref)
+	status_t be_BEntryList_GetNextRef(BEntryList *self, entry_ref * _ref)
 	{
-		return self->GetNextRef_super(_ref);
+		BEntryListProxy *proxy = dynamic_cast<BEntryListProxy *>(self);
+		if(proxy)
+			return proxy->GetNextRef_super(_ref);
+		else
+			return self->GetNextRef(_ref);
 	}
 
-	int32 be_BEntryList_GetNextDirents(BEntryListProxy *self, struct dirent * direntBuffer, size_t bufferSize, int32 maxEntries)
+	int32 be_BEntryList_GetNextDirents(BEntryList *self, struct dirent * direntBuffer, size_t bufferSize, int32 maxEntries)
 	{
-		return self->GetNextDirents_super(direntBuffer, bufferSize, maxEntries);
+		BEntryListProxy *proxy = dynamic_cast<BEntryListProxy *>(self);
+		if(proxy)
+			return proxy->GetNextDirents_super(direntBuffer, bufferSize, maxEntries);
+		else
+			return self->GetNextDirents(direntBuffer, bufferSize, maxEntries);
 	}
 
-	status_t be_BEntryList_Rewind(BEntryListProxy *self)
+	status_t be_BEntryList_Rewind(BEntryList *self)
 	{
-		return self->Rewind_super();
+		BEntryListProxy *proxy = dynamic_cast<BEntryListProxy *>(self);
+		if(proxy)
+			return proxy->Rewind_super();
+		else
+			return self->Rewind();
 	}
 
-	int32 be_BEntryList_CountEntries(BEntryListProxy *self)
+	int32 be_BEntryList_CountEntries(BEntryList *self)
 	{
-		return self->CountEntries_super();
+		BEntryListProxy *proxy = dynamic_cast<BEntryListProxy *>(self);
+		if(proxy)
+			return proxy->CountEntries_super();
+		else
+			return self->CountEntries();
 	}
 
 }
