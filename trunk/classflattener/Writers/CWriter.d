@@ -140,12 +140,12 @@ void buildCExports(InterfaceClassInfo classInfo) {
 
     foreach(memberFunc; classInfo.memberFunctions) {
         if(memberFunc.isConstructor) {
-            exportBuffer ~= "\t" ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? "Proxy *" : "*") ~ " be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
+            exportBuffer ~= "\t" ~ classInfo.nameString ~" *be_" ~ classInfo.nameString ~ "_ctor" ~ memberFunc.postfixString ~ "(void *bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
             exportBuffer ~= "\t{{";
-            exportBuffer ~= "\t\treturn new " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? ("Proxy(bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "")) : "(") ~ memberFunc.buildArguments(false, true) ~ ");";
+            exportBuffer ~= "\t\treturn (" ~ classInfo.nameString ~ "* )new " ~ classInfo.nameString ~ ((classInfo.hasPureVirtual || classInfo.hasVirtual) ? ("Proxy(bindInstPtr" ~ (memberFunc.argCount > 0 ? ", " : "")) : "(") ~ memberFunc.buildArguments(false, true) ~ ");";
             exportBuffer ~= "\t}\n";
         } else if(memberFunc.isDestructor) {
-            exportBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ "* self)";
+            exportBuffer ~= "\tvoid be_" ~ classInfo.nameString ~ "_dtor(" ~ classInfo.nameString ~ " *self)";
             exportBuffer ~= "\t{{";
             exportBuffer ~= "\t\tdelete self;";
             exportBuffer ~= "\t}\n";
@@ -174,12 +174,18 @@ void buildCExports(InterfaceClassInfo classInfo) {
             exportBuffer ~= "\t}\n";
         } else {
             if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
-                exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ "Proxy *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
+                exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
                 exportBuffer ~= "\t{{";
+                exportBuffer ~= "\t\t" ~ classInfo.nameString ~ "Proxy *proxy = dynamic_cast<" ~ classInfo.nameString ~ "Proxy *>(self);";
                 if(InterfaceParser.isClass(memberFunc.returnString) && !Util.contains(memberFunc.returnString, '&') && !Util.contains(memberFunc.returnString, '*'))
                     exportBuffer ~= "\t\t" ~ "return new " ~ memberFunc.returnString ~ "(" ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true) ~ "));";
-                else
-                    exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
+                else {
+                    exportBuffer ~= "\t\tif(proxy)";
+                    exportBuffer ~= "\t\t\t"~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "proxy->" ~ memberFunc.nameString ~ "_super(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
+                    exportBuffer ~= "\t\telse";
+                    exportBuffer ~= "\t\t\t"~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
+                //    exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ (memberFunc.returnIsRef() ? "&" : "") ~ "self->" ~ memberFunc.nameString ~ ((memberFunc.isVirtual || memberFunc.isPureVirtual) ? "_super" : "") ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
+                }
                 exportBuffer ~= "\t}\n";
             } else {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
