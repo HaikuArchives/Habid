@@ -186,58 +186,58 @@ interface IBBitmap
 	status_t Archive(BMessage, bool);
 
 	// status_t be_BBitmap_InitCheck(BBitmap *self);
-	status_t InitCheck();
+	final status_t InitCheck();
 
 	// bool be_BBitmap_IsValid(BBitmap *self);
-	bool IsValid();
+	final bool IsValid();
 
 	// status_t be_BBitmap_LockBits(BBitmap *self, uint32* state);
-	status_t LockBits(inout uint32);
+	final status_t LockBits(inout uint32);
 
 	// void be_BBitmap_UnlockBits(BBitmap *self);
-	void UnlockBits();
+	final void UnlockBits();
 
 	// area_id be_BBitmap_Area(BBitmap *self);
-	area_id Area();
+	final area_id Area();
 
 	// void* be_BBitmap_Bits(BBitmap *self);
-	void [] Bits();
+	final void [] Bits();
 
 	// int32 be_BBitmap_BitsLength(BBitmap *self);
-	int32 BitsLength();
+	final int32 BitsLength();
 
 	// int32 be_BBitmap_BytesPerRow(BBitmap *self);
-	int32 BytesPerRow();
+	final int32 BytesPerRow();
 
 	// color_space be_BBitmap_ColorSpace(BBitmap *self);
-	color_space ColorSpace();
+	final color_space ColorSpace();
 
 	// BRect * be_BBitmap_Bounds(BBitmap *self);
-	BRect Bounds();
+	final BRect Bounds();
 
 	// status_t be_BBitmap_SetDrawingFlags(BBitmap *self, uint32 flags);
-//	status_t SetDrawingFlags(uint32);
+//	final status_t SetDrawingFlags(uint32);
 
 	// uint32 be_BBitmap_Flags(BBitmap *self);
-	uint32 Flags();
+	final uint32 Flags();
 
 	// void be_BBitmap_SetBits(BBitmap *self, const void* data, int32 length, int32 offset, color_space colorSpace);
-	void SetBits(void [], int32, int32, color_space);
+	final void SetBits(void [], int32, int32, color_space);
 
 	// status_t be_BBitmap_ImportBits(BBitmap *self, const void* data, int32 length, int32 bpr, int32 offset, color_space colorSpace);
-	status_t ImportBits(void [], int32, int32, int32, color_space);
+	final status_t ImportBits(void [], int32, int32, int32, color_space);
 
 	// status_t be_BBitmap_ImportBits_1(BBitmap *self, const void* data, int32 length, int32 bpr, color_space colorSpace, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits(void [], int32, int32, color_space, BPoint, BPoint, int32, int32);
+	final status_t ImportBits(void [], int32, int32, color_space, BPoint, BPoint, int32, int32);
 
 	// status_t be_BBitmap_ImportBits_2(BBitmap *self, const BBitmap* bitmap);
-	status_t ImportBits(BBitmap);
+	final status_t ImportBits(BBitmap);
 
 	// status_t be_BBitmap_ImportBits_3(BBitmap *self, const BBitmap* bitmap, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits(BBitmap, BPoint, BPoint, int32, int32);
+	final status_t ImportBits(BBitmap, BPoint, BPoint, int32, int32);
 
 	// status_t be_BBitmap_GetOverlayRestrictions(BBitmap *self, overlay_restrictions* restrictions);
-	status_t GetOverlayRestrictions(inout overlay_restrictions);
+	final status_t GetOverlayRestrictions(inout overlay_restrictions);
 
 	// void be_BBitmap_AddChild(BBitmap *self, BView* view);
 	void AddChild(BView);
@@ -246,25 +246,25 @@ interface IBBitmap
 	bool RemoveChild(BView);
 
 	// int32 be_BBitmap_CountChildren(BBitmap *self);
-	int32 CountChildren();
+	final int32 CountChildren();
 
 	// BView* be_BBitmap_ChildAt(BBitmap *self, int32 index);
-	BView ChildAt(int32);
+	final BView ChildAt(int32);
 
 	// BView* be_BBitmap_FindView(BBitmap *self, const char* viewName);
-	BView FindView(char []);
+	final BView FindView(char []);
 
 	// BView* be_BBitmap_FindView_1(BBitmap *self, BPoint *point);
-	BView FindView(BPoint);
+	final BView FindView(BPoint);
 
 	// bool be_BBitmap_Lock(BBitmap *self);
-	bool Lock();
+	final bool Lock();
 
 	// void be_BBitmap_Unlock(BBitmap *self);
-	void Unlock();
+	final void Unlock();
 
 	// bool be_BBitmap_IsLocked(BBitmap *self);
-	bool IsLocked();
+	final bool IsLocked();
 
 	// BBitmap& be_BBitmap_opAssign(BBitmap *self, const BBitmap& source);
 	//BBitmap& opAssign();
@@ -351,92 +351,92 @@ public:
 	}
 
 	// status_t be_BBitmap_InitCheck(BBitmap *self);
-	status_t InitCheck() {
+	final status_t InitCheck() {
 		return be_BBitmap_InitCheck(_InstPtr());
 	}
 
 	// bool be_BBitmap_IsValid(BBitmap *self);
-	bool IsValid() {
+	final bool IsValid() {
 		return be_BBitmap_IsValid(_InstPtr());
 	}
 
 	// status_t be_BBitmap_LockBits(BBitmap *self, uint32* state);
-	status_t LockBits(inout uint32 state) {
+	final status_t LockBits(inout uint32 state) {
 		return be_BBitmap_LockBits(_InstPtr(), &state);
 	}
 
 	// void be_BBitmap_UnlockBits(BBitmap *self);
-	void UnlockBits() {
+	final void UnlockBits() {
 		be_BBitmap_UnlockBits(_InstPtr());
 	}
 
 	// area_id be_BBitmap_Area(BBitmap *self);
-	area_id Area() {
+	final area_id Area() {
 		return be_BBitmap_Area(_InstPtr());
 	}
 
 	// void* be_BBitmap_Bits(BBitmap *self);
-	void [] Bits() {
+	final void [] Bits() {
 		return be_BBitmap_Bits(_InstPtr())[0..BitsLength()];
 	}
 
 	// int32 be_BBitmap_BitsLength(BBitmap *self);
-	int32 BitsLength() {
+	final int32 BitsLength() {
 		return be_BBitmap_BitsLength(_InstPtr());
 	}
 
 	// int32 be_BBitmap_BytesPerRow(BBitmap *self);
-	int32 BytesPerRow() {
+	final int32 BytesPerRow() {
 		return be_BBitmap_BytesPerRow(_InstPtr());
 	}
 
 	// color_space be_BBitmap_ColorSpace(BBitmap *self);
-	color_space ColorSpace() {
+	final color_space ColorSpace() {
 		return be_BBitmap_ColorSpace(_InstPtr());
 	}
 
 	// BRect * be_BBitmap_Bounds(BBitmap *self);
-	BRect Bounds() {
+	final BRect Bounds() {
 		return new BRect(be_BBitmap_Bounds(_InstPtr()), true);
 	}
 /*
 	// status_t be_BBitmap_SetDrawingFlags(BBitmap *self, uint32 flags);
-	status_t SetDrawingFlags(uint32 flags) {
+	final status_t SetDrawingFlags(uint32 flags) {
 		return be_BBitmap_SetDrawingFlags(_InstPtr(), flags);
 	}
 */
 	// uint32 be_BBitmap_Flags(BBitmap *self);
-	uint32 Flags() {
+	final uint32 Flags() {
 		return be_BBitmap_Flags(_InstPtr());
 	}
 
 	// void be_BBitmap_SetBits(BBitmap *self, const void* data, int32 length, int32 offset, color_space colorSpace);
-	void SetBits(void [] data, int32 length, int32 offset, color_space colorSpace) {
+	final void SetBits(void [] data, int32 length, int32 offset, color_space colorSpace) {
 		be_BBitmap_SetBits(_InstPtr(), data.ptr, length, offset, colorSpace);
 	}
 
 	// status_t be_BBitmap_ImportBits(BBitmap *self, const void* data, int32 length, int32 bpr, int32 offset, color_space colorSpace);
-	status_t ImportBits(void [] data, int32 length, int32 bpr, int32 offset, color_space colorSpace) {
+	final status_t ImportBits(void [] data, int32 length, int32 bpr, int32 offset, color_space colorSpace) {
 		return be_BBitmap_ImportBits(_InstPtr(), data.ptr, length, bpr, offset, colorSpace);
 	}
 
 	// status_t be_BBitmap_ImportBits_1(BBitmap *self, const void* data, int32 length, int32 bpr, color_space colorSpace, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits(void [] data, int32 length, int32 bpr, color_space colorSpace, BPoint from, BPoint to, int32 width, int32 height) {
+	final status_t ImportBits(void [] data, int32 length, int32 bpr, color_space colorSpace, BPoint from, BPoint to, int32 width, int32 height) {
 		return be_BBitmap_ImportBits_1(_InstPtr(), data.ptr, length, bpr, colorSpace, from._InstPtr, to._InstPtr, width, height);
 	}
 
 	// status_t be_BBitmap_ImportBits_2(BBitmap *self, const BBitmap* bitmap);
-	status_t ImportBits(BBitmap bitmap) {
+	final status_t ImportBits(BBitmap bitmap) {
 		return be_BBitmap_ImportBits_2(_InstPtr(), bitmap._InstPtr);
 	}
 
 	// status_t be_BBitmap_ImportBits_3(BBitmap *self, const BBitmap* bitmap, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits(BBitmap bitmap, BPoint from, BPoint to, int32 width, int32 height) {
+	final status_t ImportBits(BBitmap bitmap, BPoint from, BPoint to, int32 width, int32 height) {
 		return be_BBitmap_ImportBits_3(_InstPtr(), bitmap._InstPtr, from._InstPtr, to._InstPtr, width, height);
 	}
 
 	// status_t be_BBitmap_GetOverlayRestrictions(BBitmap *self, overlay_restrictions* restrictions);
-	status_t GetOverlayRestrictions(inout overlay_restrictions restrictions) {
+	final status_t GetOverlayRestrictions(inout overlay_restrictions restrictions) {
 		return be_BBitmap_GetOverlayRestrictions(_InstPtr(), &restrictions);
 	}
 
@@ -451,37 +451,37 @@ public:
 	}
 
 	// int32 be_BBitmap_CountChildren(BBitmap *self);
-	int32 CountChildren() {
+	final int32 CountChildren() {
 		return be_BBitmap_CountChildren(_InstPtr());
 	}
 
 	// BView* be_BBitmap_ChildAt(BBitmap *self, int32 index);
-	BView ChildAt(int32 index) {
+	final BView ChildAt(int32 index) {
 		return new BView(be_BBitmap_ChildAt(_InstPtr(), index), false);
 	}
 
 	// BView* be_BBitmap_FindView(BBitmap *self, const char* viewName);
-	BView FindView(char [] viewName) {
+	final BView FindView(char [] viewName) {
 		return new BView(be_BBitmap_FindView(_InstPtr(), toStringz(viewName)), false);
 	}
 
 	// BView* be_BBitmap_FindView_1(BBitmap *self, BPoint *point);
-	BView FindView(BPoint point) {
+	final BView FindView(BPoint point) {
 		return new BView(be_BBitmap_FindView_1(_InstPtr(), point._InstPtr), false);
 	}
 
 	// bool be_BBitmap_Lock(BBitmap *self);
-	bool Lock() {
+	final bool Lock() {
 		return be_BBitmap_Lock(_InstPtr());
 	}
 
 	// void be_BBitmap_Unlock(BBitmap *self);
-	void Unlock() {
+	final void Unlock() {
 		be_BBitmap_Unlock(_InstPtr());
 	}
 
 	// bool be_BBitmap_IsLocked(BBitmap *self);
-	bool IsLocked() {
+	final bool IsLocked() {
 		return be_BBitmap_IsLocked(_InstPtr());
 	}
 
