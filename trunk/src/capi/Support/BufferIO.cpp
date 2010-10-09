@@ -79,9 +79,9 @@ status_t BBufferIOProxy::Flush_super()
 
 
 extern "C" {
-	BBufferIOProxy * be_BBufferIO_ctor(void *bindInstPtr, BPositionIO * stream, size_t bufferSize, bool ownsStream)
+	BBufferIO * be_BBufferIO_ctor(void *bindInstPtr, BPositionIO * stream, size_t bufferSize, bool ownsStream)
 	{
-		return new BBufferIOProxy(bindInstPtr, stream, bufferSize, ownsStream);
+		return (BBufferIO *)new BBufferIOProxy(bindInstPtr, stream, bufferSize, ownsStream);
 	}
 
 	void be_BBufferIO_dtor(BBufferIO* self)
@@ -91,55 +91,79 @@ extern "C" {
 
 	ssize_t be_BBufferIO_ReadAt(BBufferIOProxy *self, off_t pos, void * buffer, size_t size)
 	{
-		return self->ReadAt_super(pos, buffer, size);
+		BBufferIOProxy *proxy = dynamic_cast<BBufferIOProxy *>(self);
+		if(proxy)
+			return proxy->ReadAt_super(pos, buffer, size);
+		else
+			return self->ReadAt(pos, buffer, size);
 	}
 
-	ssize_t be_BBufferIO_WriteAt(BBufferIOProxy *self, off_t pos, const void * buffer, size_t size)
+	ssize_t be_BBufferIO_WriteAt(BBufferIO *self, off_t pos, const void * buffer, size_t size)
 	{
-		return self->WriteAt_super(pos, buffer, size);
+		BBufferIOProxy *proxy = dynamic_cast<BBufferIOProxy *>(self);
+		if(proxy)
+			return proxy->WriteAt_super(pos, buffer, size);
+		else
+			return self->WriteAt(pos, buffer, size);
 	}
 
-	off_t be_BBufferIO_Seek(BBufferIOProxy *self, off_t position, uint32 seekMode)
+	off_t be_BBufferIO_Seek(BBufferIO *self, off_t position, uint32 seekMode)
 	{
-		return self->Seek_super(position, seekMode);
+		BBufferIOProxy *proxy = dynamic_cast<BBufferIOProxy *>(self);
+		if(proxy)
+			return proxy->Seek_super(position, seekMode);
+		else
+			return self->Seek(position, seekMode);
 	}
 
-	off_t be_BBufferIO_Position(BBufferIOProxy *self)
+	off_t be_BBufferIO_Position(BBufferIO *self)
 	{
-		return self->Position_super();
+		BBufferIOProxy *proxy = dynamic_cast<BBufferIOProxy *>(self);
+		if(proxy)
+			return proxy->Position_super();
+		else
+			return self->Position();
 	}
 
-	status_t be_BBufferIO_SetSize(BBufferIOProxy *self, off_t size)
+	status_t be_BBufferIO_SetSize(BBufferIO *self, off_t size)
 	{
-		return self->SetSize_super(size);
+		BBufferIOProxy *proxy = dynamic_cast<BBufferIOProxy *>(self);
+		if(proxy)
+			return proxy->SetSize_super(size);
+		else
+			return self->SetSize(size);
 	}
 
-	status_t be_BBufferIO_Flush(BBufferIOProxy *self)
+	status_t be_BBufferIO_Flush(BBufferIO *self)
 	{
-		return self->Flush_super();
+		BBufferIOProxy *proxy = dynamic_cast<BBufferIOProxy *>(self);
+		if(proxy)
+			return proxy->Flush_super();
+		else
+			return self->Flush();
 	}
 
-	BPositionIO * be_BBufferIO_Stream(BBufferIOProxy *self)
+	BPositionIO * be_BBufferIO_Stream(BBufferIO *self)
 	{
 		return self->Stream();
 	}
 
-	size_t be_BBufferIO_BufferSize(BBufferIOProxy *self)
+	size_t be_BBufferIO_BufferSize(BBufferIO *self)
 	{
 		return self->BufferSize();
 	}
 
-	bool be_BBufferIO_OwnsStream(BBufferIOProxy *self)
+	bool be_BBufferIO_OwnsStream(BBufferIO *self)
 	{
 		return self->OwnsStream();
 	}
 
-	void be_BBufferIO_SetOwnsStream(BBufferIOProxy *self, bool ownsStream)
+	void be_BBufferIO_SetOwnsStream(BBufferIO *self, bool ownsStream)
 	{
 		self->SetOwnsStream(ownsStream);
 	}
 
-	void be_BBufferIO_PrintToStream(BBufferIOProxy *self)
+	void be_BBufferIO_PrintToStream(BBufferIO *self)
 	{
 		self->PrintToStream();
 	}
