@@ -139,7 +139,7 @@ void buildBasicClass(InterfaceClassInfo classInfo)
 
         } else {
             classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
-            classBuffer ~= "\t" ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.nameString ~ "();\n";
+            classBuffer ~= "\t" ~ (memberFunc.isFinal ? "final " : "") ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.nameString ~ "();\n";
         }
     }
 
@@ -195,7 +195,7 @@ void buildBasicClass(InterfaceClassInfo classInfo)
             classBuffer ~= "\t}\n";
         } else {
             classBuffer ~= "\t// " ~ memberFunc.getReturnString(false) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, false) ~ ");";
-            classBuffer ~= "\t" ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.nameString ~ "() {{";
+            classBuffer ~= "\t" ~ (memberFunc.isFinal ? "final " : "") ~ replaceConstsNames(memberFunc.returnString) ~ " " ~ memberFunc.nameString ~ "() {{";
             classBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ "be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(_InstPtr());";
 
             classBuffer ~= "\t}\n";

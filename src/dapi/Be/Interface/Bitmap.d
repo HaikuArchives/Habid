@@ -19,6 +19,8 @@ import Be.App.Message;
 
 import Be.Support.Archivable;
 
+import tango.stdc.stringz;
+
 enum {
 	B_BITMAP_CLEAR_TO_WHITE				= 0x00000001,
 	B_BITMAP_ACCEPTS_VIEWS				= 0x00000002,
@@ -103,7 +105,7 @@ extern (C) extern {
 	void * be_BBitmap_Bounds(void *self);
 
 	// status_t be_BBitmap_SetDrawingFlags(BBitmapProxy *self, uint32 flags);
-	status_t be_BBitmap_SetDrawingFlags(void *self, uint32 flags);
+//	status_t be_BBitmap_SetDrawingFlags(void *self, uint32 flags);
 
 	// uint32 be_BBitmap_Flags(BBitmapProxy *self);
 	uint32 be_BBitmap_Flags(void *self);
@@ -179,9 +181,9 @@ interface IBBitmap
 {
 	// BArchivable* be_BBitmap_Instantiate(BBitmap *self, BMessage* data);
 //	BArchivable* Instantiate();
-/*
+
 	// status_t be_BBitmap_Archive(BBitmap *self, BMessage* data, bool deep);
-	status_t Archive();
+	status_t Archive(BMessage, bool);
 
 	// status_t be_BBitmap_InitCheck(BBitmap *self);
 	status_t InitCheck();
@@ -190,7 +192,7 @@ interface IBBitmap
 	bool IsValid();
 
 	// status_t be_BBitmap_LockBits(BBitmap *self, uint32* state);
-	status_t LockBits();
+	status_t LockBits(inout uint32);
 
 	// void be_BBitmap_UnlockBits(BBitmap *self);
 	void UnlockBits();
@@ -199,7 +201,7 @@ interface IBBitmap
 	area_id Area();
 
 	// void* be_BBitmap_Bits(BBitmap *self);
-	void* Bits();
+	void [] Bits();
 
 	// int32 be_BBitmap_BitsLength(BBitmap *self);
 	int32 BitsLength();
@@ -214,46 +216,46 @@ interface IBBitmap
 	BRect Bounds();
 
 	// status_t be_BBitmap_SetDrawingFlags(BBitmap *self, uint32 flags);
-	status_t SetDrawingFlags();
+//	status_t SetDrawingFlags(uint32);
 
 	// uint32 be_BBitmap_Flags(BBitmap *self);
 	uint32 Flags();
 
 	// void be_BBitmap_SetBits(BBitmap *self, const void* data, int32 length, int32 offset, color_space colorSpace);
-	void SetBits();
+	void SetBits(void [], int32, int32, color_space);
 
 	// status_t be_BBitmap_ImportBits(BBitmap *self, const void* data, int32 length, int32 bpr, int32 offset, color_space colorSpace);
-	status_t ImportBits();
+	status_t ImportBits(void [], int32, int32, int32, color_space);
 
 	// status_t be_BBitmap_ImportBits_1(BBitmap *self, const void* data, int32 length, int32 bpr, color_space colorSpace, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits();
+	status_t ImportBits(void [], int32, int32, color_space, BPoint, BPoint, int32, int32);
 
 	// status_t be_BBitmap_ImportBits_2(BBitmap *self, const BBitmap* bitmap);
-	status_t ImportBits();
+	status_t ImportBits(BBitmap);
 
 	// status_t be_BBitmap_ImportBits_3(BBitmap *self, const BBitmap* bitmap, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits();
+	status_t ImportBits(BBitmap, BPoint, BPoint, int32, int32);
 
 	// status_t be_BBitmap_GetOverlayRestrictions(BBitmap *self, overlay_restrictions* restrictions);
-	status_t GetOverlayRestrictions();
+	status_t GetOverlayRestrictions(inout overlay_restrictions);
 
 	// void be_BBitmap_AddChild(BBitmap *self, BView* view);
-	void AddChild();
+	void AddChild(BView);
 
 	// bool be_BBitmap_RemoveChild(BBitmap *self, BView* view);
-	bool RemoveChild();
+	bool RemoveChild(BView);
 
 	// int32 be_BBitmap_CountChildren(BBitmap *self);
 	int32 CountChildren();
 
 	// BView* be_BBitmap_ChildAt(BBitmap *self, int32 index);
-	BView* ChildAt();
+	BView ChildAt(int32);
 
 	// BView* be_BBitmap_FindView(BBitmap *self, const char* viewName);
-	BView* FindView();
+	BView FindView(char []);
 
 	// BView* be_BBitmap_FindView_1(BBitmap *self, BPoint *point);
-	BView* FindView();
+	BView FindView(BPoint);
 
 	// bool be_BBitmap_Lock(BBitmap *self);
 	bool Lock();
@@ -266,7 +268,7 @@ interface IBBitmap
 
 	// BBitmap& be_BBitmap_opAssign(BBitmap *self, const BBitmap& source);
 	//BBitmap& opAssign();
-*/
+
 	void * _InstPtr();
 	void _InstPtr(void *ptr);
 	bool _OwnsPtr();
@@ -336,15 +338,16 @@ public:
 			_OwnsPtr = false;
 		}
 	}
-/*
+
 	//BArchivable* be_BBitmap_Instantiate_static(BMessage* data)
-	static BArchivable* Instantiate(BMessage* data)
+	static BBitmap Instantiate(BMessage data)
 	{
+		return new BBitmap(be_BBitmap_Instantiate_static(data._InstPtr), true);
 	}
 
 	// status_t be_BBitmap_Archive(BBitmap *self, BMessage* data, bool deep);
-	status_t Archive() {
-		return be_BBitmap_Archive(_InstPtr());
+	status_t Archive(BMessage data, bool deep = true) {
+		return be_BBitmap_Archive(_InstPtr(), data._InstPtr, deep);
 	}
 
 	// status_t be_BBitmap_InitCheck(BBitmap *self);
@@ -358,8 +361,8 @@ public:
 	}
 
 	// status_t be_BBitmap_LockBits(BBitmap *self, uint32* state);
-	status_t LockBits() {
-		return be_BBitmap_LockBits(_InstPtr());
+	status_t LockBits(inout uint32 state) {
+		return be_BBitmap_LockBits(_InstPtr(), &state);
 	}
 
 	// void be_BBitmap_UnlockBits(BBitmap *self);
@@ -373,8 +376,8 @@ public:
 	}
 
 	// void* be_BBitmap_Bits(BBitmap *self);
-	void* Bits() {
-		return be_BBitmap_Bits(_InstPtr());
+	void [] Bits() {
+		return be_BBitmap_Bits(_InstPtr())[0..BitsLength()];
 	}
 
 	// int32 be_BBitmap_BitsLength(BBitmap *self);
@@ -394,57 +397,57 @@ public:
 
 	// BRect * be_BBitmap_Bounds(BBitmap *self);
 	BRect Bounds() {
-		return be_BBitmap_Bounds(_InstPtr());
+		return new BRect(be_BBitmap_Bounds(_InstPtr()), true);
 	}
-
+/*
 	// status_t be_BBitmap_SetDrawingFlags(BBitmap *self, uint32 flags);
-	status_t SetDrawingFlags() {
-		return be_BBitmap_SetDrawingFlags(_InstPtr());
+	status_t SetDrawingFlags(uint32 flags) {
+		return be_BBitmap_SetDrawingFlags(_InstPtr(), flags);
 	}
-
+*/
 	// uint32 be_BBitmap_Flags(BBitmap *self);
 	uint32 Flags() {
 		return be_BBitmap_Flags(_InstPtr());
 	}
 
 	// void be_BBitmap_SetBits(BBitmap *self, const void* data, int32 length, int32 offset, color_space colorSpace);
-	void SetBits() {
-		be_BBitmap_SetBits(_InstPtr());
+	void SetBits(void [] data, int32 length, int32 offset, color_space colorSpace) {
+		be_BBitmap_SetBits(_InstPtr(), data.ptr, length, offset, colorSpace);
 	}
 
 	// status_t be_BBitmap_ImportBits(BBitmap *self, const void* data, int32 length, int32 bpr, int32 offset, color_space colorSpace);
-	status_t ImportBits() {
-		return be_BBitmap_ImportBits(_InstPtr());
+	status_t ImportBits(void [] data, int32 length, int32 bpr, int32 offset, color_space colorSpace) {
+		return be_BBitmap_ImportBits(_InstPtr(), data.ptr, length, bpr, offset, colorSpace);
 	}
 
 	// status_t be_BBitmap_ImportBits_1(BBitmap *self, const void* data, int32 length, int32 bpr, color_space colorSpace, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits() {
-		return be_BBitmap_ImportBits_1(_InstPtr());
+	status_t ImportBits(void [] data, int32 length, int32 bpr, color_space colorSpace, BPoint from, BPoint to, int32 width, int32 height) {
+		return be_BBitmap_ImportBits_1(_InstPtr(), data.ptr, length, bpr, colorSpace, from._InstPtr, to._InstPtr, width, height);
 	}
 
 	// status_t be_BBitmap_ImportBits_2(BBitmap *self, const BBitmap* bitmap);
-	status_t ImportBits() {
-		return be_BBitmap_ImportBits_2(_InstPtr());
+	status_t ImportBits(BBitmap bitmap) {
+		return be_BBitmap_ImportBits_2(_InstPtr(), bitmap._InstPtr);
 	}
 
 	// status_t be_BBitmap_ImportBits_3(BBitmap *self, const BBitmap* bitmap, BPoint *from, BPoint *to, int32 width, int32 height);
-	status_t ImportBits() {
-		return be_BBitmap_ImportBits_3(_InstPtr());
+	status_t ImportBits(BBitmap bitmap, BPoint from, BPoint to, int32 width, int32 height) {
+		return be_BBitmap_ImportBits_3(_InstPtr(), bitmap._InstPtr, from._InstPtr, to._InstPtr, width, height);
 	}
 
 	// status_t be_BBitmap_GetOverlayRestrictions(BBitmap *self, overlay_restrictions* restrictions);
-	status_t GetOverlayRestrictions() {
-		return be_BBitmap_GetOverlayRestrictions(_InstPtr());
+	status_t GetOverlayRestrictions(inout overlay_restrictions restrictions) {
+		return be_BBitmap_GetOverlayRestrictions(_InstPtr(), &restrictions);
 	}
 
 	// void be_BBitmap_AddChild(BBitmap *self, BView* view);
-	void AddChild() {
-		be_BBitmap_AddChild(_InstPtr());
+	void AddChild(BView view) {
+		be_BBitmap_AddChild(_InstPtr(), view._InstPtr);
 	}
 
 	// bool be_BBitmap_RemoveChild(BBitmap *self, BView* view);
-	bool RemoveChild() {
-		return be_BBitmap_RemoveChild(_InstPtr());
+	bool RemoveChild(BView view) {
+		return be_BBitmap_RemoveChild(_InstPtr(), view._InstPtr);
 	}
 
 	// int32 be_BBitmap_CountChildren(BBitmap *self);
@@ -453,18 +456,18 @@ public:
 	}
 
 	// BView* be_BBitmap_ChildAt(BBitmap *self, int32 index);
-	BView* ChildAt() {
-		return be_BBitmap_ChildAt(_InstPtr());
+	BView ChildAt(int32 index) {
+		return new BView(be_BBitmap_ChildAt(_InstPtr(), index), false);
 	}
 
 	// BView* be_BBitmap_FindView(BBitmap *self, const char* viewName);
-	BView* FindView() {
-		return be_BBitmap_FindView(_InstPtr());
+	BView FindView(char [] viewName) {
+		return new BView(be_BBitmap_FindView(_InstPtr(), toStringz(viewName)), false);
 	}
 
 	// BView* be_BBitmap_FindView_1(BBitmap *self, BPoint *point);
-	BView* FindView() {
-		return be_BBitmap_FindView_1(_InstPtr());
+	BView FindView(BPoint point) {
+		return new BView(be_BBitmap_FindView_1(_InstPtr(), point._InstPtr), false);
 	}
 
 	// bool be_BBitmap_Lock(BBitmap *self);
@@ -484,7 +487,7 @@ public:
 
 	// BBitmap& be_BBitmap_opAssign(BBitmap *self, const BBitmap& source);
 	//BBitmap& opAssign();
-*/
+
 	void * _InstPtr() { return fInstancePointer; }
 	void _InstPtr(void *ptr) { fInstancePointer = ptr; }
 	bool _OwnsPtr() { return fOwnsPointer; }

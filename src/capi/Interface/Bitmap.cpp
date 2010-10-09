@@ -181,12 +181,12 @@ extern "C" {
 	{
 		return new BRect(self->Bounds());
 	}
-
+/* Why isnt this located anywhere?
 	status_t be_BBitmap_SetDrawingFlags(BBitmap *self, uint32 flags)
 	{
 		return self->SetDrawingFlags(flags);
 	}
-
+*/
 	uint32 be_BBitmap_Flags(BBitmap *self)
 	{
 		return self->Flags();

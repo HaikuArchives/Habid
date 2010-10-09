@@ -32,7 +32,7 @@ public:
 		SetPulseRate(1000000);
 	}
 	
-	void MessageReceived(BMessage message) {
+	override void MessageReceived(BMessage message) {
 		Stdout.formatln("ReceivedMessage: {}", message.what);
 		switch(message.what) {
 			default: {
@@ -41,16 +41,16 @@ public:
 		}	
 	}
 	
-	bool QuitRequested() {
+	override bool QuitRequested() {
 		Stdout.formatln("QuitRequested");
 		return super.QuitRequested();	
 	}
 	
-	void Pulse() {
+	override void Pulse() {
 		Stdout.formatln("Pulse...");	
 	}
 	
-	void ReadyToRun() {
+	override void ReadyToRun() {
 		Stdout.formatln("ReadyToRun");
 		fWindow = new MyWindow(new BRect(100, 100, 740, 580), "Window from D (habid)");
 
@@ -80,14 +80,14 @@ public:
 		AddChild(fView);
 	}
 
-	bool QuitRequested() {
+	override bool QuitRequested() {
 		Stdout.formatln("BWindow::QuitRequested");
 		/* Do not need to call this if we have B_QUIT_ON_WINDOW_CLOSE */
 //		be_app_messenger.SendMessage(B_QUIT_REQUESTED);
 		return super.QuitRequested();
 	}
 	
-	void FrameResized(float width, float height) {
+	override void FrameResized(float width, float height) {
 		Stdout.formatln("FrameResized: {} {}", width, height);
 		return super.FrameResized(width, height);	
 	}
