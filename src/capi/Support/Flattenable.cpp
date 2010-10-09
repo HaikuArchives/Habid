@@ -84,9 +84,9 @@ status_t BFlattenableProxy::Unflatten_super(type_code code, const void * buffer,
 
 
 extern "C" {
-	BFlattenableProxy * be_BFlattenable_ctor(void *bindInstPtr)
+	BFlattenable * be_BFlattenable_ctor(void *bindInstPtr)
 	{
-		return new BFlattenableProxy(bindInstPtr);
+		return (BFlattenable *)new BFlattenableProxy(bindInstPtr);
 	}
 
 	void be_BFlattenable_dtor(BFlattenable* self)
@@ -94,34 +94,58 @@ extern "C" {
 		delete self;
 	}
 
-	bool be_BFlattenable_IsFixedSize(BFlattenableProxy *self)
+	bool be_BFlattenable_IsFixedSize(BFlattenable *self)
 	{
-		return self->IsFixedSize_super();
+		BFlattenableProxy *proxy = dynamic_cast<BFlattenableProxy *>(self);
+		if(proxy)
+			return proxy->IsFixedSize_super();
+		else
+			return self->IsFixedSize();
 	}
 
-	type_code be_BFlattenable_TypeCode(BFlattenableProxy *self)
+	type_code be_BFlattenable_TypeCode(BFlattenable *self)
 	{
-		return self->TypeCode_super();
+		BFlattenableProxy *proxy = dynamic_cast<BFlattenableProxy *>(self);
+		if(proxy)
+			return proxy->TypeCode_super();
+		else
+			return self->TypeCode();
 	}
 
-	ssize_t be_BFlattenable_FlattenedSize(BFlattenableProxy *self)
+	ssize_t be_BFlattenable_FlattenedSize(BFlattenable *self)
 	{
-		return self->FlattenedSize_super();
+		BFlattenableProxy *proxy = dynamic_cast<BFlattenableProxy *>(self);
+		if(proxy)
+			return proxy->FlattenedSize_super();
+		else
+			return self->FlattenedSize();
 	}
 
-	status_t be_BFlattenable_Flatten(BFlattenableProxy *self, void * buffer, ssize_t size)
+	status_t be_BFlattenable_Flatten(BFlattenable *self, void * buffer, ssize_t size)
 	{
-		return self->Flatten_super(buffer, size);
+		BFlattenableProxy *proxy = dynamic_cast<BFlattenableProxy *>(self);
+		if(proxy)
+			return proxy->Flatten_super(buffer, size);
+		else
+			return self->Flatten(buffer, size);
 	}
 
-	bool be_BFlattenable_AllowsTypeCode(BFlattenableProxy *self, type_code code)
+	bool be_BFlattenable_AllowsTypeCode(BFlattenable *self, type_code code)
 	{
-		return self->AllowsTypeCode_super(code);
+		BFlattenableProxy *proxy = dynamic_cast<BFlattenableProxy *>(self);
+		if(proxy)
+			return proxy->AllowsTypeCode_super(code);
+		else
+			return self->AllowsTypeCode(code);
 	}
 
-	status_t be_BFlattenable_Unflatten(BFlattenableProxy *self, type_code code, const void * buffer, ssize_t size)
+	status_t be_BFlattenable_Unflatten(BFlattenable *self, type_code code, const void * buffer, ssize_t size)
 	{
-		return self->Unflatten_super(code, buffer, size);
+		BFlattenableProxy *proxy = dynamic_cast<BFlattenableProxy *>(self);
+		if(proxy)
+			return proxy->Unflatten_super(code, buffer, size);
+		else
+			return self->Unflatten(code, buffer, size);
 	}
 
 }

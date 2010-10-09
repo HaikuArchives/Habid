@@ -65,14 +65,14 @@ status_t BArchivableProxy::AllArchived_super(BMessage* archive) const
 
 
 extern "C" {
-	BArchivableProxy * be_BArchivable_ctor(void *bindInstPtr)
+	BArchivable * be_BArchivable_ctor(void *bindInstPtr)
 	{
-		return new BArchivableProxy(bindInstPtr);
+		return (BArchivable *)new BArchivableProxy(bindInstPtr);
 	}
 
-	BArchivableProxy * be_BArchivable_ctor_1(void *bindInstPtr, BMessage* from)
+	BArchivable * be_BArchivable_ctor_1(void *bindInstPtr, BMessage* from)
 	{
-		return new BArchivableProxy(bindInstPtr, from);
+		return (BArchivable *)new BArchivableProxy(bindInstPtr, from);
 	}
 
 	void be_BArchivable_dtor(BArchivable* self)
@@ -80,9 +80,13 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BArchivable_Archive(BArchivableProxy *self, BMessage* into, bool deep)
+	status_t be_BArchivable_Archive(BArchivable *self, BMessage* into, bool deep)
 	{
-		return self->Archive_super(into, deep);
+		BArchivableProxy *proxy = dynamic_cast<BArchivableProxy *>(self);
+		if(proxy)
+			return proxy->Archive_super(into, deep);
+		else
+			return self->Archive(into, deep);
 	}
 
 	BArchivable * be_BArchivable_Instantiate_static(BMessage * archive)
@@ -90,19 +94,31 @@ extern "C" {
 		return BArchivable::Instantiate(archive);
 	}
 
-	status_t be_BArchivable_Perform(BArchivableProxy *self, perform_code d, void* arg)
+	status_t be_BArchivable_Perform(BArchivable *self, perform_code d, void* arg)
 	{
-		return self->Perform_super(d, arg);
+		BArchivableProxy *proxy = dynamic_cast<BArchivableProxy *>(self);
+		if(proxy)
+			return proxy->Perform_super(d, arg);
+		else
+			return self->Perform(d, arg);
 	}
 
-	status_t be_BArchivable_AllUnarchived(BArchivableProxy *self, const BMessage* archive)
+	status_t be_BArchivable_AllUnarchived(BArchivable *self, const BMessage* archive)
 	{
-		return self->AllUnarchived_super(archive);
+		BArchivableProxy *proxy = dynamic_cast<BArchivableProxy *>(self);
+		if(proxy)
+			return proxy->AllUnarchived_super(archive);
+		else
+			return self->AllUnarchived(archive);
 	}
 
-	status_t be_BArchivable_AllArchived(BArchivableProxy *self, BMessage* archive)
+	status_t be_BArchivable_AllArchived(BArchivable *self, BMessage* archive)
 	{
-		return self->AllArchived_super(archive);
+		BArchivableProxy *proxy = dynamic_cast<BArchivableProxy *>(self);
+		if(proxy)
+			return proxy->AllArchived_super(archive);
+		else
+			return self->AllArchived(archive);
 	}
 
 }

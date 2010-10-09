@@ -86,6 +86,11 @@ public:
 //		be_app_messenger.SendMessage(B_QUIT_REQUESTED);
 		return super.QuitRequested();
 	}
+	
+	void FrameResized(float width, float height) {
+		Stdout.formatln("FrameResized: {} {}", width, height);
+		return super.FrameResized(width, height);	
+	}
 }
 	
 int main() {

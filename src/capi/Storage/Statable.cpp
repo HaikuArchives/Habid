@@ -51,9 +51,9 @@ status_t BStatableProxy::set_stat_super(struct stat & st, uint32 what)
 
 
 extern "C" {
-	BStatableProxy * be_BStatable_ctor(void *bindInstPtr)
+	BStatable * be_BStatable_ctor(void *bindInstPtr)
 	{
-		return new BStatableProxy(bindInstPtr);
+		return (BStatable *)new BStatableProxy(bindInstPtr);
 	}
 
 	void be_BStatable_dtor(BStatable* self)
@@ -61,109 +61,121 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BStatable_GetStat(BStatableProxy *self, struct stat * st)
+	status_t be_BStatable_GetStat(BStatable *self, struct stat * st)
 	{
-		return self->GetStat_super(st);
+		BStatableProxy *proxy = dynamic_cast<BStatableProxy *>(self);
+		if(proxy)
+			return proxy->GetStat_super(st);
+		else
+			return self->GetStat(st);
 	}
 
-	status_t be_BStatable__GetStat(BStatableProxy *self, struct stat_beos * st)
+	status_t be_BStatable__GetStat(BStatable *self, struct stat_beos * st)
 	{
-		return self->_GetStat_super(st);
+		BStatableProxy *proxy = dynamic_cast<BStatableProxy *>(self);
+		if(proxy)
+			return proxy->_GetStat_super(st);
+		else
+			return B_NOT_ALLOWED;
 	}
 
-	bool be_BStatable_IsFile(BStatableProxy *self)
+	bool be_BStatable_IsFile(BStatable *self)
 	{
 		return self->IsFile();
 	}
 
-	bool be_BStatable_IsDirectory(BStatableProxy *self)
+	bool be_BStatable_IsDirectory(BStatable *self)
 	{
 		return self->IsDirectory();
 	}
 
-	bool be_BStatable_IsSymLink(BStatableProxy *self)
+	bool be_BStatable_IsSymLink(BStatable *self)
 	{
 		return self->IsSymLink();
 	}
 
-	status_t be_BStatable_GetNodeRef(BStatableProxy *self, node_ref * ref)
+	status_t be_BStatable_GetNodeRef(BStatable *self, node_ref * ref)
 	{
 		return self->GetNodeRef(ref);
 	}
 
-	status_t be_BStatable_GetOwner(BStatableProxy *self, uid_t * owner)
+	status_t be_BStatable_GetOwner(BStatable *self, uid_t * owner)
 	{
 		return self->GetOwner(owner);
 	}
 
-	status_t be_BStatable_SetOwner(BStatableProxy *self, uid_t owner)
+	status_t be_BStatable_SetOwner(BStatable *self, uid_t owner)
 	{
 		return self->SetOwner(owner);
 	}
 
-	status_t be_BStatable_GetGroup(BStatableProxy *self, gid_t * group)
+	status_t be_BStatable_GetGroup(BStatable *self, gid_t * group)
 	{
 		return self->GetGroup(group);
 	}
 
-	status_t be_BStatable_SetGroup(BStatableProxy *self, gid_t group)
+	status_t be_BStatable_SetGroup(BStatable *self, gid_t group)
 	{
 		return self->SetGroup(group);
 	}
 
-	status_t be_BStatable_GetPermissions(BStatableProxy *self, mode_t * perms)
+	status_t be_BStatable_GetPermissions(BStatable *self, mode_t * perms)
 	{
 		return self->GetPermissions(perms);
 	}
 
-	status_t be_BStatable_SetPermissions(BStatableProxy *self, mode_t perms)
+	status_t be_BStatable_SetPermissions(BStatable *self, mode_t perms)
 	{
 		return self->SetPermissions(perms);
 	}
 
-	status_t be_BStatable_GetSize(BStatableProxy *self, off_t * size)
+	status_t be_BStatable_GetSize(BStatable *self, off_t * size)
 	{
 		return self->GetSize(size);
 	}
 
-	status_t be_BStatable_GetModificationTime(BStatableProxy *self, time_t * mtime)
+	status_t be_BStatable_GetModificationTime(BStatable *self, time_t * mtime)
 	{
 		return self->GetModificationTime(mtime);
 	}
 
-	status_t be_BStatable_SetModificationTime(BStatableProxy *self, time_t mtime)
+	status_t be_BStatable_SetModificationTime(BStatable *self, time_t mtime)
 	{
 		return self->SetModificationTime(mtime);
 	}
 
-	status_t be_BStatable_GetCreationTime(BStatableProxy *self, time_t * ctime)
+	status_t be_BStatable_GetCreationTime(BStatable *self, time_t * ctime)
 	{
 		return self->GetCreationTime(ctime);
 	}
 
-	status_t be_BStatable_SetCreationTime(BStatableProxy *self, time_t ctime)
+	status_t be_BStatable_SetCreationTime(BStatable *self, time_t ctime)
 	{
 		return self->SetCreationTime(ctime);
 	}
 
-	status_t be_BStatable_GetAccessTime(BStatableProxy *self, time_t * atime)
+	status_t be_BStatable_GetAccessTime(BStatable *self, time_t * atime)
 	{
 		return self->GetAccessTime(atime);
 	}
 
-	status_t be_BStatable_SetAccessTime(BStatableProxy *self, time_t atime)
+	status_t be_BStatable_SetAccessTime(BStatable *self, time_t atime)
 	{
 		return self->SetAccessTime(atime);
 	}
 
-	status_t be_BStatable_GetVolume(BStatableProxy *self, BVolume * vol)
+	status_t be_BStatable_GetVolume(BStatable *self, BVolume * vol)
 	{
 		return self->GetVolume(vol);
 	}
 
-	status_t be_BStatable_set_stat(BStatableProxy *self, struct stat * st, uint32 what)
+	status_t be_BStatable_set_stat(BStatable *self, struct stat * st, uint32 what)
 	{
-		return self->set_stat_super(*st, what);
+		BStatableProxy *proxy = dynamic_cast<BStatableProxy *>(self);
+		if(proxy)
+			return proxy->set_stat_super(*st, what);
+		else
+			return B_NOT_ALLOWED;
 	}
 
 }

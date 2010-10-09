@@ -262,9 +262,9 @@ status_t BMallocIOProxy::SetSize_super(off_t size)
 
 
 extern "C" {
-	BDataIOProxy * be_BDataIO_ctor(void *bindInstPtr)
+	BDataIO * be_BDataIO_ctor(void *bindInstPtr)
 	{
-		return new BDataIOProxy(bindInstPtr);
+		return (BDataIO *)new BDataIOProxy(bindInstPtr);
 	}
 
 	void be_BDataIO_dtor(BDataIO* self)
@@ -272,22 +272,30 @@ extern "C" {
 		delete self;
 	}
 
-	ssize_t be_BDataIO_Read(BDataIOProxy *self, void * buffer, size_t size)
+	ssize_t be_BDataIO_Read(BDataIO *self, void * buffer, size_t size)
 	{
-		return self->Read_super(buffer, size);
+		BDataIOProxy *proxy = dynamic_cast<BDataIOProxy *>(self);
+		if(proxy)
+			return proxy->Read_super(buffer, size);
+		else
+			return self->Read(buffer, size);
 	}
 
-	ssize_t be_BDataIO_Write(BDataIOProxy *self, const void * buffer, size_t size)
+	ssize_t be_BDataIO_Write(BDataIO *self, const void * buffer, size_t size)
 	{
-		return self->Write_super(buffer, size);
+		BDataIOProxy *proxy = dynamic_cast<BDataIOProxy *>(self);
+		if(proxy)
+			return proxy->Write_super(buffer, size);
+		else
+			return self->Write(buffer, size);
 	}
 
 }
 
 extern "C" {
-	BPositionIOProxy * be_BPositionIO_ctor(void *bindInstPtr)
+	BPositionIO * be_BPositionIO_ctor(void *bindInstPtr)
 	{
-		return new BPositionIOProxy(bindInstPtr);
+		return (BPositionIO *)new BPositionIOProxy(bindInstPtr);
 	}
 
 	void be_BPositionIO_dtor(BPositionIO* self)
@@ -295,57 +303,89 @@ extern "C" {
 		delete self;
 	}
 
-	ssize_t be_BPositionIO_Read(BPositionIOProxy *self, void * buffer, size_t size)
+	ssize_t be_BPositionIO_Read(BPositionIO *self, void * buffer, size_t size)
 	{
-		return self->Read_super(buffer, size);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->Read_super(buffer, size);
+		else
+			return self->Read(buffer, size);
 	}
 
-	ssize_t be_BPositionIO_Write(BPositionIOProxy *self, const void * buffer, size_t size)
+	ssize_t be_BPositionIO_Write(BPositionIO *self, const void * buffer, size_t size)
 	{
-		return self->Write_super(buffer, size);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->Write_super(buffer, size);
+		else
+			return self->Write(buffer, size);
 	}
 
-	ssize_t be_BPositionIO_ReadAt(BPositionIOProxy *self, off_t position, void * buffer, size_t size)
+	ssize_t be_BPositionIO_ReadAt(BPositionIO *self, off_t position, void * buffer, size_t size)
 	{
-		return self->ReadAt_super(position, buffer, size);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->ReadAt_super(position, buffer, size);
+		else
+			return self->ReadAt(position, buffer, size);
 	}
 
-	ssize_t be_BPositionIO_WriteAt(BPositionIOProxy *self, off_t position, const void * buffer, size_t size)
+	ssize_t be_BPositionIO_WriteAt(BPositionIO *self, off_t position, const void * buffer, size_t size)
 	{
-		return self->WriteAt_super(position, buffer, size);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->WriteAt_super(position, buffer, size);
+		else
+			return self->WriteAt(position, buffer, size);
 	}
 
-	off_t be_BPositionIO_Seek(BPositionIOProxy *self, off_t position, uint32 seekMode)
+	off_t be_BPositionIO_Seek(BPositionIO *self, off_t position, uint32 seekMode)
 	{
-		return self->Seek_super(position, seekMode);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->Seek_super(position, seekMode);
+		else
+			return self->Seek(position, seekMode);
 	}
 
-	off_t be_BPositionIO_Position(BPositionIOProxy *self)
+	off_t be_BPositionIO_Position(BPositionIO *self)
 	{
-		return self->Position_super();
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->Position_super();
+		else
+			return self->Position();
 	}
 
-	status_t be_BPositionIO_SetSize(BPositionIOProxy *self, off_t size)
+	status_t be_BPositionIO_SetSize(BPositionIO *self, off_t size)
 	{
-		return self->SetSize_super(size);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->SetSize_super(size);
+		else
+			return self->SetSize(size);
 	}
 
-	status_t be_BPositionIO_GetSize(BPositionIOProxy *self, off_t * size)
+	status_t be_BPositionIO_GetSize(BPositionIO *self, off_t * size)
 	{
-		return self->GetSize_super(size);
+		BPositionIOProxy *proxy = dynamic_cast<BPositionIOProxy *>(self);
+		if(proxy)
+			return proxy->GetSize_super(size);
+		else
+			return self->GetSize(size);
 	}
 
 }
 
 extern "C" {
-	BMemoryIOProxy * be_BMemoryIO_ctor(void *bindInstPtr, void * data, size_t length)
+	BMemoryIO * be_BMemoryIO_ctor(void *bindInstPtr, void * data, size_t length)
 	{
-		return new BMemoryIOProxy(bindInstPtr, data, length);
+		return (BMemoryIO *)new BMemoryIOProxy(bindInstPtr, data, length);
 	}
 
-	BMemoryIOProxy * be_BMemoryIO_ctor_1(void *bindInstPtr, const void * data, size_t length)
+	BMemoryIO * be_BMemoryIO_ctor_1(void *bindInstPtr, const void * data, size_t length)
 	{
-		return new BMemoryIOProxy(bindInstPtr, data, length);
+		return (BMemoryIO *)new BMemoryIOProxy(bindInstPtr, data, length);
 	}
 
 	void be_BMemoryIO_dtor(BMemoryIO* self)
@@ -353,37 +393,57 @@ extern "C" {
 		delete self;
 	}
 
-	ssize_t be_BMemoryIO_ReadAt(BMemoryIOProxy *self, off_t position, void * buffer, size_t size)
+	ssize_t be_BMemoryIO_ReadAt(BMemoryIO *self, off_t position, void * buffer, size_t size)
 	{
-		return self->ReadAt_super(position, buffer, size);
+		BMemoryIOProxy *proxy = dynamic_cast<BMemoryIOProxy *>(self);
+		if(proxy)
+			return proxy->ReadAt_super(position, buffer, size);
+		else
+			return self->ReadAt(position, buffer, size);
 	}
 
-	ssize_t be_BMemoryIO_WriteAt(BMemoryIOProxy *self, off_t position, const void * buffer, size_t size)
+	ssize_t be_BMemoryIO_WriteAt(BMemoryIO *self, off_t position, const void * buffer, size_t size)
 	{
-		return self->WriteAt_super(position, buffer, size);
+		BMemoryIOProxy *proxy = dynamic_cast<BMemoryIOProxy *>(self);
+		if(proxy)
+			return proxy->WriteAt_super(position, buffer, size);
+		else
+			return self->WriteAt(position, buffer, size);
 	}
 
-	off_t be_BMemoryIO_Seek(BMemoryIOProxy *self, off_t position, uint32 seekMode)
+	off_t be_BMemoryIO_Seek(BMemoryIO *self, off_t position, uint32 seekMode)
 	{
-		return self->Seek_super(position, seekMode);
+		BMemoryIOProxy *proxy = dynamic_cast<BMemoryIOProxy *>(self);
+		if(proxy)
+			return proxy->Seek_super(position, seekMode);
+		else
+			return self->Seek(position, seekMode);
 	}
 
-	off_t be_BMemoryIO_Position(BMemoryIOProxy *self)
+	off_t be_BMemoryIO_Position(BMemoryIO *self)
 	{
-		return self->Position_super();
+		BMemoryIOProxy *proxy = dynamic_cast<BMemoryIOProxy *>(self);
+		if(proxy)
+			return proxy->Position_super();
+		else
+			return self->Position();
 	}
 
-	status_t be_BMemoryIO_SetSize(BMemoryIOProxy *self, off_t size)
+	status_t be_BMemoryIO_SetSize(BMemoryIO *self, off_t size)
 	{
-		return self->SetSize_super(size);
+		BMemoryIOProxy *proxy = dynamic_cast<BMemoryIOProxy *>(self);
+		if(proxy)
+			return proxy->SetSize_super(size);
+		else
+			return self->SetSize(size);
 	}
 
 }
 
 extern "C" {
-	BMallocIOProxy * be_BMallocIO_ctor(void *bindInstPtr)
+	BMallocIO * be_BMallocIO_ctor(void *bindInstPtr)
 	{
-		return new BMallocIOProxy(bindInstPtr);
+		return (BMallocIO *)new BMallocIOProxy(bindInstPtr);
 	}
 
 	void be_BMallocIO_dtor(BMallocIO* self)
@@ -391,42 +451,62 @@ extern "C" {
 		delete self;
 	}
 
-	ssize_t be_BMallocIO_ReadAt(BMallocIOProxy *self, off_t position, void * buffer, size_t size)
+	ssize_t be_BMallocIO_ReadAt(BMallocIO *self, off_t position, void * buffer, size_t size)
 	{
-		return self->ReadAt_super(position, buffer, size);
+		BMallocIOProxy *proxy = dynamic_cast<BMallocIOProxy *>(self);
+		if(proxy)
+			return proxy->ReadAt_super(position, buffer, size);
+		else
+			return self->ReadAt(position, buffer, size);
 	}
 
-	ssize_t be_BMallocIO_WriteAt(BMallocIOProxy *self, off_t position, const void * buffer, size_t size)
+	ssize_t be_BMallocIO_WriteAt(BMallocIO *self, off_t position, const void * buffer, size_t size)
 	{
-		return self->WriteAt_super(position, buffer, size);
+		BMallocIOProxy *proxy = dynamic_cast<BMallocIOProxy *>(self);
+		if(proxy)
+			return proxy->WriteAt_super(position, buffer, size);
+		else
+			return self->WriteAt(position, buffer, size);
 	}
 
-	off_t be_BMallocIO_Seek(BMallocIOProxy *self, off_t position, uint32 seekMode)
+	off_t be_BMallocIO_Seek(BMallocIO *self, off_t position, uint32 seekMode)
 	{
-		return self->Seek_super(position, seekMode);
+		BMallocIOProxy *proxy = dynamic_cast<BMallocIOProxy *>(self);
+		if(proxy)
+			return proxy->Seek_super(position, seekMode);
+		else
+			return self->Seek(position, seekMode);
 	}
 
-	off_t be_BMallocIO_Position(BMallocIOProxy *self)
+	off_t be_BMallocIO_Position(BMallocIO *self)
 	{
-		return self->Position_super();
+		BMallocIOProxy *proxy = dynamic_cast<BMallocIOProxy *>(self);
+		if(proxy)
+			return proxy->Position_super();
+		else
+			return self->Position();
 	}
 
-	status_t be_BMallocIO_SetSize(BMallocIOProxy *self, off_t size)
+	status_t be_BMallocIO_SetSize(BMallocIO *self, off_t size)
 	{
-		return self->SetSize_super(size);
+		BMallocIOProxy *proxy = dynamic_cast<BMallocIOProxy *>(self);
+		if(proxy)
+			return proxy->SetSize_super(size);
+		else
+			return self->SetSize(size);
 	}
 
-	void be_BMallocIO_SetBlockSize(BMallocIOProxy *self, size_t blockSize)
+	void be_BMallocIO_SetBlockSize(BMallocIO *self, size_t blockSize)
 	{
 		self->SetBlockSize(blockSize);
 	}
 
-	const void * be_BMallocIO_Buffer(BMallocIOProxy *self)
+	const void * be_BMallocIO_Buffer(BMallocIO *self)
 	{
 		return self->Buffer();
 	}
 
-	size_t be_BMallocIO_BufferLength(BMallocIOProxy *self)
+	size_t be_BMallocIO_BufferLength(BMallocIO *self)
 	{
 		return self->BufferLength();
 	}

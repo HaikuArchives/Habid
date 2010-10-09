@@ -113,34 +113,34 @@ status_t BPathProxy::Unflatten_super(type_code code, const void* buffer, ssize_t
 
 
 extern "C" {
-	BPathProxy * be_BPath_ctor(void *bindInstPtr)
+	BPath * be_BPath_ctor(void *bindInstPtr)
 	{
-		return new BPathProxy(bindInstPtr);
+		return (BPath *)new BPathProxy(bindInstPtr);
 	}
 
-	BPathProxy * be_BPath_ctor_1(void *bindInstPtr, const BPath* path)
+	BPath * be_BPath_ctor_1(void *bindInstPtr, const BPath* path)
 	{
-		return new BPathProxy(bindInstPtr, *path);
+		return (BPath *)new BPathProxy(bindInstPtr, *path);
 	}
 
-	BPathProxy * be_BPath_ctor_2(void *bindInstPtr, const entry_ref* _ref)
+	BPath * be_BPath_ctor_2(void *bindInstPtr, const entry_ref* _ref)
 	{
-		return new BPathProxy(bindInstPtr, _ref);
+		return (BPath *)new BPathProxy(bindInstPtr, _ref);
 	}
 
-	BPathProxy * be_BPath_ctor_3(void *bindInstPtr, const BEntry* entry)
+	BPath * be_BPath_ctor_3(void *bindInstPtr, const BEntry* entry)
 	{
-		return new BPathProxy(bindInstPtr, entry);
+		return (BPath *)new BPathProxy(bindInstPtr, entry);
 	}
 
-	BPathProxy * be_BPath_ctor_4(void *bindInstPtr, const char* dir, const char* leaf, bool normalize)
+	BPath * be_BPath_ctor_4(void *bindInstPtr, const char* dir, const char* leaf, bool normalize)
 	{
-		return new BPathProxy(bindInstPtr, dir, leaf, normalize);
+		return (BPath *)new BPathProxy(bindInstPtr, dir, leaf, normalize);
 	}
 
-	BPathProxy * be_BPath_ctor_5(void *bindInstPtr, const BDirectory* dir, const char* leaf, bool normalize)
+	BPath * be_BPath_ctor_5(void *bindInstPtr, const BDirectory* dir, const char* leaf, bool normalize)
 	{
-		return new BPathProxy(bindInstPtr, dir, leaf, normalize);
+		return (BPath *)new BPathProxy(bindInstPtr, dir, leaf, normalize);
 	}
 
 	void be_BPath_dtor(BPath* self)
@@ -148,52 +148,52 @@ extern "C" {
 		delete self;
 	}
 
-	status_t be_BPath_InitCheck(BPathProxy *self)
+	status_t be_BPath_InitCheck(BPath *self)
 	{
 		return self->InitCheck();
 	}
 
-	status_t be_BPath_SetTo(BPathProxy *self, const entry_ref* _ref)
+	status_t be_BPath_SetTo(BPath *self, const entry_ref* _ref)
 	{
 		return self->SetTo(_ref);
 	}
 
-	status_t be_BPath_SetTo_1(BPathProxy *self, const BEntry* entry)
+	status_t be_BPath_SetTo_1(BPath *self, const BEntry* entry)
 	{
 		return self->SetTo(entry);
 	}
 
-	status_t be_BPath_SetTo_2(BPathProxy *self, const char* path, const char* leaf, bool normalize)
+	status_t be_BPath_SetTo_2(BPath *self, const char* path, const char* leaf, bool normalize)
 	{
 		return self->SetTo(path, leaf, normalize);
 	}
 
-	status_t be_BPath_SetTo_3(BPathProxy *self, const BDirectory* dir, const char* leaf, bool normalize)
+	status_t be_BPath_SetTo_3(BPath *self, const BDirectory* dir, const char* leaf, bool normalize)
 	{
 		return self->SetTo(dir, leaf, normalize);
 	}
 
-	void be_BPath_Unset(BPathProxy *self)
+	void be_BPath_Unset(BPath *self)
 	{
 		self->Unset();
 	}
 
-	status_t be_BPath_Append(BPathProxy *self, const char* path, bool normalize)
+	status_t be_BPath_Append(BPath *self, const char* path, bool normalize)
 	{
 		return self->Append(path, normalize);
 	}
 
-	const char* be_BPath_Path(BPathProxy *self)
+	const char* be_BPath_Path(BPath *self)
 	{
 		return self->Path();
 	}
 
-	const char* be_BPath_Leaf(BPathProxy *self)
+	const char* be_BPath_Leaf(BPath *self)
 	{
 		return self->Leaf();
 	}
 
-	status_t be_BPath_GetParent(BPathProxy *self, BPath* path)
+	status_t be_BPath_GetParent(BPath *self, BPath* path)
 	{
 		return self->GetParent(path);
 	}
@@ -228,34 +228,58 @@ extern "C" {
 		return &self->operator=(path);
 	}
 
-	bool be_BPath_IsFixedSize(BPathProxy *self)
+	bool be_BPath_IsFixedSize(BPath *self)
 	{
-		return self->IsFixedSize_super();
+		BPathProxy *proxy = dynamic_cast<BPathProxy *>(self);
+		if(proxy)
+			return proxy->IsFixedSize_super();
+		else
+			return self->IsFixedSize();
 	}
 
-	type_code be_BPath_TypeCode(BPathProxy *self)
+	type_code be_BPath_TypeCode(BPath *self)
 	{
-		return self->TypeCode_super();
+		BPathProxy *proxy = dynamic_cast<BPathProxy *>(self);
+		if(proxy)
+			return proxy->TypeCode_super();
+		else
+			return self->TypeCode();
 	}
 
-	ssize_t be_BPath_FlattenedSize(BPathProxy *self)
+	ssize_t be_BPath_FlattenedSize(BPath *self)
 	{
-		return self->FlattenedSize_super();
+		BPathProxy *proxy = dynamic_cast<BPathProxy *>(self);
+		if(proxy)
+			return proxy->FlattenedSize_super();
+		else
+			return self->FlattenedSize();
 	}
 
 	status_t be_BPath_Flatten(BPathProxy *self, void* buffer, ssize_t size)
 	{
-		return self->Flatten_super(buffer, size);
+		BPathProxy *proxy = dynamic_cast<BPathProxy *>(self);
+		if(proxy)
+			return proxy->Flatten_super(buffer, size);
+		else
+			return self->Flatten(buffer, size);
 	}
 
-	bool be_BPath_AllowsTypeCode(BPathProxy *self, type_code code)
+	bool be_BPath_AllowsTypeCode(BPath *self, type_code code)
 	{
-		return self->AllowsTypeCode_super(code);
+		BPathProxy *proxy = dynamic_cast<BPathProxy *>(self);
+		if(proxy)
+			return proxy->AllowsTypeCode_super(code);
+		else
+			return self->AllowsTypeCode(code);
 	}
 
-	status_t be_BPath_Unflatten(BPathProxy *self, type_code code, const void* buffer, ssize_t size)
+	status_t be_BPath_Unflatten(BPath *self, type_code code, const void* buffer, ssize_t size)
 	{
-		return self->Unflatten_super(code, buffer, size);
+		BPathProxy *proxy = dynamic_cast<BPathProxy *>(self);
+		if(proxy)
+			return proxy->Unflatten_super(code, buffer, size);
+		else
+			return self->Unflatten(code, buffer, size);
 	}
 
 }

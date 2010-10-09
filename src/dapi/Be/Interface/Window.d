@@ -667,7 +667,7 @@ interface IBWindow
 
 	// bool be_BWindow_IsMinimized(BWindow *self);
 	bool IsMinimized();
-/*
+
 	// void be_BWindow_Flush(BWindow *self);
 	void Flush();
 
@@ -675,7 +675,7 @@ interface IBWindow
 	void Sync();
 
 	// status_t be_BWindow_SendBehind(BWindow *self, const BWindow* window);
-	status_t SendBehind();
+	status_t SendBehind(BWindow);
 
 	// void be_BWindow_DisableUpdates(BWindow *self);
 	void DisableUpdates();
@@ -691,13 +691,13 @@ interface IBWindow
 
 	// void be_BWindow_InViewTransaction(BWindow *self);
 	void InViewTransaction();
-*/
+
 	// BRect * be_BWindow_Bounds(BWindow *self);
 	BRect Bounds();
 
 	// BRect * be_BWindow_Frame(BWindow *self);
 	BRect Frame();
-/*
+
 	// BRect * be_BWindow_DecoratorFrame(BWindow *self);
 	BRect DecoratorFrame();
 
@@ -705,79 +705,79 @@ interface IBWindow
 	BSize Size();
 
 	// const char* be_BWindow_Title(BWindow *self);
-	char* Title();
+	char [] Title();
 
 	// void be_BWindow_SetTitle(BWindow *self, const char* title);
-	void SetTitle();
+	void SetTitle(char [] title);
 
 	// bool be_BWindow_IsFront(BWindow *self);
 	bool IsFront();
 
 	// bool be_BWindow_IsActive(BWindow *self);
 	bool IsActive();
-
+/*
 	// void be_BWindow_SetKeyMenuBar(BWindow *self, BMenuBar* bar);
 	void SetKeyMenuBar();
 
 	// BMenuBar* be_BWindow_KeyMenuBar(BWindow *self);
 	BMenuBar* KeyMenuBar();
-
+*/
 	// void be_BWindow_SetSizeLimits(BWindow *self, float minWidth, float maxWidth, float minHeight, float maxHeight);
-	void SetSizeLimits();
+	void SetSizeLimits(float, float, float, float);
 
 	// void be_BWindow_GetSizeLimits(BWindow *self, float* minWidth, float* maxWidth, float* minHeight, float* maxHeight);
-	void GetSizeLimits();
+	void GetSizeLimits(inout float, inout float, inout float, inout float);
 
 	// status_t be_BWindow_SetDecoratorSettings(BWindow *self, const BMessage& settings);
-	status_t SetDecoratorSettings();
+	status_t SetDecoratorSettings(BMessage);
 
 	// status_t be_BWindow_GetDecoratorSettings(BWindow *self, BMessage* settings);
-	status_t GetDecoratorSettings();
+	status_t GetDecoratorSettings(BMessage);
 
 	// uint32 be_BWindow_Workspaces(BWindow *self);
 	uint32 Workspaces();
 
 	// void be_BWindow_SetWorkspaces(BWindow *self, uint32 workspace);
-	void SetWorkspaces();
+	void SetWorkspaces(uint32);
 
 	// BView* be_BWindow_LastMouseMovedView(BWindow *self);
-	BView* LastMouseMovedView();
+	BView LastMouseMovedView();
 
 	// BHandler* be_BWindow_ResolveSpecifier(BWindow *self, BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property);
-	BHandler* ResolveSpecifier();
+	BHandler ResolveSpecifier(BMessage, int32, BMessage, int32, char []);
 
 	// status_t be_BWindow_GetSupportedSuites(BWindow *self, BMessage* data);
-	status_t GetSupportedSuites();
+	status_t GetSupportedSuites(BMessage);
 
 	// status_t be_BWindow_AddToSubset(BWindow *self, BWindow* window);
-	status_t AddToSubset();
+	status_t AddToSubset(BWindow);
 
 	// status_t be_BWindow_RemoveFromSubset(BWindow *self, BWindow* window);
-	status_t RemoveFromSubset();
+	status_t RemoveFromSubset(BWindow);
 
 	// status_t be_BWindow_Perform(BWindow *self, perform_code code, void* data);
-	status_t Perform();
+	status_t Perform(perform_code, void *);
 
 	// status_t be_BWindow_SetType(BWindow *self, window_type type);
-	status_t SetType();
+	status_t SetType(window_type);
 
 	// window_type be_BWindow_Type(BWindow *self);
 	window_type Type();
 
 	// status_t be_BWindow_SetLook(BWindow *self, window_look look);
-	status_t SetLook();
+	status_t SetLook(window_look);
 
 	// window_look be_BWindow_Look(BWindow *self);
 	window_look Look();
 
 	// status_t be_BWindow_SetFeel(BWindow *self, window_feel feel);
-	status_t SetFeel();
+	status_t SetFeel(window_feel);
 
 	// window_feel be_BWindow_Feel(BWindow *self);
 	window_feel Feel();
 
 	// status_t be_BWindow_SetFlags(BWindow *self, uint32 flags);
-	status_t SetFlags();
+	status_t SetFlags(uint32);
 
 	// uint32 be_BWindow_Flags(BWindow *self);
 	uint32 Flags();
@@ -789,11 +789,11 @@ interface IBWindow
 	bool IsFloating();
 
 	// status_t be_BWindow_SetWindowAlignment(BWindow *self, window_alignment mode, int32 h, int32 hOffset, int32 width, int32 widthOffset, int32 v, int32 vOffset, int32 height, int32 heightOffset);
-	status_t SetWindowAlignment();
+	status_t SetWindowAlignment(window_alignment, int32, int32, int32, int32, int32, int32, int32, int32);
 
 	// status_t be_BWindow_GetWindowAlignment(BWindow *self, window_alignment* mode, int32* h, int32* hOffset, int32* width, int32* widthOffset, int32* v, int32* vOffset, int32* height, int32* heightOffset);
-	status_t GetWindowAlignment();
-*/
+	status_t GetWindowAlignment(inout window_alignment, inout int32, inout int32, inout int32, inout int32, inout int32, inout int32, inout int32, inout int32);
+
 	// bool be_BWindow_QuitRequested(BWindow *self);
 	bool QuitRequested();
 
@@ -1135,7 +1135,7 @@ public:
 	bool IsMinimized() {
 		return be_BWindow_IsMinimized(_InstPtr());
 	}
-/*
+
 	// void be_BWindow_Flush(BWindow *self);
 	void Flush() {
 		be_BWindow_Flush(_InstPtr());
@@ -1147,8 +1147,8 @@ public:
 	}
 
 	// status_t be_BWindow_SendBehind(BWindow *self, const BWindow* window);
-	status_t SendBehind() {
-		return be_BWindow_SendBehind(_InstPtr());
+	status_t SendBehind(BWindow window) {
+		return be_BWindow_SendBehind(_InstPtr(), window._InstPtr);
 	}
 
 	// void be_BWindow_DisableUpdates(BWindow *self);
@@ -1175,7 +1175,7 @@ public:
 	void InViewTransaction() {
 		be_BWindow_InViewTransaction(_InstPtr());
 	}
-*/
+
 	// BRect * be_BWindow_Bounds(BWindow *self);
 	BRect Bounds() {
 		return new BRect(be_BWindow_Bounds(_InstPtr()), true);
@@ -1185,25 +1185,25 @@ public:
 	BRect Frame() {
 		return new BRect(be_BWindow_Frame(_InstPtr()), true);
 	}
-/*
+
 	// BRect * be_BWindow_DecoratorFrame(BWindow *self);
 	BRect DecoratorFrame() {
-		return be_BWindow_DecoratorFrame(_InstPtr());
+		return new BRect(be_BWindow_DecoratorFrame(_InstPtr()), true);
 	}
 
 	// BSize * be_BWindow_Size(BWindow *self);
 	BSize Size() {
-		return be_BWindow_Size(_InstPtr());
+		return new BSize(be_BWindow_Size(_InstPtr()), true);
 	}
 
 	// const char* be_BWindow_Title(BWindow *self);
-	char* Title() {
-		return be_BWindow_Title(_InstPtr());
+	char [] Title() {
+		return fromStringz(be_BWindow_Title(_InstPtr())).dup;
 	}
 
 	// void be_BWindow_SetTitle(BWindow *self, const char* title);
-	void SetTitle() {
-		be_BWindow_SetTitle(_InstPtr());
+	void SetTitle(char [] title) {
+		be_BWindow_SetTitle(_InstPtr(), toStringz(title));
 	}
 
 	// bool be_BWindow_IsFront(BWindow *self);
@@ -1215,7 +1215,7 @@ public:
 	bool IsActive() {
 		return be_BWindow_IsActive(_InstPtr());
 	}
-
+/*
 	// void be_BWindow_SetKeyMenuBar(BWindow *self, BMenuBar* bar);
 	void SetKeyMenuBar() {
 		be_BWindow_SetKeyMenuBar(_InstPtr());
@@ -1225,25 +1225,25 @@ public:
 	BMenuBar* KeyMenuBar() {
 		return be_BWindow_KeyMenuBar(_InstPtr());
 	}
-
+*/
 	// void be_BWindow_SetSizeLimits(BWindow *self, float minWidth, float maxWidth, float minHeight, float maxHeight);
-	void SetSizeLimits() {
-		be_BWindow_SetSizeLimits(_InstPtr());
+	void SetSizeLimits(float minWidth, float maxWidth, float minHeight, float maxHeight) {
+		be_BWindow_SetSizeLimits(_InstPtr(), minWidth, maxWidth, minHeight, maxHeight);
 	}
 
 	// void be_BWindow_GetSizeLimits(BWindow *self, float* minWidth, float* maxWidth, float* minHeight, float* maxHeight);
-	void GetSizeLimits() {
-		be_BWindow_GetSizeLimits(_InstPtr());
+	void GetSizeLimits(inout float minWidth, inout float maxWidth, inout float minHeight, inout float maxHeight) {
+		be_BWindow_GetSizeLimits(_InstPtr(), &minWidth, &maxWidth, &minHeight, &maxHeight);
 	}
 
 	// status_t be_BWindow_SetDecoratorSettings(BWindow *self, const BMessage& settings);
-	status_t SetDecoratorSettings() {
-		return be_BWindow_SetDecoratorSettings(_InstPtr());
+	status_t SetDecoratorSettings(BMessage settings) {
+		return be_BWindow_SetDecoratorSettings(_InstPtr(), settings._InstPtr);
 	}
 
 	// status_t be_BWindow_GetDecoratorSettings(BWindow *self, BMessage* settings);
-	status_t GetDecoratorSettings() {
-		return be_BWindow_GetDecoratorSettings(_InstPtr());
+	status_t GetDecoratorSettings(BMessage settings) {
+		return be_BWindow_GetDecoratorSettings(_InstPtr(), settings._InstPtr);
 	}
 
 	// uint32 be_BWindow_Workspaces(BWindow *self);
@@ -1252,43 +1252,43 @@ public:
 	}
 
 	// void be_BWindow_SetWorkspaces(BWindow *self, uint32 workspace);
-	void SetWorkspaces() {
-		be_BWindow_SetWorkspaces(_InstPtr());
+	void SetWorkspaces(uint32 workspace) {
+		be_BWindow_SetWorkspaces(_InstPtr(), workspace);
 	}
 
 	// BView* be_BWindow_LastMouseMovedView(BWindow *self);
-	BView* LastMouseMovedView() {
-		return be_BWindow_LastMouseMovedView(_InstPtr());
+	BView LastMouseMovedView() {
+		return new BView(be_BWindow_LastMouseMovedView(_InstPtr()), false);
 	}
 
 	// BHandler* be_BWindow_ResolveSpecifier(BWindow *self, BMessage* message, int32 index, BMessage* specifier, int32 form, const char* property);
-	BHandler* ResolveSpecifier() {
-		return be_BWindow_ResolveSpecifier(_InstPtr());
+	BHandler ResolveSpecifier(BMessage message, int32 index, BMessage specifier, int32 form, char [] property) {
+		return new BHandler(be_BWindow_ResolveSpecifier(_InstPtr(), message._InstPtr, index, specifier._InstPtr, form, toStringz(property)), false);
 	}
 
 	// status_t be_BWindow_GetSupportedSuites(BWindow *self, BMessage* data);
-	status_t GetSupportedSuites() {
-		return be_BWindow_GetSupportedSuites(_InstPtr());
+	status_t GetSupportedSuites(BMessage data) {
+		return be_BWindow_GetSupportedSuites(_InstPtr(), data._InstPtr);
 	}
 
 	// status_t be_BWindow_AddToSubset(BWindow *self, BWindow* window);
-	status_t AddToSubset() {
-		return be_BWindow_AddToSubset(_InstPtr());
+	status_t AddToSubset(BWindow window) {
+		return be_BWindow_AddToSubset(_InstPtr(), window._InstPtr);
 	}
 
 	// status_t be_BWindow_RemoveFromSubset(BWindow *self, BWindow* window);
-	status_t RemoveFromSubset() {
-		return be_BWindow_RemoveFromSubset(_InstPtr());
+	status_t RemoveFromSubset(BWindow window) {
+		return be_BWindow_RemoveFromSubset(_InstPtr(), window._InstPtr);
 	}
 
 	// status_t be_BWindow_Perform(BWindow *self, perform_code code, void* data);
-	status_t Perform() {
-		return be_BWindow_Perform(_InstPtr());
+	status_t Perform(perform_code code, void *data) {
+		return be_BWindow_Perform(_InstPtr(), code, data);
 	}
 
 	// status_t be_BWindow_SetType(BWindow *self, window_type type);
-	status_t SetType() {
-		return be_BWindow_SetType(_InstPtr());
+	status_t SetType(window_type type) {
+		return be_BWindow_SetType(_InstPtr(), type);
 	}
 
 	// window_type be_BWindow_Type(BWindow *self);
@@ -1297,8 +1297,8 @@ public:
 	}
 
 	// status_t be_BWindow_SetLook(BWindow *self, window_look look);
-	status_t SetLook() {
-		return be_BWindow_SetLook(_InstPtr());
+	status_t SetLook(window_look look) {
+		return be_BWindow_SetLook(_InstPtr(), look);
 	}
 
 	// window_look be_BWindow_Look(BWindow *self);
@@ -1307,8 +1307,8 @@ public:
 	}
 
 	// status_t be_BWindow_SetFeel(BWindow *self, window_feel feel);
-	status_t SetFeel() {
-		return be_BWindow_SetFeel(_InstPtr());
+	status_t SetFeel(window_feel feel) {
+		return be_BWindow_SetFeel(_InstPtr(), feel);
 	}
 
 	// window_feel be_BWindow_Feel(BWindow *self);
@@ -1317,8 +1317,8 @@ public:
 	}
 
 	// status_t be_BWindow_SetFlags(BWindow *self, uint32 flags);
-	status_t SetFlags() {
-		return be_BWindow_SetFlags(_InstPtr());
+	status_t SetFlags(uint32 flags) {
+		return be_BWindow_SetFlags(_InstPtr(), flags);
 	}
 
 	// uint32 be_BWindow_Flags(BWindow *self);
@@ -1337,15 +1337,15 @@ public:
 	}
 
 	// status_t be_BWindow_SetWindowAlignment(BWindow *self, window_alignment mode, int32 h, int32 hOffset, int32 width, int32 widthOffset, int32 v, int32 vOffset, int32 height, int32 heightOffset);
-	status_t SetWindowAlignment() {
-		return be_BWindow_SetWindowAlignment(_InstPtr());
+	status_t SetWindowAlignment(window_alignment mode, int32 h, int32 hOffset, int32 width, int32 widthOffset, int32 v, int32 vOffset, int32 height, int32 heightOffset) {
+		return be_BWindow_SetWindowAlignment(_InstPtr(), mode, h, hOffset, width, widthOffset, v, vOffset, height, heightOffset);
 	}
 
 	// status_t be_BWindow_GetWindowAlignment(BWindow *self, window_alignment* mode, int32* h, int32* hOffset, int32* width, int32* widthOffset, int32* v, int32* vOffset, int32* height, int32* heightOffset);
-	status_t GetWindowAlignment() {
-		return be_BWindow_GetWindowAlignment(_InstPtr());
+	status_t GetWindowAlignment(inout window_alignment mode, inout int32 h, inout int32 hOffset, inout int32 width, inout int32 widthOffset, inout int32 v, inout int32 vOffset, inout int32 height, inout int32 heightOffset) {
+		return be_BWindow_GetWindowAlignment(_InstPtr(), &mode, &h, &hOffset, &width, &widthOffset, &v, &vOffset, &height, &heightOffset);
 	}
-*/
+
 	// bool be_BWindow_QuitRequested(BWindow *self);
 	bool QuitRequested() {
 		return be_BWindow_QuitRequested(_InstPtr());
