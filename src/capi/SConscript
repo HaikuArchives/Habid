@@ -10,6 +10,7 @@ c_srcs = [
 	'Interface/Input.cpp',
 	'Interface/View.cpp',
 	'Interface/Window.cpp',
+	'Interface/Bitmap.cpp',
 
 	'App/Application.cpp',
 	'App/Clipboard.cpp',
