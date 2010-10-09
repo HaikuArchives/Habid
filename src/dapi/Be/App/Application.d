@@ -17,6 +17,8 @@ import Be.App.Handler;
 import Be.App.Cursor;
 import Be.App.Roster;
 
+import Be.Interface.Window;
+
 import Be.Support.Archivable;
 
 import Be.Kernel.OS;
@@ -218,7 +220,7 @@ interface IBApplication
 	status_t Archive(BMessage, bool);
 
 	// status_t be_BApplication_InitCheck(BApplication *self);
-	status_t InitCheck();
+	final status_t InitCheck();
 
 	// thread_id be_BApplication_Run(BApplication *self);
 	thread_id Run();
@@ -254,40 +256,40 @@ interface IBApplication
 	BHandler ResolveSpecifier(BMessage, int32, BMessage, int32, char []);
 
 	// void be_BApplication_ShowCursor(BApplication *self);
-	void ShowCursor();
+	final void ShowCursor();
 
 	// void be_BApplication_HideCursor(BApplication *self);
-	void HideCursor();
+	final void HideCursor();
 
 	// void be_BApplication_ObscureCursor(BApplication *self);
-	void ObscureCursor();
+	final void ObscureCursor();
 
 	// bool be_BApplication_IsCursorHidden(BApplication *self);
-	bool IsCursorHidden();
+	final bool IsCursorHidden();
 
 	// void be_BApplication_SetCursor(BApplication *self, const void* cursor);
-	void SetCursor(void []);
+	final void SetCursor(void []);
 
 	// void be_BApplication_SetCursor_1(BApplication *self, const BCursor* cursor, bool sync);
-	void SetCursor(BCursor, bool);
+	final void SetCursor(BCursor, bool);
 
 	// int32 be_BApplication_CountWindows(BApplication *self);
-	int32 CountWindows();
+	final int32 CountWindows();
 
 	// BWindow * be_BApplication_WindowAt(BApplication *self, int32 index);
-//	BWindow WindowAt(int32);
+	final BWindow WindowAt(int32);
 
 	// int32 be_BApplication_CountLoopers(BApplication *self);
-	int32 CountLoopers();
+	final int32 CountLoopers();
 
 	// BLooper * be_BApplication_LooperAt(BApplication *self, int32 index);
-	BLooper LooperAt(int32);
+	final BLooper LooperAt(int32);
 
 	// bool be_BApplication_IsLaunching(BApplication *self);
-	bool IsLaunching();
+	final bool IsLaunching();
 
 	// status_t be_BApplication_GetAppInfo(BApplication *self, app_info* info);
-	status_t GetAppInfo(inout app_info);
+	final status_t GetAppInfo(inout app_info);
 
 	// BResources * be_BApplication_AppResources(BApplication *self);
 //	BResources AppResources();
@@ -296,7 +298,7 @@ interface IBApplication
 	void DispatchMessage(BMessage, BHandler);
 
 	// void be_BApplication_SetPulseRate(BApplication *self, bigtime_t rate);
-	void SetPulseRate(bigtime_t);
+	final void SetPulseRate(bigtime_t);
 
 	// status_t be_BApplication_GetSupportedSuites(BApplication *self, BMessage* data);
 	status_t GetSupportedSuites(BMessage);
@@ -377,7 +379,7 @@ public:
 	}
 
 	// status_t be_BApplication_InitCheck(BApplication *self);
-	status_t InitCheck() {
+	final status_t InitCheck() {
 		return be_BApplication_InitCheck(_InstPtr());
 	}
 
@@ -442,62 +444,62 @@ public:
 	}
 
 	// void be_BApplication_ShowCursor(BApplication *self);
-	void ShowCursor() {
+	final void ShowCursor() {
 		be_BApplication_ShowCursor(_InstPtr());
 	}
 
 	// void be_BApplication_HideCursor(BApplication *self);
-	void HideCursor() {
+	final void HideCursor() {
 		be_BApplication_HideCursor(_InstPtr());
 	}
 
 	// void be_BApplication_ObscureCursor(BApplication *self);
-	void ObscureCursor() {
+	final void ObscureCursor() {
 		be_BApplication_ObscureCursor(_InstPtr());
 	}
 
 	// bool be_BApplication_IsCursorHidden(BApplication *self);
-	bool IsCursorHidden() {
+	final bool IsCursorHidden() {
 		return be_BApplication_IsCursorHidden(_InstPtr());
 	}
 
 	// void be_BApplication_SetCursor(BApplication *self, const void* cursor);
-	void SetCursor(void [] cursor) {
+	final void SetCursor(void [] cursor) {
 		be_BApplication_SetCursor(_InstPtr(), cursor.ptr);
 	}
 
 	// void be_BApplication_SetCursor_1(BApplication *self, const BCursor* cursor, bool sync);
-	void SetCursor(BCursor cursor, bool sync = true) {
+	final void SetCursor(BCursor cursor, bool sync = true) {
 		be_BApplication_SetCursor_1(_InstPtr(), cursor._InstPtr, sync);
 	}
 
 	// int32 be_BApplication_CountWindows(BApplication *self);
-	int32 CountWindows() {
+	final int32 CountWindows() {
 		return be_BApplication_CountWindows(_InstPtr());
 	}
-/*
+
 	// BWindow * be_BApplication_WindowAt(BApplication *self, int32 index);
-	BWindow WindowAt(int32 index) {
-		return be_BApplication_WindowAt(_InstPtr(), index);
+	final BWindow WindowAt(int32 index) {
+		return new BWindow(be_BApplication_WindowAt(_InstPtr(), index), false);
 	}
-*/
+
 	// int32 be_BApplication_CountLoopers(BApplication *self);
-	int32 CountLoopers() {
+	final int32 CountLoopers() {
 		return be_BApplication_CountLoopers(_InstPtr());
 	}
 
 	// BLooper * be_BApplication_LooperAt(BApplication *self, int32 index);
-	BLooper LooperAt(int32 index) {
+	final BLooper LooperAt(int32 index) {
 		return new BLooper(be_BApplication_LooperAt(_InstPtr(), index), false);
 	}
 
 	// bool be_BApplication_IsLaunching(BApplication *self);
-	bool IsLaunching() {
+	final bool IsLaunching() {
 		return be_BApplication_IsLaunching(_InstPtr());
 	}
 
 	// status_t be_BApplication_GetAppInfo(BApplication *self, app_info* info);
-	status_t GetAppInfo(inout app_info info) {
+	final status_t GetAppInfo(inout app_info info) {
 		return be_BApplication_GetAppInfo(_InstPtr(), &info);
 	}
 /*
@@ -512,7 +514,7 @@ public:
 	}
 
 	// void be_BApplication_SetPulseRate(BApplication *self, bigtime_t rate);
-	void SetPulseRate(bigtime_t rate) {
+	final void SetPulseRate(bigtime_t rate) {
 		be_BApplication_SetPulseRate(_InstPtr(), rate);
 	}
 

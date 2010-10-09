@@ -24,7 +24,7 @@ public:
 		SetPulseRate(1000000);
 	}
 	
-	void MessageReceived(BMessage message) {
+	override void MessageReceived(BMessage message) {
 		Stdout.formatln("ReceivedMessage: {}", message.what);
 		switch(message.what) {
 			default: {
@@ -33,12 +33,12 @@ public:
 		}	
 	}
 	
-	bool QuitRequested() {
+	override bool QuitRequested() {
 		Stdout.formatln("QuitRequested");
 		return super.QuitRequested();	
 	}
 	
-	void Pulse() {
+	override void Pulse() {
 		Stdout.formatln("Pulse...");	
 	}
 }
