@@ -173,7 +173,7 @@ void buildCExports(InterfaceClassInfo classInfo) {
             exportBuffer ~= "\t\t" ~ (memberFunc.returnString == "void" ? "" : "return ") ~ classInfo.nameString ~ "::" ~ memberFunc.nameString ~ "(" ~ memberFunc.buildArguments(false, true, false, true) ~ ");";
             exportBuffer ~= "\t}\n";
         } else {
-            if(classInfo.hasVirtual || classInfo.hasPureVirtual) {
+            if(memberFunc.isVirtual || memberFunc.isPureVirtual) {
                 exportBuffer ~= "\t" ~ memberFunc.getReturnString(true) ~ " be_" ~ classInfo.nameString ~ "_" ~ memberFunc.nameString ~ memberFunc.postfixString ~ "(" ~ classInfo.nameString ~ " *self" ~ (memberFunc.argCount > 0 ? ", " : "") ~ memberFunc.buildArguments(true, true) ~ ")";
                 exportBuffer ~= "\t{{";
                 exportBuffer ~= "\t\t" ~ classInfo.nameString ~ "Proxy *proxy = dynamic_cast<" ~ classInfo.nameString ~ "Proxy *>(self);";

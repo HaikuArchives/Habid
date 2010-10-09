@@ -144,9 +144,9 @@ struct overlay_restrictions {
 // screen ID
 
 struct screen_id { int32 id; };
-/*
-extern const struct screen_id B_MAIN_SCREEN_ID;
-*/
+
+extern (C) extern screen_id B_MAIN_SCREEN_ID;
+
 
 // color spaces
 

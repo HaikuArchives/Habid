@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Bitmap.h" type="system" target="header"/>
+	<includefile name="Support/Archivable.h" type="local" target="header"/>
+	<IncludeFile name="Interface/Bitmap.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BRect BPoint "/>
+
+	<class name="BBitmap">
+		<Inherits name="BArchivable" access="public"/>
+
+		<Function name="" returns="" arguments="BRect bounds, uint32 flags, color_space colorSpace, int32 bytesPerRow, screen_id screenID" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BRect bounds, color_space colorSpace, bool acceptsViews, bool needsContiguous" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BBitmap& source, uint32 flags" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BBitmap& source" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BBitmap* source, bool acceptsViews, bool needsContiguous" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* data" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable*" arguments="BMessage* data" type="static" mod=""/>
+
+		<Function name="Archive" returns="status_t" arguments="BMessage* data, bool deep" type="Virtual" mod="const"/>
+
+		<Function name="InitCheck" returns="status_t" arguments="" type="Final" mod="const"/>
+		<Function name="IsValid" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="LockBits" returns="status_t" arguments="uint32* state" type="Final" mod=""/>
+		<Function name="UnlockBits" returns="void" arguments="" type="Final" mod=""/>
+
+		<Function name="Area" returns="area_id" arguments="" type="Final" mod="const"/>
+		<Function name="Bits" returns="void*" arguments="" type="Final" mod="const"/>
+		<Function name="BitsLength" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="BytesPerRow" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="ColorSpace" returns="color_space" arguments="" type="Final" mod="const"/>
+		<Function name="Bounds" returns="BRect" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetDrawingFlags" returns="status_t" arguments="uint32 flags" type="Final" mod=""/>
+		<Function name="Flags" returns="uint32" arguments="" type="Final" mod="const"/>
+
+		<Function name="SetBits" returns="void" arguments="const void* data, int32 length, int32 offset, color_space colorSpace" type="Final" mod=""/>
+
+		<Function name="ImportBits" returns="status_t" arguments="const void* data, int32 length, int32 bpr, int32 offset, color_space colorSpace" type="Final" mod=""/>
+		<Function name="ImportBits" returns="status_t" arguments="const void* data, int32 length, int32 bpr, color_space colorSpace, BPoint from, BPoint to, int32 width, int32 height" type="Final" mod=""/>
+		<Function name="ImportBits" returns="status_t" arguments="const BBitmap* bitmap" type="Final" mod=""/>
+		<Function name="ImportBits" returns="status_t" arguments="const BBitmap* bitmap, BPoint from, BPoint to, int32 width, int32 height" type="Final" mod=""/>
+
+		<Function name="GetOverlayRestrictions" returns="status_t" arguments="overlay_restrictions* restrictions" type="Final" mod="const"/>
+
+		<Function name="AddChild" returns="void" arguments="BView* view" type="Virtual" mod=""/>
+		<Function name="RemoveChild" returns="bool" arguments="BView* view" type="Virtual" mod=""/>
+
+		<Function name="CountChildren" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="ChildAt" returns="BView*" arguments="int32 index" type="Final" mod="const"/>
+		<Function name="FindView" returns="BView*" arguments="const char* viewName" type="Final" mod="const"/>
+		<Function name="FindView" returns="BView*" arguments="BPoint point" type="Final" mod="const"/>
+		<Function name="Lock" returns="bool" arguments="" type="Final" mod=""/>
+		<Function name="Unlock" returns="void" arguments="" type="Final" mod=""/>
+		<Function name="IsLocked" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="operator=" returns="BBitmap&" arguments="const BBitmap& source" type="operator" mod=""/>
+	</class>
+</Flatten>
+
