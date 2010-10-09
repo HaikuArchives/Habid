@@ -157,12 +157,19 @@ enum mode_mouse {
 	B_FOCUS_FOLLOWS_MOUSE	= 1
 }
 
+alias mode_mouse.B_NORMAL_MOUSE B_NORMAL_MOUSE;
+alias mode_mouse.B_CLICK_TO_FOCUS_MOUSE B_CLICK_TO_FOCUS_MOUSE;
+alias mode_mouse.B_FOCUS_FOLLOWS_MOUSE B_FOCUS_FOLLOWS_MOUSE;
+
 enum mode_focus_follows_mouse {
 	B_NORMAL_FOCUS_FOLLOWS_MOUSE		= 0,
 	B_WARP_FOCUS_FOLLOWS_MOUSE			= 1,
 	B_INSTANT_WARP_FOCUS_FOLLOWS_MOUSE	= 2
 }
 
+alias mode_focus_follows_mouse.B_NORMAL_FOCUS_FOLLOWS_MOUSE B_NORMAL_FOCUS_FOLLOWS_MOUSE;
+alias mode_focus_follows_mouse.B_WARP_FOCUS_FOLLOWS_MOUSE B_WARP_FOCUS_FOLLOWS_MOUSE;
+alias mode_focus_follows_mouse.B_INSTANT_WARP_FOCUS_FOLLOWS_MOUSE B_INSTANT_WARP_FOCUS_FOLLOWS_MOUSE;
 
 // View orientation/alignment/style
 
@@ -172,16 +179,30 @@ enum border_style {
 	B_NO_BORDER
 }
 
+alias border_style.B_PLAIN_BORDER B_PLAIN_BORDER;
+alias border_style.B_FANCY_BORDER B_FANCY_BORDER;
+alias border_style.B_NO_BORDER B_NO_BORDER;
+
+
 enum orientation {
 	B_HORIZONTAL,
 	B_VERTICAL
 }
+
+alias orientation.B_HORIZONTAL B_HORIZONTAL;
+alias orientation.B_VERTICAL B_VERTICAL;
+
 
 enum button_width {
 	B_WIDTH_AS_USUAL,
 	B_WIDTH_FROM_WIDEST,
 	B_WIDTH_FROM_LABEL
 }
+
+alias button_width.B_WIDTH_AS_USUAL B_WIDTH_AS_USUAL;
+alias button_width.B_WIDTH_FROM_WIDEST B_WIDTH_FROM_WIDEST;
+alias button_width.B_WIDTH_FROM_LABEL B_WIDTH_FROM_LABEL;
+
 
 struct scroll_bar_info {
 	bool	proportional;
@@ -201,6 +222,14 @@ enum alignment {
 	B_ALIGN_USE_FULL_WIDTH		= -2L
 }
 
+alias alignment.B_ALIGN_LEFT B_ALIGN_LEFT;
+alias alignment.B_ALIGN_RIGHT B_ALIGN_RIGHT;
+alias alignment.B_ALIGN_CENTER B_ALIGN_CENTER;
+alias alignment.B_ALIGN_HORIZONTAL_CENTER B_ALIGN_HORIZONTAL_CENTER;
+alias alignment.B_ALIGN_HORIZONTAL_UNSET B_ALIGN_HORIZONTAL_UNSET;
+alias alignment.B_ALIGN_USE_FULL_WIDTH B_ALIGN_USE_FULL_WIDTH;
+
+
 enum vertical_alignment {
 	B_ALIGN_TOP					= 0x10L,
 	B_ALIGN_MIDDLE				= 0x20,
@@ -212,6 +241,14 @@ enum vertical_alignment {
 	B_ALIGN_NO_VERTICAL			= B_ALIGN_VERTICAL_UNSET,
 	B_ALIGN_USE_FULL_HEIGHT		= -2L
 }
+
+alias vertical_alignment.B_ALIGN_TOP B_ALIGN_TOP;
+alias vertical_alignment.B_ALIGN_MIDDLE B_ALIGN_MIDDLE;
+alias vertical_alignment.B_ALIGN_BOTTOM B_ALIGN_BOTTOM;
+alias vertical_alignment.B_ALIGN_VERTICAL_CENTER B_ALIGN_VERTICAL_CENTER;
+alias vertical_alignment.B_ALIGN_VERTICAL_UNSET B_ALIGN_VERTICAL_UNSET;
+alias vertical_alignment.B_ALIGN_NO_VERTICAL B_ALIGN_NO_VERTICAL;
+alias vertical_alignment.B_ALIGN_USE_FULL_HEIGHT B_ALIGN_USE_FULL_HEIGHT;
 
 const float B_USE_DEFAULT_SPACING = -2.0f;
 
@@ -226,11 +263,22 @@ enum join_mode {
 	B_SQUARE_JOIN
 }
 
+alias join_mode.B_ROUND_JOIN B_ROUND_JOIN;
+alias join_mode.B_MITER_JOIN B_MITER_JOIN;
+alias join_mode.B_BEVEL_JOIN B_BEVEL_JOIN;
+alias join_mode.B_BUTT_JOIN B_BUTT_JOIN;
+alias join_mode.B_SQUARE_JOIN B_SQUARE_JOIN;
+
+
 enum cap_mode {
 	B_ROUND_CAP		= join_mode.B_ROUND_JOIN,
 	B_BUTT_CAP		= join_mode.B_BUTT_JOIN,
 	B_SQUARE_CAP	= join_mode.B_SQUARE_JOIN
 }
+
+alias cap_mode.B_ROUND_CAP B_ROUND_CAP;
+alias cap_mode.B_BUTT_CAP B_BUTT_CAP;
+alias cap_mode.B_SQUARE_CAP B_SQUARE_CAP;
 
 const float B_DEFAULT_MITER_LIMIT = 10.0F;
 
@@ -243,12 +291,21 @@ enum bitmap_tiling {
 	B_TILE_BITMAP				= 0x00000003
 }
 
+alias bitmap_tiling.B_TILE_BITMAP_X B_TILE_BITMAP_X;
+alias bitmap_tiling.B_TILE_BITMAP_X B_TILE_BITMAP_Y;
+alias bitmap_tiling.B_TILE_BITMAP B_TILE_BITMAP;
+
 enum overlay_options {
 	B_OVERLAY_FILTER_HORIZONTAL	= 0x00010000,
 	B_OVERLAY_FILTER_VERTICAL	= 0x00020000,
 	B_OVERLAY_MIRROR			= 0x00040000,
 	B_OVERLAY_TRANSFER_CHANNEL	= 0x00080000
 }
+
+alias overlay_options.B_OVERLAY_FILTER_HORIZONTAL B_OVERLAY_FILTER_HORIZONTAL;
+alias overlay_options.B_OVERLAY_FILTER_VERTICAL B_OVERLAY_FILTER_VERTICAL;
+alias overlay_options.B_OVERLAY_MIRROR B_OVERLAY_MIRROR;
+alias overlay_options.B_OVERLAY_TRANSFER_CHANNEL B_OVERLAY_TRANSFER_CHANNEL;
 
 enum bitmap_filtering {
 	B_FILTER_BITMAP_BILINEAR	= 0x00000100
