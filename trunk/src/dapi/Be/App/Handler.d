@@ -259,7 +259,7 @@ class BHandler : BArchivable, IBHandler
 private:
 	void *fInstancePointer = null;
 	bool fOwnsPointer = false;
-	mixin(BObject!());
+	mixin(BObjectInherited!());
 	char [] fname;
 public:
 	this() {

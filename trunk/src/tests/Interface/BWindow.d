@@ -17,10 +17,12 @@ import Be.Support.SupportDefs;
 import Be.App.Application;
 
 import Be.Interface.Rect;
+import Be.Interface.Point;
 import Be.Interface.Window;
 import Be.Interface.View;
 import Be.Interface.GraphicsDefs;
 import Be.Interface.Picture;
+import Be.Interface.Button;
 
 class App : BApplication
 {
@@ -31,6 +33,7 @@ public:
 	this() {
 		super("application/x-vnd.your-app-sig");
 		SetPulseRate(1000000);
+
 	}
 	
 	override void MessageReceived(BMessage message) {
@@ -67,12 +70,12 @@ public:
 	this(BRect frame, char [] name) {
 		super(frame, name, B_FOLLOW_ALL_SIDES, B_WILL_DRAW);	
 
+		ForceFontAliasing(true);
 		fPicture = new BPicture();
 	}
 	
 	override void Draw(BRect updateRect) {
 		DrawPicture(fPicture);
-//		super.Draw(updateRect);
 	}
 	
 	override void AllAttached() {
@@ -82,6 +85,13 @@ public:
 		SetLowColor(0, 255, 0);
 		FillRect(new BRect(200, 200, 300, 300), B_SOLID_HIGH);
 		StrokeRect(new BRect(400, 400, 500, 450), B_SOLID_HIGH);
+		SetFontSize(40);
+		PushState();
+		SetHighColor(255, 0, 0);
+		SetLowColor(255, 0, 0);
+		DrawString("This is a BPicture test", new BPoint(100, 40));
+		PopState();
+		FillEllipse(new BRect(0, 300, 400, 500), B_SOLID_HIGH);
 		EndPicture();
 		PopState();
 	}
@@ -91,11 +101,12 @@ class MyWindow : BWindow
 {
 private:
 	BView fView;
+	BButton fButton;
+
 public:
 	this(BRect frame, char [] title) {
 		super(frame, title, window_type.B_TITLED_WINDOW, B_QUIT_ON_WINDOW_CLOSE);
 
-		
 		fView = new MyView(Bounds(), "MainView");
 		fView.SetViewColor(255, 255, 0, 255);
 		
@@ -103,9 +114,9 @@ public:
 		
 		Stdout.formatln("{} {} {}", color.red, color.green, color.blue);
 		
-		fView.AddChild(new BView(new BRect(100, 100, 200, 200), "DohView", B_FOLLOW_ALL_SIDES, B_WILL_DRAW));
-
-
+		fButton = new BButton(new BRect(20, 20, 100, 100), "TestButton", "TestButton", new BMessage(55));
+		
+		AddChild(fButton, null);
 		AddChild(fView);
 
 	}
@@ -120,6 +131,18 @@ public:
 	override void FrameResized(float width, float height) {
 		Stdout.formatln("FrameResized: {} {}", width, height);
 		return super.FrameResized(width, height);	
+	}
+	
+	override void MessageReceived(BMessage message) {
+		Stdout.formatln("ReceivedMessage: {}", message.what);
+		switch(message.what) {
+			case 55: {
+				Stdout.formatln("Button Pressed");
+			} break;
+			default: {
+				super.MessageReceived(message);	
+			}	
+		}	
 	}
 }
 	

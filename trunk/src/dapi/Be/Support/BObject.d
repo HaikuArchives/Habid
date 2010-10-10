@@ -16,9 +16,26 @@ template BObject()
 	public:
 		this(void *instancePointer, bool ownsPointer)
 		{
-			fInstancePointer = instancePointer;
-			fOwnsPointer = ownsPointer;
+			_InstPtr = instancePointer;
+			_OwnsPtr = ownsPointer;
 		}
-	
+	";	
+}
+
+template BObjectInherited()
+{
+	const char [] BObjectInherited =
+	"
+/*	private:
+	void *fInstancePointer = null;
+	bool fOwnsPointer; */
+	public:
+		this(void *instancePointer, bool ownsPointer)
+		{
+			_InstPtr = instancePointer;
+			_OwnsPtr = ownsPointer;
+			
+			super(instancePointer, ownsPointer);
+		}
 	";	
 }
