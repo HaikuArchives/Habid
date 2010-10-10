@@ -136,8 +136,8 @@ extern (C) {
 		assert(false, "bind_BControl_AllDetached(void *bindInstPtr) Unimplemented");
 	}
 
-	void bind_BControl_MessageReceived(void *bindInstPtr, BMessage* message) {
-		assert(false, "bind_BControl_MessageReceived(void *bindInstPtr, BMessage* message) Unimplemented");
+	void bind_BControl_MessageReceived(void *bindInstPtr, void* message) {
+		(cast(BControl)bindInstPtr).MessageReceived(new BMessage(message, false));
 	}
 
 	void bind_BControl_MakeFocus(void *bindInstPtr, bool focused) {
@@ -292,6 +292,7 @@ private:
 public:
 	// BControlProxy * be_BControl_ctor(void *bindInstPtr, BRect *frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags);
 	this(BRect frame, char [] name, char [] label, BMessage message, uint32 resizingMode, uint32 flags) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BControl_ctor(cast(void *)this, frame._InstPtr, toStringz(name), toStringz(label), message._InstPtr, resizingMode, flags);
 			_OwnsPtr = true;
@@ -301,6 +302,7 @@ public:
 
 	// BControlProxy * be_BControl_ctor_1(void *bindInstPtr, const char* name, const char* label, BMessage* message, uint32 flags);
 	this(char [] name, char [] label, BMessage message, uint32 flags) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BControl_ctor_1(cast(void *)this, name is null ? null : toStringz(name), toStringz(label), message._InstPtr, flags);
 			_OwnsPtr = true;

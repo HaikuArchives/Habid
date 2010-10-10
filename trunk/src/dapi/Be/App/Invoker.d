@@ -163,6 +163,7 @@ public:
 
 	// BInvokerProxy * be_BInvoker_ctor_1(void *bindInstPtr, BMessage* message, const BHandler* handler, const BLooper* looper);
 	this(BMessage message, BHandler handler, BLooper looper = null) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BInvoker_ctor_1(cast(void *)this, message._InstPtr, handler._InstPtr, looper is null ? null : looper._InstPtr);
 			_OwnsPtr = true;
@@ -171,6 +172,7 @@ public:
 
 	// BInvokerProxy * be_BInvoker_ctor_2(void *bindInstPtr, BMessage* message, BMessenger *target);
 	this(BMessage message, BMessenger target) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BInvoker_ctor_2(cast(void *)this, message._InstPtr, target._InstPtr);
 			_OwnsPtr = true;
