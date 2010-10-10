@@ -9,20 +9,8 @@
 #include <Window.h>
 #include "App/Looper.h"
 
-class BWindowBridge
-: public BWindow
-{
-public:
-	BWindowBridge(BMessage* archive);
-	BWindowBridge(BRect frame, const char* title, window_type type, uint32 flags, uint32 workspace);
-	BWindowBridge(BRect frame, const char* title, window_look look, window_feel feel, uint32 flags, uint32 workspace);
-	~BWindowBridge();
-
-};
-
-
 class BWindowProxy
-: public  BLooperProxy, public BWindowBridge
+: public  BLooperProxy, public BWindow
 {
 	void *fBindInstPtr;
 public:

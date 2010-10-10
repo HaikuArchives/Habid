@@ -5,35 +5,18 @@
 
 #include "App/MessageFilter.h"
 
-BMessageFilterBridge::BMessageFilterBridge(uint32 what, filter_hook func)
-: BMessageFilter(what, func)
-{
-}
-BMessageFilterBridge::BMessageFilterBridge(message_delivery delivery, message_source source, filter_hook func)
-: BMessageFilter(delivery, source, func)
-{
-}
-BMessageFilterBridge::BMessageFilterBridge(message_delivery delivery, message_source source, uint32 what, filter_hook func)
-: BMessageFilter(delivery, source, what, func)
-{
-}
-BMessageFilterBridge::BMessageFilterBridge(const BMessageFilter* filter)
-: BMessageFilter(filter)
-{
-}
-BMessageFilterBridge::~BMessageFilterBridge() { }
 
 BMessageFilterProxy::BMessageFilterProxy(void *bindInstPtr, uint32 what, filter_hook func)
-: fBindInstPtr(bindInstPtr), BMessageFilterBridge(what, func) { }
+: fBindInstPtr(bindInstPtr), BMessageFilter(what, func) { }
 
 BMessageFilterProxy::BMessageFilterProxy(void *bindInstPtr, message_delivery delivery, message_source source, filter_hook func)
-: fBindInstPtr(bindInstPtr), BMessageFilterBridge(delivery, source, func) { }
+: fBindInstPtr(bindInstPtr), BMessageFilter(delivery, source, func) { }
 
 BMessageFilterProxy::BMessageFilterProxy(void *bindInstPtr, message_delivery delivery, message_source source, uint32 what, filter_hook func)
-: fBindInstPtr(bindInstPtr), BMessageFilterBridge(delivery, source, what, func) { }
+: fBindInstPtr(bindInstPtr), BMessageFilter(delivery, source, what, func) { }
 
 BMessageFilterProxy::BMessageFilterProxy(void *bindInstPtr, const BMessageFilter* filter)
-: fBindInstPtr(bindInstPtr), BMessageFilterBridge(filter) { }
+: fBindInstPtr(bindInstPtr), BMessageFilter(filter) { }
 
 BMessageFilterProxy::~BMessageFilterProxy() { }
 

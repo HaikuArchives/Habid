@@ -9,20 +9,8 @@
 #include <Picture.h>
 #include "Support/Archivable.h"
 
-class BPictureBridge
-: public BPicture
-{
-public:
-	BPictureBridge();
-	BPictureBridge(const BPicture& other);
-	BPictureBridge(BMessage* archive);
-	~BPictureBridge();
-
-};
-
-
 class BPictureProxy
-: public  BArchivableProxy, public BPictureBridge
+: public  BArchivableProxy, public BPicture
 {
 	void *fBindInstPtr;
 public:

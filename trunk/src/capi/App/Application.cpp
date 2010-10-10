@@ -18,28 +18,14 @@ looper_name_for(const char *signature)
  	return "AppLooperPort";
 }
 
-BApplicationBridge::BApplicationBridge(const char* signature)
-: BApplication(signature)
-{
-}
-BApplicationBridge::BApplicationBridge(const char* signature, status_t* error)
-: BApplication(signature, error)
-{
-}
-BApplicationBridge::BApplicationBridge(BMessage* data)
-: BApplication(data)
-{
-}
-BApplicationBridge::~BApplicationBridge() { }
-
 BApplicationProxy::BApplicationProxy(void *bindInstPtr, const char* signature)
-: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, looper_name_for(signature), B_NORMAL_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BApplicationBridge(signature) { }
+: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, looper_name_for(signature), B_NORMAL_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BApplication(signature) { }
 
 BApplicationProxy::BApplicationProxy(void *bindInstPtr, const char* signature, status_t* error)
-: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, looper_name_for(signature), B_NORMAL_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BApplicationBridge(signature, error) { }
+: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, looper_name_for(signature), B_NORMAL_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BApplication(signature, error) { }
 
 BApplicationProxy::BApplicationProxy(void *bindInstPtr, BMessage* data)
-: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, data), BApplicationBridge(data) { }
+: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, data), BApplication(data) { }
 
 BApplicationProxy::~BApplicationProxy() { }
 

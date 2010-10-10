@@ -9,18 +9,8 @@
 #include <PropertyInfo.h>
 #include <Support/Flattenable.h>
 
-class BPropertyInfoBridge
-: public BPropertyInfo
-{
-public:
-	BPropertyInfoBridge(property_info* prop, value_info* value, bool freeOnDelete);
-	~BPropertyInfoBridge();
-
-};
-
-
 class BPropertyInfoProxy
-: public  BFlattenableProxy, public BPropertyInfoBridge
+: public  BFlattenableProxy, public BPropertyInfo
 {
 	void *fBindInstPtr;
 public:

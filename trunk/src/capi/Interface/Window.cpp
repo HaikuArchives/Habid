@@ -6,28 +6,14 @@
 #include "Interface/Window.h"
 #include "Interface/View.h"
 
-BWindowBridge::BWindowBridge(BMessage* archive)
-: BWindow(archive)
-{
-}
-BWindowBridge::BWindowBridge(BRect frame, const char* title, window_type type, uint32 flags, uint32 workspace)
-: BWindow(frame, title, type, flags, workspace)
-{
-}
-BWindowBridge::BWindowBridge(BRect frame, const char* title, window_look look, window_feel feel, uint32 flags, uint32 workspace)
-: BWindow(frame, title, look, feel, flags, workspace)
-{
-}
-BWindowBridge::~BWindowBridge() { }
-
 BWindowProxy::BWindowProxy(void *bindInstPtr, BMessage* archive)
-: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, archive), BWindowBridge(archive) { }
+: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, archive), BWindow(archive) { }
 
 BWindowProxy::BWindowProxy(void *bindInstPtr, BRect frame, const char* title, window_type type, uint32 flags, uint32 workspace)
-: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, title, B_DISPLAY_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BWindowBridge(frame, title, type, flags, workspace) { }
+: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, title, B_DISPLAY_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BWindow(frame, title, type, flags, workspace) { }
 
 BWindowProxy::BWindowProxy(void *bindInstPtr, BRect frame, const char* title, window_look look, window_feel feel, uint32 flags, uint32 workspace)
-: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, title, B_DISPLAY_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BWindowBridge(frame, title, look, feel, flags, workspace) { }
+: fBindInstPtr(bindInstPtr), BLooperProxy(bindInstPtr, title, B_DISPLAY_PRIORITY, B_LOOPER_PORT_DEFAULT_CAPACITY), BWindow(frame, title, look, feel, flags, workspace) { }
 
 BWindowProxy::~BWindowProxy() { }
 

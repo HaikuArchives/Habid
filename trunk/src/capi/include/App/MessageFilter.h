@@ -8,21 +8,9 @@
 
 #include <MessageFilter.h>
 
-class BMessageFilterBridge
-: public BMessageFilter
-{
-public:
-	BMessageFilterBridge(uint32 what, filter_hook func);
-	BMessageFilterBridge(message_delivery delivery, message_source source, filter_hook func);
-	BMessageFilterBridge(message_delivery delivery, message_source source, uint32 what, filter_hook func);
-	BMessageFilterBridge(const BMessageFilter* filter);
-	~BMessageFilterBridge();
-
-};
-
 
 class BMessageFilterProxy
-: public BMessageFilterBridge
+: public BMessageFilter
 {
 	void *fBindInstPtr;
 public:

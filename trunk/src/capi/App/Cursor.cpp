@@ -5,35 +5,18 @@
 
 #include "App/Cursor.h"
 
-BCursorBridge::BCursorBridge(const void* cursorData)
-: BCursor(cursorData)
-{
-}
-BCursorBridge::BCursorBridge(const BCursor& other)
-: BCursor(other)
-{
-}
-BCursorBridge::BCursorBridge(BCursorID id)
-: BCursor(id)
-{
-}
-BCursorBridge::BCursorBridge(BMessage* data)
-: BCursor(data)
-{
-}
-BCursorBridge::~BCursorBridge() { }
 
 BCursorProxy::BCursorProxy(void *bindInstPtr, const void* cursorData)
-: fBindInstPtr(bindInstPtr), BCursorBridge(cursorData) { }
+: fBindInstPtr(bindInstPtr), BCursor(cursorData) { }
 
 BCursorProxy::BCursorProxy(void *bindInstPtr, const BCursor& other)
-: fBindInstPtr(bindInstPtr), BCursorBridge(other) { }
+: fBindInstPtr(bindInstPtr), BCursor(other) { }
 
 BCursorProxy::BCursorProxy(void *bindInstPtr, BCursorID id)
-: fBindInstPtr(bindInstPtr), BCursorBridge(id) { }
+: fBindInstPtr(bindInstPtr), BCursor(id) { }
 
 BCursorProxy::BCursorProxy(void *bindInstPtr, BMessage* data)
-: fBindInstPtr(bindInstPtr), BCursorBridge(data) { }
+: fBindInstPtr(bindInstPtr), BCursor(data) { }
 
 BCursorProxy::~BCursorProxy() { }
 

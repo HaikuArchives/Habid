@@ -5,49 +5,23 @@
 
 #include "Interface/Bitmap.h"
 
-BBitmapBridge::BBitmapBridge(BRect bounds, uint32 flags, color_space colorSpace, int32 bytesPerRow, screen_id screenID)
-: BBitmap(bounds, flags, colorSpace, bytesPerRow, screenID)
-{
-}
-BBitmapBridge::BBitmapBridge(BRect bounds, color_space colorSpace, bool acceptsViews, bool needsContiguous)
-: BBitmap(bounds, colorSpace, acceptsViews, needsContiguous)
-{
-}
-BBitmapBridge::BBitmapBridge(const BBitmap& source, uint32 flags)
-: BBitmap(source, flags)
-{
-}
-BBitmapBridge::BBitmapBridge(const BBitmap& source)
-: BBitmap(source)
-{
-}
-BBitmapBridge::BBitmapBridge(const BBitmap* source, bool acceptsViews, bool needsContiguous)
-: BBitmap(source, acceptsViews, needsContiguous)
-{
-}
-BBitmapBridge::BBitmapBridge(BMessage* data)
-: BBitmap(data)
-{
-}
-BBitmapBridge::~BBitmapBridge() { }
-
 BBitmapProxy::BBitmapProxy(void *bindInstPtr, BRect bounds, uint32 flags, color_space colorSpace, int32 bytesPerRow, screen_id screenID)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmapBridge(bounds, flags, colorSpace, bytesPerRow, screenID) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmap(bounds, flags, colorSpace, bytesPerRow, screenID) { }
 
 BBitmapProxy::BBitmapProxy(void *bindInstPtr, BRect bounds, color_space colorSpace, bool acceptsViews, bool needsContiguous)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmapBridge(bounds, colorSpace, acceptsViews, needsContiguous) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmap(bounds, colorSpace, acceptsViews, needsContiguous) { }
 
 BBitmapProxy::BBitmapProxy(void *bindInstPtr, const BBitmap& source, uint32 flags)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmapBridge(source, flags) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmap(source, flags) { }
 
 BBitmapProxy::BBitmapProxy(void *bindInstPtr, const BBitmap& source)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmapBridge(source) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmap(source) { }
 
 BBitmapProxy::BBitmapProxy(void *bindInstPtr, const BBitmap* source, bool acceptsViews, bool needsContiguous)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmapBridge(source, acceptsViews, needsContiguous) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BBitmap(source, acceptsViews, needsContiguous) { }
 
 BBitmapProxy::BBitmapProxy(void *bindInstPtr, BMessage* data)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr, data), BBitmapBridge(data) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr, data), BBitmap(data) { }
 
 BBitmapProxy::~BBitmapProxy() { }
 

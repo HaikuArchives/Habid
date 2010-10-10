@@ -9,19 +9,8 @@
 #include <Looper.h>
 #include "App/Handler.h"
 
-class BLooperBridge
-: public BLooper
-{
-public:
-	BLooperBridge(const char* name, int32 priority, int32 port_capacity);
-	BLooperBridge(BMessage* data);
-	~BLooperBridge();
-
-};
-
-
 class BLooperProxy
-: public  BHandlerProxy, public BLooperBridge
+: public  BHandlerProxy, public BLooper
 {
 	void *fBindInstPtr;
 public:

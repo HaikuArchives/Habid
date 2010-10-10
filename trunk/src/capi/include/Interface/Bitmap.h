@@ -9,23 +9,8 @@
 #include <Bitmap.h>
 #include "Support/Archivable.h"
 
-class BBitmapBridge
-: public BBitmap
-{
-public:
-	BBitmapBridge(BRect bounds, uint32 flags, color_space colorSpace, int32 bytesPerRow, screen_id screenID);
-	BBitmapBridge(BRect bounds, color_space colorSpace, bool acceptsViews, bool needsContiguous);
-	BBitmapBridge(const BBitmap& source, uint32 flags);
-	BBitmapBridge(const BBitmap& source);
-	BBitmapBridge(const BBitmap* source, bool acceptsViews, bool needsContiguous);
-	BBitmapBridge(BMessage* data);
-	~BBitmapBridge();
-
-};
-
-
 class BBitmapProxy
-: public  BArchivableProxy, public BBitmapBridge
+: public  BArchivableProxy, public BBitmap
 {
 	void *fBindInstPtr;
 public:

@@ -5,21 +5,12 @@
 
 #include "App/Looper.h"
 
-BLooperBridge::BLooperBridge(const char* name, int32 priority, int32 port_capacity)
-: BLooper(name, priority, port_capacity)
-{
-}
-BLooperBridge::BLooperBridge(BMessage* data)
-: BLooper(data)
-{
-}
-BLooperBridge::~BLooperBridge() { }
 
 BLooperProxy::BLooperProxy(void *bindInstPtr, const char* name, int32 priority, int32 port_capacity)
-: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, name), BLooperBridge(name, priority, port_capacity) { }
+: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, name), BLooper(name, priority, port_capacity) { }
 
 BLooperProxy::BLooperProxy(void *bindInstPtr, BMessage* data)
-: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, data), BLooperBridge(data) { }
+: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, data), BLooper(data) { }
 
 BLooperProxy::~BLooperProxy() { }
 
