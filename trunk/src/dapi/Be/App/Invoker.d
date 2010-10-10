@@ -190,6 +190,7 @@ public:
 
 	// status_t be_BInvoker_SetMessage(BInvoker *self, BMessage* message);
 	status_t SetMessage(BMessage message) {
+		message._OwnsPtr = false;
 		return be_BInvoker_SetMessage(_InstPtr(), message._InstPtr);
 	}
 

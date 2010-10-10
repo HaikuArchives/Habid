@@ -820,7 +820,7 @@ class BWindow : BLooper, IBWindow
 private:
 	void *fInstancePointer = null;
 	bool fOwnsPointer = false;
-	mixin(BObject!());
+	mixin(BObjectInherited!());
 public:
 	// BWindowProxy * be_BWindow_ctor(void *bindInstPtr, BMessage* archive);
 	this(BMessage archive) {
