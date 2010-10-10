@@ -353,6 +353,7 @@ private:
 public:
 	// BButtonProxy * be_BButton_ctor(void *bindInstPtr, BRect *frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags);
 	this(BRect frame, char [] name, char [] label, BMessage message, uint32 resizingMode = B_FOLLOW_LEFT | B_FOLLOW_TOP, uint32 flags = B_WILL_DRAW | B_NAVIGABLE | B_FULL_UPDATE_ON_RESIZE) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BButton_ctor(cast(void *)this, frame._InstPtr, toStringz(name), toStringz(label), message._InstPtr, resizingMode, flags);
 			_OwnsPtr = true;
@@ -363,6 +364,7 @@ public:
 
 	// BButtonProxy * be_BButton_ctor_1(void *bindInstPtr, const char* name, const char* label, BMessage * message, uint32 flags);
 	this(char [] name, char [] label, BMessage message, uint32 flags = B_WILL_DRAW | B_NAVIGABLE | B_FULL_UPDATE_ON_RESIZE) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BButton_ctor_1(cast(void *)this, toStringz(name), toStringz(label), message._InstPtr, flags);
 			_OwnsPtr = true;
@@ -373,6 +375,7 @@ public:
 
 	// BButtonProxy * be_BButton_ctor_2(void *bindInstPtr, const char* label, BMessage* message);
 	this(char [] label, BMessage message) {
+		message._OwnsPtr = false;
 		if(_InstPtr is null) {
 			_InstPtr = be_BButton_ctor_2(cast(void *)this, toStringz(label), message._InstPtr);
 			_OwnsPtr = true;

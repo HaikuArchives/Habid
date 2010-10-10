@@ -144,7 +144,7 @@ public:
 				Stdout.formatln("Button Pressed");
 			} break;
 			default: {
-				super.MessageReceived(message);	
+				super.MessageReceived(message);
 			}	
 		}	
 	}

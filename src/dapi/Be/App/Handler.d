@@ -122,7 +122,7 @@ extern (C) {
 	}
 
 	void bind_BHandler_MessageReceived(void *bindInstPtr, void* message) {
-		(cast(BHandler)bindInstPtr).MessageReceived(new BMessage(message, true));
+		(cast(BHandler)bindInstPtr).MessageReceived(new BMessage(message, false));
 	}
 
 	void bind_BHandler_SetNextHandler(void *bindInstPtr, void* handler) {
