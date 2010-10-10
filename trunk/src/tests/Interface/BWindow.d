@@ -24,6 +24,10 @@ import Be.Interface.GraphicsDefs;
 import Be.Interface.Picture;
 import Be.Interface.Button;
 
+import Be.Support.HelperFunctions;
+
+const int32 kButtonMessage = MakeValue!("BTNP");
+
 class App : BApplication
 {
 private:
@@ -114,7 +118,7 @@ public:
 		
 		Stdout.formatln("{} {} {}", color.red, color.green, color.blue);
 		
-		fButton = new BButton(new BRect(20, 20, 100, 100), "TestButton", "TestButton", new BMessage(55));
+		fButton = new BButton(new BRect(20, 20, 100, 100), "TestButton", "TestButton", new BMessage(kButtonMessage));
 		
 		AddChild(fButton, null);
 		AddChild(fView);
@@ -134,9 +138,9 @@ public:
 	}
 	
 	override void MessageReceived(BMessage message) {
-		Stdout.formatln("ReceivedMessage: {}", message.what);
+		Stdout.formatln("ReceivedMessage: {}", getValueString(message.what));
 		switch(message.what) {
-			case 55: {
+			case kButtonMessage: {
 				Stdout.formatln("Button Pressed");
 			} break;
 			default: {

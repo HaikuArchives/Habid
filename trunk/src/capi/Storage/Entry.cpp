@@ -5,42 +5,21 @@
 
 #include "Storage/Entry.h"
 
-BEntryBridge::BEntryBridge()
-: BEntry()
-{
-}
-BEntryBridge::BEntryBridge(const BDirectory* dir, const char* path, bool traverse)
-: BEntry(dir, path, traverse)
-{
-}
-BEntryBridge::BEntryBridge(const entry_ref* _ref, bool traverse)
-: BEntry(_ref, traverse)
-{
-}
-BEntryBridge::BEntryBridge(const char* path, bool traverse)
-: BEntry(path, traverse)
-{
-}
-BEntryBridge::BEntryBridge(const BEntry& entry)
-: BEntry(entry)
-{
-}
-BEntryBridge::~BEntryBridge() { }
 
 BEntryProxy::BEntryProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge() { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntry() { }
 
 BEntryProxy::BEntryProxy(void *bindInstPtr, const BDirectory* dir, const char* path, bool traverse)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(dir, path, traverse) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntry(dir, path, traverse) { }
 
 BEntryProxy::BEntryProxy(void *bindInstPtr, const entry_ref* _ref, bool traverse)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(_ref, traverse) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntry(_ref, traverse) { }
 
 BEntryProxy::BEntryProxy(void *bindInstPtr, const char* path, bool traverse)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(path, traverse) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntry(path, traverse) { }
 
 BEntryProxy::BEntryProxy(void *bindInstPtr, const BEntry& entry)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntryBridge(entry) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BEntry(entry) { }
 
 BEntryProxy::~BEntryProxy() { }
 

@@ -9,23 +9,9 @@
 #include <Path.h>
 #include "Support/Flattenable.h"
 
-class BPathBridge
-: public BPath
-{
-public:
-	BPathBridge();
-	BPathBridge(const BPath& path);
-	BPathBridge(const entry_ref* _ref);
-	BPathBridge(const BEntry* entry);
-	BPathBridge(const char* dir, const char* leaf, bool normalize);
-	BPathBridge(const BDirectory* dir, const char* leaf, bool normalize);
-	~BPathBridge();
-
-};
-
 
 class BPathProxy
-: public  BFlattenableProxy, public BPathBridge
+: public  BFlattenableProxy, public BPath
 {
 	void *fBindInstPtr;
 public:
