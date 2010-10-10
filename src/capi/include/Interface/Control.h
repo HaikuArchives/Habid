@@ -10,20 +10,8 @@
 #include "Interface/View.h"
 #include "App/Invoker.h"
 
-class BControlBridge
-: public BControl
-{
-public:
-	BControlBridge(BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags);
-	BControlBridge(const char* name, const char* label, BMessage* message, uint32 flags);
-	BControlBridge(BMessage* archive);
-	~BControlBridge();
-
-};
-
-
 class BControlProxy
-: public  BViewProxy,  BInvokerProxy, public BControlBridge
+: public  BViewProxy,  BInvokerProxy, public BControl
 {
 	void *fBindInstPtr;
 public:

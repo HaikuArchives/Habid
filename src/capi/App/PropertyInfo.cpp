@@ -5,14 +5,9 @@
 
 #include <App/PropertyInfo.h>
 
-BPropertyInfoBridge::BPropertyInfoBridge(property_info* prop, value_info* value, bool freeOnDelete)
-: BPropertyInfo(prop, value, freeOnDelete)
-{
-}
-BPropertyInfoBridge::~BPropertyInfoBridge() { }
 
 BPropertyInfoProxy::BPropertyInfoProxy(void *bindInstPtr, property_info* prop, value_info* value, bool freeOnDelete)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPropertyInfoBridge(prop, value, freeOnDelete) { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPropertyInfo(prop, value, freeOnDelete) { }
 
 BPropertyInfoProxy::~BPropertyInfoProxy() { }
 

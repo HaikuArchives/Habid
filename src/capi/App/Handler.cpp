@@ -6,21 +6,12 @@
 
 #include "App/Handler.h"
 
-BHandlerBridge::BHandlerBridge(const char* name)
-: BHandler(name)
-{
-}
-BHandlerBridge::BHandlerBridge(BMessage* data)
-: BHandler(data)
-{
-}
-BHandlerBridge::~BHandlerBridge() { }
 
 BHandlerProxy::BHandlerProxy(void *bindInstPtr, const char* name)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BHandlerBridge(name) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BHandler(name) { }
 
 BHandlerProxy::BHandlerProxy(void *bindInstPtr, BMessage* data)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr, data), BHandlerBridge(data) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr, data), BHandler(data) { }
 
 BHandlerProxy::~BHandlerProxy() { }
 

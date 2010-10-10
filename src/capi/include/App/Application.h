@@ -9,20 +9,8 @@
 #include <Application.h>
 #include "App/Looper.h"
 
-class BApplicationBridge
-: public BApplication
-{
-public:
-	BApplicationBridge(const char* signature);
-	BApplicationBridge(const char* signature, status_t* error);
-	BApplicationBridge(BMessage* data);
-	~BApplicationBridge();
-
-};
-
-
 class BApplicationProxy
-: public  BLooperProxy, public BApplicationBridge
+: public  BLooperProxy, public BApplication
 {
 	void *fBindInstPtr;
 public:

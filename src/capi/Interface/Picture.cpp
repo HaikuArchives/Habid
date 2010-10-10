@@ -5,28 +5,15 @@
 
 #include "Interface/Picture.h"
 
-BPictureBridge::BPictureBridge()
-: BPicture()
-{
-}
-BPictureBridge::BPictureBridge(const BPicture& other)
-: BPicture(other)
-{
-}
-BPictureBridge::BPictureBridge(BMessage* archive)
-: BPicture(archive)
-{
-}
-BPictureBridge::~BPictureBridge() { }
 
 BPictureProxy::BPictureProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BPictureBridge() { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BPicture() { }
 
 BPictureProxy::BPictureProxy(void *bindInstPtr, const BPicture& other)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BPictureBridge(other) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr), BPicture(other) { }
 
 BPictureProxy::BPictureProxy(void *bindInstPtr, BMessage* archive)
-: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr, archive), BPictureBridge(archive) { }
+: fBindInstPtr(bindInstPtr), BArchivableProxy(bindInstPtr, archive), BPicture(archive) { }
 
 BPictureProxy::~BPictureProxy() { }
 

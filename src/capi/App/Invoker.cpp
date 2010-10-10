@@ -5,28 +5,15 @@
 
 #include "App/Invoker.h"
 
-BInvokerBridge::BInvokerBridge()
-: BInvoker()
-{
-}
-BInvokerBridge::BInvokerBridge(BMessage* message, const BHandler* handler, const BLooper* looper)
-: BInvoker(message, handler, looper)
-{
-}
-BInvokerBridge::BInvokerBridge(BMessage* message, BMessenger target)
-: BInvoker(message, target)
-{
-}
-BInvokerBridge::~BInvokerBridge() { }
 
 BInvokerProxy::BInvokerProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BInvokerBridge() { }
+: fBindInstPtr(bindInstPtr), BInvoker() { }
 
 BInvokerProxy::BInvokerProxy(void *bindInstPtr, BMessage* message, const BHandler* handler, const BLooper* looper)
-: fBindInstPtr(bindInstPtr), BInvokerBridge(message, handler, looper) { }
+: fBindInstPtr(bindInstPtr), BInvoker(message, handler, looper) { }
 
 BInvokerProxy::BInvokerProxy(void *bindInstPtr, BMessage* message, BMessenger target)
-: fBindInstPtr(bindInstPtr), BInvokerBridge(message, target) { }
+: fBindInstPtr(bindInstPtr), BInvoker(message, target) { }
 
 BInvokerProxy::~BInvokerProxy() { }
 

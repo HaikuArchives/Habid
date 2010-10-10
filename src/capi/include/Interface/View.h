@@ -9,20 +9,9 @@
 #include <View.h>
 #include "App/Handler.h"
 
-class BViewBridge
-: public BView
-{
-public:
-	BViewBridge(BMessage* archive);
-	BViewBridge(const char* name, uint32 flags, BLayout* layout);
-	BViewBridge(BRect frame, const char* name, uint32 resizeMask, uint32 flags);
-	~BViewBridge();
-
-};
-
 
 class BViewProxy
-: public  BHandlerProxy, public BViewBridge
+: public  BHandlerProxy, public BView
 {
 	void *fBindInstPtr;
 public:

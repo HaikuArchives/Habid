@@ -5,28 +5,14 @@
 
 #include "Interface/View.h"
 
-BViewBridge::BViewBridge(BMessage* archive)
-: BView(archive)
-{
-}
-BViewBridge::BViewBridge(const char* name, uint32 flags, BLayout* layout)
-: BView(name, flags, layout)
-{
-}
-BViewBridge::BViewBridge(BRect frame, const char* name, uint32 resizeMask, uint32 flags)
-: BView(frame, name, resizeMask, flags)
-{
-}
-BViewBridge::~BViewBridge() { }
-
 BViewProxy::BViewProxy(void *bindInstPtr, BMessage* archive)
-: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, archive), BViewBridge(archive) { }
+: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, archive), BView(archive) { }
 
 BViewProxy::BViewProxy(void *bindInstPtr, const char* name, uint32 flags, BLayout* layout)
-: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, name), BViewBridge(name, flags, layout) { }
+: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, name), BView(name, flags, layout) { }
 
 BViewProxy::BViewProxy(void *bindInstPtr, BRect frame, const char* name, uint32 resizeMask, uint32 flags)
-: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, name), BViewBridge(frame, name, resizeMask, flags) { }
+: fBindInstPtr(bindInstPtr), BHandlerProxy(bindInstPtr, name), BView(frame, name, resizeMask, flags) { }
 
 BViewProxy::~BViewProxy() { }
 

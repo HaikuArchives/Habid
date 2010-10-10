@@ -5,28 +5,14 @@
 
 #include <Interface/Control.h>
 
-BControlBridge::BControlBridge(BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags)
-: BControl(frame, name, label, message, resizingMode, flags)
-{
-}
-BControlBridge::BControlBridge(const char* name, const char* label, BMessage* message, uint32 flags)
-: BControl(name, label, message, flags)
-{
-}
-BControlBridge::BControlBridge(BMessage* archive)
-: BControl(archive)
-{
-}
-BControlBridge::~BControlBridge() { }
-
 BControlProxy::BControlProxy(void *bindInstPtr, BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags)
-: fBindInstPtr(bindInstPtr), BViewProxy(bindInstPtr, frame, name, resizingMode, flags), BInvokerProxy(bindInstPtr), BControlBridge(frame, name, label, message, resizingMode, flags) { }
+: fBindInstPtr(bindInstPtr), BViewProxy(bindInstPtr, frame, name, resizingMode, flags), BInvokerProxy(bindInstPtr), BControl(frame, name, label, message, resizingMode, flags) { }
 
 BControlProxy::BControlProxy(void *bindInstPtr, const char* name, const char* label, BMessage* message, uint32 flags)
-: fBindInstPtr(bindInstPtr), BViewProxy(bindInstPtr, name, flags, NULL), BInvokerProxy(bindInstPtr), BControlBridge(name, label, message, flags) { }
+: fBindInstPtr(bindInstPtr), BViewProxy(bindInstPtr, name, flags, NULL), BInvokerProxy(bindInstPtr), BControl(name, label, message, flags) { }
 
 BControlProxy::BControlProxy(void *bindInstPtr, BMessage* archive)
-: fBindInstPtr(bindInstPtr), BViewProxy(bindInstPtr, archive), BInvokerProxy(bindInstPtr), BControlBridge(archive) { }
+: fBindInstPtr(bindInstPtr), BViewProxy(bindInstPtr, archive), BInvokerProxy(bindInstPtr), BControl(archive) { }
 
 BControlProxy::~BControlProxy() { }
 

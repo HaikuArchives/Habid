@@ -10,19 +10,8 @@
 #include <Archivable.h>
 #include "Support/Archivable.h"
 
-class BHandlerBridge
-: public BHandler
-{
-public:
-	BHandlerBridge(const char* name);
-	BHandlerBridge(BMessage* data);
-	~BHandlerBridge();
-
-};
-
-
 class BHandlerProxy
-: public  BArchivableProxy, public BHandlerBridge
+: public  BArchivableProxy, public BHandler
 {
 	void *fBindInstPtr;
 public:

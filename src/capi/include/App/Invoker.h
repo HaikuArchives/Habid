@@ -8,20 +8,8 @@
 
 #include <Invoker.h>
 
-class BInvokerBridge
-: public BInvoker
-{
-public:
-	BInvokerBridge();
-	BInvokerBridge(BMessage* message, const BHandler* handler, const BLooper* looper);
-	BInvokerBridge(BMessage* message, BMessenger target);
-	~BInvokerBridge();
-
-};
-
-
 class BInvokerProxy
-: public BInvokerBridge
+: public BInvoker
 {
 	void *fBindInstPtr;
 public:

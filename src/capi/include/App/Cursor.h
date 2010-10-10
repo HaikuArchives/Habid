@@ -8,21 +8,8 @@
 
 #include <Cursor.h>
 
-class BCursorBridge
-: public BCursor
-{
-public:
-	BCursorBridge(const void* cursorData);
-	BCursorBridge(const BCursor& other);
-	BCursorBridge(BCursorID id);
-	BCursorBridge(BMessage* data);
-	~BCursorBridge();
-
-};
-
-
 class BCursorProxy
-: public BCursorBridge
+: public BCursor
 {
 	void *fBindInstPtr;
 public:

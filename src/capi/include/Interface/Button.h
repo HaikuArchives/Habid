@@ -9,21 +9,8 @@
 #include <Button.h>
 #include "Interface/Control.h"
 
-class BButtonBridge
-: public BButton
-{
-public:
-	BButtonBridge(BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags);
-	BButtonBridge(const char* name, const char* label, BMessage * message, uint32 flags);
-	BButtonBridge(const char* label, BMessage* message);
-	BButtonBridge(BMessage * archive);
-	~BButtonBridge();
-
-};
-
-
 class BButtonProxy
-: public  BControlProxy, public BButtonBridge
+: public  BControlProxy, public BButton
 {
 	void *fBindInstPtr;
 public:

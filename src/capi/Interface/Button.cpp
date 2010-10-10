@@ -5,35 +5,17 @@
 
 #include "Interface/Button.h"
 
-BButtonBridge::BButtonBridge(BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags)
-: BButton(frame, name, label, message, resizingMode, flags)
-{
-}
-BButtonBridge::BButtonBridge(const char* name, const char* label, BMessage * message, uint32 flags)
-: BButton(name, label, message, flags)
-{
-}
-BButtonBridge::BButtonBridge(const char* label, BMessage* message)
-: BButton(label, message)
-{
-}
-BButtonBridge::BButtonBridge(BMessage * archive)
-: BButton(archive)
-{
-}
-BButtonBridge::~BButtonBridge() { }
-
 BButtonProxy::BButtonProxy(void *bindInstPtr, BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags)
-: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, frame, name, label, message, resizingMode, flags), BButtonBridge(frame, name, label, message, resizingMode, flags) { }
+: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, frame, name, label, message, resizingMode, flags), BButton(frame, name, label, message, resizingMode, flags) { }
 
 BButtonProxy::BButtonProxy(void *bindInstPtr, const char* name, const char* label, BMessage * message, uint32 flags)
-: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, name, label, message, flags), BButtonBridge(name, label, message, flags) { }
+: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, name, label, message, flags), BButton(name, label, message, flags) { }
 
 BButtonProxy::BButtonProxy(void *bindInstPtr, const char* label, BMessage* message)
-: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, NULL, label, message, B_WILL_DRAW | B_NAVIGABLE | B_FULL_UPDATE_ON_RESIZE), BButtonBridge(label, message) { }
+: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, NULL, label, message, B_WILL_DRAW | B_NAVIGABLE | B_FULL_UPDATE_ON_RESIZE), BButton(label, message) { }
 
 BButtonProxy::BButtonProxy(void *bindInstPtr, BMessage * archive)
-: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, archive), BButtonBridge(archive) { }
+: fBindInstPtr(bindInstPtr), BControlProxy(bindInstPtr, archive), BButton(archive) { }
 
 BButtonProxy::~BButtonProxy() { }
 
