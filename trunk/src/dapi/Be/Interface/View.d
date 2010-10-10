@@ -20,7 +20,7 @@ import Be.Interface.Alignment;
 import Be.Interface.Size;
 import Be.Interface.Window;
 import Be.Interface.Bitmap;
-
+import Be.Interface.Picture;
 import Be.Interface.GraphicsDefs;
 import Be.Interface.InterfaceDefs;
 
@@ -656,14 +656,14 @@ extern (C) extern {
 	// void be_BView_DrawPicture_2(BViewProxy *self, const char* filename, long offset, BPoint *where);
 	void be_BView_DrawPicture_2(void *self, char* filename, long offset, void *where);
 
-	// void be_BView_DrawPicture_3(BViewProxy *self, const BPicture* a_picture);
-	void be_BView_DrawPicture_3(void *self, void* a_picture);
+	// void be_BView_DrawPictureAsync(BViewProxy *self, const BPicture* a_picture);
+	void be_BView_DrawPictureAsync(void *self, void* a_picture);
 
-	// void be_BView_DrawPicture_4(BViewProxy *self, const BPicture* a_picture, BPoint *where);
-	void be_BView_DrawPicture_4(void *self, void* a_picture, void *where);
+	// void be_BView_DrawPictureAsync_1(BViewProxy *self, const BPicture* a_picture, BPoint *where);
+	void be_BView_DrawPictureAsync_1(void *self, void* a_picture, void *where);
 
-	// void be_BView_DrawPicture_5(BViewProxy *self, const char* filename, long offset, BPoint *where);
-	void be_BView_DrawPicture_5(void *self, char* filename, long offset, void *where);
+	// void be_BView_DrawPictureAsync_2(BViewProxy *self, const char* filename, long offset, BPoint *where);
+	void be_BView_DrawPictureAsync_2(void *self, char* filename, long offset, void *where);
 
 	// status_t be_BView_SetEventMask(BViewProxy *self, uint32 mask, uint32 options);
 	status_t be_BView_SetEventMask(void *self, uint32 mask, uint32 options);
@@ -1208,10 +1208,10 @@ interface IBView
 	void ConstrainClippingRegion(BRegion);
 
 	// void be_BView_ClipToPicture(BView *self, BPicture* picture, BPoint *where, bool sync);
-//	final void ClipToPicture(BPicture, BPoint, bool);
+	final void ClipToPicture(BPicture, BPoint, bool);
 
 	// void be_BView_ClipToPicture_1(BView *self, BPicture* picture, BPoint *where, bool sync);
-//	final void ClipToPicture(BPicture, BPoint, bool);
+	final void ClipToPicture(BPicture, BPoint, bool);
 
 	// void be_BView_SetDrawingMode(BView *self, drawing_mode mode);
 	void SetDrawingMode(drawing_mode);
@@ -1536,34 +1536,34 @@ interface IBView
 
 	// void be_BView_SetDiskMode(BView *self, char* filename, long offset);
 	final void SetDiskMode(char [], long);
-/*
+
 	// void be_BView_BeginPicture(BView *self, BPicture* a_picture);
-	final void BeginPicture();
+	final void BeginPicture(BPicture);
 
 	// void be_BView_AppendToPicture(BView *self, BPicture* a_picture);
-	final void AppendToPicture();
+	final void AppendToPicture(BPicture);
 
 	// BPicture* be_BView_EndPicture(BView *self);
-	final BPicture* EndPicture();
+	final BPicture EndPicture();
 
 	// void be_BView_DrawPicture(BView *self, const BPicture* a_picture);
-	final void DrawPicture();
+	final void DrawPicture(BPicture);
 
 	// void be_BView_DrawPicture_1(BView *self, const BPicture* a_picture, BPoint *where);
-	final void DrawPicture();
+	final void DrawPicture(BPicture, BPoint);
 
 	// void be_BView_DrawPicture_2(BView *self, const char* filename, long offset, BPoint *where);
-	final void DrawPicture();
+	final void DrawPicture(char [], long, BPoint);
 
-	// void be_BView_DrawPicture_3(BView *self, const BPicture* a_picture);
-	final void DrawPicture();
+	// void be_BView_DrawPictureAsync(BView *self, const BPicture* a_picture);
+	final void DrawPictureAsync(BPicture);
 
-	// void be_BView_DrawPicture_4(BView *self, const BPicture* a_picture, BPoint *where);
-	final void DrawPicture();
+	// void be_BView_DrawPictureAsync_1(BView *self, const BPicture* a_picture, BPoint *where);
+	final void DrawPictureAsync(BPicture, BPoint);
 
-	// void be_BView_DrawPicture_5(BView *self, const char* filename, long offset, BPoint *where);
-	final void DrawPicture();
-*/
+	// void be_BView_DrawPictureAsync_2(BView *self, const char* filename, long offset, BPoint *where);
+	final void DrawPictureAsync(char [], long, BPoint);
+
 	// status_t be_BView_SetEventMask(BView *self, uint32 mask, uint32 options);
 	final status_t SetEventMask(uint32, uint32);
 
@@ -1750,6 +1750,8 @@ private:
 	void *fInstancePointer = null;
 	bool fOwnsPointer = false;
 	mixin(BObject!());
+	
+	BPicture fCurrentPicture = null;
 public:
 	// BViewProxy * be_BView_ctor(void *bindInstPtr, BMessage* archive);
 	this(BMessage archive) {
@@ -2082,7 +2084,7 @@ public:
 	void ConstrainClippingRegion(BRegion region) {
 		be_BView_ConstrainClippingRegion(_InstPtr(), region._InstPtr);
 	}
-/*
+
 	// void be_BView_ClipToPicture(BView *self, BPicture* picture, BPoint *where, bool sync);
 	final void ClipToPicture(BPicture picture, BPoint where, bool sync = true) {
 		be_BView_ClipToPicture(_InstPtr(), picture._InstPtr, where._InstPtr, sync);
@@ -2092,7 +2094,7 @@ public:
 	final void ClipToPicture(BPicture picture, BPoint where, bool sync = true) {
 		be_BView_ClipToPicture_1(_InstPtr(), picture._InstPtr, where._InstPtr, sync);
 	}
-*/
+
 	// void be_BView_SetDrawingMode(BView *self, drawing_mode mode);
 	void SetDrawingMode(drawing_mode mode) {
 		be_BView_SetDrawingMode(_InstPtr(), mode);
@@ -2633,52 +2635,57 @@ public:
 	final void SetDiskMode(char [] filename, long offset) {
 		be_BView_SetDiskMode(_InstPtr(), toStringz(filename), offset);
 	}
-/*
+
 	// void be_BView_BeginPicture(BView *self, BPicture* a_picture);
-	final void BeginPicture() {
-		be_BView_BeginPicture(_InstPtr());
+	final void BeginPicture(BPicture a_picture) {
+		fCurrentPicture = a_picture;
+		be_BView_BeginPicture(_InstPtr(), a_picture._InstPtr);
 	}
 
 	// void be_BView_AppendToPicture(BView *self, BPicture* a_picture);
-	final void AppendToPicture() {
-		be_BView_AppendToPicture(_InstPtr());
+	final void AppendToPicture(BPicture a_picture) {
+		be_BView_AppendToPicture(_InstPtr(), a_picture._InstPtr);
 	}
 
 	// BPicture* be_BView_EndPicture(BView *self);
-	final BPicture* EndPicture() {
-		return be_BView_EndPicture(_InstPtr());
+	final BPicture EndPicture() {
+		void *picPtr = be_BView_EndPicture(_InstPtr());
+		
+		if(picPtr is null) return null;
+		
+		return fCurrentPicture._InstPtr is picPtr ? fCurrentPicture : new BPicture(picPtr, false);
 	}
 
 	// void be_BView_DrawPicture(BView *self, const BPicture* a_picture);
-	final void DrawPicture() {
-		be_BView_DrawPicture(_InstPtr());
+	final void DrawPicture(BPicture a_picture) {
+		be_BView_DrawPicture(_InstPtr(), a_picture._InstPtr);
 	}
 
 	// void be_BView_DrawPicture_1(BView *self, const BPicture* a_picture, BPoint *where);
-	final void DrawPicture() {
-		be_BView_DrawPicture_1(_InstPtr());
+	final void DrawPicture(BPicture a_picture, BPoint where) {
+		be_BView_DrawPicture_1(_InstPtr(), a_picture._InstPtr, where._InstPtr);
 	}
 
 	// void be_BView_DrawPicture_2(BView *self, const char* filename, long offset, BPoint *where);
-	final void DrawPicture() {
-		be_BView_DrawPicture_2(_InstPtr());
+	final void DrawPicture(char [] filename, long offset, BPoint where) {
+		be_BView_DrawPicture_2(_InstPtr(), toStringz(filename), offset, where._InstPtr);
 	}
 
-	// void be_BView_DrawPicture_3(BView *self, const BPicture* a_picture);
-	final void DrawPicture() {
-		be_BView_DrawPicture_3(_InstPtr());
+	// void be_BView_DrawPictureAsync(BView *self, const BPicture* a_picture);
+	final void DrawPictureAsync(BPicture picture) {
+		be_BView_DrawPictureAsync(_InstPtr(), picture._InstPtr);
 	}
 
-	// void be_BView_DrawPicture_4(BView *self, const BPicture* a_picture, BPoint *where);
-	final void DrawPicture() {
-		be_BView_DrawPicture_4(_InstPtr());
+	// void be_BView_DrawPictureAsync_1(BView *self, const BPicture* a_picture, BPoint *where);
+	final void DrawPictureAsync(BPicture picture, BPoint where) {
+		be_BView_DrawPictureAsync_1(_InstPtr(), picture._InstPtr, where._InstPtr);
 	}
 
-	// void be_BView_DrawPicture_5(BView *self, const char* filename, long offset, BPoint *where);
-	final void DrawPicture() {
-		be_BView_DrawPicture_5(_InstPtr());
+	// void be_BView_DrawPictureAsync_2(BView *self, const char* filename, long offset, BPoint *where);
+	final void DrawPictureAsync(char [] filename, long offset, BPoint where) {
+		be_BView_DrawPictureAsync_2(_InstPtr(), toStringz(filename), offset, where._InstPtr);
 	}
-*/
+
 	// status_t be_BView_SetEventMask(BView *self, uint32 mask, uint32 options);
 	final status_t SetEventMask(uint32 mask, uint32 options) {
 		return be_BView_SetEventMask(_InstPtr(), mask, options);

@@ -25,11 +25,11 @@ operator!=(const pattern& a, const pattern& b)
 	return !(a == b);
 }
 */
-/*
-extern const pattern B_SOLID_HIGH;
-extern const pattern B_MIXED_COLORS;
-extern const pattern B_SOLID_LOW;
-*/
+
+extern (C) extern pattern B_SOLID_HIGH;
+extern (C) extern pattern B_MIXED_COLORS;
+extern (C) extern pattern B_SOLID_LOW;
+
 
 // rgb_color
 

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Picture.h" type="system" target="header"/>
+	<includefile name="Support/Archivable.h" type="local" target="header"/>
+	<Includefile name="Interface/Picture.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<class name="BPicture">
+		<Inherits name="BArchivable" access="public"/>
+
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BPicture& other" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage* archive" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable*" arguments="BMessage* archive" type="static" mod=""/>
+
+		<Function name="Archive" returns="status_t" arguments="BMessage* archive, bool deep" type="Virtual" mod="const"/>
+		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
+
+		<Function name="Play" returns="status_t" arguments="void** callBackTable, int32 tableEntries, void* userData" type="Final" mod=""/>
+
+		<Function name="Flatten" returns="status_t" arguments="BDataIO* stream" type="Final" mod=""/>
+		<Function name="Unflatten" returns="status_t" arguments="BDataIO* stream" type="Final" mod=""/>
+
+	</class>
+</Flatten>
+

@@ -20,6 +20,7 @@ import Be.Interface.Rect;
 import Be.Interface.Window;
 import Be.Interface.View;
 import Be.Interface.GraphicsDefs;
+import Be.Interface.Picture;
 
 class App : BApplication
 {
@@ -58,17 +59,44 @@ public:
 	}
 }
 
+class MyView : BView
+{
+private:
+	BPicture fPicture;
+public:
+	this(BRect frame, char [] name) {
+		super(frame, name, B_FOLLOW_ALL_SIDES, B_WILL_DRAW);	
+
+		fPicture = new BPicture();
+	}
+	
+	override void Draw(BRect updateRect) {
+		DrawPicture(fPicture);
+//		super.Draw(updateRect);
+	}
+	
+	override void AllAttached() {
+		PushState();
+		BeginPicture(fPicture);
+		SetHighColor(255, 0, 0);
+		SetLowColor(0, 255, 0);
+		FillRect(new BRect(200, 200, 300, 300), B_SOLID_HIGH);
+		StrokeRect(new BRect(400, 400, 500, 450), B_SOLID_HIGH);
+		EndPicture();
+		PopState();
+	}
+}
 
 class MyWindow : BWindow
 {
 private:
 	BView fView;
-
 public:
 	this(BRect frame, char [] title) {
 		super(frame, title, window_type.B_TITLED_WINDOW, B_QUIT_ON_WINDOW_CLOSE);
 
-		fView = new BView(Bounds(), "MainView", B_FOLLOW_ALL_SIDES, B_WILL_DRAW);
+		
+		fView = new MyView(Bounds(), "MainView");
 		fView.SetViewColor(255, 255, 0, 255);
 		
 		rgb_color color = fView.ViewColor();
@@ -76,8 +104,10 @@ public:
 		Stdout.formatln("{} {} {}", color.red, color.green, color.blue);
 		
 		fView.AddChild(new BView(new BRect(100, 100, 200, 200), "DohView", B_FOLLOW_ALL_SIDES, B_WILL_DRAW));
-		
+
+
 		AddChild(fView);
+
 	}
 
 	override bool QuitRequested() {

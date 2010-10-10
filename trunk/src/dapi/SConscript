@@ -13,6 +13,7 @@ d_srcs = [
 	'Be/Interface/Window.d',
 	'Be/Interface/GraphicsDefs.d',
 	'Be/Interface/Bitmap.d',
+	'Be/Interface/Picture.d',
 
 	'Be/App/AppDefs.d',
 	'Be/App/Application.d',

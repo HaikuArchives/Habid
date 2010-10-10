@@ -235,9 +235,9 @@
 		<Function name="DrawPicture" returns="void" arguments="const BPicture* a_picture" type="Final" mod=""/>
 		<Function name="DrawPicture" returns="void" arguments="const BPicture* a_picture, BPoint where" type="Final" mod=""/>
 		<Function name="DrawPicture" returns="void" arguments="const char* filename, long offset, BPoint where" type="Final" mod=""/>
-		<Function name="DrawPicture" returns="void" arguments="const BPicture* a_picture" type="Final" mod=""/>
-		<Function name="DrawPicture" returns="void" arguments="const BPicture* a_picture, BPoint where" type="Final" mod=""/>
-		<Function name="DrawPicture" returns="void" arguments="const char* filename, long offset, BPoint where" type="Final" mod=""/>
+		<Function name="DrawPictureAsync" returns="void" arguments="const BPicture* a_picture" type="Final" mod=""/>
+		<Function name="DrawPictureAsync" returns="void" arguments="const BPicture* a_picture, BPoint where" type="Final" mod=""/>
+		<Function name="DrawPictureAsync" returns="void" arguments="const char* filename, long offset, BPoint where" type="Final" mod=""/>
 
 		<Function name="SetEventMask" returns="status_t" arguments="uint32 mask, uint32 options" type="Final" mod=""/>
 		<Function name="EventMask" returns="uint32" arguments="" type="Final" mod=""/>
