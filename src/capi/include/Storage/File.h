@@ -10,23 +10,9 @@
 #include "Storage/Node.h"
 #include "Support/DataIO.h"
 
-class BFileBridge
-: public BFile
-{
-public:
-	BFileBridge();
-	BFileBridge(const BFile & file);
-	BFileBridge(const entry_ref * ref, uint32 openMode);
-	BFileBridge(const BEntry * entry, uint32 openMode);
-	BFileBridge(const char * path, uint32 openMode);
-	BFileBridge(const BDirectory * dir, const char * path, uint32 openMode);
-	~BFileBridge();
-
-};
-
 
 class BFileProxy
-: public  BNodeProxy,  BPositionIOProxy, public BFileBridge
+: public  BNodeProxy,  BPositionIOProxy, public BFile
 {
 	void *fBindInstPtr;
 public:

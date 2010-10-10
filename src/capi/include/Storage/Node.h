@@ -9,23 +9,9 @@
 #include <Node.h>
 #include "Storage/Statable.h"
 
-class BNodeBridge
-: public BNode
-{
-public:
-	BNodeBridge();
-	BNodeBridge(const entry_ref * ref);
-	BNodeBridge(const BEntry * entry);
-	BNodeBridge(const char * path);
-	BNodeBridge(const BDirectory * dir, const char * path);
-	BNodeBridge(const BNode & node);
-	~BNodeBridge();
-
-};
-
 
 class BNodeProxy
-: public  BStatableProxy, public BNodeBridge
+: public  BStatableProxy, public BNode
 {
 	void *fBindInstPtr;
 public:

@@ -5,49 +5,24 @@
 
 #include <Storage/Path.h>
 
-BPathBridge::BPathBridge()
-: BPath()
-{
-}
-BPathBridge::BPathBridge(const BPath& path)
-: BPath(path)
-{
-}
-BPathBridge::BPathBridge(const entry_ref* _ref)
-: BPath(_ref)
-{
-}
-BPathBridge::BPathBridge(const BEntry* entry)
-: BPath(entry)
-{
-}
-BPathBridge::BPathBridge(const char* dir, const char* leaf, bool normalize)
-: BPath(dir, leaf, normalize)
-{
-}
-BPathBridge::BPathBridge(const BDirectory* dir, const char* leaf, bool normalize)
-: BPath(dir, leaf, normalize)
-{
-}
-BPathBridge::~BPathBridge() { }
 
 BPathProxy::BPathProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPathBridge() { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPath() { }
 
 BPathProxy::BPathProxy(void *bindInstPtr, const BPath& path)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPathBridge(path) { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPath(path) { }
 
 BPathProxy::BPathProxy(void *bindInstPtr, const entry_ref* _ref)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPathBridge(_ref) { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPath(_ref) { }
 
 BPathProxy::BPathProxy(void *bindInstPtr, const BEntry* entry)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPathBridge(entry) { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPath(entry) { }
 
 BPathProxy::BPathProxy(void *bindInstPtr, const char* dir, const char* leaf, bool normalize)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPathBridge(dir, leaf, normalize) { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPath(dir, leaf, normalize) { }
 
 BPathProxy::BPathProxy(void *bindInstPtr, const BDirectory* dir, const char* leaf, bool normalize)
-: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPathBridge(dir, leaf, normalize) { }
+: fBindInstPtr(bindInstPtr), BFlattenableProxy(bindInstPtr), BPath(dir, leaf, normalize) { }
 
 BPathProxy::~BPathProxy() { }
 

@@ -10,24 +10,8 @@
 #include "Storage/Node.h"
 #include "Storage/EntryList.h"
 
-class BDirectoryBridge
-: public BDirectory
-{
-public:
-	BDirectoryBridge();
-	BDirectoryBridge(const BDirectory & dir);
-	BDirectoryBridge(const entry_ref * _ref);
-	BDirectoryBridge(const node_ref * nref);
-	BDirectoryBridge(const BEntry * entry);
-	BDirectoryBridge(const char * path);
-	BDirectoryBridge(const BDirectory * dir, const char * path);
-	~BDirectoryBridge();
-
-};
-
-
 class BDirectoryProxy
-: public  BNodeProxy,  BEntryListProxy, public BDirectoryBridge
+: public  BNodeProxy,  BEntryListProxy, public BDirectory
 {
 	void *fBindInstPtr;
 public:

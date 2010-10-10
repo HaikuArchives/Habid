@@ -5,58 +5,29 @@
 
 #include "Storage/Directory.h"
 
-BDirectoryBridge::BDirectoryBridge()
-: BDirectory()
-{
-}
-BDirectoryBridge::BDirectoryBridge(const BDirectory & dir)
-: BDirectory(dir)
-{
-}
-BDirectoryBridge::BDirectoryBridge(const entry_ref * _ref)
-: BDirectory(_ref)
-{
-}
-BDirectoryBridge::BDirectoryBridge(const node_ref * nref)
-: BDirectory(nref)
-{
-}
-BDirectoryBridge::BDirectoryBridge(const BEntry * entry)
-: BDirectory(entry)
-{
-}
-BDirectoryBridge::BDirectoryBridge(const char * path)
-: BDirectory(path)
-{
-}
-BDirectoryBridge::BDirectoryBridge(const BDirectory * dir, const char * path)
-: BDirectory(dir, path)
-{
-}
-BDirectoryBridge::~BDirectoryBridge() { }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr), BEntryListProxy(bindInstPtr), BDirectoryBridge() { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr), BEntryListProxy(bindInstPtr), BDirectory() { }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr, const BDirectory & dir)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, dir), BEntryListProxy(bindInstPtr), BDirectoryBridge(dir) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, dir), BEntryListProxy(bindInstPtr), BDirectory(dir) { }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr, const entry_ref * _ref)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, _ref), BEntryListProxy(bindInstPtr), BDirectoryBridge(_ref) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, _ref), BEntryListProxy(bindInstPtr), BDirectory(_ref) { }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr, const node_ref * nref)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr), BEntryListProxy(bindInstPtr), BDirectoryBridge(nref) {
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr), BEntryListProxy(bindInstPtr), BDirectory(nref) {
 	((BDirectory *)this)->SetTo(nref);
 }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr, const BEntry * entry)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, entry), BEntryListProxy(bindInstPtr), BDirectoryBridge(entry) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, entry), BEntryListProxy(bindInstPtr), BDirectory(entry) { }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr, const char * path)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, path), BEntryListProxy(bindInstPtr), BDirectoryBridge(path) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, path), BEntryListProxy(bindInstPtr), BDirectory(path) { }
 
 BDirectoryProxy::BDirectoryProxy(void *bindInstPtr, const BDirectory * dir, const char * path)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, dir, path), BEntryListProxy(bindInstPtr), BDirectoryBridge(dir, path) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, dir, path), BEntryListProxy(bindInstPtr), BDirectory(dir, path) { }
 
 BDirectoryProxy::~BDirectoryProxy() { }
 

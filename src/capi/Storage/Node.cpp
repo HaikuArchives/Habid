@@ -5,49 +5,23 @@
 
 #include "Storage/Node.h"
 
-BNodeBridge::BNodeBridge()
-: BNode()
-{
-}
-BNodeBridge::BNodeBridge(const entry_ref * ref)
-: BNode(ref)
-{
-}
-BNodeBridge::BNodeBridge(const BEntry * entry)
-: BNode(entry)
-{
-}
-BNodeBridge::BNodeBridge(const char * path)
-: BNode(path)
-{
-}
-BNodeBridge::BNodeBridge(const BDirectory * dir, const char * path)
-: BNode(dir, path)
-{
-}
-BNodeBridge::BNodeBridge(const BNode & node)
-: BNode(node)
-{
-}
-BNodeBridge::~BNodeBridge() { }
-
 BNodeProxy::BNodeProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNodeBridge() { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNode() { }
 
 BNodeProxy::BNodeProxy(void *bindInstPtr, const entry_ref * ref)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNodeBridge(ref) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNode(ref) { }
 
 BNodeProxy::BNodeProxy(void *bindInstPtr, const BEntry * entry)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNodeBridge(entry) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNode(entry) { }
 
 BNodeProxy::BNodeProxy(void *bindInstPtr, const char * path)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNodeBridge(path) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNode(path) { }
 
 BNodeProxy::BNodeProxy(void *bindInstPtr, const BDirectory * dir, const char * path)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNodeBridge(dir, path) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNode(dir, path) { }
 
 BNodeProxy::BNodeProxy(void *bindInstPtr, const BNode & node)
-: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNodeBridge(node) { }
+: fBindInstPtr(bindInstPtr), BStatableProxy(bindInstPtr), BNode(node) { }
 
 BNodeProxy::~BNodeProxy() { }
 

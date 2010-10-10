@@ -7,49 +7,24 @@
 #include "Support/DataIO.h"
 #include "Storage/File.h"
 
-BFileBridge::BFileBridge()
-: BFile()
-{
-}
-BFileBridge::BFileBridge(const BFile & file)
-: BFile(file)
-{
-}
-BFileBridge::BFileBridge(const entry_ref * ref, uint32 openMode)
-: BFile(ref, openMode)
-{
-}
-BFileBridge::BFileBridge(const BEntry * entry, uint32 openMode)
-: BFile(entry, openMode)
-{
-}
-BFileBridge::BFileBridge(const char * path, uint32 openMode)
-: BFile(path, openMode)
-{
-}
-BFileBridge::BFileBridge(const BDirectory * dir, const char * path, uint32 openMode)
-: BFile(dir, path, openMode)
-{
-}
-BFileBridge::~BFileBridge() { }
 
 BFileProxy::BFileProxy(void *bindInstPtr)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr), BPositionIOProxy(bindInstPtr), BFileBridge() { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr), BPositionIOProxy(bindInstPtr), BFile() { }
 
 BFileProxy::BFileProxy(void *bindInstPtr, const BFile & file)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, file), BPositionIOProxy(bindInstPtr), BFileBridge(file) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, file), BPositionIOProxy(bindInstPtr), BFile(file) { }
 
 BFileProxy::BFileProxy(void *bindInstPtr, const entry_ref * ref, uint32 openMode)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, ref), BPositionIOProxy(bindInstPtr), BFileBridge(ref, openMode) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, ref), BPositionIOProxy(bindInstPtr), BFile(ref, openMode) { }
 
 BFileProxy::BFileProxy(void *bindInstPtr, const BEntry * entry, uint32 openMode)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, entry), BPositionIOProxy(bindInstPtr), BFileBridge(entry, openMode) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, entry), BPositionIOProxy(bindInstPtr), BFile(entry, openMode) { }
 
 BFileProxy::BFileProxy(void *bindInstPtr, const char * path, uint32 openMode)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, path), BPositionIOProxy(bindInstPtr), BFileBridge(path, openMode) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, path), BPositionIOProxy(bindInstPtr), BFile(path, openMode) { }
 
 BFileProxy::BFileProxy(void *bindInstPtr, const BDirectory * dir, const char * path, uint32 openMode)
-: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, dir, path), BPositionIOProxy(bindInstPtr), BFileBridge(dir, path, openMode) { }
+: fBindInstPtr(bindInstPtr), BNodeProxy(bindInstPtr, dir, path), BPositionIOProxy(bindInstPtr), BFile(dir, path, openMode) { }
 
 BFileProxy::~BFileProxy() { }
 

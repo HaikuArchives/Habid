@@ -9,22 +9,9 @@
 #include <Entry.h>
 #include "Storage/Statable.h"
 
-class BEntryBridge
-: public BEntry
-{
-public:
-	BEntryBridge();
-	BEntryBridge(const BDirectory* dir, const char* path, bool traverse);
-	BEntryBridge(const entry_ref* _ref, bool traverse);
-	BEntryBridge(const char* path, bool traverse);
-	BEntryBridge(const BEntry& entry);
-	~BEntryBridge();
-
-};
-
 
 class BEntryProxy
-: public  BStatableProxy, public BEntryBridge
+: public  BStatableProxy, public BEntry
 {
 	void *fBindInstPtr;
 public:
