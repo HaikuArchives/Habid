@@ -1486,19 +1486,19 @@ extern "C" {
 		self->DrawPicture(filename, offset, *where);
 	}
 
-	void be_BView_DrawPicture_3(BView *self, const BPicture* a_picture)
+	void be_BView_DrawPictureAsync(BView *self, const BPicture* a_picture)
 	{
-		self->DrawPicture(a_picture);
+		self->DrawPictureAsync(a_picture);
 	}
 
-	void be_BView_DrawPicture_4(BView *self, const BPicture* a_picture, BPoint *where)
+	void be_BView_DrawPictureAsync_1(BView *self, const BPicture* a_picture, BPoint *where)
 	{
-		self->DrawPicture(a_picture, *where);
+		self->DrawPictureAsync(a_picture, *where);
 	}
 
-	void be_BView_DrawPicture_5(BView *self, const char* filename, long offset, BPoint *where)
+	void be_BView_DrawPictureAsync_2(BView *self, const char* filename, long offset, BPoint *where)
 	{
-		self->DrawPicture(filename, offset, *where);
+		self->DrawPictureAsync(filename, offset, *where);
 	}
 
 	status_t be_BView_SetEventMask(BView *self, uint32 mask, uint32 options)
