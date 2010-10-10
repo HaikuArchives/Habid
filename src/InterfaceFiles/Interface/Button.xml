@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Button.h" type="system" target="header"/>
+	<Includefile name="Interface/Control.h" type="local" target="header"/>
+	<Includefile name="Interface/Button.h" type="local" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BSize BRect BPoint "/>
+
+	<class name="BButton">
+		<Inherits name="BControl" access="public"/>
+
+		<Function name="" returns="" arguments="BRect frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char* name, const char* label, BMessage *message, uint32 flags" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const char* label, BMessage* message" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="BMessage *archive" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Instantiate" returns="BArchivable*" arguments="BMessage* archive" type="static" mod=""/>
+		<Function name="Archive" returns="status_t" arguments="BMessage* archive, bool deep" type="Virtual" mod="const"/>
+
+		<Function name="Draw" returns="void" arguments="BRect updateRect" type="Virtual" mod=""/>
+		<Function name="MouseDown" returns="void" arguments="BPoint point" type="Virtual" mod=""/>
+		<Function name="AttachedToWindow" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="KeyDown" returns="void" arguments="const char* bytes, int32 numBytes" type="Virtual" mod=""/>
+		<Function name="MakeDefault" returns="void" arguments="bool flag" type="Virtual" mod=""/>
+		<Function name="SetLabel" returns="void" arguments="const char* string" type="Virtual" mod=""/>
+		<Function name="IsDefault" returns="bool" arguments="" type="Final" mod="const"/>
+
+		<Function name="MessageReceived" returns="void" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="WindowActivated" returns="void" arguments="bool active" type="Virtual" mod=""/>
+		<Function name="MouseMoved" returns="void" arguments="BPoint point, uint32 transit, const BMessage* message" type="Virtual" mod=""/>
+		<Function name="MouseUp" returns="void" arguments="BPoint point" type="Virtual" mod=""/>
+		<Function name="DetachedFromWindow" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="SetValue" returns="void" arguments="int32 value" type="Virtual" mod=""/>
+		<Function name="GetPreferredSize" returns="void" arguments="float* _width, float* _height" type="Virtual" mod=""/>
+		<Function name="ResizeToPreferred" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="Invoke" returns="status_t" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="FrameMoved" returns="void" arguments="BPoint newLocation" type="Virtual" mod=""/>
+		<Function name="FrameResized" returns="void" arguments="float width, float height" type="Virtual" mod=""/>
+
+		<Function name="MakeFocus" returns="void" arguments="bool focused" type="Virtual" mod=""/>
+		<Function name="AllAttached" returns="void" arguments="" type="Virtual" mod=""/>
+		<Function name="AllDetached" returns="void" arguments="" type="Virtual" mod=""/>
+
+		<Function name="ResolveSpecifier" returns="BHandler*" arguments="BMessage* message, int32 index, BMessage* specifier, int32 what, const char* property" type="Virtual" mod=""/>
+		<Function name="GetSupportedSuites" returns="status_t" arguments="BMessage* message" type="Virtual" mod=""/>
+		<Function name="Perform" returns="status_t" arguments="perform_code d, void* arg" type="Virtual" mod=""/>
+
+		<Function name="InvalidateLayout" returns="void" arguments="bool descendants" type="Virtual" mod=""/>
+
+		<Function name="MinSize" returns="BSize" arguments="" type="Virtual" mod=""/>
+		<Function name="MaxSize" returns="BSize" arguments="" type="Virtual" mod=""/>
+		<Function name="PreferredSize" returns="BSize" arguments="" type="Virtual" mod=""/>
+	</class>
+</Flatten>

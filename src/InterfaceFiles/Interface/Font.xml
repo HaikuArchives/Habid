@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<Flatten>
+	<Includefile name="Font.h" type="system" target="source"/>
+	<Includefile name="Rect.h" type="system" target="source"/>
+
+	<Author name="Tomas Wilhelmsson" email="tomas.wilhelmsson@gmail.com" license="MIT"/>
+
+	<ClassNames names="BRect BPoint"/>
+
+	<class name="unicode_block">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="uint64 block2, uint64 block1" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="Includes" returns="bool" arguments="const unicode_block& block" type="Final" mod="const"/>
+
+		<Function name="operator&" returns="unicode_block" arguments="const unicode_block& block" type="operator" mod="const"/>
+		<Function name="operator|" returns="unicode_block" arguments="const unicode_block& block" type="operator" mod="const"/>
+		<Function name="operator=" returns="unicode_block&" arguments="const unicode_block& block" type="operator" mod=""/>
+		<Function name="operator==" returns="bool" arguments="const unicode_block& block" type="operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const unicode_block& block" type="operator" mod="const"/>
+	</class>
+
+	<class name="BFont">
+		<Function name="" returns="" arguments="" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="const BFont* font" type="Constructor" mod=""/>
+		<Function name="" returns="" arguments="" type="Destructor" mod=""/>
+
+		<Function name="SetFamilyAndStyle" returns="status_t" arguments="const font_family family, const font_style style" type="Final" mod=""/>
+		<Function name="SetFamilyAndStyle" returns="void" arguments="uint32 code" type="Final" mod=""/>
+		<Function name="SetFamilyAndFace" returns="status_t" arguments="const font_family family, uint16 face" type="Final" mod=""/>
+
+		<Function name="SetSize" returns="void" arguments="float size" type="Final" mod=""/>
+		<Function name="SetShear" returns="void" arguments="float shear" type="Final" mod=""/>
+		<Function name="SetRotation" returns="void" arguments="float rotation" type="Final" mod=""/>
+		<Function name="SetFalseBoldWidth" returns="void" arguments="float width" type="Final" mod=""/>
+		<Function name="SetSpacing" returns="void" arguments="uint8 spacing" type="Final" mod=""/>
+		<Function name="SetEncoding" returns="void" arguments="uint8 encoding" type="Final" mod=""/>
+		<Function name="SetFace" returns="void" arguments="uint16 face" type="Final" mod=""/>
+		<Function name="SetFlags" returns="void" arguments="uint32 flags" type="Final" mod=""/>
+
+		<Function name="GetFamilyAndStyle" returns="void" arguments="font_family* family, font_style* style" type="Final" mod="const"/>
+		<Function name="FamilyAndStyle" returns="uint32" arguments="" type="Final" mod="const"/>
+		<Function name="Size" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="Shear" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="Rotation" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="FalseBoldWidth" returns="float" arguments="" type="Final" mod="const"/>
+		<Function name="Spacing" returns="uint8" arguments="" type="Final" mod="const"/>
+		<Function name="Encoding" returns="uint8" arguments="" type="Final" mod="const"/>
+		<Function name="Face" returns="uint16" arguments="" type="Final" mod="const"/>
+		<Function name="Flags" returns="uint32" arguments="" type="Final" mod="const"/>
+
+		<Function name="Direction" returns="font_direction" arguments="" type="Final" mod="const"/>
+		<Function name="IsFixed" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="IsFullAndHalfFixed" returns="bool" arguments="" type="Final" mod="const"/>
+		<Function name="BoundingBox" returns="BRect" arguments="" type="Final" mod="const"/>
+		<Function name="Blocks" returns="unicode_block" arguments="" type="Final" mod="const"/>
+		<Function name="FileFormat" returns="font_file_format" arguments="" type="Final" mod="const"/>
+
+		<Function name="CountTuned" returns="int32" arguments="" type="Final" mod="const"/>
+		<Function name="GetTunedInfo" returns="void" arguments="int32 index, tuned_font_info* info" type="Final" mod="const"/>
+
+		<Function name="TruncateString" returns="void" arguments="BString* inOut, uint32 mode, float width" type="Final" mod="const"/>
+		<Function name="GetTruncatedStrings" returns="void" arguments="const char* stringArray[], int32 numStrings, uint32 mode, float width, BString resultArray[]" type="Final" mod="const"/>
+		<Function name="GetTruncatedStrings" returns="void" arguments="const char* stringArray[], int32 numStrings, uint32 mode, float width, char* resultArray[]" type="Final" mod="const"/>
+
+		<Function name="StringWidth" returns="float" arguments="const char* string" type="Final" mod="const"/>
+		<Function name="StringWidth" returns="float" arguments="const char* string, int32 length" type="Final" mod="const"/>
+		<Function name="GetStringWidths" returns="void" arguments="const char* stringArray[], const int32 lengthArray[], int32 numStrings, float widthArray[]" type="Final" mod="const"/>
+
+
+		<Function name="GetEscapements" returns="void" arguments="const char charArray[], int32 numChars, float escapementArray[]" type="Final" mod="const"/>
+		<Function name="GetEscapements" returns="void" arguments="const char charArray[], int32 numChars, escapement_delta* delta, float escapementArray[]" type="Final" mod="const"/>
+		<Function name="GetEscapements" returns="void" arguments="const char charArray[], int32 numChars, escapement_delta* delta, BPoint escapementArray[]" type="Final" mod="const"/>
+		<Function name="GetEscapements" returns="void" arguments="const char charArray[], int32 numChars, escapement_delta* delta, BPoint escapementArray[], BPoint offsetArray[]" type="Final" mod="const"/>
+
+		<Function name="GetEdges" returns="void" arguments="const char charArray[], int32 numBytes, edge_info edgeArray[]" type="Final" mod="const"/>
+		<Function name="GetHeight" returns="void" arguments="font_height* height" type="Final" mod="const"/>
+
+		<Function name="GetBoundingBoxesAsGlyphs" returns="void" arguments="const char charArray[], int32 numChars, font_metric_mode mode, BRect boundingBoxArray[]" type="Final" mod="const"/>
+		<Function name="GetBoundingBoxesAsString" returns="void" arguments="const char charArray[], int32 numChars, font_metric_mode mode, escapement_delta* delta, BRect boundingBoxArray[]" type="Final" mod="const"/>
+		<Function name="GetBoundingBoxesForStrings" returns="void" arguments="const char* stringArray[], int32 numStrings, font_metric_mode mode, escapement_delta deltas[], BRect boundingBoxArray[]" type="Final" mod="const"/>
+
+		<Function name="GetGlyphShapes" returns="void" arguments="const char charArray[], int32 numChars, BShape* glyphShapeArray[]" type="Final" mod="const"/>
+		<Function name="GetHasGlyphs" returns="void" arguments="const char charArray[], int32 numChars, bool hasArray[]" type="Final" mod="const"/>
+
+
+		<Function name="operator=" returns="BFont&" arguments="const BFont& font" type="operator" mod=""/>
+		<Function name="operator==" returns="bool" arguments="const BFont& font" type="operator" mod="const"/>
+		<Function name="operator!=" returns="bool" arguments="const BFont& font" type="operator" mod="const"/>
+
+		<Function name="PrintToStream" returns="void" arguments="" type="Final" mod="const"/>
+	</class>
+</Flatten>
+

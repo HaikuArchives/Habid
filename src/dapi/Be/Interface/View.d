@@ -7,6 +7,7 @@ module Be.Interface.View;
 import Be.Support.SupportDefs;
 import Be.Support.types;
 import Be.Support.BObject;
+import Be.Support.String;
 
 import Be.App.Message;
 import Be.App.Handler;
@@ -23,6 +24,7 @@ import Be.Interface.Bitmap;
 import Be.Interface.Picture;
 import Be.Interface.GraphicsDefs;
 import Be.Interface.InterfaceDefs;
+import Be.Interface.Font;
 
 import tango.stdc.stringz;
 
@@ -944,7 +946,7 @@ extern (C) {
 	}
 
 	void bind_BView_SetFont(void *bindInstPtr, void* font, uint32 mask) {
-		assert(false, "bind_BView_SetFont(void *bindInstPtr, const BFont* font, uint32 mask) Unimplemented");
+		(cast(BView)bindInstPtr).SetFont(new BFont(font, false), mask);
 	}
 
 	void bind_BView_SetFlags(void *bindInstPtr, uint32 flags) {
@@ -1481,41 +1483,41 @@ interface IBView
 	final void DrawChar(char, BPoint);
 
 	// void be_BView_DrawString(BView *self, const char* string, escapement_delta* delta);
-	final void DrawString(char [], escapement_delta);
+	final void DrawString(char [], escapement_delta *);
 
 	// void be_BView_DrawString_1(BView *self, const char* string, BPoint *location, escapement_delta* delta);
-	final void DrawString(char [], BPoint, escapement_delta);
+	final void DrawString(char [], BPoint, escapement_delta *);
 
 	// void be_BView_DrawString_2(BView *self, const char* string, int32 length, escapement_delta* delta);
-	final void DrawString(char [], int32, escapement_delta);
+	final void DrawString(char [], int32, escapement_delta *);
 
 	// void be_BView_DrawString_3(BView *self, const char* string, int32 length, BPoint *location, escapement_delta* delta);
-	final void DrawString(char [], int32, BPoint, escapement_delta);
+	final void DrawString(char [], int32, BPoint, escapement_delta *);
 
 	// void be_BView_DrawString_4(BView *self, const char* string, const BPoint* locations, int32 locationCount);
 //	final void DrawString(char [], BPoint [], int32);
 
 	// void be_BView_DrawString_5(BView *self, const char* string, int32 length, const BPoint* locations, int32 locationCount);
 //	final void DrawString(char [], int32, BPoint [], int32);
-/*
+
 	// void be_BView_SetFont(BView *self, const BFont* font, uint32 mask);
-	void SetFont();
+	void SetFont(BFont, uint32);
 
 	// void be_BView_GetFont(BView *self, BFont* font);
-	final void GetFont();
+	final void GetFont(BFont);
 
 	// void be_BView_TruncateString(BView *self, BString* in_out, uint32 mode, float width);
-	final void TruncateString();
+	final void TruncateString(BString, uint32, float);
 
 	// float be_BView_StringWidth(BView *self, const char* string);
-	final float StringWidth();
+	final float StringWidth(char []);
 
 	// float be_BView_StringWidth_1(BView *self, const char* string, int32 length);
-	final float StringWidth();
+	final float StringWidth(char [], int32);
 
 	// void be_BView_GetStringWidths(BView *self, char* stringArray[], int32 lengthArray[], int32 numStrings, float widthArray[]);
-	final void GetStringWidths();
-*/
+//	final void GetStringWidths();
+
 	// void be_BView_SetFontSize(BView *self, float size);
 	final void SetFontSize(float);
 
@@ -1523,7 +1525,7 @@ interface IBView
 	final void ForceFontAliasing(bool);
 
 	// void be_BView_GetFontHeight(BView *self, font_height* height);
-//	final void GetFontHeight(inout font_height);
+	final void GetFontHeight(inout font_height);
 
 	// void be_BView_Invalidate(BView *self, BRect *invalRect);
 	final void Invalidate(BRect);
@@ -1749,10 +1751,13 @@ class BView : BHandler, IBView
 private:
 	void *fInstancePointer = null;
 	bool fOwnsPointer = false;
-	mixin(BObject!());
+	mixin(BObjectInherited!());
 	
 	BPicture fCurrentPicture = null;
 public:
+	this() {
+		super();	
+	}
 	// BViewProxy * be_BView_ctor(void *bindInstPtr, BMessage* archive);
 	this(BMessage archive) {
 		if(_InstPtr is null) {
@@ -2541,23 +2546,23 @@ public:
 	}
 
 	// void be_BView_DrawString(BView *self, const char* string, escapement_delta* delta);
-	final void DrawString(char [] string, escapement_delta delta) {
-		be_BView_DrawString(_InstPtr(), toStringz(string), &delta);
+	final void DrawString(char [] string, escapement_delta *delta = null) {
+		be_BView_DrawString(_InstPtr(), toStringz(string), delta);
 	}
 
 	// void be_BView_DrawString_1(BView *self, const char* string, BPoint *location, escapement_delta* delta);
-	final void DrawString(char [] string, BPoint location, escapement_delta delta) {
-		be_BView_DrawString_1(_InstPtr(), toStringz(string), location._InstPtr, &delta);
+	final void DrawString(char [] string, BPoint location, escapement_delta *delta = null) {
+		be_BView_DrawString_1(_InstPtr(), toStringz(string), location._InstPtr, delta);
 	}
 
 	// void be_BView_DrawString_2(BView *self, const char* string, int32 length, escapement_delta* delta);
-	final void DrawString(char [] string, int32 length, escapement_delta delta) {
-		be_BView_DrawString_2(_InstPtr(), toStringz(string), length, &delta);
+	final void DrawString(char [] string, int32 length, escapement_delta *delta = null) {
+		be_BView_DrawString_2(_InstPtr(), toStringz(string), length, delta);
 	}
 
 	// void be_BView_DrawString_3(BView *self, const char* string, int32 length, BPoint *location, escapement_delta* delta);
-	final void DrawString(char [] string, int32 length, BPoint location, escapement_delta delta) {
-		be_BView_DrawString_3(_InstPtr(), toStringz(string), length, location._InstPtr, &delta);
+	final void DrawString(char [] string, int32 length, BPoint location, escapement_delta *delta = null) {
+		be_BView_DrawString_3(_InstPtr(), toStringz(string), length, location._InstPtr, delta);
 	}
 
 /*
@@ -2570,32 +2575,32 @@ public:
 	final void DrawString(char [] string, int32 length, BPoint [] locations, int32 locationCount) {
 		be_BView_DrawString_5(_InstPtr(), toStringz(string), length, locations._InstPtr, locationCount);
 	}
-
+*/
 	// void be_BView_SetFont(BView *self, const BFont* font, uint32 mask);
-	void SetFont() {
-		be_BView_SetFont(_InstPtr());
+	void SetFont(BFont font, uint32 mask) {
+		be_BView_SetFont(_InstPtr(), font._InstPtr, mask);
 	}
 
 	// void be_BView_GetFont(BView *self, BFont* font);
-	final void GetFont() {
-		be_BView_GetFont(_InstPtr());
+	final void GetFont(BFont font) {
+		be_BView_GetFont(_InstPtr(), font._InstPtr);
 	}
 
 	// void be_BView_TruncateString(BView *self, BString* in_out, uint32 mode, float width);
-	final void TruncateString() {
-		be_BView_TruncateString(_InstPtr());
+	final void TruncateString(BString in_out, uint32 mode, float width) {
+		be_BView_TruncateString(_InstPtr(), in_out._InstPtr, mode, width);
 	}
 
 	// float be_BView_StringWidth(BView *self, const char* string);
-	final float StringWidth() {
-		return be_BView_StringWidth(_InstPtr());
+	final float StringWidth(char [] string) {
+		return be_BView_StringWidth(_InstPtr(), toStringz(string));
 	}
 
 	// float be_BView_StringWidth_1(BView *self, const char* string, int32 length);
-	final float StringWidth() {
-		return be_BView_StringWidth_1(_InstPtr());
+	final float StringWidth(char [] string, int32 length) {
+		return be_BView_StringWidth_1(_InstPtr(), toStringz(string), length);
 	}
-
+/*
 	// void be_BView_GetStringWidths(BView *self, char* stringArray[], int32 lengthArray[], int32 numStrings, float widthArray[]);
 	final void GetStringWidths() {
 		be_BView_GetStringWidths(_InstPtr());
@@ -2610,12 +2615,12 @@ public:
 	final void ForceFontAliasing(bool enable) {
 		be_BView_ForceFontAliasing(_InstPtr(), enable);
 	}
-/*
+
 	// void be_BView_GetFontHeight(BView *self, font_height* height);
-	final void GetFontHeight() {
-		be_BView_GetFontHeight(_InstPtr());
+	final void GetFontHeight(inout font_height height) {
+		be_BView_GetFontHeight(_InstPtr(), &height);
 	}
-*/
+
 	// void be_BView_Invalidate(BView *self, BRect *invalRect);
 	final void Invalidate(BRect invalRect) {
 		be_BView_Invalidate(_InstPtr(), invalRect._InstPtr);

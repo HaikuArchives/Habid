@@ -14,6 +14,9 @@ d_srcs = [
 	'Be/Interface/GraphicsDefs.d',
 	'Be/Interface/Bitmap.d',
 	'Be/Interface/Picture.d',
+	'Be/Interface/Font.d',
+	'Be/Interface/Control.d',
+	'Be/Interface/Button.d',
 
 	'Be/App/AppDefs.d',
 	'Be/App/Application.d',

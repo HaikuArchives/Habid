@@ -12,6 +12,9 @@ c_srcs = [
 	'Interface/Window.cpp',
 	'Interface/Bitmap.cpp',
 	'Interface/Picture.cpp',
+	'Interface/Font.cpp',
+	'Interface/Control.cpp',
+	'Interface/Button.cpp',
 
 	'App/Application.cpp',
 	'App/Clipboard.cpp',
