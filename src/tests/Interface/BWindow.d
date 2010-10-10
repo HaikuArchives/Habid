@@ -120,7 +120,7 @@ public:
 		
 		fButton = new BButton(new BRect(20, 20, 100, 100), "TestButton", "TestButton", new BMessage(kButtonMessage));
 		
-		AddChild(fButton, null);
+		AddChild(fButton);
 		AddChild(fView);
 
 	}
@@ -138,6 +138,7 @@ public:
 	}
 	
 	override void MessageReceived(BMessage message) {
+		Stdout.formatln("OwnsPtr? {}", message._OwnsPtr);
 		Stdout.formatln("ReceivedMessage: {}", getValueString(message.what));
 		switch(message.what) {
 			case kButtonMessage: {

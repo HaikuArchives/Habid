@@ -292,8 +292,8 @@ private:
 public:
 	// BControlProxy * be_BControl_ctor(void *bindInstPtr, BRect *frame, const char* name, const char* label, BMessage* message, uint32 resizingMode, uint32 flags);
 	this(BRect frame, char [] name, char [] label, BMessage message, uint32 resizingMode, uint32 flags) {
-		message._OwnsPtr = false;
 		if(_InstPtr is null) {
+			message._OwnsPtr = false;
 			_InstPtr = be_BControl_ctor(cast(void *)this, frame._InstPtr, toStringz(name), toStringz(label), message._InstPtr, resizingMode, flags);
 			_OwnsPtr = true;
 		}
@@ -302,8 +302,8 @@ public:
 
 	// BControlProxy * be_BControl_ctor_1(void *bindInstPtr, const char* name, const char* label, BMessage* message, uint32 flags);
 	this(char [] name, char [] label, BMessage message, uint32 flags) {
-		message._OwnsPtr = false;
 		if(_InstPtr is null) {
+			message._OwnsPtr = false;
 			_InstPtr = be_BControl_ctor_1(cast(void *)this, name is null ? null : toStringz(name), toStringz(label), message._InstPtr, flags);
 			_OwnsPtr = true;
 		}
@@ -329,7 +329,7 @@ public:
 	}
 
 	//BArchivable* be_BControl_Instantiate_static(BMessage* archive)
-	static BControl Instantiate(BMessage* archive)
+	static BControl Instantiate(BMessage archive)
 	{
 		return new BControl(be_BControl_Instantiate_static(archive._InstPtr), true);
 	}
@@ -457,6 +457,7 @@ public:
 	/* Stupid multiple inheritance */
 	// status_t be_BInvoker_SetMessage(BInvoker *self, BMessage* message);
 	status_t SetMessage(BMessage message) {
+		message._OwnsPtr = false;
 		return be_BInvoker_SetMessage(_InstPtr(), message._InstPtr);
 	}
 

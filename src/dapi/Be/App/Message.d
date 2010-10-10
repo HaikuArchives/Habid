@@ -25,6 +25,9 @@ import Be.Interface.Size;
 import Be.Interface.Rect;
 
 import tango.stdc.stringz;
+import tango.io.Stdout;
+
+import Be.Support.HelperFunctions;
 
 extern (C) extern {
 	// BMessage* be_BMessage_ctor(void *bindInstPtr);
@@ -642,6 +645,7 @@ public:
 
 	// void be_BMessage_dtor(BMessage* self);
 	~this() {
+		Stdout.formatln("Deleting Message: \"{}\" OwnsPtr: {}", getValueString(what), _OwnsPtr);
 		if(_InstPtr !is null && fOwnsPointer) {
 			be_BMessage_dtor(_InstPtr());
 			_InstPtr = null;
@@ -1597,8 +1601,8 @@ public:
 	}
 
 	// const char * be_BMessage_FindString_4(BMessage *self, const char* name, int32 n);
-	char * FindString(char [] name, int32 n) {
-		return be_BMessage_FindString_4(_InstPtr(), toStringz(name), n);
+	char [] FindString(char [] name, int32 n) {
+		return fromStringz(be_BMessage_FindString_4(_InstPtr(), toStringz(name), n)).dup;
 	}
 
 	// int8 be_BMessage_FindInt8_2(BMessage *self, const char* name, int32 n);

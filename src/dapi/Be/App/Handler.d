@@ -118,7 +118,7 @@ extern (C) extern {
 
 extern (C) {
 	status_t bind_BHandler_Archive(void *bindInstPtr, void* data, bool deep) {
-		return (cast(BHandler)bindInstPtr).Archive(new BMessage(data, true), deep);
+		return (cast(BHandler)bindInstPtr).Archive(new BMessage(data, false), deep);
 	}
 
 	void bind_BHandler_MessageReceived(void *bindInstPtr, void* message) {
@@ -146,11 +146,11 @@ extern (C) {
 	}
 
 	void* bind_BHandler_ResolveSpecifier(void *bindInstPtr, void* msg, int32 index, void* specifier, int32 form,  char* property) {
-		return (cast(BHandler)bindInstPtr).ResolveSpecifier(new BMessage(msg, true), index, new BMessage(specifier, true), form, fromStringz(property))._InstPtr();
+		return (cast(BHandler)bindInstPtr).ResolveSpecifier(new BMessage(msg, false), index, new BMessage(specifier, false), form, fromStringz(property))._InstPtr();
 	}
 
 	status_t bind_BHandler_GetSupportedSuites(void *bindInstPtr, void* data) {
-		return (cast(BHandler)bindInstPtr).GetSupportedSuites(new BMessage(data, true));
+		return (cast(BHandler)bindInstPtr).GetSupportedSuites(new BMessage(data, false));
 	}
 
 	status_t bind_BHandler_Perform(void *bindInstPtr, perform_code d, void* arg) {
@@ -158,7 +158,7 @@ extern (C) {
 	}
 
 	void bind_BHandler_SendNotices(void *bindInstPtr, uint32 what,  void* notice) {
-		(cast(BHandler)bindInstPtr).SendNotices(what, new BMessage(notice, true));
+		(cast(BHandler)bindInstPtr).SendNotices(what, new BMessage(notice, false));
 	}
 }
 
